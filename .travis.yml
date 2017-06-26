@@ -1,0 +1,33 @@
+dist: trusty
+language: node_js
+node_js:
+  - 'stable'
+
+branches:
+  only:
+  - master
+
+cache:
+  directories:
+    - node_modules
+
+env:
+  global:
+    - PORT=3000
+    - DB_DRIVER=postgres
+    - DB_USERNAME=postgres
+    - DB_PASSWORD=
+    - DB_HOST=127.0.0.1
+    - DB_PORT=5432
+    - DB_NAME=eve-book-api
+
+services:
+  - postgresql
+
+addons:
+  postgresql: "9.6"
+
+before_script:
+  - psql -c 'create database "eve-book-api";' -U postgres
+
+after_success: npm run coverage

@@ -1,0 +1,68 @@
+{
+  "name": "eve-book-api",
+  "version": "0.1.0",
+  "description": "EVE Book API",
+  "private": true,
+  "license": "GPL-3.0",
+  "scripts": {
+    "start": "nodemon -e ts --watch src index.js",
+    "seed": "node seed",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "build": "tsc",
+    "test": "nyc --require ts-node/register mocha src/**/*.spec.ts --reporter spec",
+    "start:prod": "node dist/server.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules/",
+      "src/**/*.spec.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  },
+  "dependencies": {
+    "@nestjs/common": "*",
+    "@nestjs/core": "*",
+    "@nestjs/microservices": "*",
+    "@nestjs/testing": "*",
+    "@nestjs/websockets": "*",
+    "body-parser": "^1.17.2",
+    "class-validator": "^0.7.1",
+    "dotenv": "^4.0.0",
+    "pg": "^6.4.0",
+    "redis": "^2.7.1",
+    "reflect-metadata": "^0.1.10",
+    "rxjs": "^5.4.0",
+    "typeorm": "0.1.0-alpha.19",
+    "typescript": "^2.2.1"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/faker": "^4.1.0",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.2",
+    "chai": "^4.0.2",
+    "coveralls": "^2.13.1",
+    "mocha": "^3.4.2",
+    "nyc": "^11.0.2",
+    "supertest": "^3.0.0",
+    "ts-node": "^3.1.0",
+    "tslint": "^5.4.3",
+    "tslint-config-airbnb": "^5.2.0",
+    "faker": "^4.1.0"
+  }
+}
