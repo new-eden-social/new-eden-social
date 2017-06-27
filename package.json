@@ -47,7 +47,7 @@
     "redis": "^2.7.1",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.4.0",
-    "typeorm": "0.1.0-alpha.19",
+    "typeorm": "0.1.0-alpha.20",
     "typescript": "^2.2.1"
   },
   "devDependencies": {
