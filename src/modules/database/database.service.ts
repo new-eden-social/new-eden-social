@@ -41,7 +41,6 @@ export class DatabaseService {
         if (!this.pending) {
           break;
         }
-        // await is converting Promise<number> into number
         await delay(50, i);
       }
     }
@@ -74,8 +73,7 @@ export class DatabaseService {
    * @param entityClassOrName
    * @returns {Promise<Repository<T>>}
    */
-  public async getRepository<T>(entityClassOrName: ObjectType<T>
-                                  | string): Promise<Repository<T>> {
+  public async getRepository<T>(entityClassOrName: ObjectType<T> | string): Promise<Repository<T>> {
     return (await this.getConnection()).getRepository<T>(entityClassOrName);
   }
 }

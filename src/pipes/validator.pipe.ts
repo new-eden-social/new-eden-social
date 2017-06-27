@@ -7,6 +7,13 @@ import { validate } from 'class-validator';
  */
 @Pipe()
 export class ValidatorPipe implements PipeTransform {
+
+  /**
+   * Validates provided data against Class
+   * @param value
+   * @param metadata
+   * @return {Promise<any>}
+   */
   public async transform(value, metadata: ArgumentMetadata) {
     const { metatype } = metadata;
     if (!this.toValidate(metatype)) {
