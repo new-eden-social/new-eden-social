@@ -1,19 +1,19 @@
 import { Component } from '@nestjs/common';
 import { ESIService } from '../external/esi/esi.service';
-import { AllianceName, CorporationName } from '../external/esi/esi.interface';
 import { Character } from '../character/character.entety';
+import { Corporation } from '../corporation/corporation.entety';
+import { Alliance } from '../alliance/alliance.entety';
 
 @Component()
 export class SearchService {
 
-  // TODO: what if i want to provide token to constructor?
   constructor(private esiService: ESIService) {
   }
 
   public async search(query: string): Promise<{
     characters: Character[],
-    corporations: CorporationName[],
-    alliances: AllianceName[],
+    corporations: Corporation[],
+    alliances: Alliance[],
   }> {
     const searchResponse = await this.esiService.search(query);
 
@@ -21,14 +21,16 @@ export class SearchService {
     let corporations = [];
     let alliances = [];
 
+    // TODO: Limit characters/corporations/alliances to 20 or query is too long, meybe split and do more requests?
+
     if (searchResponse.character) {
-      characters = await this.esiService.characterNames(searchResponse.character);
+      characters = await this.esiService.characterNames(searchResponse.character.slice(0, 20));
     }
     if (searchResponse.corporation) {
-      corporations = await this.esiService.corporationNames(searchResponse.corporation);
+      corporations = await this.esiService.corporationNames(searchResponse.corporation.slice(0, 20));
     }
     if (searchResponse.alliance) {
-      alliances = await this.esiService.allianceNames(searchResponse.alliance);
+      alliances = await this.esiService.allianceNames(searchResponse.alliance.slice(0, 20));
     }
 
     return { characters, corporations, alliances };

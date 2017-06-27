@@ -1,5 +1,6 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
+import * as cors from 'cors';
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './modules/app.module';
 import { ValidatorPipe } from './pipes/validator.pipe';
@@ -13,6 +14,7 @@ config();
 
 const instance = express();
 instance.use(bodyParser.json());
+instance.use(cors());
 
 const app = NestFactory.create(ApplicationModule, instance);
 app.useGlobalPipes(new ValidatorPipe());

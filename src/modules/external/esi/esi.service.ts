@@ -6,6 +6,8 @@ import {
   Search,
 } from './esi.interface';
 import { Character } from '../../character/character.entety';
+import { Corporation } from '../../corporation/corporation.entety';
+import { Alliance } from '../../alliance/alliance.entety';
 
 @Component()
 export class ESIService {
@@ -36,12 +38,15 @@ export class ESIService {
       return this.cacheService.fetch<T>(hash);
     }
 
-    const response = await this.client.request(config);
-    const cacheTime = parseInt(response.headers['access-control-max-age']);
+    try {
+      const response = await this.client.request(config);
+      const cacheTime = parseInt(response.headers['access-control-max-age']);
 
-    await this.cacheService.store(hash, response.data, cacheTime);
+      await this.cacheService.store(hash, response.data, cacheTime);
 
-    return response.data;
+      return response.data;
+    }catch (err) { console.log(err)}
+
   }
 
   /**
@@ -85,33 +90,48 @@ export class ESIService {
 
   /**
    * Get corporation names for ids
-   * @todo Transform response
    * @param ids
-   * @return {Promise<CorporationName>}
+   * @return {Promise<Corporation[]>}
    */
-  public async corporationNames(ids: number[]): Promise<CorporationName[]> {
-    return this.request<CorporationName[]>({
+  public async corporationNames(ids: number[]): Promise<Corporation[]> {
+    const corporations = await this.request<CorporationName[]>({
       url: 'corporations/names/',
       method: 'GET',
       params: {
         corporation_ids: ids.join(','),
       },
     });
+
+    // Transform api response to Corporation
+    return corporations.map((corporationName) => {
+      const corporation = new Corporation();
+      corporation.id = corporationName.corporation_id;
+      corporation.name = corporationName.corporation_name;
+      return corporation;
+    });
   }
 
   /**
    * Get alliance names for ids
-   * @todo Transform response
    * @param ids
-   * @return {Promise<AllianceName>}
+   * @return {Promise<Alliance[]>}
    */
-  public async allianceNames(ids: number[]): Promise<AllianceName[]> {
-    return this.request<AllianceName[]>({
+  public async allianceNames(ids: number[]): Promise<Alliance[]> {
+    const alliances = await this.request<AllianceName[]>({
       url: 'alliances/names/',
       method: 'GET',
       params: {
         alliance_ids: ids.join(','),
       },
+    });
+
+
+    // Transform api response to Alliance
+    return alliances.map((allianceName) => {
+      const alliance = new Alliance();
+      alliance.id = allianceName.alliance_id;
+      alliance.name = allianceName.alliance_name;
+      return alliance;
     });
   }
 

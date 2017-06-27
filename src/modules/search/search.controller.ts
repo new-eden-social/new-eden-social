@@ -8,7 +8,7 @@ export class SearchController {
   }
 
   @Get()
-  public async search(@Response() res, @Query('search') query) {
+  public async search(@Response() res, @Query('query') query) {
     const data = await this.searchService.search(query);
 
     res.status(HttpStatus.OK).json(data);
