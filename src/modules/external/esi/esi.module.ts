@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { CacheModule } from '../../cache/cache.module';
-import { EveService } from './eve.service';
+import { ESIService } from './esi.service';
 
 @Module({
   modules: [
     CacheModule,
   ],
   components: [
-    EveService,
+    ESIService,
   ],
   exports: [
-    EveService,
+    ESIService,
   ],
 })
-export class EveModule {
+export class ESIModule {
 }

@@ -21,9 +21,12 @@ env:
     - DB_HOST=127.0.0.1
     - DB_PORT=5432
     - DB_NAME=eve-book-api
+    - REDIS_HOST=localhost
+    - REDIS_PORT=6379
 
 services:
   - postgresql
+  - redis-server
 
 addons:
   postgresql: "9.6"

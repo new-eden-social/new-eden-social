@@ -1,10 +1,14 @@
 import { Component } from '@nestjs/common';
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { CacheService } from '../../cache/cache.service';
-import { AllianceName, CharacterName, CorporationName, Search } from './eve.interface';
+import {
+  AllianceName, CharacterName, CorporationName, GetCharacter,
+  Search,
+} from './esi.interface';
+import { Character } from '../../character/character.entety';
 
 @Component()
-export class EveService {
+export class ESIService {
 
   private baseUrl = 'https://esi.tech.ccp.is/latest/';
   private userAgent = `eve-book/${process.env.npm_package_version} https://github.com/evebook/api`;
@@ -15,11 +19,9 @@ export class EveService {
       baseURL: this.baseUrl,
       headers: {
         'User-Agent': this.userAgent,
-        'Accept': 'application/json',
+        Accept: 'application/json',
       },
-      //
-      //params: { token: '' },
-    })
+    });
   }
 
   /**
@@ -39,8 +41,7 @@ export class EveService {
 
     await this.cacheService.store(hash, response.data, cacheTime);
 
-    return response.data
-
+    return response.data;
   }
 
   /**
@@ -64,23 +65,32 @@ export class EveService {
    * @param ids
    * @return {Promise<CharacterName>}
    */
-  public async characterNames(ids: Array<number>): Promise<Array<CharacterName>> {
-    return this.request<Array<CharacterName>>({
+  public async characterNames(ids: number[]): Promise<Character[]> {
+    const characters = await this.request<CharacterName[]>({
       url: 'characters/names/',
       method: 'GET',
       params: {
         character_ids: ids.join(','),
       },
     });
+
+    // Transform api response to Character
+    return characters.map((characterName) => {
+      const character = new Character();
+      character.id = characterName.character_id;
+      character.name = characterName.character_name;
+      return character;
+    });
   }
 
   /**
    * Get corporation names for ids
+   * @todo Transform response
    * @param ids
    * @return {Promise<CorporationName>}
    */
-  public async corporationNames(ids: Array<number>): Promise<Array<CorporationName>> {
-    return this.request<Array<CorporationName>>({
+  public async corporationNames(ids: number[]): Promise<CorporationName[]> {
+    return this.request<CorporationName[]>({
       url: 'corporations/names/',
       method: 'GET',
       params: {
@@ -91,16 +101,29 @@ export class EveService {
 
   /**
    * Get alliance names for ids
+   * @todo Transform response
    * @param ids
    * @return {Promise<AllianceName>}
    */
-  public async allianceNames(ids: Array<number>): Promise<Array<AllianceName>> {
-    return this.request<Array<AllianceName>>({
+  public async allianceNames(ids: number[]): Promise<AllianceName[]> {
+    return this.request<AllianceName[]>({
       url: 'alliances/names/',
       method: 'GET',
       params: {
         alliance_ids: ids.join(','),
       },
+    });
+  }
+
+  /**
+   * Get character by id
+   * @param id
+   * @return {Promise<GetCharacter>}
+   */
+  public async getCharacter(id: number): Promise<GetCharacter> {
+    return this.request<GetCharacter>({
+      url: `characters/${id}/`,
+      method: 'GET',
     });
   }
 

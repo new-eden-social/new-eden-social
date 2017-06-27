@@ -1,36 +1,37 @@
 import { Component } from '@nestjs/common';
-import { EveService } from '../external/eve/eve.service';
-import { AllianceName, CharacterName, CorporationName } from '../external/eve/eve.interface';
+import { ESIService } from '../external/esi/esi.service';
+import { AllianceName, CorporationName } from '../external/esi/esi.interface';
+import { Character } from '../character/character.entety';
 
 @Component()
 export class SearchService {
 
   // TODO: what if i want to provide token to constructor?
-  constructor(private eveService: EveService) {
+  constructor(private esiService: ESIService) {
   }
 
   public async search(query: string): Promise<{
-    characters: Array<CharacterName>,
-    corporations: Array<CorporationName>,
-    alliances: Array<AllianceName>
+    characters: Character[],
+    corporations: CorporationName[],
+    alliances: AllianceName[],
   }> {
-    const searchResponse = await this.eveService.search(query);
+    const searchResponse = await this.esiService.search(query);
 
     let characters = [];
     let corporations = [];
-    let alliances= [];
+    let alliances = [];
 
     if (searchResponse.character) {
-      characters = await this.eveService.characterNames(searchResponse.character);
+      characters = await this.esiService.characterNames(searchResponse.character);
     }
     if (searchResponse.corporation) {
-      corporations = await this.eveService.corporationNames(searchResponse.corporation);
+      corporations = await this.esiService.corporationNames(searchResponse.corporation);
     }
     if (searchResponse.alliance) {
-      alliances = await this.eveService.allianceNames(searchResponse.alliance);
+      alliances = await this.esiService.allianceNames(searchResponse.alliance);
     }
 
-    return { characters, corporations, alliances }
+    return { characters, corporations, alliances };
   }
 
 }
