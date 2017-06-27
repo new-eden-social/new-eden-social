@@ -16,9 +16,19 @@ export class SearchService {
   }> {
     const searchResponse = await this.eveService.search(query);
 
-    const characters = await this.eveService.characterNames(searchResponse.character);
-    const corporations = await this.eveService.corporationNames(searchResponse.corporation);
-    const alliances = await this.eveService.allianceNames(searchResponse.alliance);
+    let characters = [];
+    let corporations = [];
+    let alliances= [];
+
+    if (searchResponse.character) {
+      characters = await this.eveService.characterNames(searchResponse.character);
+    }
+    if (searchResponse.corporation) {
+      corporations = await this.eveService.corporationNames(searchResponse.corporation);
+    }
+    if (searchResponse.alliance) {
+      alliances = await this.eveService.allianceNames(searchResponse.alliance);
+    }
 
     return { characters, corporations, alliances }
   }

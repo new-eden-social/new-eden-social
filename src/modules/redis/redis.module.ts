@@ -1,14 +1,16 @@
-import { Module, Shared } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { RedisService } from './redis.service';
 import { RedisConfig } from './redis.config';
 
-@Shared()
 @Module({
   components: [
     RedisService,
     RedisConfig,
   ],
-  exports: [RedisService],
+  exports: [
+    RedisService,
+    RedisConfig,
+  ],
 })
 export class RedisModule {
 }

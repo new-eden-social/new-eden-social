@@ -20,7 +20,7 @@ export class CacheService {
    * @return {Promise<T>}
    */
   public async fetch<T>(key: string): Promise<T> {
-    const data = (await this.redisService.client).get(this.formatKey(key));
+    const data = await (await this.redisService.client).get(this.formatKey(key));
 
     return JSON.parse(data)
   }
@@ -31,7 +31,7 @@ export class CacheService {
    * @return {Promise<boolean>}
    */
   public async exsists(key: string): Promise<boolean> {
-    return (await  this.redisService.client).exists(this.formatKey(key))
+    return await (await  this.redisService.client).exists(this.formatKey(key))
   }
 
   /**
@@ -43,7 +43,7 @@ export class CacheService {
    */
   public async store(key: string, data: any, expire: number = 600): Promise<any> {
     const json = JSON.stringify(data);
-    return (await this.redisService.client).setex(this.formatKey(key), expire, json)
+    return await (await this.redisService.client).setex(this.formatKey(key), expire, json)
   }
 
   /**

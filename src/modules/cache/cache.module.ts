@@ -1,8 +1,7 @@
-import { Module, Shared } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { RedisModule } from '../redis/redis.module';
 import { CacheService } from './cache.service';
 
-@Shared()
 @Module({
   modules: [
     RedisModule,
