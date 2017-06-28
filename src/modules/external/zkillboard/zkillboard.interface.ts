@@ -1,6 +1,6 @@
 declare module zKillboard {
 
-  interface AllianceStatistics {
+  interface IAllianceStatistics {
     readonly id: number;
     readonly allTimeSum: number;
     readonly groups: any;
@@ -35,7 +35,7 @@ declare module zKillboard {
     };
   }
 
-  interface CorporationStatistics {
+  interface ICorporationStatistics {
     readonly id: number;
     readonly allTimeSum: number;
     readonly groups: any;
@@ -70,7 +70,7 @@ declare module zKillboard {
     };
   }
 
-  interface CharacterStatistics {
+  interface ICharacterStatistics {
     readonly id: number;
     readonly calcTrophies: boolean;
     readonly iskDestroyed: number;

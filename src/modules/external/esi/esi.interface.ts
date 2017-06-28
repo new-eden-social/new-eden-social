@@ -1,6 +1,6 @@
 declare module ESI {
 
-  interface GetAlliance {
+  interface IGetAlliance {
     readonly id: number;
     readonly ticker: string;
     readonly alliance_name: string;
@@ -8,7 +8,7 @@ declare module ESI {
     readonly date_founded: Date;
   }
 
-  interface GetCorporation {
+  interface IGetCorporation {
     readonly id: number;
     readonly ticker: string;
     readonly corporation_name: string;
@@ -22,7 +22,7 @@ declare module ESI {
     readonly tax_rate: number;
   }
 
-  interface GetCharacter {
+  interface IGetCharacter {
     readonly id: number;
     readonly name: string;
     readonly description: string;
@@ -35,7 +35,7 @@ declare module ESI {
     readonly corporation_id: number;
   }
 
-  interface Search {
+  interface ISearch {
     readonly agent?: number[];
     readonly alliance?: number[];
     readonly character?: number[];
@@ -49,17 +49,17 @@ declare module ESI {
     readonly wormhole?: number[];
   }
 
-  interface AllianceName {
+  interface IAllianceName {
     readonly alliance_id: number;
     readonly alliance_name: string;
   }
 
-  interface CharacterName {
+  interface ICharacterName {
     readonly character_id: number;
     readonly character_name: string;
   }
 
-  interface CorporationName {
+  interface ICorporationName {
     readonly corporation_id: number;
     readonly corporation_name: string;
   }

@@ -2,12 +2,16 @@ import { Component } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { CacheService } from '../../cache/cache.service';
 import {
-  AllianceName, CharacterName, CorporationName, GetCharacter,
-  Search,
+  IAllianceName,
+  ICharacterName,
+  ICorporationName,
+  IGetCharacter,
+  ISearch,
 } from './esi.interface';
 import { Character } from '../../character/character.entety';
 import { Corporation } from '../../corporation/corporation.entety';
 import { Alliance } from '../../alliance/alliance.entety';
+import { Utils } from '../../utils.static';
 
 @Component()
 export class ESIService {
@@ -32,7 +36,7 @@ export class ESIService {
    * @return {Promise<T>}
    */
   private async request<T>(config: AxiosRequestConfig): Promise<T> {
-    const hash = await this.cacheService.hash(config);
+    const hash = await Utils.hash(config);
 
     if (await this.cacheService.exsists(hash)) {
       return this.cacheService.fetch<T>(hash);
@@ -45,17 +49,20 @@ export class ESIService {
       await this.cacheService.store(hash, response.data, cacheTime);
 
       return response.data;
-    }catch (err) { console.log(err)}
+    }
+    catch (err) {
+      console.log(err)
+    }
 
   }
 
   /**
    * Search for alliances, characters, corporations
    * @param query
-   * @return {Promise<Search>}
+   * @return {Promise<ISearch>}
    */
-  public async search(query: string): Promise<Search> {
-    return this.request<Search>({
+  public async search(query: string): Promise<ISearch> {
+    return this.request<ISearch>({
       url: 'search/',
       method: 'GET',
       params: {
@@ -68,10 +75,10 @@ export class ESIService {
   /**
    * Get character names for ids
    * @param ids
-   * @return {Promise<CharacterName>}
+   * @return {Promise<ICharacterName>}
    */
   public async characterNames(ids: number[]): Promise<Character[]> {
-    const characters = await this.request<CharacterName[]>({
+    const characters = await this.request<ICharacterName[]>({
       url: 'characters/names/',
       method: 'GET',
       params: {
@@ -94,7 +101,7 @@ export class ESIService {
    * @return {Promise<Corporation[]>}
    */
   public async corporationNames(ids: number[]): Promise<Corporation[]> {
-    const corporations = await this.request<CorporationName[]>({
+    const corporations = await this.request<ICorporationName[]>({
       url: 'corporations/names/',
       method: 'GET',
       params: {
@@ -117,7 +124,7 @@ export class ESIService {
    * @return {Promise<Alliance[]>}
    */
   public async allianceNames(ids: number[]): Promise<Alliance[]> {
-    const alliances = await this.request<AllianceName[]>({
+    const alliances = await this.request<IAllianceName[]>({
       url: 'alliances/names/',
       method: 'GET',
       params: {
@@ -138,10 +145,10 @@ export class ESIService {
   /**
    * Get character by id
    * @param id
-   * @return {Promise<GetCharacter>}
+   * @return {Promise<IGetCharacter>}
    */
-  public async getCharacter(id: number): Promise<GetCharacter> {
-    return this.request<GetCharacter>({
+  public async getCharacter(id: number): Promise<IGetCharacter> {
+    return this.request<IGetCharacter>({
       url: `characters/${id}/`,
       method: 'GET',
     });

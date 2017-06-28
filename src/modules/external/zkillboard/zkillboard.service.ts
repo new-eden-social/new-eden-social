@@ -1,10 +1,11 @@
 import { Component } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import {
-  AllianceStatistics, CharacterStatistics,
-  CorporationStatistics,
+  IAllianceStatistics, ICharacterStatistics,
+  ICorporationStatistics,
 } from './zkillboard.interface';
 import { CacheService } from '../../cache/cache.service';
+import { Utils } from '../../utils.static';
 
 @Component()
 export class ZKillboardService {
@@ -26,7 +27,7 @@ export class ZKillboardService {
    * @return {Promise<T>}
    */
   private async request<T>(config: AxiosRequestConfig): Promise<T> {
-    const hash = await this.cacheService.hash(config);
+    const hash = await Utils.hash(config);
 
     if (await this.cacheService.exsists(hash)) {
       return this.cacheService.fetch<T>(hash);
@@ -45,10 +46,10 @@ export class ZKillboardService {
    * Get alliance statistics from zKillboard
    *
    * @param id
-   * @return {Promise<CorporationStatistics>}
+   * @return {Promise<ICorporationStatistics>}
    */
-  public async allianceStatistics(id: number): Promise<AllianceStatistics> {
-    return this.request<AllianceStatistics>({
+  public async allianceStatistics(id: number): Promise<IAllianceStatistics> {
+    return this.request<IAllianceStatistics>({
       url: `stats/allianceID/${id}/`,
       method: 'GET',
     });
@@ -58,10 +59,10 @@ export class ZKillboardService {
    * Get corporation statistics from zKillboard
    *
    * @param id
-   * @return {Promise<CorporationStatistics>}
+   * @return {Promise<ICorporationStatistics>}
    */
-  public async corporationStatistics(id: number): Promise<CorporationStatistics> {
-    return this.request<CorporationStatistics>({
+  public async corporationStatistics(id: number): Promise<ICorporationStatistics> {
+    return this.request<ICorporationStatistics>({
       url: `stats/corporationID/${id}/`,
       method: 'GET',
     });
@@ -71,10 +72,10 @@ export class ZKillboardService {
    * Get character statistics from zKillboard
    *
    * @param id
-   * @return {Promise<CharacterStatistics>}
+   * @return {Promise<ICharacterStatistics>}
    */
-  public async characterStatistics(id: number): Promise<CharacterStatistics> {
-    return this.request<CharacterStatistics>({
+  public async characterStatistics(id: number): Promise<ICharacterStatistics> {
+    return this.request<ICharacterStatistics>({
       url: `stats/characterID/${id}/`,
       method: 'GET',
     });

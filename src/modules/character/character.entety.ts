@@ -1,7 +1,7 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 import { Length } from 'class-validator';
-import { CharacterStatistics } from '../external/zkillboard/zkillboard.interface';
-import { GetCharacter } from '../external/esi/esi.interface';
+import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interface';
+import { IGetCharacter } from '../external/esi/esi.interface';
 
 @Entity()
 export class Character {
@@ -21,7 +21,7 @@ export class Character {
   ancestryId: number;
   securityStatus: number;
 
-  public populateESI(char: GetCharacter) {
+  public populateESI(char: IGetCharacter) {
     this.name = char.name;
     this.description = char.description;
     this.gender = char.gender;
@@ -46,7 +46,7 @@ export class Character {
   soloKills: number;
   soloLosses: number;
 
-  public populateZKillboard(char: CharacterStatistics) {
+  public populateZKillboard(char: ICharacterStatistics) {
     this.iskDestroyed = char.iskDestroyed;
     this.iskLost = char.iskLost;
     this.pointsDestroyed = char.pointsDestroyed;

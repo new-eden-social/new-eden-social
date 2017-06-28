@@ -46,16 +46,4 @@ export class CacheService {
     return await (await this.redisService.client).setex(this.formatKey(key), expire, json);
   }
 
-  /**
-   * Create hash from parameters
-   * @param args
-   * @return {Promise<string>}
-   */
-  public async hash(...args): Promise<string> {
-    const sha = createHash('sha1');
-    sha.update(JSON.stringify(args));
-
-    return sha.digest('hex');
-  }
-
 }

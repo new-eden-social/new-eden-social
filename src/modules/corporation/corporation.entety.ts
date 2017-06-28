@@ -1,10 +1,10 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 import { Length } from 'class-validator';
 import {
-  CharacterStatistics,
-  CorporationStatistics,
+  ICharacterStatistics,
+  ICorporationStatistics,
 } from '../external/zkillboard/zkillboard.interface';
-import { GetCharacter, GetCorporation } from '../external/esi/esi.interface';
+import { IGetCharacter, IGetCorporation } from '../external/esi/esi.interface';
 
 @Entity()
 export class Corporation {
@@ -26,7 +26,7 @@ export class Corporation {
   creationDate: Date;
   taxRate: number;
 
-  public populateESI(corp: GetCorporation) {
+  public populateESI(corp: IGetCorporation) {
     this.name = corp.corporation_name;
     this.ticker = corp.ticker;
     this.description = corp.corporation_description;
@@ -56,7 +56,7 @@ export class Corporation {
   soloKills: number;
   soloLosses: number;
 
-  public populateZKillboard(corp: CorporationStatistics) {
+  public populateZKillboard(corp: ICorporationStatistics) {
     this.iskDestroyed = corp.iskDestroyed;
     this.iskLost = corp.iskLost;
     this.pointsDestroyed = corp.pointsDestroyed;

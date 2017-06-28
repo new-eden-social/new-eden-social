@@ -19,6 +19,9 @@ import { ZKillboardModule } from '../external/zkillboard/zkillboard.module';
     CharactersService,
     DatabaseConfig,
   ],
+  exports: [
+    CharactersService,
+  ],
 })
 export class CharactersModule {
 }

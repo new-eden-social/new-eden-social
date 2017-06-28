@@ -1,11 +1,11 @@
 import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 import { Length } from 'class-validator';
 import {
-  AllianceStatistics,
-  CharacterStatistics,
-  CorporationStatistics,
+  IAllianceStatistics,
+  ICharacterStatistics,
+  ICorporationStatistics,
 } from '../external/zkillboard/zkillboard.interface';
-import { GetAlliance, GetCharacter, GetCorporation } from '../external/esi/esi.interface';
+import { IGetAlliance, IGetCharacter, IGetCorporation } from '../external/esi/esi.interface';
 
 @Entity()
 export class Alliance {
@@ -21,7 +21,7 @@ export class Alliance {
   dateFounded: Date;
   executorCorp: number;
 
-  public populateESI(alliance: GetAlliance) {
+  public populateESI(alliance: IGetAlliance) {
     this.name = alliance.alliance_name;
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.date_founded;
@@ -48,7 +48,7 @@ export class Alliance {
   memberCount: number;
   corpCount: number;
 
-  public populateZKillboard(alliance: AllianceStatistics) {
+  public populateZKillboard(alliance: IAllianceStatistics) {
     this.iskDestroyed = alliance.iskDestroyed;
     this.iskLost = alliance.iskLost;
     this.pointsDestroyed = alliance.pointsDestroyed;
