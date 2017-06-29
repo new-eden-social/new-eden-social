@@ -14,6 +14,9 @@
   <a target="_blank" href="https://coveralls.io/github/evebook/api">
     <img src="https://coveralls.io/repos/github/evebook/api/badge.svg" alt="Coverage Status" />
   </a>
+  <a target="_blank" href="https://gitter.im/EVE-Book/Lobby">
+    <img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join Gitter Chat" />
+  </a>
 </div>
 
 ## Installation
