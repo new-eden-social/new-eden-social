@@ -5,7 +5,7 @@ import {
   IAllianceName,
   ICharacterName,
   ICorporationName,
-  IGetCharacter,
+  IGetCharacter, IGetCharacterPortrait,
   ISearch,
 } from './esi.interface';
 import { Character } from '../../character/character.entety';
@@ -150,6 +150,18 @@ export class ESIService {
   public async getCharacter(id: number): Promise<IGetCharacter> {
     return this.request<IGetCharacter>({
       url: `characters/${id}/`,
+      method: 'GET',
+    });
+  }
+
+  /**
+   * Get character portrait
+   * @param id
+   * @return {Promise<IGetCharacterPortrait>}
+   */
+  public async getCharacterPortrait(id: number): Promise<IGetCharacterPortrait> {
+    return this.request<IGetCharacterPortrait>({
+      url: `characters/${id}/portrait/`,
       method: 'GET',
     });
   }

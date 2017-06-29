@@ -3,6 +3,8 @@ import { SSOService } from '../external/sso/sso.service';
 import { IAuthenticationResponse } from '../external/sso/sso.interface';
 import { CharactersService } from '../character/character.service';
 import { Character } from '../character/character.entety';
+import { TokenExpiredException } from '../external/sso/sso.exceptions';
+import { HttpException } from '@nestjs/core';
 
 @Component()
 export class AuthenticationService {

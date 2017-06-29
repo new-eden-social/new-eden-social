@@ -1,6 +1,7 @@
 import { HttpException } from '@nestjs/core';
 import { Middleware, NestMiddleware } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
+import { TokenExpiredException } from '../external/sso/sso.exceptions';
 
 @Middleware()
 export class AuthMiddleware implements NestMiddleware {
@@ -11,13 +12,17 @@ export class AuthMiddleware implements NestMiddleware {
     return async (req, res, next) => {
       const token = req.headers['authorization'];
 
-      const character = await this.authenticationService.verifyAuthentication(token);
-
-      if (!character) {
-        throw new HttpException('Authorization token is not valid.', 401);
+      try {
+        req.character = await this.authenticationService.verifyAuthentication(token.slice('Bearer '.length));
+      }
+      catch (error) {
+        if (error instanceof TokenExpiredException) {
+          throw new HttpException('Authorization token is not valid.', 401);
+        }
+        // If some other error, re-throw
+        throw error
       }
 
-      req.character = character;
       next();
     }
   }

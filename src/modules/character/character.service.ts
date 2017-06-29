@@ -37,6 +37,9 @@ export class CharactersService implements IService<Character> {
     const esiChar = await this.esiService.getCharacter(id);
     character.populateESI(esiChar);
 
+    const esiPortrait = await this.esiService.getCharacterPortrait(id);
+    character.populateESIPortrait(esiPortrait);
+
     const zkillChar = await this.zkillboardService.characterStatistics(id);
     character.populateZKillboard(zkillChar);
 

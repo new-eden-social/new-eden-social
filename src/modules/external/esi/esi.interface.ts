@@ -35,6 +35,13 @@ declare module ESI {
     readonly corporation_id: number;
   }
 
+  interface IGetCharacterPortrait {
+    readonly px64x64: string;
+    readonly px128x128: string;
+    readonly px256x256: string;
+    readonly px512x512: string;
+  }
+
   interface ISearch {
     readonly agent?: number[];
     readonly alliance?: number[];
