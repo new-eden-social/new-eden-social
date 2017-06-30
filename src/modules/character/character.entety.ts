@@ -1,7 +1,9 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
-import { Length } from 'class-validator';
+import { Entity, Column, PrimaryColumn, OneToMany, CreateDateColumn } from 'typeorm';
 import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interface';
 import { IGetCharacter, IGetCharacterPortrait } from '../external/esi/esi.interface';
+import { Post } from '../post/post.entety';
+import { Comment } from '../comment/comment.entety';
+import { CharacterResponse } from './character.interface';
 
 @Entity()
 export class Character {
@@ -9,6 +11,14 @@ export class Character {
   @PrimaryColumn('int')
   id: number;
 
+  @OneToMany(type => Post, post => post.character)
+  posts: Post[];
+
+  @OneToMany(type => Comment, comment => comment.character)
+  comments: Comment[];
+
+  @CreateDateColumn()
+  createdAt: Date;
 
   /**
    * Provided by ESI
@@ -73,4 +83,29 @@ export class Character {
     this.soloLosses = char.soloLosses;
   }
 
+  /**
+   * Get character response (this is what API returns)
+   * @return {CharacterResponse}
+   */
+  get response(): CharacterResponse {
+    return {
+      id: this.id,
+      name: this.name,
+      description: this.description,
+      gender: this.gender,
+      raceId: this.raceId,
+      bloodlineId: this.bloodlineId,
+      ancestryId: this.ancestryId,
+      securityStatus: this.securityStatus,
+      portrait: this.portrait,
+      iskDestroyed: this.iskDestroyed,
+      iskLost: this.iskLost,
+      pointsDestroyed: this.pointsDestroyed,
+      pointsLost: this.pointsLost,
+      shipsDestroyed: this.shipsDestroyed,
+      shipsLost: this.shipsLost,
+      soloKills: this.soloKills,
+      soloLosses: this.soloLosses,
+    }
+  }
 }

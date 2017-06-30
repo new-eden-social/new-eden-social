@@ -22,7 +22,15 @@ export class ValidatorPipe implements PipeTransform {
     const object = Object.assign(new metatype(), value);
     const errors = await validate(object);
     if (errors.length > 0) {
-      throw new HttpException('Validation failed', HttpStatus.BAD_REQUEST);
+      // TODO: Should create an interface that would document all errors returned, Probably do something like
+      // TODO: throw new APIValidationException(erorrs)
+      throw new HttpException({
+        reason: 'validationFailed',
+        errors: errors.map(error => ({
+          property: error.property,
+          constraints: error.constraints,
+        })),
+      }, HttpStatus.BAD_REQUEST);
     }
     return value;
   }

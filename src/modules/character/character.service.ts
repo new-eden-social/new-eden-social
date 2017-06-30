@@ -28,10 +28,11 @@ export class CharactersService implements IService<Character> {
     let character = await (await this.repository).findOneById(id);
 
     // If character wasn't created yet, create fresh instance
-    // But we don't store it in db
+    // And store it in db
     if (!character) {
       character = new Character();
       character.id = id;
+      await (await this.repository).persist(character);
     }
 
     const esiChar = await this.esiService.getCharacter(id);

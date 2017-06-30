@@ -12,7 +12,7 @@ export class CharactersController {
   public async search(@Response() res, @Param('id') characterId) {
     const character = await this.characterService.get(characterId);
 
-    res.status(HttpStatus.OK).json(character);
+    res.status(HttpStatus.OK).json(character.response);
   }
 
 }
