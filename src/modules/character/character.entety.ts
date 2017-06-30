@@ -3,7 +3,7 @@ import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interfac
 import { IGetCharacter, IGetCharacterPortrait } from '../external/esi/esi.interface';
 import { Post } from '../post/post.entety';
 import { Comment } from '../comment/comment.entety';
-import { CharacterResponse } from './character.interface';
+import { ICharacterResponse } from './character.interface';
 
 @Entity()
 export class Character {
@@ -85,9 +85,9 @@ export class Character {
 
   /**
    * Get character response (this is what API returns)
-   * @return {CharacterResponse}
+   * @return {ICharacterResponse}
    */
-  get response(): CharacterResponse {
+  get response(): ICharacterResponse {
     return {
       id: this.id,
       name: this.name,

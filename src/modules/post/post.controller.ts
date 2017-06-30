@@ -1,7 +1,7 @@
 import { Response, Request, Param, Controller, Get, Post, Body, HttpStatus } from '@nestjs/common';
 import { PostService } from './post.service';
 import { Post as PostEntity } from './post.entety';
-import { CreatePostRequest } from './post.interface';
+import { ICreatePostRequest } from './post.interface';
 
 @Controller('posts')
 export class PostController {
@@ -24,7 +24,7 @@ export class PostController {
   }
 
   @Post('')
-  public async create(@Request() req, @Response() res, @Body('post') postData: CreatePostRequest) {
+  public async create(@Request() req, @Response() res, @Body('post') postData: ICreatePostRequest) {
     const post = await this.postService.create(postData, req.character);
 
     res.status(HttpStatus.CREATED).json(post.response);

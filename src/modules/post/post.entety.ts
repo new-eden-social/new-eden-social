@@ -2,7 +2,7 @@ import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne, CreateDateColumn }
 import { Character } from '../character/character.entety';
 import { Comment } from '../comment/comment.entety';
 import { v4 as uuid } from 'uuid';
-import { CreatePostRequest, PostResponse } from './post.interface';
+import { ICreatePostRequest, IPostResponse } from './post.interface';
 
 @Entity()
 export class Post {
@@ -41,7 +41,7 @@ export class Post {
   @OneToMany(type => Comment, comment => comment.post)
   comments: Comment[];
 
-  populateRequestData(postData: CreatePostRequest) {
+  populateRequestData(postData: ICreatePostRequest) {
     this.title = postData.title;
     this.content = postData.content;
     this.previewUrl = postData.previewUrl;
@@ -50,7 +50,7 @@ export class Post {
     this.previewDescription = postData.previewDescription;
   }
 
-  get response(): PostResponse {
+  get response(): IPostResponse {
     return {
       id: this.id,
       title: this.title,

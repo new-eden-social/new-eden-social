@@ -1,10 +1,10 @@
 import { IsOptional, IsString, IsUrl, Length, MaxLength } from 'class-validator';
-import { CharacterResponse } from '../character/character.interface';
+import { ICharacterResponse } from '../character/character.interface';
 
 /**
  * Validator used when creating Post
  */
-export class CreatePostRequest {
+export class ICreatePostRequest {
 
   @IsString()
   @MaxLength(255)
@@ -31,7 +31,7 @@ export class CreatePostRequest {
   previewDescription?: string;
 }
 
-export interface PostResponse {
+export interface IPostResponse {
   id: string,
   title: string,
   content: string,
@@ -40,5 +40,5 @@ export interface PostResponse {
   previewTitle?: string,
   previewDescription?: string,
 
-  character?: CharacterResponse,
+  character?: ICharacterResponse,
 }

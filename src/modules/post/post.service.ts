@@ -2,7 +2,7 @@ import { Component } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { Repository } from 'typeorm';
 import { Post } from './post.entety';
-import { CreatePostRequest } from './post.interface';
+import { ICreatePostRequest } from './post.interface';
 import { Character } from '../character/character.entety';
 import { CharactersService } from '../character/character.service';
 
@@ -55,7 +55,7 @@ export class PostService {
    * @param character
    * @return {Promise<Post>}
    */
-  public async create(postData: CreatePostRequest, character: Character): Promise<Post> {
+  public async create(postData: ICreatePostRequest, character: Character): Promise<Post> {
     const post = new Post();
     post.populateRequestData(postData);
     post.character = character;

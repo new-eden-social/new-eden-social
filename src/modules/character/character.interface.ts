@@ -1,4 +1,4 @@
-export interface CharacterResponse {
+export interface ICharacterResponse {
   id: number;
   name: string;
   description: string;
