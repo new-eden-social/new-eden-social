@@ -7,10 +7,6 @@ import { ICharacterResponse } from '../character/character.interface';
 export class ICreatePostRequest {
 
   @IsString()
-  @MaxLength(255)
-  title: string;
-
-  @IsString()
   content: string;
 
   @IsOptional()
@@ -33,7 +29,6 @@ export class ICreatePostRequest {
 
 export interface IPostResponse {
   id: string,
-  title: string,
   content: string,
   previewUrl?: string,
   previewImage?: string,

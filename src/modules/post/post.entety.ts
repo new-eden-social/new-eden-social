@@ -14,9 +14,6 @@ export class Post {
   @PrimaryColumn('uuid')
   id: string;
 
-  @Column()
-  title: string;
-
   @Column('text')
   content: string;
 
@@ -42,7 +39,6 @@ export class Post {
   comments: Comment[];
 
   populateRequestData(postData: ICreatePostRequest) {
-    this.title = postData.title;
     this.content = postData.content;
     this.previewUrl = postData.previewUrl;
     this.previewImage = postData.previewImage;
@@ -53,7 +49,6 @@ export class Post {
   get response(): IPostResponse {
     return {
       id: this.id,
-      title: this.title,
       content: this.content,
       previewUrl: this.previewUrl,
       previewImage: this.previewImage,
