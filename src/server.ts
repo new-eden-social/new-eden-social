@@ -18,5 +18,5 @@ instance.use(cors());
 
 const app = NestFactory.create(ApplicationModule, instance);
 app.useGlobalPipes(new ValidatorPipe());
-app.listen(process.env.PORT, () =>
+app.listen(parseInt(process.env.PORT), () =>
   console.log(`Application is listening on port ${process.env.PORT}.`));
