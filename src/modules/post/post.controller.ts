@@ -1,6 +1,6 @@
 import { Response, Request, Param, Controller, Get, Post, Body, HttpStatus } from '@nestjs/common';
 import { PostService } from './post.service';
-import { Post as PostEntity } from './post.entety';
+import { Post as PostEntity } from './post.entity';
 import { ICreatePostRequest } from './post.interface';
 
 @Controller('posts')

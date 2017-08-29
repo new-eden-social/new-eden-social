@@ -1,11 +1,11 @@
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne, CreateDateColumn } from 'typeorm';
 import { Length } from 'class-validator';
-import { Character } from '../character/character.entety';
-import { Comment } from '../comment/comment.entety';
+import { Character } from '../character/character.entity';
+import { Comment } from '../comment/comment.entity';
 import { v4 as uuid } from 'uuid';
 
 @Entity()
-export class Post {
+export class Thread {
 
   constructor() {
     // Generate uuid

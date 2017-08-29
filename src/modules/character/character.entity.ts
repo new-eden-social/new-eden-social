@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryColumn, OneToMany, CreateDateColumn } from 'typeorm';
 import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interface';
 import { IGetCharacter, IGetCharacterPortrait } from '../external/esi/esi.interface';
-import { Post } from '../post/post.entety';
-import { Comment } from '../comment/comment.entety';
+import { Post } from '../post/post.entity';
+import { Comment } from '../comment/comment.entity';
 import { ICharacterResponse } from './character.interface';
 
 @Entity()

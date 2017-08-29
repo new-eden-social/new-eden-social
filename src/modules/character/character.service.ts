@@ -2,7 +2,7 @@ import { Component } from '@nestjs/common';
 import { IService } from '../../interfaces/service.interface';
 import { DatabaseService } from '../database/database.service';
 import { Repository } from 'typeorm';
-import { Character } from './character.entety';
+import { Character } from './character.entity';
 import { ESIService } from '../external/esi/esi.service';
 import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
 import * as zKillboard from '../external/zkillboard/zkillboard.interface';
