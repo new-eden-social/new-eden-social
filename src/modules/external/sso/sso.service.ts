@@ -123,6 +123,7 @@ export class SSOService {
     catch (err) {
       // Check if we caught axios 400 error
       if (err.response && err.response.status === 400) {
+        // TODO: Should we rather throw TokenInvalidException() ?
         throw new TokenExpiredException()
       }
       else throw err

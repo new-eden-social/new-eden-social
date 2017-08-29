@@ -16,7 +16,10 @@ const instance = express();
 instance.use(bodyParser.json());
 instance.use(cors());
 
-const app = NestFactory.create(ApplicationModule, instance);
-app.useGlobalPipes(new ValidatorPipe());
-app.listen(process.env.PORT, () =>
-  console.log(`Application is listening on port ${process.env.PORT}.`));
+NestFactory.create(ApplicationModule, instance)
+.then(app => {
+  app.useGlobalPipes(new ValidatorPipe());
+  app.listen(parseInt(process.env.PORT), () =>
+    console.log(`Application is listening on port ${process.env.PORT}.`));
+});
+

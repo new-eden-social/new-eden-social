@@ -2,7 +2,7 @@ import { Component } from '@nestjs/common';
 import { IService } from '../../interfaces/service.interface';
 import { DatabaseService } from '../database/database.service';
 import { Repository } from 'typeorm';
-import { Post } from './post.entety';
+import { Post } from './post.entity';
 
 @Component()
 export class PostService implements IService<Post> {

@@ -51,7 +51,7 @@
     "redis": "^2.7.1",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.4.0",
-    "typeorm": "0.1.0-alpha.35",
+    "typeorm": "^0.1.0",
     "typescript": "^2.2.1"
   },
   "devDependencies": {
@@ -60,7 +60,7 @@
     "@types/ioredis": "0.0.25",
     "@types/mocha": "^2.2.41",
     "@types/moment": "^2.13.0",
-    "@types/node": "^8.0.2",
+    "@types/node": "^8.0.8",
     "chai": "^4.0.2",
     "coveralls": "^2.13.1",
     "faker": "^4.1.0",

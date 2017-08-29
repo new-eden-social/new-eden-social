@@ -1,9 +1,9 @@
 import { Component } from '@nestjs/common';
 import { DatabaseService } from '../database/database.service';
 import { Repository } from 'typeorm';
-import { Post } from './post.entety';
+import { Post } from './post.entity';
 import { ICreatePostRequest } from './post.interface';
-import { Character } from '../character/character.entety';
+import { Character } from '../character/character.entity';
 import { CharactersService } from '../character/character.service';
 
 @Component()

@@ -8,9 +8,9 @@ import {
   IGetCharacter, IGetCharacterPortrait,
   ISearch,
 } from './esi.interface';
-import { Character } from '../../character/character.entety';
-import { Corporation } from '../../corporation/corporation.entety';
-import { Alliance } from '../../alliance/alliance.entety';
+import { Character } from '../../character/character.entity';
+import { Corporation } from '../../corporation/corporation.entity';
+import { Alliance } from '../../alliance/alliance.entity';
 import { Utils } from '../../utils.static';
 
 @Component()

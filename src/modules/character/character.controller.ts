@@ -1,6 +1,6 @@
 import { Response, Param, Controller, Get, Post, Body, HttpStatus } from '@nestjs/common';
 import { CharactersService } from './character.service';
-import { Character } from './character.entety';
+import { Character } from './character.entity';
 
 @Controller('characters')
 export class CharactersController {

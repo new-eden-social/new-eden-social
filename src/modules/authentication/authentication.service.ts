@@ -2,7 +2,7 @@ import { Component } from '@nestjs/common';
 import { SSOService } from '../external/sso/sso.service';
 import { IAuthenticationResponse } from '../external/sso/sso.interface';
 import { CharactersService } from '../character/character.service';
-import { Character } from '../character/character.entety';
+import { Character } from '../character/character.entity';
 import { TokenExpiredException } from '../external/sso/sso.exceptions';
 import { HttpException } from '@nestjs/core';
 
