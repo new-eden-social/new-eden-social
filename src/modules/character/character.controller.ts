@@ -9,10 +9,17 @@ export class CharactersController {
   }
 
   @Get('/:id')
-  public async search(@Response() res, @Param('id') characterId) {
+  public async search(@Response() res, @Param('id') characterId: number) {
     const character = await this.characterService.get(characterId);
 
     res.status(HttpStatus.OK).json(character.response);
+  }
+
+  @Get('/:id/feed')
+  public async feed(@Response() res, @Param('id') characterId: number) {
+    const feed = await this.characterService.feed(characterId);
+
+    res.status(HttpStatus.OK).json(feed);
   }
 
 }

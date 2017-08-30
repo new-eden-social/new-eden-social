@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import { Character } from './character.entity';
 import { ESIService } from '../external/esi/esi.service';
 import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
-import * as zKillboard from '../external/zkillboard/zkillboard.interface';
+import { PostService } from '../post/post.service';
 
 @Component()
 export class CharactersService implements IService<Character> {
@@ -20,11 +20,12 @@ export class CharactersService implements IService<Character> {
   }
 
   /**
-   * Get character data
-   * @param id
+   * Find character in db. If it doesn't exists, create it.
+   *  TODO: We might have to first check with ESI if it really exists.
+   * @param {number} id
    * @return {Promise<Character>}
    */
-  public async get(id: number): Promise<Character> {
+  private async findCharacterById(id: number) {
     let character = await (await this.repository).findOneById(id);
 
     // If character wasn't created yet, create fresh instance
@@ -34,6 +35,18 @@ export class CharactersService implements IService<Character> {
       character.id = id;
       await (await this.repository).persist(character);
     }
+
+    return character
+  }
+
+  /**
+   * Get character data
+   * @param id
+   * @return {Promise<Character>}
+   */
+  public async get(id: number): Promise<Character> {
+    // Find character in database
+    const character = await this.findCharacterById(id);
 
     const esiChar = await this.esiService.getCharacter(id);
     character.populateESI(esiChar);
@@ -45,5 +58,12 @@ export class CharactersService implements IService<Character> {
     character.populateZKillboard(zkillChar);
 
     return character;
+  }
+
+  public async feed(id: number) {
+    // Find character in database
+    const character = await this.findCharacterById(id);
+
+    //
   }
 }

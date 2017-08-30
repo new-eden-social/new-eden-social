@@ -5,16 +5,24 @@ import { Post } from './post.entity';
 import { ICreatePostRequest } from './post.interface';
 import { Character } from '../character/character.entity';
 import { CharactersService } from '../character/character.service';
+import { KillmailsStreamService } from '../external/killmailsStream/killmailsStream.service';
 
 @Component()
 export class PostService {
 
   constructor(private databaseService: DatabaseService,
-              private charactersService: CharactersService) {
+              private charactersService: CharactersService,
+              private killmailStreamService: KillmailsStreamService) {
+    this.killmailStreamService.subscribe(this.createKillmailPost);
   }
 
   private get repository(): Promise<Repository<Post>> {
     return this.databaseService.getRepository(Post);
+  }
+
+  private createKillmailPost(data) {
+    console.log('EVEENT', JSON.stringify(data))
+    // TODO: Create killmail posts
   }
 
   /**
