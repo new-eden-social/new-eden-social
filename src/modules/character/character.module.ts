@@ -5,7 +5,7 @@ import { DatabaseModule } from '../database/database.module';
 import { DatabaseConfig } from '../database/database.config';
 import { ESIModule } from '../external/esi/esi.module';
 import { ZKillboardModule } from '../external/zkillboard/zkillboard.module';
-import { PostModule } from '../post/post.module';
+import { PostModule } from '../feed/post/post.module';
 
 @Module({
   modules: [

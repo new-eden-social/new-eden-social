@@ -1,6 +1,9 @@
 import { Component } from '@nestjs/common';
 import * as WebSocket from 'ws';
-import { IKillmail, IKillmailStreamRaw } from './killmailsStream.interface';
+import {
+  IKillmailStream, IKillmailStreamAttacker,
+  IKillmailStreamRaw, IKillmailStreamVictim,
+} from './killmailsStream.interface';
 
 
 @Component()
@@ -22,7 +25,7 @@ export class KillmailsStreamService {
    * Emmit formatted/standardised killmail
    * @param callback
    */
-  public subscribe(callback: (data: IKillmail) => void) {
+  public subscribe(callback: (data: IKillmailStream) => void) {
     this.client.on('message', (data: WebSocket.Data) => {
       const rawKillmail = <IKillmailStreamRaw> JSON.parse(data.toString());
       callback(this.formatRawKillmail(rawKillmail))
@@ -43,26 +46,27 @@ export class KillmailsStreamService {
   /**
    * Format raw Killmail to standardized
    * @param {KillmailsStream.IKillmailStreamRaw} raw
-   * @return {KillmailsStream.IKillmail}
+   * @return {KillmailsStream.IKillmailStream}
    */
-  private formatRawKillmail(raw: IKillmailStreamRaw): IKillmail {
-    return <IKillmail>{
+  private formatRawKillmail(raw: IKillmailStreamRaw): IKillmailStream {
+    console.log(raw)
+    return <IKillmailStream>{
       id: raw.killID,
       date: new Date(raw.killmail.killTime),
       warId: raw.killmail.war.id,
-      locationId: raw.zkb.locationId,
+      locationId: raw.zkb.locationID,
       totalValue: raw.zkb.totalValue,
       fittedValue: raw.zkb.fittedValue,
       points: raw.zkb.points,
-      npc: raw.zkb.npc,
-      attackers: raw.killmail.attackers.map(attackerRaw => ({
+      npc: !!raw.zkb.npc,
+      attackers: <IKillmailStreamAttacker[]>raw.killmail.attackers.map(attackerRaw => ({
         id: attackerRaw.character ? attackerRaw.character.id : null,
         shipId: attackerRaw.shipType.id,
         weaponId: attackerRaw.weaponType ? attackerRaw.weaponType.id : null,
         damageDone: attackerRaw.damageDone,
         finalBlow: attackerRaw.finalBlow,
       })),
-      victim: {
+      victim: <IKillmailStreamVictim>{
         id: raw.killmail.victim.character.id,
         shipId: raw.killmail.victim.shipType.id,
         damageTaken: raw.killmail.victim.damageTaken,

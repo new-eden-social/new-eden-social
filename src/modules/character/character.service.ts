@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { Character } from './character.entity';
 import { ESIService } from '../external/esi/esi.service';
 import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
-import { PostService } from '../post/post.service';
 
 @Component()
 export class CharactersService implements IService<Character> {
@@ -58,12 +57,5 @@ export class CharactersService implements IService<Character> {
     character.populateZKillboard(zkillChar);
 
     return character;
-  }
-
-  public async feed(id: number) {
-    // Find character in database
-    const character = await this.findCharacterById(id);
-
-    //
   }
 }

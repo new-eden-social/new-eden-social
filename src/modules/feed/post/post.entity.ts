@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne, CreateDateColumn } from 'typeorm';
-import { Character } from '../character/character.entity';
-import { Comment } from '../comment/comment.entity';
+import { Character } from '../../character/character.entity';
+import { Comment } from '../../comment/comment.entity';
 import { v4 as uuid } from 'uuid';
 import { ICreatePostRequest, IPostResponse } from './post.interface';
 
@@ -17,17 +17,11 @@ export class Post {
   @Column('text')
   content: string;
 
-  @Column({ nullable: true })
-  previewUrl?: string;
+  @Column()
+  type: string;
 
-  @Column({ nullable: true })
-  previewImage?: string;
-
-  @Column({ nullable: true })
-  previewTitle?: string;
-
-  @Column('text', { nullable: true })
-  previewDescription?: string;
+  @Column()
+  locationId: number;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -36,24 +30,27 @@ export class Post {
   character: Character;
 
   @OneToMany(type => Comment, comment => comment.post)
-  comments: Comment[];
+  comments: Comment[] = [];
 
+  /**
+   * Populate instance with PostData
+   * @param {ICreatePostRequest} postData
+   */
   populateRequestData(postData: ICreatePostRequest) {
     this.content = postData.content;
-    this.previewUrl = postData.previewUrl;
-    this.previewImage = postData.previewImage;
-    this.previewTitle = postData.previewTitle;
-    this.previewDescription = postData.previewDescription;
+    this.type = postData.type;
+    this.locationId = postData.locationId;
   }
 
+  /**
+   * Get Response
+   * @return {IPostResponse}
+   */
   get response(): IPostResponse {
     return {
       id: this.id,
       content: this.content,
-      previewUrl: this.previewUrl,
-      previewImage: this.previewImage,
-      previewTitle: this.previewTitle,
-      previewDescription: this.previewDescription,
+      type: this.type,
 
       character: this.character.response,
     }

@@ -1,6 +1,6 @@
 declare module KillmailsStream {
 
-  interface IKillmail {
+  interface IKillmailStream {
     id: number;
     date: Date;
     warId: number;
@@ -9,20 +9,26 @@ declare module KillmailsStream {
     fittedValue: number;
     points: number;
     npc: boolean;
-    attackers: Array<{
-      id?: number; // NPC's don't have ids
-      shipId: number;
-      weaponId?: number; // Optional
-      damageDone: number;
-      finalBlow: boolean;
-    }>;
-    victim: {
-      id: number;
-      shipId: number;
-      damageTaken: number;
-      position: { x: number; y: number; z: number; }
-    }
+    attackers: Array<IKillmailStreamAttacker>;
+    victim: IKillmailStreamVictim;
   }
+
+  interface IKillmailStreamAttacker {
+    id?: number; // NPC's don't have ids
+    shipId: number;
+    weaponId?: number; // Optional
+    damageDone: number;
+    finalBlow: boolean;
+  }
+
+  interface IKillmailStreamVictim {
+    id: number;
+    shipId: number;
+    damageTaken: number;
+    position: { x: number; y: number; z: number; };
+  }
+
+  type TKillmailStreamParticipant = IKillmailStreamVictim | IKillmailStreamAttacker;
 
   interface IKillmailStreamRaw {
     readonly killID: number;
@@ -135,11 +141,11 @@ declare module KillmailsStream {
     }
     readonly zkb: {
       readonly hash: string;
-      readonly locationId: number;
+      readonly locationID: number;
       readonly fittedValue: number;
       readonly totalValue: number;
       readonly points: number;
-      readonly npc: boolean;
+      readonly npc?: boolean;
       readonly href: string;
     }
 

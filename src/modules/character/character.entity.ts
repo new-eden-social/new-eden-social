@@ -1,9 +1,11 @@
-import { Entity, Column, PrimaryColumn, OneToMany, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany, CreateDateColumn, ManyToMany } from 'typeorm';
 import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interface';
 import { IGetCharacter, IGetCharacterPortrait } from '../external/esi/esi.interface';
-import { Post } from '../post/post.entity';
+import { Post } from '../feed/post/post.entity';
 import { Comment } from '../comment/comment.entity';
 import { ICharacterResponse } from './character.interface';
+import { Killmail } from '../feed/killmail/killmail.entity';
+import { KillmailParticipant } from '../feed/killmail/participant/participant.entity';
 
 @Entity()
 export class Character {
@@ -12,10 +14,13 @@ export class Character {
   id: number;
 
   @OneToMany(type => Post, post => post.character)
-  posts: Post[];
+  posts: Post[] = [];
+
+  @OneToMany(type => KillmailParticipant, killmailParticipant => killmailParticipant.character)
+  killmails: KillmailParticipant[] = [];
 
   @OneToMany(type => Comment, comment => comment.character)
-  comments: Comment[];
+  comments: Comment[] = [];
 
   @CreateDateColumn()
   createdAt: Date;

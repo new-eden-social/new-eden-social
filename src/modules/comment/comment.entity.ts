@@ -1,7 +1,8 @@
 import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne, CreateDateColumn } from 'typeorm';
-import { Post } from '../post/post.entity';
+import { Post } from '../feed/post/post.entity';
 import { Character } from '../character/character.entity';
 import { v4 as uuid } from 'uuid';
+import { Killmail } from '../feed/killmail/killmail.entity';
 
 @Entity()
 export class Comment {
@@ -21,6 +22,9 @@ export class Comment {
 
   @ManyToOne(type => Post, post => post.comments)
   post: Post;
+
+  @ManyToOne(type => Killmail, killmail => killmail.comments)
+  killmail: Killmail;
 
   @ManyToOne(type => Character, character => character.comments)
   character: Character;
