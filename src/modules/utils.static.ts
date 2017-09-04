@@ -1,4 +1,5 @@
 import { createHash } from 'crypto';
+
 export class Utils {
 
   /**

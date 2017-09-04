@@ -1,9 +1,14 @@
-import { ICharacterResponse } from '../../character/character.interface';
+import { IParticipantResponse } from './participant/participant.interface';
 
 export interface IKillmailResponse {
-  id: string,
-  content: string,
-  type: string,
-
-  character?: ICharacterResponse,
+  type: 'killmail';
+  id: number;
+  url: string;
+  victim: IParticipantResponse;
+  attackers: IParticipantResponse[];
+  locationId: number;
+  createdAt: Date;
+  totalValue: number;
+  npc: boolean;
+  warId: number;
 }

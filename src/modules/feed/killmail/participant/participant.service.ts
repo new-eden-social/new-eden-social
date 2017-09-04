@@ -4,20 +4,35 @@ import { DatabaseService } from '../../../database/database.service';
 import { KillmailParticipant } from './participant.entity';
 import {
   IKillmailStreamAttacker,
-  IKillmailStreamVictim, TKillmailStreamParticipant,
+  IKillmailStreamVictim,
+  TKillmailStreamParticipant,
 } from '../../../external/killmailsStream/killmailsStream.interface';
+import { CharactersService } from '../../../character/character.service';
+import { IParticipantResponse } from './participant.interface';
 
 @Component()
 export class KillmailParticipantService {
 
-  constructor(private databaseService: DatabaseService) {
+  constructor(
+    private databaseService: DatabaseService,
+    private charactersService: CharactersService,
+  ) {
   }
 
   private get repository(): Promise<Repository<KillmailParticipant>> {
     return this.databaseService.getRepository(KillmailParticipant);
   }
 
-  public async create(data: TKillmailStreamParticipant, type: 'attacker' | 'victim'): Promise<KillmailParticipant> {
+  /**
+   *
+   * @param {KillmailsStream.TKillmailStreamParticipant} data
+   * @param {"attacker" | "victim"} type
+   * @return {Promise<KillmailParticipant>}
+   */
+  public async create(
+    data: TKillmailStreamParticipant,
+    type: 'attacker' | 'victim',
+  ): Promise<KillmailParticipant> {
     const participant = new KillmailParticipant();
 
     if (type === 'attacker') {
@@ -29,9 +44,25 @@ export class KillmailParticipantService {
     }
 
     participant.type = type;
+    participant.character = await this.charactersService.get(data.id);
     participant.shipId = data.shipId;
 
     return (await this.repository).persist(participant);
+  }
+
+  public async formatParticipantResponse(
+    participant: KillmailParticipant,
+  ): Promise<IParticipantResponse> {
+    const character = await this.charactersService.get(participant.character.id);
+
+    return {
+      character,
+      shipId: participant.shipId,
+      weaponId: participant.weaponId,
+      damageDone: participant.damageDone,
+      damageTaken: participant.damageTaken,
+      finalBlow: participant.finalBlow,
+    };
   }
 
 }

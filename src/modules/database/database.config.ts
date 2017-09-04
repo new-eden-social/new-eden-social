@@ -1,5 +1,6 @@
 import { Component } from '@nestjs/common';
 import { ConnectionOptions } from 'typeorm';
+import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 
 @Component()
 export class DatabaseConfig {
@@ -11,7 +12,7 @@ export class DatabaseConfig {
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      //logging: 'all',
+      logging: <LoggerOptions>process.env.DB_LOG,
       entities: [
         __dirname + '/../**/*.entity.ts',
       ],

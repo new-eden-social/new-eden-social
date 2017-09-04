@@ -1,6 +1,4 @@
-import {
-  Entity, Column, ManyToOne, PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Character } from '../../../character/character.entity';
 import { Killmail } from '../killmail.entity';
 
@@ -10,17 +8,19 @@ export class KillmailParticipant {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @JoinTable()
   @ManyToOne(type => Killmail, killmail => killmail.participants)
   killmail: Killmail;
 
+  @JoinTable()
   @ManyToOne(type => Character, character => character.killmails)
   character: Character;
 
   @Column()
-  type: string; // attacker | victim
+  type: 'attacker' | 'victim';
 
-  @Column()
-  shipId: number;
+  @Column({ nullable: true })
+  shipId?: number; // Sometimes, for some reason. shipId can be null
 
 
   // Attacker

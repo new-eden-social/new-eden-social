@@ -13,17 +13,17 @@ export class AuthMiddleware implements NestMiddleware {
       const token = req.headers['authorization'];
 
       try {
-        req.character = await this.authenticationService.verifyAuthentication(token.slice('Bearer '.length));
-      }
-      catch (error) {
+        req.character = await this.authenticationService
+        .verifyAuthentication(token.slice('Bearer '.length));
+      } catch (error) {
         if (error instanceof TokenExpiredException) {
           throw new HttpException('Authorization token is not valid.', 401);
         }
         // If some other error, re-throw
-        throw error
+        throw error;
       }
 
       next();
-    }
+    };
   }
 }

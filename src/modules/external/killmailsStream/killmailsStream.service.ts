@@ -1,8 +1,10 @@
 import { Component } from '@nestjs/common';
 import * as WebSocket from 'ws';
 import {
-  IKillmailStream, IKillmailStreamAttacker,
-  IKillmailStreamRaw, IKillmailStreamVictim,
+  IKillmailStream,
+  IKillmailStreamAttacker,
+  IKillmailStreamRaw,
+  IKillmailStreamVictim,
 } from './killmailsStream.interface';
 
 
@@ -18,7 +20,7 @@ export class KillmailsStreamService {
       headers: {
         'User-Agent': this.userAgent,
       },
-    })
+    });
   }
 
   /**
@@ -28,7 +30,7 @@ export class KillmailsStreamService {
   public subscribe(callback: (data: IKillmailStream) => void) {
     this.client.on('message', (data: WebSocket.Data) => {
       const rawKillmail = <IKillmailStreamRaw> JSON.parse(data.toString());
-      callback(this.formatRawKillmail(rawKillmail))
+      callback(this.formatRawKillmail(rawKillmail));
     });
   }
 
@@ -49,30 +51,29 @@ export class KillmailsStreamService {
    * @return {KillmailsStream.IKillmailStream}
    */
   private formatRawKillmail(raw: IKillmailStreamRaw): IKillmailStream {
-    console.log(raw)
+    console.log(raw);
     return <IKillmailStream>{
       id: raw.killID,
       date: new Date(raw.killmail.killTime),
       warId: raw.killmail.war.id,
       locationId: raw.zkb.locationID,
       totalValue: raw.zkb.totalValue,
-      fittedValue: raw.zkb.fittedValue,
       points: raw.zkb.points,
       npc: !!raw.zkb.npc,
       attackers: <IKillmailStreamAttacker[]>raw.killmail.attackers.map(attackerRaw => ({
         id: attackerRaw.character ? attackerRaw.character.id : null,
-        shipId: attackerRaw.shipType.id,
+        shipId: attackerRaw.shipType ? attackerRaw.shipType.id : null,
         weaponId: attackerRaw.weaponType ? attackerRaw.weaponType.id : null,
         damageDone: attackerRaw.damageDone,
         finalBlow: attackerRaw.finalBlow,
       })),
       victim: <IKillmailStreamVictim>{
-        id: raw.killmail.victim.character.id,
-        shipId: raw.killmail.victim.shipType.id,
+        id: raw.killmail.victim.character ? raw.killmail.victim.character.id : null,
+        shipId: raw.killmail.victim.shipType ? raw.killmail.victim.shipType.id : null,
         damageTaken: raw.killmail.victim.damageTaken,
         position: raw.killmail.victim.position,
       },
-    }
+    };
   }
 
 }

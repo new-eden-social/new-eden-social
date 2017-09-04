@@ -3,8 +3,7 @@ import { KillmailsStreamService } from './killmailsStream.service';
 
 @Shared()
 @Module({
-  modules: [
-  ],
+  modules: [],
   components: [
     KillmailsStreamService,
   ],

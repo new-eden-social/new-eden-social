@@ -1,6 +1,4 @@
-import {
-  Entity, Column, PrimaryColumn, OneToMany, OneToOne,
-} from 'typeorm';
+import { Column, Entity, JoinTable, OneToMany, PrimaryColumn } from 'typeorm';
 import { Comment } from '../../comment/comment.entity';
 import { KillmailParticipant } from './participant/participant.entity';
 
@@ -19,18 +17,18 @@ export class Killmail {
   @Column('real')
   totalValue: number;
 
-  @Column('real', {nullable: true})
-  fittedValue?: number;
-
   @Column()
   npc: boolean = false;
 
   @Column('timestamp')
   createdAt: Date;
 
-  @OneToOne(type => KillmailParticipant, participant => participant.killmail)
+  @JoinTable()
+  @OneToMany(type => KillmailParticipant, participant => participant.killmail)
   participants: KillmailParticipant[] = [];
 
+  @JoinTable()
   @OneToMany(type => Comment, comment => comment.killmail)
   comments: Comment[] = [];
+
 }

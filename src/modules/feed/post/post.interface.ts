@@ -1,11 +1,11 @@
 import { IsIn, IsNumber, IsString } from 'class-validator';
 import { ICharacterResponse } from '../../character/character.interface';
 
-export const PostTypes = [
+export const POST_TYPES = [
   'text',
   'location',
-  //'corporationChange'
-  //'allianceChange'
+  // 'corporationChange'
+  // 'allianceChange'
 ];
 
 export class ICreatePostRequest {
@@ -13,7 +13,7 @@ export class ICreatePostRequest {
   @IsString()
   content: string;
 
-  @IsIn(PostTypes)
+  @IsIn(POST_TYPES)
   type: string;
 
   @IsNumber()
@@ -22,9 +22,9 @@ export class ICreatePostRequest {
 }
 
 export interface IPostResponse {
-  id: string,
-  content: string,
-  type: string,
+  id: string;
+  content: string;
+  type: string;
 
-  character?: ICharacterResponse,
+  character?: ICharacterResponse;
 }

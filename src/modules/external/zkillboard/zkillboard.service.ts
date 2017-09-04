@@ -1,7 +1,8 @@
 import { Component } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import {
-  IAllianceStatistics, ICharacterStatistics,
+  IAllianceStatistics,
+  ICharacterStatistics,
   ICorporationStatistics,
 } from './zkillboard.interface';
 import { CacheService } from '../../cache/cache.service';
@@ -22,24 +23,12 @@ export class ZKillboardService {
   }
 
   /**
-   * Request wrapper, it stores response to cache and use it if it's not expired
-   * @param config
-   * @return {Promise<T>}
+   * Create Kill URL
+   * @param {number} killId
+   * @return {string}
    */
-  private async request<T>(config: AxiosRequestConfig): Promise<T> {
-    const hash = await Utils.hash(config);
-
-    if (await this.cacheService.exsists(hash)) {
-      return this.cacheService.fetch<T>(hash);
-    }
-
-    const response = await this.client.request(config);
-    // const cacheTime = parseInt(response.headers['access-control-max-age']);
-    const cacheTime = 3600;
-
-    await this.cacheService.store(hash, response.data, cacheTime);
-
-    return response.data;
+  public static createKillUrl(killId: number): string {
+    return `https://zkillboard.com/kill/${killId}`;
   }
 
   /**
@@ -81,4 +70,24 @@ export class ZKillboardService {
     });
   }
 
+  /**
+   * Request wrapper, it stores response to cache and use it if it's not expired
+   * @param config
+   * @return {Promise<T>}
+   */
+  private async request<T>(config: AxiosRequestConfig): Promise<T> {
+    const hash = await Utils.hash(config);
+
+    if (await this.cacheService.exists(hash)) {
+      return this.cacheService.fetch<T>(hash);
+    }
+
+    const response = await this.client.request(config);
+    // const cacheTime = parseInt(response.headers['access-control-max-age']);
+    const cacheTime = 3600;
+
+    await this.cacheService.store(hash, response.data, cacheTime);
+
+    return response.data;
+  }
 }

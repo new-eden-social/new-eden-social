@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryColumn, OneToMany, ManyToOne, CreateDateColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
 import { Character } from '../../character/character.entity';
 import { Comment } from '../../comment/comment.entity';
 import { v4 as uuid } from 'uuid';
@@ -53,6 +53,6 @@ export class Post {
       type: this.type,
 
       character: this.character.response,
-    }
+    };
   }
 }

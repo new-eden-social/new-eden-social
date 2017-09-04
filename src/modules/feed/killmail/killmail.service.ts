@@ -5,18 +5,72 @@ import { Killmail } from './killmail.entity';
 import { KillmailsStreamService } from '../../external/killmailsStream/killmailsStream.service';
 import { IKillmailStream } from '../../external/killmailsStream/killmailsStream.interface';
 import { KillmailParticipantService } from './participant/participant.service';
+import { Character } from '../../character/character.entity';
+import { IKillmailResponse } from './killmail.interface';
+import { ZKillboardService } from '../../external/zkillboard/zkillboard.service';
 
 @Component()
 export class KillmailService {
 
-  constructor(private databaseService: DatabaseService,
-              private killmailsStreamService: KillmailsStreamService,
-              private killmailParticipantService: KillmailParticipantService) {
+  constructor(
+    private databaseService: DatabaseService,
+    private killmailsStreamService: KillmailsStreamService,
+    private killmailParticipantService: KillmailParticipantService,
+  ) {
     this.killmailsStreamService.subscribe(this.create.bind(this));
   }
 
   private get repository(): Promise<Repository<Killmail>> {
     return this.databaseService.getRepository(Killmail);
+  }
+
+  /**
+   *
+   * @param {Killmail} killmail
+   * @return {Promise<IKillmailResponse>}
+   */
+  public async formatKillmailResponse(killmail: Killmail): Promise<IKillmailResponse> {
+    const victim = await this.killmailParticipantService
+    .formatParticipantResponse(killmail.participants.filter(
+      participant => participant.type === 'victim')[0]);
+
+    const attackers = await Promise.all(killmail.participants
+    .filter(participant => participant.type === 'attacker')
+    .map(killer => this.killmailParticipantService.formatParticipantResponse(killer)));
+
+    return {
+      victim,
+      attackers,
+      type: 'killmail',
+      id: killmail.id,
+      url: ZKillboardService.createKillUrl(killmail.id),
+      locationId: killmail.locationId,
+      totalValue: killmail.totalValue,
+      npc: killmail.npc,
+      warId: killmail.warId,
+      createdAt: killmail.createdAt,
+    };
+  }
+
+  /**
+   *
+   * @param {Character} character
+   * @return {Promise<Killmail[]>}
+   */
+  public async getKillmailsForCharacter(character: Character): Promise<Killmail[]> {
+
+    return (await this.repository).createQueryBuilder('killmail')
+    .leftJoinAndSelect('killmail.participants', 'participants')
+    .leftJoinAndSelect('participants.character', 'participants.character')
+    .where(`killmail.id IN (
+  SELECT killmail.id
+  FROM killmail
+    LEFT JOIN killmail_participant ON killmail.id = killmail_participant."killmailId"
+  WHERE killmail_participant."characterId" = :characterId
+)`)
+    .orderBy('killmail.createdAt')
+    .setParameters({ characterId: character.id })
+    .getMany();
   }
 
   /**
@@ -27,6 +81,11 @@ export class KillmailService {
    * @return {Promise<void>}
    */
   private async create(killmailStream: IKillmailStream) {
+
+    if (!killmailStream.victim.id) {
+      console.log('skipping killmail - victim has no character id');
+    }
+
     console.info('creating killmail');
     const killmail = new Killmail();
     killmail.id = killmailStream.id;
@@ -34,10 +93,10 @@ export class KillmailService {
     killmail.locationId = killmailStream.locationId;
     killmail.npc = killmailStream.npc;
     killmail.totalValue = killmailStream.totalValue;
-    killmail.fittedValue = killmailStream.fittedValue;
 
     // Create attackers
-    await Promise.all(killmailStream.attackers.map(attacker => {
+    await Promise.all(killmailStream.attackers.map((attacker) => {
+      if (!attacker.id) return null; // If NPC, ignore
       return this.killmailParticipantService.create(attacker, 'attacker')
       .then(participant => killmail.participants.push(participant));
     }));
@@ -47,15 +106,6 @@ export class KillmailService {
     .then(participant => killmail.participants.push(participant));
 
     (await this.repository).persist(killmail);
-  }
-
-  /**
-   * Get single Killmail
-   * @param id
-   * @return {Promise<Killmail>}
-   */
-  public async get(id: number): Promise<Killmail> {
-    return (await this.repository).findOneById(id);
   }
 
 }

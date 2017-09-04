@@ -1,10 +1,9 @@
-import { Entity, Column, PrimaryColumn, OneToMany, CreateDateColumn, ManyToMany } from 'typeorm';
+import { CreateDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interface';
 import { IGetCharacter, IGetCharacterPortrait } from '../external/esi/esi.interface';
 import { Post } from '../feed/post/post.entity';
 import { Comment } from '../comment/comment.entity';
 import { ICharacterResponse } from './character.interface';
-import { Killmail } from '../feed/killmail/killmail.entity';
 import { KillmailParticipant } from '../feed/killmail/participant/participant.entity';
 
 @Entity()
@@ -111,6 +110,6 @@ export class Character {
       shipsLost: this.shipsLost,
       soloKills: this.soloKills,
       soloLosses: this.soloLosses,
-    }
+    };
   }
 }

@@ -1,4 +1,4 @@
-import { Response, Controller, Get, Headers, Body, Query, Post, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, Headers, HttpStatus, Post, Query, Response } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { HttpException } from '@nestjs/core';
 
@@ -10,16 +10,19 @@ export class AuthenticationController {
 
   @Get('/sso')
   public async authenticate(@Response() res) {
-    res.redirect(this.authenticationService.authenticationRedirect)
+    res.redirect(this.authenticationService.authenticationRedirect);
   }
 
   @Get('/sso/verify')
   public async verify(@Response() res, @Headers('authorization') token: string) {
-    if (!token) throw new HttpException('Authorization header is required!',
+    if (!token) throw new HttpException(
+      'Authorization header is required!',
       HttpStatus.BAD_REQUEST);
 
-    const response = await this.authenticationService.verifyAuthentication(token.slice('Bearer '.length));
-    res.json(response)
+    const response = await this.authenticationService
+    .verifyAuthentication(token.slice('Bearer '.length));
+
+    res.json(response);
   }
 
   @Get('/sso/callback')

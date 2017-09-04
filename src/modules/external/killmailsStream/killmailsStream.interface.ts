@@ -6,24 +6,23 @@ declare module KillmailsStream {
     warId: number;
     locationId: number;
     totalValue: number;
-    fittedValue: number;
     points: number;
     npc: boolean;
-    attackers: Array<IKillmailStreamAttacker>;
+    attackers: IKillmailStreamAttacker[];
     victim: IKillmailStreamVictim;
   }
 
   interface IKillmailStreamAttacker {
     id?: number; // NPC's don't have ids
-    shipId: number;
+    shipId?: number;
     weaponId?: number; // Optional
     damageDone: number;
     finalBlow: boolean;
   }
 
   interface IKillmailStreamVictim {
-    id: number;
-    shipId: number;
+    id?: number;
+    shipId?: number;
     damageTaken: number;
     position: { x: number; y: number; z: number; };
   }
@@ -35,7 +34,7 @@ declare module KillmailsStream {
     readonly killmail: {
       readonly killID: number;
       readonly killTime: string;
-      readonly attackers: Array<{
+      readonly attackers: {
         readonly alliance: {
           readonly id: number;
           readonly href: string;
@@ -52,7 +51,7 @@ declare module KillmailsStream {
             readonly href: string;
           };
         };
-        readonly character: {
+        readonly character?: {
           readonly id: number;
           readonly href: string;
           readonly name: string;
@@ -60,7 +59,7 @@ declare module KillmailsStream {
             readonly href: string;
           };
         };
-        readonly shipType: {
+        readonly shipType?: {
           readonly id: number;
           readonly href: string;
           readonly name: string;
@@ -68,7 +67,7 @@ declare module KillmailsStream {
             readonly href: string;
           };
         };
-        readonly weaponType: {
+        readonly weaponType?: {
           readonly id: number;
           readonly href: string;
           readonly name: string;
@@ -79,7 +78,7 @@ declare module KillmailsStream {
         readonly damageDone: number;
         readonly securityStatus: number;
         readonly finalBlow: boolean;
-      }>;
+      }[];
       readonly attackersCount: number;
       readonly victim: {
         readonly damageTaken: number;
@@ -107,7 +106,7 @@ declare module KillmailsStream {
             readonly href: string;
           };
         };
-        readonly shipType: {
+        readonly shipType?: {
           readonly id: number;
           readonly href: string;
           readonly name: string;
@@ -120,7 +119,7 @@ declare module KillmailsStream {
           readonly y: number;
           readonly z: number;
         }
-        readonly items: Array<{
+        readonly items: {
           readonly singleton: number;
           readonly itemType: {
             readonly href: string;
@@ -132,13 +131,13 @@ declare module KillmailsStream {
           };
           readonly quantityDestroyed: number;
           readonly flag: number;
-        }>
+        }[]
       };
       readonly war: {
         readonly id: number;
         readonly href: string;
       }
-    }
+    };
     readonly zkb: {
       readonly hash: string;
       readonly locationID: number;
@@ -147,7 +146,7 @@ declare module KillmailsStream {
       readonly points: number;
       readonly npc?: boolean;
       readonly href: string;
-    }
+    };
 
   }
 }

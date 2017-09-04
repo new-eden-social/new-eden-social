@@ -5,7 +5,8 @@ import {
   IAllianceName,
   ICharacterName,
   ICorporationName,
-  IGetCharacter, IGetCharacterPortrait,
+  IGetCharacter,
+  IGetCharacterPortrait,
   ISearch,
 } from './esi.interface';
 import { Character } from '../../character/character.entity';
@@ -38,7 +39,7 @@ export class ESIService {
   private async request<T>(config: AxiosRequestConfig): Promise<T> {
     const hash = await Utils.hash(config);
 
-    if (await this.cacheService.exsists(hash)) {
+    if (await this.cacheService.exists(hash)) {
       return this.cacheService.fetch<T>(hash);
     }
 
@@ -49,9 +50,8 @@ export class ESIService {
       await this.cacheService.store(hash, response.data, cacheTime);
 
       return response.data;
-    }
-    catch (err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     }
 
   }

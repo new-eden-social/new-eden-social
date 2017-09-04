@@ -9,9 +9,11 @@ import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
 @Component()
 export class CharactersService implements IService<Character> {
 
-  constructor(private databaseService: DatabaseService,
-              private esiService: ESIService,
-              private zkillboardService: ZKillboardService) {
+  constructor(
+    private databaseService: DatabaseService,
+    private esiService: ESIService,
+    private zkillboardService: ZKillboardService,
+  ) {
   }
 
   private get repository(): Promise<Repository<Character>> {
@@ -35,7 +37,7 @@ export class CharactersService implements IService<Character> {
       await (await this.repository).persist(character);
     }
 
-    return character
+    return character;
   }
 
   /**
