@@ -5,12 +5,12 @@
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
-    "start": "nodemon",
+    "start:importer": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/importer.ts",
+    "start:api": "nodemon",
     "seed": "node seed",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
     "test": "nyc --require ts-node/register mocha src/**/*.spec.ts --reporter spec",
-    "start:prod": "node dist/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "nyc": {
