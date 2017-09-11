@@ -1,6 +1,5 @@
 import { Component } from '@nestjs/common';
 import { RedisService } from '../redis/redis.service';
-import { createHash } from 'crypto';
 
 @Component()
 export class CacheService {
@@ -30,7 +29,7 @@ export class CacheService {
    * @param key
    * @return {Promise<boolean>}
    */
-  public async exsists(key: string): Promise<boolean> {
+  public async exists(key: string): Promise<boolean> {
     return await (await  this.redisService.client).exists(this.formatKey(key));
   }
 

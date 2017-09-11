@@ -1,5 +1,5 @@
 import { Component } from '@nestjs/common';
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, { AxiosInstance } from 'axios';
 import { IAuthenticationResponse, IAuthenticationVerify } from './sso.interface';
 import { CacheService } from '../../cache/cache.service';
 import * as moment from 'moment';
@@ -44,7 +44,7 @@ export class SSOService {
       + '?response_type=code'
       + `&redirect_uri=${this.authenticationRedirect}`
       + `&client_id=${this.clientId}`
-      + `&scope=${this.scope}`
+      + `&scope=${this.scope}`;
     // TODO + `&state=someRandomThingThatWeCanVerify
   }
 
@@ -54,7 +54,10 @@ export class SSOService {
    * @param code
    * @return {Promise<IAuthenticationResponse>}
    */
-  public async getAuthenticationToken(state: string, code: string): Promise<IAuthenticationResponse> {
+  public async getAuthenticationToken(
+    state: string,
+    code: string,
+  ): Promise<IAuthenticationResponse> {
     const response = await this.client.request({
       url: 'token/',
       method: 'POST',
@@ -68,7 +71,7 @@ export class SSOService {
       },
     });
 
-    return response.data
+    return response.data;
   }
 
   /**
@@ -90,7 +93,7 @@ export class SSOService {
       },
     });
 
-    return response.data
+    return response.data;
   }
 
   /**
@@ -101,7 +104,7 @@ export class SSOService {
   public async verifyAuthentication(token: string): Promise<IAuthenticationVerify> {
 
     // Check in cache if we have response already
-    if (await this.cacheService.exsists(token)) {
+    if (await this.cacheService.exists(token)) {
       return this.cacheService.fetch<IAuthenticationVerify>(token);
     }
 
@@ -109,7 +112,7 @@ export class SSOService {
       const response = await this.client.request({
         url: 'verify/',
         method: 'GET',
-        headers: { Authorization: `Bearer ${token}`, },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       // Get expiration date
@@ -118,15 +121,14 @@ export class SSOService {
       // Store response data to cache
       await this.cacheService.store(token, response.data, expiresIn);
 
-      return response.data
-    }
-    catch (err) {
+      return response.data;
+    } catch (err) {
       // Check if we caught axios 400 error
       if (err.response && err.response.status === 400) {
         // TODO: Should we rather throw TokenInvalidException() ?
-        throw new TokenExpiredException()
+        throw new TokenExpiredException();
       }
-      else throw err
+      else throw err;
     }
   }
 

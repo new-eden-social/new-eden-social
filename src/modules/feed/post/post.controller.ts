@@ -9,13 +9,6 @@ export class PostController {
   constructor(private postService: PostService) {
   }
 
-  @Get('')
-  public async getAll(@Response() res) {
-    const posts = await this.postService.all();
-
-    res.status(200).json(posts.map(post => post.response))
-  }
-
   @Get('/:id')
   public async search(@Response() res, @Param('id') postId) {
     const post = await this.postService.get(postId);

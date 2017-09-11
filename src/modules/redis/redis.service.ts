@@ -1,6 +1,5 @@
 import { Component } from '@nestjs/common';
 import { RedisConfig } from './redis.config';
-import { Redis } from 'ioredis';
 import * as IORedis from 'ioredis';
 
 function delay(milliseconds: number, count: number): Promise<number> {
@@ -19,7 +18,7 @@ export class RedisService {
   /**
    * A Connection reference which is reused by all consumers of the redis service
    */
-  private connection: Redis;
+  private connection: IORedis.Redis;
 
   private pending: boolean;
 
@@ -31,13 +30,21 @@ export class RedisService {
   }
 
   /**
-   * An async getter for the Connection which creates the connection if needed.
-   * @returns {Promise<Redis>}
+   * Get redis client
+   * @return {Promise<IORedis.Redis>}
    */
-  private async getConnection(): Promise<Redis> {
+  public get client(): Promise<IORedis.Redis> {
+    return this.getConnection();
+  }
+
+  /**
+   * An async getter for the Connection which creates the connection if needed.
+   * @returns {Promise<IORedis.Redis>}
+   */
+  private async getConnection(): Promise<IORedis.Redis> {
 
     if (this.pending) {
-      // Need to wait untill previous call is resolved, otherwise will throw transaction error
+      // Need to wait until previous call is resolved, otherwise will throw transaction error
       for (let i = 0; i < 500; i += 1) {
         if (!this.pending) {
           break;
@@ -54,13 +61,5 @@ export class RedisService {
     this.pending = false;
 
     return this.connection;
-  }
-
-  /**
-   * Get redis client
-   * @return {Promise<Redis>}
-   */
-  public get client(): Promise<Redis> {
-    return this.getConnection();
   }
 }

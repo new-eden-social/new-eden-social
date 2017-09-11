@@ -8,12 +8,12 @@ declare module SSO {
   }
 
   interface IAuthenticationVerify {
-    readonly CharacterID: number,
-    readonly CharacterName: string,
-    readonly ExpiresOn: Date,
-    readonly Scopes: string,
-    readonly TokenType: string,
-    readonly CharacterOwnerHash: string
+    readonly CharacterID: number;
+    readonly CharacterName: string;
+    readonly ExpiresOn: Date;
+    readonly Scopes: string;
+    readonly TokenType: string;
+    readonly CharacterOwnerHash: string;
   }
 
 }

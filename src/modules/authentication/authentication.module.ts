@@ -21,6 +21,6 @@ export class AuthenticationModule {
   configure(consumer: MiddlewaresConsumer) {
     consumer.apply(AuthMiddleware).forRoutes({
       path: 'authentication/sso/verify', method: RequestMethod.GET,
-    })
+    });
   }
 }
