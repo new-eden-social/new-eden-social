@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ImporterService } from './importer.service';
+import { UpdaterService } from './updater.service';
 import { CharactersModule } from '../character/character.module';
 import { DatabaseModule } from '../database/database.module';
 
@@ -9,8 +9,8 @@ import { DatabaseModule } from '../database/database.module';
     DatabaseModule,
   ],
   components: [
-    ImporterService,
+    UpdaterService,
   ],
 })
-export class ImporterModule {
+export class UpdaterModule {
 }

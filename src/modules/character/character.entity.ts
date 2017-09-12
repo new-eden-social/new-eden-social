@@ -1,9 +1,9 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interface';
-import { IGetCharacter, IGetCharacterPortrait } from '../external/esi/esi.interface';
+import { IGetCharacter } from '../external/esi/esi.interface';
 import { Post } from '../feed/post/post.entity';
 import { Comment } from '../comment/comment.entity';
-import { ICharacterResponse } from './character.interface';
+import { ICharacterPortrait, ICharacterResponse } from './character.interface';
 import { KillmailParticipant } from '../feed/killmail/participant/participant.entity';
 
 @Entity()
@@ -25,6 +25,9 @@ export class Character {
   createdAt: Date;
 
   @Column()
+  updatedAt: Date = new Date();
+
+  @Column()
   name: string;
 
   @Column('text')
@@ -42,7 +45,7 @@ export class Character {
   @Column()
   ancestryId: number;
 
-  @Column()
+  @Column('real')
   securityStatus: number;
   /**
    * Provided by zKillboard (Live, updated on the go)
@@ -59,7 +62,7 @@ export class Character {
     this.securityStatus = char.security_status;
   }
 
-  get portrait(): IGetCharacterPortrait {
+  get portrait(): ICharacterPortrait {
     return {
       px64x64: `https://imageserver.eveonline.com/Character/${this.id}_64.jpg`,
       px128x128: `https://imageserver.eveonline.com/Character/${this.id}_128.jpg`,

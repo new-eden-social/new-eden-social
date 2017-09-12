@@ -5,7 +5,7 @@
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
-    "start:importer": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/importer.ts",
+    "start:updater": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/updater.ts",
     "start:api": "nodemon",
     "seed": "node seed",
     "lint": "tslint -c tslint.json -p tsconfig.json",
@@ -51,6 +51,7 @@
     "ioredis": "^3.1.1",
     "moment": "^2.18.1",
     "pg": "^7.0.0",
+    "pg-query-stream": "^1.1.1",
     "redis": "^2.7.1",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.4.0",
