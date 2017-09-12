@@ -47,10 +47,6 @@ export class Character {
 
   @Column('real')
   securityStatus: number;
-  /**
-   * Provided by zKillboard (Live, updated on the go)
-   */
-  iskDestroyed: number;
 
   public populateESI(char: IGetCharacter) {
     this.name = char.name;
@@ -70,6 +66,11 @@ export class Character {
       px512x512: `https://imageserver.eveonline.com/Character/${this.id}_512.jpg`,
     };
   }
+
+  /**
+   * Provided by zKillboard (Live, updated on the go)
+   */
+  iskDestroyed: number;
   iskLost: number;
   pointsDestroyed: number;
   pointsLost: number;

@@ -3,17 +3,10 @@ import { HttpException } from '@nestjs/core';
 import { validate } from 'class-validator';
 
 /**
- * Example from: https://docs.nestjs.com/quick-start/pipes.html
+ * Example from: http://www.docs.nestjs.com/pipes
  */
 @Pipe()
-export class ValidatorPipe implements PipeTransform {
-
-  /**
-   * Validates provided data against Class
-   * @param value
-   * @param metadata
-   * @return {Promise<any>}
-   */
+export class ValidatorPipe implements PipeTransform<any> {
   public async transform(value, metadata: ArgumentMetadata) {
     const { metatype } = metadata;
     if (!this.toValidate(metatype)) {

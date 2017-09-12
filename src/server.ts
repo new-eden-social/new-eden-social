@@ -8,16 +8,19 @@ import { ValidatorPipe } from './pipes/validator.pipe';
 import 'reflect-metadata';
 // Import config
 import { config } from 'dotenv';
-config();
 
-const instance = express();
-instance.use(bodyParser.json());
-instance.use(cors());
+async function bootstrap() {
+  config();
 
-NestFactory.create(ApplicationModule, instance)
-.then((app) => {
+  const instance = express();
+  instance.use(bodyParser.json());
+  instance.use(cors());
+
+  const app = await NestFactory.create(ApplicationModule, instance);
   app.useGlobalPipes(new ValidatorPipe());
-  app.listen(parseInt(process.env.PORT), () =>
-    console.log(`Application is listening on port ${process.env.PORT}.`));
-});
+  await app.listen(parseInt(process.env.PORT));
 
+  console.log(`Application is listening on port ${process.env.PORT}.`);
+}
+
+bootstrap();

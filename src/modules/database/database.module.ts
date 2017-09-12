@@ -1,8 +1,7 @@
-import { Module, Shared } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { DatabaseService } from './database.service';
 import { DatabaseConfig } from './database.config';
 
-@Shared()
 @Module({
   components: [
     DatabaseService,

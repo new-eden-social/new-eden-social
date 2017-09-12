@@ -6,8 +6,7 @@ import { Character } from '../character/character.entity';
 @Component()
 export class UpdaterService {
 
-  // 10min timeout
-  private readonly INTERVAL = 60000;
+  private readonly LOOP_INTERVAL = 60000; // 10min timeout
   private readonly UPDATE_INTERVAL = '1 day';
 
   constructor(
@@ -15,7 +14,7 @@ export class UpdaterService {
     private characterService: CharactersService,
   ) {
     this.loop();
-    setInterval(this.loop.bind(this), this.INTERVAL);
+    setInterval(this.loop.bind(this), this.LOOP_INTERVAL);
   }
 
   /**
