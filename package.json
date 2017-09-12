@@ -5,12 +5,12 @@
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
-    "start": "nodemon",
+    "start:updater": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/updater.ts",
+    "start:api": "nodemon",
     "seed": "node seed",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
     "test": "nyc --require ts-node/register mocha src/**/*.spec.ts --reporter spec",
-    "start:prod": "node dist/server.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "nyc": {
@@ -35,11 +35,11 @@
     "instrument": true
   },
   "dependencies": {
-    "@nestjs/common": "*",
-    "@nestjs/core": "*",
-    "@nestjs/microservices": "*",
-    "@nestjs/testing": "*",
-    "@nestjs/websockets": "*",
+    "@nestjs/common": "^4.0.0",
+    "@nestjs/core": "^4.0.0",
+    "@nestjs/microservices": "^4.0.0",
+    "@nestjs/testing": "^4.0.0",
+    "@nestjs/websockets": "^4.0.0",
     "@types/bluebird": "^3.5.8",
     "@types/ws": "^3.0.2",
     "axios": "^0.16.2",
@@ -51,6 +51,7 @@
     "ioredis": "^3.1.1",
     "moment": "^2.18.1",
     "pg": "^7.0.0",
+    "pg-query-stream": "^1.1.1",
     "redis": "^2.7.1",
     "reflect-metadata": "^0.1.10",
     "rxjs": "^5.4.0",

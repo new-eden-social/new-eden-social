@@ -1,7 +1,6 @@
-import { Module, Shared } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { KillmailsStreamService } from './killmailsStream.service';
 
-@Shared()
 @Module({
   modules: [],
   components: [

@@ -1,9 +1,9 @@
-import { CreateDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interface';
-import { IGetCharacter, IGetCharacterPortrait } from '../external/esi/esi.interface';
+import { IGetCharacter } from '../external/esi/esi.interface';
 import { Post } from '../feed/post/post.entity';
 import { Comment } from '../comment/comment.entity';
-import { ICharacterResponse } from './character.interface';
+import { ICharacterPortrait, ICharacterResponse } from './character.interface';
 import { KillmailParticipant } from '../feed/killmail/participant/participant.entity';
 
 @Entity()
@@ -24,15 +24,28 @@ export class Character {
   @CreateDateColumn()
   createdAt: Date;
 
-  /**
-   * Provided by ESI
-   */
+  @Column()
+  updatedAt: Date = new Date();
+
+  @Column()
   name: string;
+
+  @Column('text')
   description: string;
+
+  @Column()
   gender: string;
+
+  @Column()
   raceId: number;
+
+  @Column()
   bloodlineId: number;
+
+  @Column()
   ancestryId: number;
+
+  @Column('real')
   securityStatus: number;
 
   public populateESI(char: IGetCharacter) {
@@ -45,34 +58,24 @@ export class Character {
     this.securityStatus = char.security_status;
   }
 
-  portrait: {
-    px64x64: string;
-    px128x128: string;
-    px256x256: string;
-    px512x512: string;
-  };
-
-  public populateESIPortrait(portrait: IGetCharacterPortrait) {
-    this.portrait = {
-      px64x64: portrait.px64x64,
-      px128x128: portrait.px128x128,
-      px256x256: portrait.px256x256,
-      px512x512: portrait.px512x512,
+  get portrait(): ICharacterPortrait {
+    return {
+      px64x64: `https://imageserver.eveonline.com/Character/${this.id}_64.jpg`,
+      px128x128: `https://imageserver.eveonline.com/Character/${this.id}_128.jpg`,
+      px256x256: `https://imageserver.eveonline.com/Character/${this.id}_256.jpg`,
+      px512x512: `https://imageserver.eveonline.com/Character/${this.id}_512.jpg`,
     };
   }
 
   /**
-   * Provided by zKillboard
+   * Provided by zKillboard (Live, updated on the go)
    */
   iskDestroyed: number;
   iskLost: number;
-
   pointsDestroyed: number;
   pointsLost: number;
-
   shipsDestroyed: number;
   shipsLost: number;
-
   soloKills: number;
   soloLosses: number;
 
