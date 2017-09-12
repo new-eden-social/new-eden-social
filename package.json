@@ -6,7 +6,7 @@
   "license": "GPL-3.0",
   "scripts": {
     "start:updater": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/updater.ts",
-    "start:api": "nodemon",
+    "start": "nodemon",
     "seed": "node seed",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
