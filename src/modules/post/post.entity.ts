@@ -8,6 +8,16 @@ import { Killmail } from '../killmail/killmail.entity';
 @Entity()
 export class Post {
 
+  constructor(postData?: ICreatePostRequest) {
+    this.id = uuid();
+
+    if (postData) {
+      this.content = postData.content;
+      this.type = postData.type;
+      this.locationId = postData.locationId;
+    }
+  }
+
   @Column('text', { nullable: true })
   content: string;
 
@@ -29,16 +39,6 @@ export class Post {
 
   @OneToMany(type => Comment, comment => comment.post)
   comments: Comment[] = [];
-
-  constructor(postData?: ICreatePostRequest) {
-    this.id = uuid();
-
-    if (postData) {
-      this.content = postData.content;
-      this.type = postData.type;
-      this.locationId = postData.locationId;
-    }
-  }
 
   /**
    * Get Response

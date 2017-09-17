@@ -18,7 +18,7 @@ export class KillmailService {
     private killmailParticipantService: KillmailParticipantService,
     private postService: PostService,
   ) {
-    this.killmailsStreamService.subscribe(this.create.bind(this));
+    // this.killmailsStreamService.subscribe(this.create.bind(this));
   }
 
   /**

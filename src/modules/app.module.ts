@@ -3,7 +3,6 @@ import { SearchModule } from './search/search.module';
 import { CharactersModule } from './character/character.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { PostModule } from './post/post.module';
-import { FeedModule } from './feed/feed.module';
 import { KillmailModule } from './killmail/killmail.module';
 
 @Module({
@@ -12,7 +11,6 @@ import { KillmailModule } from './killmail/killmail.module';
     CharactersModule,
     AuthenticationModule,
     PostModule,
-    FeedModule,
     // TODO: Should be moved to microservice
     KillmailModule,
   ],

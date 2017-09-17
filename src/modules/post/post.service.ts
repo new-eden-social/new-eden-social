@@ -1,7 +1,7 @@
 import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
-import { ICreatePostRequest, IPostResponse } from './post.interface';
+import { ICreatePostRequest } from './post.interface';
 import { Character } from '../character/character.entity';
 import { Killmail } from '../killmail/killmail.entity';
 import { POST_REPOSITORY_TOKEN, TYPES } from './post.constants';
@@ -36,22 +36,40 @@ export class PostService {
     return this.postRepository.save(post);
   }
 
-  public async getCharacterPosts(character: Character): Promise<IPostResponse[]> {
+  /**
+   * Get character posts
+   * @param {Character} character
+   * @param {Number} limit
+   * @param {Number} page
+   * @return {Promise<Post[]>}
+   */
+  public async getCharacterPosts(
+    character: Character,
+    limit = 10,
+    page = 0,
+  ): Promise<Post[]> {
     return this.postRepository
     .createQueryBuilder('post')
+    .leftJoinAndSelect('post.character', 'author')
     .leftJoinAndSelect('post.killmail', 'killmail')
-    .leftJoinAndSelect(
-      'killmail.participants',
-      'killmail.participants')
-    .leftJoinAndSelect(
-      Character,
-      'killmail.participants.character',
-      '"killmail.participants"."characterId" = "killmail.participants.character".id')
+    .leftJoinAndSelect('killmail.participants', 'participant')
+    .leftJoinAndSelect('participant.character', 'character')
+    .where(
+      'author.id = :characterId OR character.id = :characterId',
+      { characterId: character.id })
     .orderBy({ 'post."createdAt"': 'DESC' })
+    .skip(limit * page)
+    // FIXME: .take(limit)
     .getMany();
   }
 
-  public async createKillmailPost(killmail: Killmail, finalBlow: Character) {
+  /**
+   * Create killmail post
+   * @param {Killmail} killmail
+   * @param {Character} finalBlow
+   * @return {Promise<Post>}
+   */
+  public async createKillmailPost(killmail: Killmail, finalBlow: Character): Promise<Post> {
     const post = new Post();
     post.type = TYPES.KILLMAIL;
     post.killmail = killmail;
