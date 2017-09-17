@@ -1,22 +1,18 @@
-import { Component } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service';
+import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Character } from './character.entity';
 import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
 import { ESIService } from '../external/esi/esi.service';
+import { CHARACTER_REPOSITORY_TOKEN } from './character.constants';
 
 @Component()
 export class CharactersService {
 
   constructor(
-    private databaseService: DatabaseService,
+    @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,
     private zkillboardService: ZKillboardService,
     private esiService: ESIService,
   ) {
-  }
-
-  private get repository(): Promise<Repository<Character>> {
-    return this.databaseService.getRepository(Character);
   }
 
   /**
@@ -34,12 +30,17 @@ export class CharactersService {
     return character;
   }
 
+  /**
+   * Update character by id
+   * @param {number} id
+   * @return {Promise<Character>}
+   */
   public async update(id: number): Promise<Character> {
     const character = await this.findCharacterById(id);
     character.populateESI(await this.esiService.getCharacter(id));
     character.updatedAt = new Date();
 
-    return (await this.repository).persist(character);
+    return this.characterRepository.save(character);
   }
 
   /**
@@ -48,7 +49,7 @@ export class CharactersService {
    * @return {Promise<Character>}
    */
   private async findCharacterById(id: number) {
-    let character = await (await this.repository).findOneById(id);
+    let character = await this.characterRepository.findOneById(id);
 
     // If character not in DB, load it from ESI
     if (!character) {
@@ -56,7 +57,7 @@ export class CharactersService {
       character.id = id;
       character.populateESI(await this.esiService.getCharacter(id));
 
-      await (await this.repository).persist(character);
+      await this.characterRepository.save(character);
     }
 
     return character;

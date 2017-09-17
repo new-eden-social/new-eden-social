@@ -1,6 +1,5 @@
-import { Component } from '@nestjs/common';
+import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { DatabaseService } from '../../database/database.service';
 import { KillmailParticipant } from './participant.entity';
 import {
   IKillmailStreamAttacker,
@@ -9,18 +8,16 @@ import {
 } from '../../external/killmailsStream/killmailsStream.interface';
 import { CharactersService } from '../../character/character.service';
 import { IParticipantResponse } from './participant.interface';
+import { KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN } from './participant.constants';
 
 @Component()
 export class KillmailParticipantService {
 
   constructor(
-    private databaseService: DatabaseService,
+    @Inject(KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN)
+    private killmailParticipantRepository: Repository<KillmailParticipant>,
     private charactersService: CharactersService,
   ) {
-  }
-
-  private get repository(): Promise<Repository<KillmailParticipant>> {
-    return this.databaseService.getRepository(KillmailParticipant);
   }
 
   /**
@@ -47,7 +44,7 @@ export class KillmailParticipantService {
     participant.character = await this.charactersService.get(data.id);
     participant.shipId = data.shipId;
 
-    return (await this.repository).persist(participant);
+    return this.killmailParticipantRepository.save(participant);
   }
 
   /**

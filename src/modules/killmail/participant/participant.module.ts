@@ -1,7 +1,8 @@
-import { MiddlewaresConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../../database/database.module';
 import { CharactersModule } from '../../character/character.module';
 import { KillmailParticipantService } from './participant.service';
+import { killmailParticipantProviders } from './participant.providers';
 
 @Module({
   modules: [
@@ -10,6 +11,7 @@ import { KillmailParticipantService } from './participant.service';
   ],
   controllers: [],
   components: [
+    ...killmailParticipantProviders,
     KillmailParticipantService,
   ],
   exports: [

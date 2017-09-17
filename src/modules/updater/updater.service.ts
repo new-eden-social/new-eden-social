@@ -1,7 +1,8 @@
-import { Component } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service';
+import { Component, Inject } from '@nestjs/common';
 import { CharactersService } from '../character/character.service';
 import { Character } from '../character/character.entity';
+import { CHARACTER_REPOSITORY_TOKEN } from '../character/character.constants';
+import { Repository } from 'typeorm';
 
 @Component()
 export class UpdaterService {
@@ -10,7 +11,7 @@ export class UpdaterService {
   private readonly UPDATE_INTERVAL = '1 day';
 
   constructor(
-    private databaseService: DatabaseService,
+    @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,
     private characterService: CharactersService,
   ) {
     this.loop();
@@ -22,7 +23,7 @@ export class UpdaterService {
    * @return {Promise<void>}
    */
   private async updateCharacters(): Promise<void> {
-    const idsStream = await (await this.databaseService.getRepository(Character))
+    const idsStream = await this.characterRepository
     .createQueryBuilder('character')
     .select('id')
     .where(

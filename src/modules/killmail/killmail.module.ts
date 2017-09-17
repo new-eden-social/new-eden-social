@@ -4,6 +4,7 @@ import { KillmailsStreamModule } from '../external/killmailsStream/killmailsStre
 import { KillmailService } from './killmail.service';
 import { KillmailParticipantModule } from './participant/participant.module';
 import { PostModule } from '../post/post.module';
+import { killmailProviders } from './killmail.providers';
 
 @Module({
   modules: [
@@ -14,6 +15,7 @@ import { PostModule } from '../post/post.module';
   ],
   controllers: [],
   components: [
+    ...killmailProviders,
     KillmailService,
   ],
   exports: [

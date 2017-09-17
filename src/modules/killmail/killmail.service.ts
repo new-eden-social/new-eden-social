@@ -1,5 +1,4 @@
-import { Component } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service';
+import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Killmail } from './killmail.entity';
 import { KillmailsStreamService } from '../external/killmailsStream/killmailsStream.service';
@@ -8,21 +7,18 @@ import { KillmailParticipantService } from './participant/participant.service';
 import { IKillmailResponse } from './killmail.interface';
 import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
 import { PostService } from '../post/post.service';
+import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
 
 @Component()
 export class KillmailService {
 
   constructor(
-    private databaseService: DatabaseService,
+    @Inject(KILLMAIL_REPOSITORY_TOKEN) private killmailRepository: Repository<Killmail>,
     private killmailsStreamService: KillmailsStreamService,
     private killmailParticipantService: KillmailParticipantService,
     private postService: PostService,
   ) {
     this.killmailsStreamService.subscribe(this.create.bind(this));
-  }
-
-  private get repository(): Promise<Repository<Killmail>> {
-    return this.databaseService.getRepository(Killmail);
   }
 
   /**
@@ -84,7 +80,7 @@ export class KillmailService {
     await this.killmailParticipantService.create(killmailStream.victim, 'victim')
     .then(participant => killmail.participants.push(participant));
 
-    await (await this.repository).persist(killmail);
+    await this.killmailRepository.save(killmail);
 
     // FIXME: Can it happen that finalBlow is NPC or Structure?
     const finalBlow = killmail.participants.find(participant => participant.finalBlow);

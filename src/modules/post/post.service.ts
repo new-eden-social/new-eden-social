@@ -1,20 +1,17 @@
-import { Component } from '@nestjs/common';
-import { DatabaseService } from '../database/database.service';
+import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
 import { ICreatePostRequest, IPostResponse } from './post.interface';
 import { Character } from '../character/character.entity';
 import { Killmail } from '../killmail/killmail.entity';
-import { TYPES } from './post.constants';
+import { POST_REPOSITORY_TOKEN, TYPES } from './post.constants';
 
 @Component()
 export class PostService {
 
-  constructor(private databaseService: DatabaseService) {
-  }
-
-  private get repository(): Promise<Repository<Post>> {
-    return this.databaseService.getRepository(Post);
+  constructor(
+    @Inject(POST_REPOSITORY_TOKEN) private postRepository: Repository<Post>,
+  ) {
   }
 
   /**
@@ -23,7 +20,7 @@ export class PostService {
    * @return {Promise<Post>}
    */
   public async get(id: number): Promise<Post> {
-    return (await this.repository).findOneById(id);
+    return this.postRepository.findOneById(id);
   }
 
   /**
@@ -36,11 +33,11 @@ export class PostService {
     const post = new Post(postData);
     post.character = character;
 
-    return (await this.repository).persist(post);
+    return this.postRepository.save(post);
   }
 
   public async getCharacterPosts(character: Character): Promise<IPostResponse[]> {
-    return (await this.repository)
+    return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect(
@@ -62,6 +59,6 @@ export class PostService {
     post.locationId = killmail.locationId;
     post.createdAt = killmail.createdAt;
 
-    return (await this.repository).persist(post);
+    return this.postRepository.persist(post);
   }
 }

@@ -5,6 +5,7 @@ import { DatabaseModule } from '../database/database.module';
 import { AuthMiddleware } from '../authentication/authentication.middleware';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { CharactersModule } from '../character/character.module';
+import { postProviders } from './post.providers';
 
 @Module({
   modules: [
@@ -16,6 +17,7 @@ import { CharactersModule } from '../character/character.module';
     PostController,
   ],
   components: [
+    ...postProviders,
     PostService,
   ],
   exports: [
