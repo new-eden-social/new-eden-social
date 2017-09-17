@@ -1,13 +1,13 @@
 import { Component } from '@nestjs/common';
-import { IFeed } from './feed.interface';
 import { Character } from '../character/character.entity';
-import { KillmailService } from './killmail/killmail.service';
+import { PostService } from '../post/post.service';
+import { IPostResponse } from '../post/post.interface';
 
 @Component()
 export class FeedService {
 
   constructor(
-    private killmailService: KillmailService,
+    private postService: PostService,
   ) {
   }
 
@@ -16,16 +16,14 @@ export class FeedService {
    * @param character
    * @param page
    * @param limit
-   * @return {Promise<IFeed[]>}
+   * @return {Promise<IPostResponse[]>}
    */
   public async getCharacterFeed(
     character: Character,
     page: number = 0,
     limit: number = 10,
-  ): Promise<IFeed[]> {
-    const rawKillmails = await this.killmailService.getKillmailsForCharacter(character);
-
-    return Promise.all(rawKillmails.map(raw => this.killmailService.formatKillmailResponse(raw)));
+  ): Promise<IPostResponse[]> {
+    return this.postService.getCharacterPosts(character);
   }
 
 }

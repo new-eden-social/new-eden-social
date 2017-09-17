@@ -1,13 +1,13 @@
 import { Component } from '@nestjs/common';
-import { DatabaseService } from '../../database/database.service';
+import { DatabaseService } from '../database/database.service';
 import { Repository } from 'typeorm';
 import { Killmail } from './killmail.entity';
-import { KillmailsStreamService } from '../../external/killmailsStream/killmailsStream.service';
-import { IKillmailStream } from '../../external/killmailsStream/killmailsStream.interface';
+import { KillmailsStreamService } from '../external/killmailsStream/killmailsStream.service';
+import { IKillmailStream } from '../external/killmailsStream/killmailsStream.interface';
 import { KillmailParticipantService } from './participant/participant.service';
-import { Character } from '../../character/character.entity';
 import { IKillmailResponse } from './killmail.interface';
-import { ZKillboardService } from '../../external/zkillboard/zkillboard.service';
+import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
+import { PostService } from '../post/post.service';
 
 @Component()
 export class KillmailService {
@@ -16,6 +16,7 @@ export class KillmailService {
     private databaseService: DatabaseService,
     private killmailsStreamService: KillmailsStreamService,
     private killmailParticipantService: KillmailParticipantService,
+    private postService: PostService,
   ) {
     this.killmailsStreamService.subscribe(this.create.bind(this));
   }
@@ -41,7 +42,6 @@ export class KillmailService {
     return {
       victim,
       attackers,
-      type: 'killmail',
       id: killmail.id,
       url: ZKillboardService.createKillUrl(killmail.id),
       locationId: killmail.locationId,
@@ -50,27 +50,6 @@ export class KillmailService {
       warId: killmail.warId,
       createdAt: killmail.createdAt,
     };
-  }
-
-  /**
-   *
-   * @param {Character} character
-   * @return {Promise<Killmail[]>}
-   */
-  public async getKillmailsForCharacter(character: Character): Promise<Killmail[]> {
-
-    return (await this.repository).createQueryBuilder('killmail')
-    .leftJoinAndSelect('killmail.participants', 'participants')
-    .leftJoinAndSelect('participants.character', 'participants.character')
-    .where(`killmail.id IN (
-  SELECT killmail.id
-  FROM killmail
-    LEFT JOIN killmail_participant ON killmail.id = killmail_participant."killmailId"
-  WHERE killmail_participant."characterId" = :characterId
-)`)
-    .orderBy('killmail.createdAt')
-    .setParameters({ characterId: character.id })
-    .getMany();
   }
 
   /**
@@ -105,7 +84,12 @@ export class KillmailService {
     await this.killmailParticipantService.create(killmailStream.victim, 'victim')
     .then(participant => killmail.participants.push(participant));
 
-    (await this.repository).persist(killmail);
+    await (await this.repository).persist(killmail);
+
+    // FIXME: Can it happen that finalBlow is NPC or Structure?
+    const finalBlow = killmail.participants.find(participant => participant.finalBlow);
+
+    await this.postService.createKillmailPost(killmail, finalBlow.character);
   }
 
 }

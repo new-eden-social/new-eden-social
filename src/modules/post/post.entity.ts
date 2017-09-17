@@ -1,27 +1,25 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
-import { Character } from '../../character/character.entity';
-import { Comment } from '../../comment/comment.entity';
+import { Character } from '../character/character.entity';
+import { Comment } from '../comment/comment.entity';
 import { v4 as uuid } from 'uuid';
 import { ICreatePostRequest, IPostResponse } from './post.interface';
+import { Killmail } from '../killmail/killmail.entity';
 
 @Entity()
 export class Post {
 
-  constructor() {
-    this.id = uuid();
-  }
+  @Column('text', { nullable: true })
+  content: string;
 
   @PrimaryColumn('uuid')
   id: string;
-
-  @Column('text')
-  content: string;
+  @Column({ nullable: true })
+  locationId: number;
 
   @Column()
   type: string;
-
-  @Column()
-  locationId: number;
+  @ManyToOne(type => Killmail, killmail => killmail.posts)
+  killmail: Killmail;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -32,14 +30,14 @@ export class Post {
   @OneToMany(type => Comment, comment => comment.post)
   comments: Comment[] = [];
 
-  /**
-   * Populate instance with PostData
-   * @param {ICreatePostRequest} postData
-   */
-  populateRequestData(postData: ICreatePostRequest) {
-    this.content = postData.content;
-    this.type = postData.type;
-    this.locationId = postData.locationId;
+  constructor(postData?: ICreatePostRequest) {
+    this.id = uuid();
+
+    if (postData) {
+      this.content = postData.content;
+      this.type = postData.type;
+      this.locationId = postData.locationId;
+    }
   }
 
   /**

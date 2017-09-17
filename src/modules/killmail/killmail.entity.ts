@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, OneToMany, PrimaryColumn } from 'typeorm';
-import { Comment } from '../../comment/comment.entity';
 import { KillmailParticipant } from './participant/participant.entity';
+import { Post } from '../post/post.entity';
 
 @Entity()
 export class Killmail {
@@ -27,8 +27,6 @@ export class Killmail {
   @OneToMany(type => KillmailParticipant, participant => participant.killmail)
   participants: KillmailParticipant[] = [];
 
-  @JoinTable()
-  @OneToMany(type => Comment, comment => comment.killmail)
-  comments: Comment[] = [];
-
+  @OneToMany(type => Post, post => post.killmail)
+  posts: Post[] = [];
 }

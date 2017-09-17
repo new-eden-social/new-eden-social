@@ -1,7 +1,6 @@
 import { IParticipantResponse } from './participant/participant.interface';
 
 export interface IKillmailResponse {
-  type: 'killmail';
   id: number;
   url: string;
   victim: IParticipantResponse;

@@ -1,13 +1,13 @@
 import { Component } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { DatabaseService } from '../../../database/database.service';
+import { DatabaseService } from '../../database/database.service';
 import { KillmailParticipant } from './participant.entity';
 import {
   IKillmailStreamAttacker,
   IKillmailStreamVictim,
   TKillmailStreamParticipant,
-} from '../../../external/killmailsStream/killmailsStream.interface';
-import { CharactersService } from '../../../character/character.service';
+} from '../../external/killmailsStream/killmailsStream.interface';
+import { CharactersService } from '../../character/character.service';
 import { IParticipantResponse } from './participant.interface';
 
 @Component()
@@ -50,6 +50,11 @@ export class KillmailParticipantService {
     return (await this.repository).persist(participant);
   }
 
+  /**
+   * Format Participant Response
+   * @param {KillmailParticipant} participant
+   * @return {Promise<IParticipantResponse>}
+   */
   public async formatParticipantResponse(
     participant: KillmailParticipant,
   ): Promise<IParticipantResponse> {

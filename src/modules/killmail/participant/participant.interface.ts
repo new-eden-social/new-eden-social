@@ -1,4 +1,4 @@
-import { ICharacterResponse } from '../../../character/character.interface';
+import { ICharacterResponse } from '../../character/character.interface';
 
 export interface IParticipantResponse {
   shipId?: number;

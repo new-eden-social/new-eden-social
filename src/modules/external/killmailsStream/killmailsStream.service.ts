@@ -51,7 +51,6 @@ export class KillmailsStreamService {
    * @return {KillmailsStream.IKillmailStream}
    */
   private formatRawKillmail(raw: IKillmailStreamRaw): IKillmailStream {
-    console.log(raw);
     return <IKillmailStream>{
       id: raw.killID,
       date: new Date(raw.killmail.killTime),

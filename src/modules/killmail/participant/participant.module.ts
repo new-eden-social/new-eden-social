@@ -1,6 +1,6 @@
-import { MiddlewaresConsumer, Module, RequestMethod, Shared } from '@nestjs/common';
-import { DatabaseModule } from '../../../database/database.module';
-import { CharactersModule } from '../../../character/character.module';
+import { MiddlewaresConsumer, Module } from '@nestjs/common';
+import { DatabaseModule } from '../../database/database.module';
+import { CharactersModule } from '../../character/character.module';
 import { KillmailParticipantService } from './participant.service';
 
 @Module({

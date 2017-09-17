@@ -1,6 +1,5 @@
-import { Response, Request, Param, Controller, Get, Post, Body, HttpStatus } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Post, Request, Response } from '@nestjs/common';
 import { PostService } from './post.service';
-import { Post as PostEntity } from './post.entity';
 import { ICreatePostRequest } from './post.interface';
 
 @Controller('posts')
@@ -10,7 +9,7 @@ export class PostController {
   }
 
   @Get('/:id')
-  public async search(@Response() res, @Param('id') postId) {
+  public async get(@Response() res, @Param('id') postId) {
     const post = await this.postService.get(postId);
 
     res.status(HttpStatus.OK).json(post.response);
