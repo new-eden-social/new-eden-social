@@ -23,4 +23,5 @@ async function bootstrap() {
   console.log(`Application is listening on port ${process.env.PORT}.`);
 }
 
-bootstrap();
+bootstrap()
+.catch(console.error);

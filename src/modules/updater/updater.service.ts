@@ -7,8 +7,9 @@ import { Repository } from 'typeorm';
 @Component()
 export class UpdaterService {
 
-  private readonly LOOP_INTERVAL = 60000; // 10min timeout
+  private readonly LOOP_INTERVAL = 60000; // 1min timeout
   private readonly UPDATE_INTERVAL = '1 day';
+  private readonly UPDATE_LIMIT = 100;
 
   constructor(
     @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,
@@ -26,13 +27,18 @@ export class UpdaterService {
     const idsStream = await this.characterRepository
     .createQueryBuilder('character')
     .select('id')
-    .where(
-      `"updatedAt" < (NOW() - interval :updateInterval)`,
-      { updateInterval: this.UPDATE_INTERVAL },
-    )
+    .where(`"updatedAt" < (NOW() - interval '${this.UPDATE_INTERVAL}')`)
+    .limit(this.UPDATE_LIMIT)
     .stream();
 
-    idsStream.on('data', ({ id }) => this.characterService.update(id));
+    idsStream.on('error', (err) => {
+      throw err;
+    });
+
+    idsStream.on('data', ({ id }) => {
+      this.characterService.get(id)
+      .then(character => this.characterService.update(character));
+    });
   }
 
   /**

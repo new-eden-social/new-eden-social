@@ -1,4 +1,4 @@
-import { Component } from '@nestjs/common';
+import { Component, HttpStatus } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { CacheService } from '../../cache/cache.service';
 import {
@@ -13,6 +13,7 @@ import { Character } from '../../character/character.entity';
 import { Corporation } from '../../corporation/corporation.entity';
 import { Alliance } from '../../alliance/alliance.entity';
 import { Utils } from '../../utils.static';
+import { ESIEntetyNotFoundException } from './esi.exceptions';
 
 @Component()
 export class ESIService {
@@ -51,7 +52,12 @@ export class ESIService {
 
       return response.data;
     } catch (err) {
-      console.log(err);
+      /**
+       * Transform underlying request exceptions to ESI Exceptions
+       */
+      if (err.response && err.response.status === HttpStatus.NOT_FOUND)
+        throw new ESIEntetyNotFoundException();
+      else throw err;
     }
 
   }

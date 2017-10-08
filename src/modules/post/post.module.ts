@@ -6,6 +6,7 @@ import { AuthMiddleware } from '../authentication/authentication.middleware';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { CharactersModule } from '../character/character.module';
 import { postProviders } from './post.providers';
+import { CharacterExistsMiddleware, } from '../character/character.exists.middleware';
 
 @Module({
   modules: [
@@ -26,8 +27,14 @@ import { postProviders } from './post.providers';
 })
 export class PostModule {
   configure(consumer: MiddlewaresConsumer) {
-    consumer.apply(AuthMiddleware).forRoutes({
+    consumer.apply(AuthMiddleware)
+    .forRoutes({
       path: 'posts', method: RequestMethod.POST,
+    });
+
+    consumer.apply(CharacterExistsMiddleware)
+    .forRoutes({
+      path: 'posts/character/:characterId', method: RequestMethod.GET,
     });
   }
 }

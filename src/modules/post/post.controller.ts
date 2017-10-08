@@ -11,11 +11,15 @@ import {
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { ICreatePostRequest } from './post.interface';
+import { CharactersService } from '../character/character.service';
 
 @Controller('posts')
 export class PostController {
 
-  constructor(private postService: PostService) {
+  constructor(
+    private postService: PostService,
+    private characterService: CharactersService,
+  ) {
   }
 
   @Get('/character/:characterId')
@@ -25,7 +29,8 @@ export class PostController {
     @Query('limit') limit,
     @Query('page') page,
   ) {
-    const posts = await this.postService.getCharacterPosts(characterId, limit, page);
+    const character = await this.characterService.get(characterId);
+    const posts = await this.postService.getCharacterPosts(character, limit, page);
 
     res.status(HttpStatus.OK).json(posts);
   }

@@ -18,7 +18,7 @@ export class KillmailService {
     private killmailParticipantService: KillmailParticipantService,
     private postService: PostService,
   ) {
-    // this.killmailsStreamService.subscribe(this.create.bind(this));
+    //this.killmailsStreamService.subscribe(this.create.bind(this));
   }
 
   /**
@@ -59,6 +59,7 @@ export class KillmailService {
 
     if (!killmailStream.victim.id) {
       console.log('skipping killmail - victim has no character id');
+      return;
     }
 
     console.info('creating killmail');

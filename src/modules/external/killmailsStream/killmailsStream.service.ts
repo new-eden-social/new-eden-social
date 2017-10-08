@@ -54,7 +54,7 @@ export class KillmailsStreamService {
     return <IKillmailStream>{
       id: raw.killID,
       date: new Date(raw.killmail.killTime),
-      warId: raw.killmail.war.id,
+      warId: raw.killmail.war ? raw.killmail.war.id : null,
       locationId: raw.zkb.locationID,
       totalValue: raw.zkb.totalValue,
       points: raw.zkb.points,

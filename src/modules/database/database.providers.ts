@@ -16,7 +16,7 @@ export const databaseProviders = [
       entities: [
         __dirname + '/../**/*.entity.ts',
       ],
-      autoSchemaSync: true,
+      synchronize: process.env.DB_SYNC === 'true',
     }),
   },
 ];

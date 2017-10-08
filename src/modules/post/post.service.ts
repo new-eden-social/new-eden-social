@@ -77,6 +77,6 @@ export class PostService {
     post.locationId = killmail.locationId;
     post.createdAt = killmail.createdAt;
 
-    return this.postRepository.persist(post);
+    return this.postRepository.save(post);
   }
 }
