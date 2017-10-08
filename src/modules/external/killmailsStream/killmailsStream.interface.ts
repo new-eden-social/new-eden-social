@@ -133,7 +133,7 @@ declare module KillmailsStream {
           readonly flag: number;
         }[]
       };
-      readonly war: {
+      readonly war?: {
         readonly id: number;
         readonly href: string;
       }

@@ -1,11 +1,11 @@
-import { Component } from '@nestjs/common';
-import { ConnectionOptions } from 'typeorm';
+import { DB_CONNECTION_TOKEN } from './database.constants';
+import { createConnection } from 'typeorm';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 
-@Component()
-export class DatabaseConfig {
-  public getConfiguration(): ConnectionOptions {
-    return {
+export const databaseProviders = [
+  {
+    provide: DB_CONNECTION_TOKEN,
+    useFactory: async () => await createConnection({
       type: 'postgres',
       host: process.env.DB_HOST,
       port: parseInt(process.env.DB_PORT),
@@ -16,7 +16,7 @@ export class DatabaseConfig {
       entities: [
         __dirname + '/../**/*.entity.ts',
       ],
-      autoSchemaSync: true,
-    };
-  }
-}
+      synchronize: process.env.DB_SYNC === 'true',
+    }),
+  },
+];

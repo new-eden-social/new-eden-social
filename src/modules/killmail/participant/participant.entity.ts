@@ -1,5 +1,5 @@
 import { Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Character } from '../../../character/character.entity';
+import { Character } from '../../character/character.entity';
 import { Killmail } from '../killmail.entity';
 
 @Entity()

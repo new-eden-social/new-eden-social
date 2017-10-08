@@ -1,10 +1,10 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interface';
 import { IGetCharacter } from '../external/esi/esi.interface';
-import { Post } from '../feed/post/post.entity';
+import { Post } from '../post/post.entity';
 import { Comment } from '../comment/comment.entity';
 import { ICharacterPortrait, ICharacterResponse } from './character.interface';
-import { KillmailParticipant } from '../feed/killmail/participant/participant.entity';
+import { KillmailParticipant } from '../killmail/participant/participant.entity';
 
 @Entity()
 export class Character {
