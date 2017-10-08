@@ -12,7 +12,7 @@ import {
 import { Character } from '../../character/character.entity';
 import { Corporation } from '../../corporation/corporation.entity';
 import { Alliance } from '../../alliance/alliance.entity';
-import { Utils } from '../../utils.static';
+import { Utils } from '../../../utils/utils.static';
 import { ESIEntetyNotFoundException } from './esi.exceptions';
 
 @Component()

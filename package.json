@@ -40,8 +40,6 @@
     "@nestjs/microservices": "^4.1.0",
     "@nestjs/testing": "^4.1.0",
     "@nestjs/websockets": "^4.1.0",
-    "@types/bluebird": "^3.5.14",
-    "@types/ws": "^3.2.0",
     "axios": "^0.16.2",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
@@ -57,6 +55,7 @@
     "rxjs": "^5.4.0",
     "typeorm": "0.1.0-alpha.50",
     "typescript": "^2.5.3",
+    "winston": "^2.4.0",
     "ws": "^3.1.0"
   },
   "devDependencies": {
@@ -66,6 +65,9 @@
     "@types/mocha": "^2.2.41",
     "@types/moment": "^2.13.0",
     "@types/node": "^8.0.33",
+    "@types/bluebird": "^3.5.14",
+    "@types/winston": "^2.3.6",
+    "@types/ws": "^3.2.0",
     "chai": "^4.0.2",
     "coveralls": "^2.13.3",
     "faker": "^4.1.0",

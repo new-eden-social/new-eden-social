@@ -3,6 +3,7 @@ import { CharactersService } from '../character/character.service';
 import { Character } from '../character/character.entity';
 import { CHARACTER_REPOSITORY_TOKEN } from '../character/character.constants';
 import { Repository } from 'typeorm';
+import Log from '../../utils/Log';
 
 @Component()
 export class UpdaterService {
@@ -47,7 +48,7 @@ export class UpdaterService {
   private loop(): void {
     this.updateCharacters()
     .then(() => {
-      console.log('loop done');
+      Log.debug('Update loop done');
     });
   }
 

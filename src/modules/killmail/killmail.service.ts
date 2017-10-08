@@ -8,6 +8,7 @@ import { IKillmailResponse } from './killmail.interface';
 import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
 import { PostService } from '../post/post.service';
 import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
+import Log from '../../utils/Log';
 
 @Component()
 export class KillmailService {
@@ -58,7 +59,7 @@ export class KillmailService {
   private async create(killmailStream: IKillmailStream) {
 
     if (!killmailStream.victim.id) {
-      console.log('skipping killmail - victim has no character id');
+      Log.debug('skipping killmail - victim has no character id');
       return;
     }
 
