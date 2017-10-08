@@ -23,6 +23,10 @@ export default class Log {
     }
   }
 
+  public static log(level: string, msg: string, ...meta): void {
+    Log.winston.log(level, msg, ...meta);
+  }
+
   public static error(msg: string, ...meta): void {
     Log.winston.error(msg, ...meta);
   }
