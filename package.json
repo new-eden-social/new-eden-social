@@ -5,6 +5,7 @@
   "private": true,
   "license": "GPL-3.0",
   "scripts": {
+    "start:killmails": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/killmails.ts",
     "start:updater": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/updater.ts",
     "start": "nodemon",
     "seed": "node seed",

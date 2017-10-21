@@ -21,6 +21,16 @@ export class UpdaterService {
   }
 
   /**
+   * Main Loop
+   */
+  private loop(): void {
+    this.updateCharacters()
+    .then(() => {
+      Log.debug('Update loop done');
+    });
+  }
+
+  /**
    * Update Characters
    * @return {Promise<void>}
    */
@@ -39,16 +49,6 @@ export class UpdaterService {
     idsStream.on('data', ({ id }) => {
       this.characterService.get(id)
       .then(character => this.characterService.update(character));
-    });
-  }
-
-  /**
-   * Main Loop
-   */
-  private loop(): void {
-    this.updateCharacters()
-    .then(() => {
-      Log.debug('Update loop done');
     });
   }
 
