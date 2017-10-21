@@ -42,7 +42,7 @@
     "@nestjs/websockets": "^4.0.0",
     "@types/bluebird": "^3.5.8",
     "@types/ws": "^3.0.2",
-    "axios": "^0.16.2",
+    "axios": "^0.17.0",
     "bluebird": "^3.5.0",
     "body-parser": "^1.17.2",
     "class-validator": "^0.7.1",
