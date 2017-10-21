@@ -17,6 +17,14 @@ export const databaseProviders = [
         __dirname + '/../**/*.entity.ts',
       ],
       synchronize: process.env.DB_SYNC === 'true',
+      cache: {
+        type: 'redis',
+        options: {
+          host: process.env.REDIS_HOST,
+          port: process.env.REDIS_PORT,
+        },
+        alwaysEnabled: process.env.DB_ALWAYS_CACHE === 'true',
+      },
     }),
   },
 ];

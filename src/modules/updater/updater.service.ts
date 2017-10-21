@@ -3,6 +3,7 @@ import { CharactersService } from '../character/character.service';
 import { Character } from '../character/character.entity';
 import { CHARACTER_REPOSITORY_TOKEN } from '../character/character.constants';
 import { Repository } from 'typeorm';
+import Log from '../../utils/Log';
 
 @Component()
 export class UpdaterService {
@@ -17,6 +18,16 @@ export class UpdaterService {
   ) {
     this.loop();
     setInterval(this.loop.bind(this), this.LOOP_INTERVAL);
+  }
+
+  /**
+   * Main Loop
+   */
+  private loop(): void {
+    this.updateCharacters()
+    .then(() => {
+      Log.debug('Update loop done');
+    });
   }
 
   /**
@@ -38,16 +49,6 @@ export class UpdaterService {
     idsStream.on('data', ({ id }) => {
       this.characterService.get(id)
       .then(character => this.characterService.update(character));
-    });
-  }
-
-  /**
-   * Main Loop
-   */
-  private loop(): void {
-    this.updateCharacters()
-    .then(() => {
-      console.log('loop done');
     });
   }
 

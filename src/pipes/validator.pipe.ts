@@ -1,6 +1,6 @@
-import { ArgumentMetadata, HttpStatus, Pipe, PipeTransform } from '@nestjs/common';
-import { HttpException } from '@nestjs/core';
+import { ArgumentMetadata, Pipe, PipeTransform } from '@nestjs/common';
 import { validate } from 'class-validator';
+import ApiValidationException from '../errors/ApiValidationException';
 
 /**
  * Example from: http://www.docs.nestjs.com/pipes
@@ -15,17 +15,11 @@ export class ValidatorPipe implements PipeTransform<any> {
     const object = Object.assign(new metatype(), value);
     const errors = await validate(object);
     if (errors.length > 0) {
-      // TODO: Should create an interface that would document all errors returned, Probably do
-      // TODO: something like throw new APIValidationException(errors)
-      throw new HttpException(
-        {
-          reason: 'validationFailed',
-          errors: errors.map(error => ({
-            property: error.property,
-            constraints: error.constraints,
-          })),
-        },
-        HttpStatus.BAD_REQUEST);
+      const apiValidationErrors = errors.map(error => ({
+        property   : error.property,
+        constraints: error.constraints,
+      }));
+      throw new ApiValidationException(apiValidationErrors);
     }
     return value;
   }

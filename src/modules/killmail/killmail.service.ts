@@ -8,6 +8,7 @@ import { IKillmailResponse } from './killmail.interface';
 import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
 import { PostService } from '../post/post.service';
 import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
+import Log from '../../utils/Log';
 
 @Component()
 export class KillmailService {
@@ -18,7 +19,7 @@ export class KillmailService {
     private killmailParticipantService: KillmailParticipantService,
     private postService: PostService,
   ) {
-    //this.killmailsStreamService.subscribe(this.create.bind(this));
+    this.killmailsStreamService.subscribe(this.create.bind(this));
   }
 
   /**
@@ -50,19 +51,17 @@ export class KillmailService {
 
   /**
    * Create killmail from killmail stream
-   * TODO: This should later be moved to separate microservice, that would get jobs from redis.
-   * TODO: So that we can run multiple instances of main API
    * @param {KillmailsStream.IKillmailStream} killmailStream
    * @return {Promise<void>}
    */
   private async create(killmailStream: IKillmailStream) {
+    Log.debug(`Killmail create ${killmailStream.id}`);
 
     if (!killmailStream.victim.id) {
-      console.log('skipping killmail - victim has no character id');
+      Log.debug('skipping killmail - victim has no character id');
       return;
     }
 
-    console.info('creating killmail');
     const killmail = new Killmail();
     killmail.id = killmailStream.id;
     killmail.createdAt = killmailStream.date;
