@@ -3,9 +3,13 @@ import { Logger, LoggerInstance, transports } from 'winston';
 export default class Log {
 
   private static winston: LoggerInstance;
-  private static initDone   = false;
+  private static initDone = false;
   private static transports = [
-    new transports.Console({ level: process.env.LOG_LEVEL, colorize: true }),
+    new transports.Console({
+      colorize: true,
+      align: true,
+      level: process.env.LOG_LEVEL,
+    }),
   ];
 
   /**
@@ -15,7 +19,11 @@ export default class Log {
     if (!Log.initDone) {
       Log.initDone = true;
 
-      Log.winston = new Logger({ transports: Log.transports });
+      console.log(Log.transports);
+      Log.winston = new Logger({
+        level: process.env.LOG_LEVEL,
+        transports: Log.transports,
+      });
     }
   }
 
