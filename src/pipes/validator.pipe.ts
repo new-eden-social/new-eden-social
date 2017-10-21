@@ -15,12 +15,11 @@ export class ValidatorPipe implements PipeTransform<any> {
     const object = Object.assign(new metatype(), value);
     const errors = await validate(object);
     if (errors.length > 0) {
-      // TODO: Should create an interface that would document all errors returned, Probably do
-      // TODO: something like throw new APIValidationException(errors)
-      throw new ApiValidationException(errors.map(error => ({
-        property: error.property,
+      const apiValidationErrors = errors.map(error => ({
+        property   : error.property,
         constraints: error.constraints,
-      })));
+      }));
+      throw new ApiValidationException(apiValidationErrors);
     }
     return value;
   }

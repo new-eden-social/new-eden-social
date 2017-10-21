@@ -1,6 +1,6 @@
-interface ApiValidationError {
+export interface ApiValidationError {
   property: string;
-  constraints: [{
-    type: string;
-  }];
+  constraints: {
+    [type: string]: string;
+  };
 }
