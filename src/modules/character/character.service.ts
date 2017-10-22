@@ -9,7 +9,7 @@ import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
 import { CorporationService } from '../corporation/corporation.service';
 
 @Component()
-export class CharactersService implements IService<Character> {
+export class CharacterService implements IService<Character> {
 
   constructor(
     @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,

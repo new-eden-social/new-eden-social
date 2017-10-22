@@ -1,6 +1,6 @@
 import { forwardRef, Module, RequestMethod } from '@nestjs/common';
 import { CharactersController } from './character.controller';
-import { CharactersService } from './character.service';
+import { CharacterService } from './character.service';
 import { DatabaseModule } from '../database/database.module';
 import { ZKillboardModule } from '../external/zkillboard/zkillboard.module';
 import { ESIModule } from '../external/esi/esi.module';
@@ -21,10 +21,10 @@ import { CorporationModule } from '../corporation/corporation.module';
   ],
   components: [
     ...characterProviders,
-    CharactersService,
+    CharacterService,
   ],
   exports: [
-    CharactersService,
+    CharacterService,
   ],
 })
 export class CharacterModule {

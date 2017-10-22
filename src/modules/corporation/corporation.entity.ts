@@ -4,6 +4,7 @@ import { IGetCorporation } from '../external/esi/esi.interface';
 import { Character } from '../character/character.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { ICorporationResponse } from './corporation.interface';
+import { Post } from '../post/post.entity';
 
 @Entity()
 export class Corporation {
@@ -34,6 +35,9 @@ export class Corporation {
 
   @OneToMany(type => Character, character => character.corporation)
   characters: Character[];
+
+  @OneToMany(type => Post, post => post.corporationWall)
+  wall: Post[];
 
   @Column({ nullable: true })
   createdAt?: Date;

@@ -6,7 +6,7 @@ import {
   IKillmailStreamVictim,
   TKillmailStreamParticipant,
 } from '../../external/killmailsStream/killmailsStream.interface';
-import { CharactersService } from '../../character/character.service';
+import { CharacterService } from '../../character/character.service';
 import { IParticipantResponse } from './participant.interface';
 import { KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN } from './participant.constants';
 
@@ -16,7 +16,7 @@ export class KillmailParticipantService {
   constructor(
     @Inject(KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN)
     private killmailParticipantRepository: Repository<KillmailParticipant>,
-    private charactersService: CharactersService,
+    private charactersService: CharacterService,
   ) {
   }
 

@@ -4,30 +4,23 @@ import { Comment } from '../comment/comment.entity';
 import { v4 as uuid } from 'uuid';
 import { ICreatePostRequest, IPostResponse } from './post.interface';
 import { Killmail } from '../killmail/killmail.entity';
+import { Corporation } from '../corporation/corporation.entity';
 
 @Entity()
 export class Post {
-
-  constructor(postData?: ICreatePostRequest) {
-    this.id = uuid();
-
-    if (postData) {
-      this.content = postData.content;
-      this.type = postData.type;
-      this.locationId = postData.locationId;
-    }
-  }
 
   @Column('text', { nullable: true })
   content: string;
 
   @PrimaryColumn('uuid')
   id: string;
+
   @Column({ nullable: true })
   locationId: number;
 
   @Column()
   type: string;
+
   @ManyToOne(type => Killmail, killmail => killmail.posts)
   killmail: Killmail;
 
@@ -39,6 +32,22 @@ export class Post {
 
   @OneToMany(type => Comment, comment => comment.post)
   comments: Comment[];
+
+  @ManyToOne(type => Character, character => character.wall, { nullable: true })
+  characterWall: Character;
+
+  @ManyToOne(type => Corporation, corporation => corporation.wall, { nullable: true })
+  corporationWall: Corporation;
+
+  constructor(postData?: ICreatePostRequest) {
+    this.id = uuid();
+
+    if (postData) {
+      this.content = postData.content;
+      this.type = postData.type;
+      this.locationId = postData.locationId;
+    }
+  }
 
   /**
    * Get Response

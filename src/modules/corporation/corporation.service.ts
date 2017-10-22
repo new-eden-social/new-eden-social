@@ -6,7 +6,7 @@ import { IService } from '../../interfaces/service.interface';
 import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
 import { Corporation } from './corporation.entity';
 import { CORPORATION_REPOSITORY_TOKEN } from './corporation.constants';
-import { CharactersService } from '../character/character.service';
+import { CharacterService } from '../character/character.service';
 
 @Component()
 export class CorporationService implements IService<Corporation> {
@@ -15,8 +15,8 @@ export class CorporationService implements IService<Corporation> {
     @Inject(CORPORATION_REPOSITORY_TOKEN) private corporationRepository: Repository<Corporation>,
     private zkillboardService: ZKillboardService,
     private esiService: ESIService,
-    @Inject(forwardRef(() => CharactersService))
-    private characterService: CharactersService,
+    @Inject(forwardRef(() => CharacterService))
+    private characterService: CharacterService,
   ) {
   }
 

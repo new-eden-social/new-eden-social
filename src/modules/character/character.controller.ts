@@ -1,10 +1,10 @@
 import { Controller, Get, HttpStatus, Param, Response } from '@nestjs/common';
-import { CharactersService } from './character.service';
+import { CharacterService } from './character.service';
 
 @Controller('characters')
 export class CharactersController {
 
-  constructor(private characterService: CharactersService) {
+  constructor(private characterService: CharacterService) {
   }
 
   @Get('/:characterId')

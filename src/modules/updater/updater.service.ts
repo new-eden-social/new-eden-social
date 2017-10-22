@@ -1,5 +1,5 @@
 import { Component, Inject } from '@nestjs/common';
-import { CharactersService } from '../character/character.service';
+import { CharacterService } from '../character/character.service';
 import { Character } from '../character/character.entity';
 import { CHARACTER_REPOSITORY_TOKEN } from '../character/character.constants';
 import { Repository } from 'typeorm';
@@ -18,7 +18,7 @@ export class UpdaterService {
   constructor(
     @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,
     @Inject(CORPORATION_REPOSITORY_TOKEN) private corporationRepository: Repository<Corporation>,
-    private characterService: CharactersService,
+    private characterService: CharacterService,
     private corporationService: CorporationService,
   ) {
     this.loop();

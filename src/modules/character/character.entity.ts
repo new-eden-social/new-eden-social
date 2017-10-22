@@ -31,6 +31,9 @@ export class Character {
   @ManyToOne(type => Corporation, corporation => corporation.characters, { eager: true })
   corporation: Corporation;
 
+  @OneToMany(type => Post, post => post.characterWall)
+  wall: Post[];
+
   @CreateDateColumn()
   createdAt: Date;
 
