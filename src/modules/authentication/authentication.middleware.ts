@@ -17,6 +17,7 @@ export class AuthMiddleware implements NestMiddleware {
         .verifyAuthentication(token.slice('Bearer '.length));
       } catch (error) {
         if (error instanceof TokenExpiredException) {
+          // TODO: Throw instance of ApiException
           throw new HttpException('Authorization token is not valid.', 401);
         }
         // If some other error, re-throw

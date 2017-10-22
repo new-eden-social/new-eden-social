@@ -32,9 +32,10 @@ export class PostModule {
   configure(consumer: MiddlewaresConsumer) {
 
     consumer.apply(AuthMiddleware)
-    .forRoutes({
-      path: 'posts', method: RequestMethod.POST,
-    });
+    .forRoutes(
+      { path: 'posts/character', method: RequestMethod.POST },
+      { path: 'posts/corporation', method: RequestMethod.POST },
+    );
 
     consumer.apply(CharacterExistsMiddleware)
     .forRoutes({
