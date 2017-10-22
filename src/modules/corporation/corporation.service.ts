@@ -44,8 +44,12 @@ export class CorporationService implements IService<Corporation> {
    * @return {Promise<Corporation>}
    */
   public async update(corporation: Corporation): Promise<Corporation> {
-    corporation.populateESI(await this.esiService.getCorporation(corporation.id));
+    const esiCorporation = await this.esiService.getCorporation(corporation.id);
+
+    corporation.populateESI(esiCorporation);
     corporation.updatedAt = new Date();
+
+    await this.updateCeoAndCreator(corporation, esiCorporation.ceo_id, esiCorporation.creator_id);
 
     return this.corporationRepository.save(corporation);
   }
@@ -83,19 +87,34 @@ export class CorporationService implements IService<Corporation> {
     corporation.populateESI(esiCorporation);
 
     await this.corporationRepository.save(corporation);
+    await this.updateCeoAndCreator(corporation, esiCorporation.ceo_id, esiCorporation.creator_id);
 
-    if (esiCorporation.ceo_id !== 1 || esiCorporation.creator_id !== 1) {
-      console.log(esiCorporation.ceo_id, esiCorporation.creator_id);
+    return corporation;
+  }
+
+  /**
+   * Update CEO and Creator
+   * @param {Corporation} corporation
+   * @param {number} ceoId
+   * @param {number} creatorId
+   * @returns {Promise<void>}
+   */
+  private async updateCeoAndCreator(
+    corporation: Corporation,
+    ceoId: number,
+    creatorId: number,
+  ): Promise<void> {
+    // id = 1 means that ceo/creator isn't a real character (but a npc?)
+    if (ceoId !== 1 || creatorId !== 1) {
       // TODO: corporation.alliance = this.allianceService.get(esiCorporation.alliance_id)
-      if (esiCorporation.ceo_id !== 1)
-        corporation.ceo = await this.characterService.get(esiCorporation.ceo_id);
 
-      if (esiCorporation.creator_id !== 1)
-        corporation.creator = await this.characterService.get(esiCorporation.creator_id);
+      if (ceoId !== 1)
+        corporation.ceo = await this.characterService.get(ceoId);
+
+      if (creatorId !== 1)
+        corporation.creator = await this.characterService.get(creatorId);
 
       await this.corporationRepository.save(corporation);
     }
-
-    return corporation;
   }
 }
