@@ -38,7 +38,7 @@ export class Post {
   character: Character;
 
   @OneToMany(type => Comment, comment => comment.post)
-  comments: Comment[] = [];
+  comments: Comment[];
 
   /**
    * Get Response

@@ -4,7 +4,7 @@ import { PostService } from './post.service';
 import { DatabaseModule } from '../database/database.module';
 import { AuthMiddleware } from '../authentication/authentication.middleware';
 import { AuthenticationModule } from '../authentication/authentication.module';
-import { CharactersModule } from '../character/character.module';
+import { CharacterModule } from '../character/character.module';
 import { postProviders } from './post.providers';
 import { CharacterExistsMiddleware, } from '../character/character.exists.middleware';
 
@@ -12,7 +12,7 @@ import { CharacterExistsMiddleware, } from '../character/character.exists.middle
   modules: [
     DatabaseModule,
     AuthenticationModule,
-    CharactersModule,
+    CharacterModule,
   ],
   controllers: [
     PostController,

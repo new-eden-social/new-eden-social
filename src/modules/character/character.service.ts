@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Component, forwardRef, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Character } from './character.entity';
 import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
@@ -6,6 +6,7 @@ import { ESIService } from '../external/esi/esi.service';
 import { CHARACTER_REPOSITORY_TOKEN } from './character.constants';
 import { IService } from '../../interfaces/service.interface';
 import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
+import { CorporationService } from '../corporation/corporation.service';
 
 @Component()
 export class CharactersService implements IService<Character> {
@@ -14,6 +15,8 @@ export class CharactersService implements IService<Character> {
     @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,
     private zkillboardService: ZKillboardService,
     private esiService: ESIService,
+    @Inject(forwardRef(() => CorporationService))
+    private corporationService: CorporationService,
   ) {
   }
 
@@ -26,11 +29,8 @@ export class CharactersService implements IService<Character> {
     // Find character in database
     const character = await this.findCharacterById(id);
 
-    // If exists, populate
-    if (character) {
-      const zkillChar = await this.zkillboardService.characterStatistics(id);
-      character.populateZKillboard(zkillChar);
-    }
+    const zkillChar = await this.zkillboardService.characterStatistics(id);
+    character.populateZKillboard(zkillChar);
 
     return character;
   }
@@ -41,8 +41,10 @@ export class CharactersService implements IService<Character> {
    * @return {Promise<Character>}
    */
   public async update(character: Character): Promise<Character> {
-    character.populateESI(await this.esiService.getCharacter(character.id));
+    const esiCharacter = await this.esiService.getCharacter(character.id);
+    character.populateESI(esiCharacter);
     character.updatedAt = new Date();
+    character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
 
     return this.characterRepository.save(character);
   }
@@ -68,18 +70,27 @@ export class CharactersService implements IService<Character> {
    * @return {Promise<Character>}
    */
   private async findCharacterById(id: number) {
-    let character = await this.characterRepository.findOneById(id);
+    const foundCharacter = await this.characterRepository.findOneById(id);
+
+    if (foundCharacter) return foundCharacter;
 
     // If character not in DB, load it from ESI
-    if (!character) {
-      character = new Character();
-      character.id = id;
+    const character = new Character();
+    character.id = id;
 
-      const esiCharacter = await this.esiService.getCharacter(id);
-      character.populateESI(esiCharacter);
+    const esiCharacter = await this.esiService.getCharacter(id);
+    character.populateESI(esiCharacter);
 
-      await this.characterRepository.save(character);
-    }
+    // Save without corporation
+    await this.characterRepository.save(character);
+
+    // Load corporation
+    character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
+
+    // Update corporation id
+    await this.characterRepository.updateById(character.id, {
+      corporation: { id: character.corporation.id },
+    });
 
     return character;
   }

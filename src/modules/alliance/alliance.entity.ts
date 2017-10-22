@@ -1,17 +1,16 @@
-import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
-import { Length } from 'class-validator';
-import {
-  IAllianceStatistics,
-  ICharacterStatistics,
-  ICorporationStatistics,
-} from '../external/zkillboard/zkillboard.interface';
-import { IGetAlliance, IGetCharacter, IGetCorporation } from '../external/esi/esi.interface';
+import { Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { IAllianceStatistics } from '../external/zkillboard/zkillboard.interface';
+import { IGetAlliance } from '../external/esi/esi.interface';
+import { Corporation } from '../corporation/corporation.entity';
 
 @Entity()
 export class Alliance {
 
   @PrimaryColumn('int')
   id: number;
+
+  @OneToMany(type => Corporation, corporation => corporation.alliance)
+  corporations: Corporation[] = [];
 
   /**
    * Provided by ESI
@@ -20,6 +19,20 @@ export class Alliance {
   ticker: string;
   dateFounded: Date;
   executorCorp: number;
+  /**
+   * Provided by zKillboard
+   */
+  hasSupers: boolean;
+  iskDestroyed: number;
+  iskLost: number;
+  pointsDestroyed: number;
+  pointsLost: number;
+  shipsDestroyed: number;
+  shipsLost: number;
+  soloKills: number;
+  soloLosses: number;
+  memberCount: number;
+  corpCount: number;
 
   public populateESI(alliance: IGetAlliance) {
     this.name = alliance.alliance_name;
@@ -27,26 +40,6 @@ export class Alliance {
     this.dateFounded = alliance.date_founded;
     this.executorCorp = alliance.executor_corp;
   }
-
-  /**
-   * Provided by zKillboard
-   */
-  hasSupers: boolean;
-
-  iskDestroyed: number;
-  iskLost: number;
-
-  pointsDestroyed: number;
-  pointsLost: number;
-
-  shipsDestroyed: number;
-  shipsLost: number;
-
-  soloKills: number;
-  soloLosses: number;
-
-  memberCount: number;
-  corpCount: number;
 
   public populateZKillboard(alliance: IAllianceStatistics) {
     this.iskDestroyed = alliance.iskDestroyed;

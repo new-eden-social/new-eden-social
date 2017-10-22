@@ -7,6 +7,7 @@ import {
   ICorporationName,
   IGetCharacter,
   IGetCharacterPortrait,
+  IGetCorporation,
   ISearch,
 } from './esi.interface';
 import { Character } from '../../character/character.entity';
@@ -14,6 +15,7 @@ import { Corporation } from '../../corporation/corporation.entity';
 import { Alliance } from '../../alliance/alliance.entity';
 import { Utils } from '../../../utils/utils.static';
 import { ESIEntetyNotFoundException } from './esi.exceptions';
+import Log from '../../../utils/Log';
 
 @Component()
 export class ESIService {
@@ -30,36 +32,6 @@ export class ESIService {
         Accept: 'application/json',
       },
     });
-  }
-
-  /**
-   * Request wrapper, it stores response to cache and use it if it's not expired
-   * @param config
-   * @return {Promise<T>}
-   */
-  private async request<T>(config: AxiosRequestConfig): Promise<T> {
-    const hash = await Utils.hash(config);
-
-    if (await this.cacheService.exists(hash)) {
-      return this.cacheService.fetch<T>(hash);
-    }
-
-    try {
-      const response = await this.client.request(config);
-      const cacheTime = parseInt(response.headers['access-control-max-age']);
-
-      await this.cacheService.store(hash, response.data, cacheTime);
-
-      return response.data;
-    } catch (err) {
-      /**
-       * Transform underlying request exceptions to ESI Exceptions
-       */
-      if (err.response && err.response.status === HttpStatus.NOT_FOUND)
-        throw new ESIEntetyNotFoundException();
-      else throw err;
-    }
-
   }
 
   /**
@@ -170,6 +142,56 @@ export class ESIService {
       url: `characters/${id}/portrait/`,
       method: 'GET',
     });
+  }
+
+  /**
+   * Get corporation by id
+   * @param id
+   * @return {Promise<IGetCorporation>}
+   */
+  public async getCorporation(id: number): Promise<IGetCorporation> {
+    return this.request<IGetCorporation>({
+      url: `corporations/${id}/`,
+      method: 'GET',
+    });
+  }
+
+  /**
+   * Request wrapper, it stores response to cache and use it if it's not expired
+   * @param config
+   * @return {Promise<T>}
+   */
+  private async request<T>(config: AxiosRequestConfig): Promise<T> {
+    const hash = await Utils.hash(config);
+
+    Log.silly('ESI Request', config);
+
+    if (await this.cacheService.exists(hash)) {
+      const response = await this.cacheService.fetch<T>(hash);
+
+      Log.silly('ESI Response', response, { cache: true });
+
+      return response;
+    }
+
+    try {
+      const response = await this.client.request(config);
+      const cacheTime = parseInt(response.headers['access-control-max-age']);
+
+      await this.cacheService.store(hash, response.data, cacheTime);
+
+      Log.silly('ESI Response', response.data, { cache: false });
+
+      return response.data;
+    } catch (err) {
+      /**
+       * Transform underlying request exceptions to ESI Exceptions
+       */
+      if (err.response && err.response.status === HttpStatus.NOT_FOUND)
+        throw new ESIEntetyNotFoundException();
+      else throw err;
+    }
+
   }
 
 }

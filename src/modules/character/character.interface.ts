@@ -1,3 +1,5 @@
+import { ICorporationResponse } from '../corporation/corporation.interface';
+
 export interface ICharacterPortrait {
   readonly px64x64: string;
   readonly px128x128: string;
@@ -12,9 +14,10 @@ export interface ICharacterResponse {
   gender: string;
   raceId: number;
   bloodlineId: number;
-  ancestryId: number;
+  ancestryId?: number;
   securityStatus: number;
   portrait: ICharacterPortrait;
+  corporation: ICorporationResponse;
 
   /* LIVE Data*/
   iskDestroyed: number;

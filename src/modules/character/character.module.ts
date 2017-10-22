@@ -1,4 +1,4 @@
-import { Module, RequestMethod } from '@nestjs/common';
+import { forwardRef, Module, RequestMethod } from '@nestjs/common';
 import { CharactersController } from './character.controller';
 import { CharactersService } from './character.service';
 import { DatabaseModule } from '../database/database.module';
@@ -7,12 +7,14 @@ import { ESIModule } from '../external/esi/esi.module';
 import { characterProviders } from './character.providers';
 import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
 import { CharacterExistsMiddleware } from './character.exists.middleware';
+import { CorporationModule } from '../corporation/corporation.module';
 
 @Module({
   modules: [
     DatabaseModule,
     ZKillboardModule,
     ESIModule,
+    forwardRef(() => CorporationModule),
   ],
   controllers: [
     CharactersController,
@@ -25,7 +27,7 @@ import { CharacterExistsMiddleware } from './character.exists.middleware';
     CharactersService,
   ],
 })
-export class CharactersModule {
+export class CharacterModule {
   configure(consumer: MiddlewaresConsumer) {
     consumer.apply(CharacterExistsMiddleware)
     .forRoutes({

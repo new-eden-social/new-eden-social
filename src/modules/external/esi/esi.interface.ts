@@ -30,7 +30,7 @@ declare module ESI {
     readonly birthday: Date;
     readonly security_status: number;
     readonly race_id: number;
-    readonly ancestry_id: number;
+    readonly ancestry_id?: number;
     readonly bloodline_id: number;
     readonly corporation_id: number;
   }
