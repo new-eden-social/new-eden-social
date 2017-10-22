@@ -11,26 +11,41 @@ import {
 } from '@nestjs/common';
 import { PostService } from './post.service';
 import { ICreatePostRequest } from './post.interface';
-import { CharactersService } from '../character/character.service';
+import { CharacterService } from '../character/character.service';
+import { CorporationService } from '../corporation/corporation.service';
 
 @Controller('posts')
 export class PostController {
 
   constructor(
     private postService: PostService,
-    private characterService: CharactersService,
+    private characterService: CharacterService,
+    private corporationService: CorporationService,
   ) {
   }
 
   @Get('/character/:characterId')
-  public async getForCharacter(
+  public async getCharacterWall(
     @Response() res,
     @Param('characterId') characterId,
     @Query('limit') limit,
     @Query('page') page,
   ) {
     const character = await this.characterService.get(characterId);
-    const posts = await this.postService.getCharacterPosts(character, limit, page);
+    const posts = await this.postService.getCharacterWall(character, limit, page);
+
+    res.status(HttpStatus.OK).json(posts);
+  }
+
+  @Get('/corporation/:corporationId')
+  public async getCorporationWall(
+    @Response() res,
+    @Param('corporationId') corporationId,
+    @Query('limit') limit,
+    @Query('page') page,
+  ) {
+    const corporation = await this.corporationService.get(corporationId);
+    const posts = await this.postService.getCorporationWall(corporation, limit, page);
 
     res.status(HttpStatus.OK).json(posts);
   }

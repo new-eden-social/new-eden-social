@@ -25,8 +25,8 @@ export class Killmail {
 
   @JoinTable()
   @OneToMany(type => KillmailParticipant, participant => participant.killmail)
-  participants: KillmailParticipant[] = [];
+  participants: KillmailParticipant[];
 
   @OneToMany(type => Post, post => post.killmail)
-  posts: Post[] = [];
+  posts: Post[];
 }

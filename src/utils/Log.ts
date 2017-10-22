@@ -19,7 +19,6 @@ export default class Log {
     if (!Log.initDone) {
       Log.initDone = true;
 
-      console.log(Log.transports);
       Log.winston = new Logger({
         level: process.env.LOG_LEVEL,
         transports: Log.transports,
