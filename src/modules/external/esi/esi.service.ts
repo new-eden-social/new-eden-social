@@ -7,6 +7,7 @@ import {
   ICorporationName,
   IGetCharacter,
   IGetCharacterPortrait,
+  IGetCharacterRoles,
   IGetCorporation,
   ISearch,
 } from './esi.interface';
@@ -141,6 +142,22 @@ export class ESIService {
     return this.request<IGetCharacterPortrait>({
       url: `characters/${id}/portrait/`,
       method: 'GET',
+    });
+  }
+
+  /**
+   * Get character roles [ Authenticated ]
+   * @param {number} id
+   * @param {string} token
+   * @return {Promise<IGetCorporation>}
+   */
+  public async getCharacterRoles(id: number, token: string): Promise<IGetCharacterRoles> {
+    return this.request<IGetCharacterRoles>({
+      url: `character/${id}/roles/`,
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     });
   }
 
