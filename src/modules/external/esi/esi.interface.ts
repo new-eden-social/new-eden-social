@@ -42,8 +42,7 @@ declare module ESI {
     readonly px512x512: string;
   }
 
-  interface IGetCharacterRoles {
-    readonly roles: string[];
+  interface IGetCharacterRoles extends Array<string> {
   }
 
   interface ISearch {

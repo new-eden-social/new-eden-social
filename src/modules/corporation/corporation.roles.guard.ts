@@ -1,22 +1,29 @@
 import { CanActivate, ExecutionContext, Guard } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
+import { CharacterService } from '../character/character.service';
+import Log from '../../utils/Log';
 
 @Guard()
 export class CorporationRolesGuard implements CanActivate {
-  constructor(private readonly reflector: Reflector) {
+  constructor(private readonly reflector: Reflector, private characterService: CharacterService) {
   }
 
-  canActivate(req, context: ExecutionContext): boolean {
+  async canActivate(req, context: ExecutionContext): Promise<boolean> {
     const { parent, handler } = context;
 
-    const roles = this.reflector.get<string[]>('corporationRoles', handler);
+    const requiredRoles = this.reflector.get<string[]>('corporationRoles', handler);
 
-    if (!roles) {
+    if (!requiredRoles) {
       return true;
     }
 
     const character = req.character;
-    const hasRole = () => !!character.roles.find(role => !!roles.find(item => item === role));
+    const roles = await this.characterService.getRoles(character.id);
+
+    Log.debug('Character roles', roles);
+
+    const hasRole = () => !!roles.find(
+      role => !!requiredRoles.find(item => item === role));
 
     return character && character.roles && hasRole();
   }

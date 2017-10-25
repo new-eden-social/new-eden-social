@@ -17,6 +17,7 @@ import { Alliance } from '../../alliance/alliance.entity';
 import { Utils } from '../../../utils/utils.static';
 import { ESIEntetyNotFoundException } from './esi.exceptions';
 import Log from '../../../utils/Log';
+import { RequestContext } from '../../requestContext/requestContext';
 
 @Component()
 export class ESIService {
@@ -148,16 +149,12 @@ export class ESIService {
   /**
    * Get character roles [ Authenticated ]
    * @param {number} id
-   * @param {string} token
    * @return {Promise<IGetCorporation>}
    */
-  public async getCharacterRoles(id: number, token: string): Promise<IGetCharacterRoles> {
+  public async getCharacterRoles(id: number): Promise<IGetCharacterRoles> {
     return this.request<IGetCharacterRoles>({
-      url: `character/${id}/roles/`,
+      url: `characters/${id}/roles/`,
       method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
     });
   }
 
@@ -180,6 +177,12 @@ export class ESIService {
    */
   private async request<T>(config: AxiosRequestConfig): Promise<T> {
     const hash = await Utils.hash(config);
+    const token = RequestContext.currentToken();
+
+    if (!config.headers) config.headers = {};
+
+    // If token is provided, send request with token.
+    if (token) config.headers = Object.assign(config.headers, { Authorization: `Bearer ${token}` });
 
     Log.silly('ESI Request', config);
 
@@ -201,6 +204,7 @@ export class ESIService {
 
       return response.data;
     } catch (err) {
+      Log.warning('ESI Error', err);
       /**
        * Transform underlying request exceptions to ESI Exceptions
        */

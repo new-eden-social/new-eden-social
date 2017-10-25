@@ -10,11 +10,11 @@ export class AuthMiddleware implements NestMiddleware {
 
   resolve(): (req, res, next) => void {
     return async (req, res, next) => {
-      const token = req.headers['authorization'];
 
       try {
-        req.character = await this.authenticationService
-        .verifyAuthentication(token.slice('Bearer '.length));
+        const token = req.headers['authorization'].slice('Bearer '.length);
+        req.token = token;
+        req.character = await this.authenticationService.verifyAuthentication(token);
       } catch (error) {
         if (error instanceof TokenExpiredException) {
           // TODO: Throw instance of ApiException
