@@ -12,6 +12,7 @@ export class CorporationRolesGuard implements CanActivate {
     const { parent, handler } = context;
 
     const requiredRoles = this.reflector.get<string[]>('corporationRoles', handler);
+    console.log(requiredRoles);
 
     if (!requiredRoles) {
       return true;
@@ -20,11 +21,11 @@ export class CorporationRolesGuard implements CanActivate {
     const character = req.character;
     const roles = await this.characterService.getRoles(character.id);
 
-    Log.debug('Character roles', roles);
+    Log.debug('[CorporationRolesGuard]', roles, requiredRoles);
 
     const hasRole = () => !!roles.find(
       role => !!requiredRoles.find(item => item === role));
 
-    return character && character.roles && hasRole();
+    return character && roles && hasRole();
   }
 }
