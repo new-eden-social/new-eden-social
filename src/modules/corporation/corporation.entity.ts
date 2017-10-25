@@ -39,6 +39,10 @@ export class Corporation {
   @OneToMany(type => Post, post => post.corporationWall)
   wall: Post[];
 
+  @OneToMany(type => Post, post => post.corporation)
+  posts: Post[];
+
+
   @Column({ nullable: true })
   createdAt?: Date;
 

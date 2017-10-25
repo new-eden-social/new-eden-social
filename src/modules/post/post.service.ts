@@ -29,14 +29,39 @@ export class PostService {
   }
 
   /**
-   * Create Post
-   * @param postData
-   * @param character
+   * Create Post as character
+   * @param {ICreatePostRequest} postData
+   * @param {Character} character
    * @return {Promise<Post>}
    */
-  public async create(postData: ICreatePostRequest, character: Character): Promise<Post> {
+  public async createAsCharacter(
+    postData: ICreatePostRequest,
+    character: Character,
+  ): Promise<Post> {
     const post = new Post(postData);
     post.character = character;
+
+    if (postData.corporationId)
+      post.corporationWall = await this.corporationService.get(postData.corporationId);
+
+    if (postData.characterId)
+      post.characterWall = await this.characterService.get(postData.characterId);
+
+    return this.postRepository.save(post);
+  }
+
+  /**
+   * Create Post as corporation
+   * @param {ICreatePostRequest} postData
+   * @param {Corporation} corporation
+   * @return {Promise<Post>}
+   */
+  public async createAsCorporation(
+    postData: ICreatePostRequest,
+    corporation: Corporation,
+  ): Promise<Post> {
+    const post = new Post(postData);
+    post.corporation = corporation;
 
     if (postData.corporationId)
       post.corporationWall = await this.corporationService.get(postData.corporationId);

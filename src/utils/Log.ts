@@ -35,7 +35,7 @@ export default class Log {
   }
 
   public static warning(msg: string, ...meta): void {
-    Log.winston.warning(msg, ...meta);
+    Log.winston.warn(msg, ...meta);
   }
 
   public static info(msg: string, ...meta): void {

@@ -7,6 +7,7 @@ import { CHARACTER_REPOSITORY_TOKEN } from './character.constants';
 import { IService } from '../../interfaces/service.interface';
 import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
 import { CorporationService } from '../corporation/corporation.service';
+import { IGetCharacterRoles } from '../external/esi/esi.interface';
 
 @Component()
 export class CharacterService implements IService<Character> {
@@ -62,6 +63,10 @@ export class CharacterService implements IService<Character> {
       throw err;
     }
     return true;
+  }
+
+  public async getRoles(id: number): Promise<IGetCharacterRoles> {
+    return this.esiService.getCharacterRoles(id);
   }
 
   /**

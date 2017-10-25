@@ -42,6 +42,9 @@ declare module ESI {
     readonly px512x512: string;
   }
 
+  interface IGetCharacterRoles extends Array<string> {
+  }
+
   interface ISearch {
     readonly agent?: number[];
     readonly alliance?: number[];

@@ -27,17 +27,20 @@ export class Post {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(type => Character, character => character.posts)
-  character: Character;
+  @ManyToOne(type => Character, character => character.posts, { nullable: true })
+  character?: Character;
+
+  @ManyToOne(type => Corporation, corporation => corporation.posts, { nullable: true })
+  corporation?: Corporation;
 
   @OneToMany(type => Comment, comment => comment.post)
   comments: Comment[];
 
   @ManyToOne(type => Character, character => character.wall, { nullable: true })
-  characterWall: Character;
+  characterWall?: Character;
 
   @ManyToOne(type => Corporation, corporation => corporation.wall, { nullable: true })
-  corporationWall: Corporation;
+  corporationWall?: Corporation;
 
   constructor(postData?: ICreatePostRequest) {
     this.id = uuid();
