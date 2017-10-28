@@ -9,6 +9,6 @@ import { config } from 'dotenv';
 config();
 Log.init();
 
-NestFactory.createMicroservice(UpdaterModule, { port: parseInt(process.env.UPDATER_PORT) })
+NestFactory.createMicroservice(UpdaterModule, { port: parseInt(process.env.UPDATER_PORT, 10) })
 .then(() => Log.info(`Updater started on port ${process.env.UPDATER_PORT}`))
 .catch(err => Log.error(err));

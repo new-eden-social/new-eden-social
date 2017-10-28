@@ -54,7 +54,7 @@ export class RedisService {
     }
 
     // return the connection if it's been created already
-    if (this.connection) return Promise.resolve(this.connection);
+    if (this.connection !== undefined) return Promise.resolve(this.connection);
     this.pending = true;
     // otherwise create it
     this.connection = await new IORedis(this.redisConfig.getConfiguration());

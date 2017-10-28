@@ -9,6 +9,6 @@ import { config } from 'dotenv';
 config();
 Log.init();
 
-NestFactory.createMicroservice(KillmailModule, { port: parseInt(process.env.KILLMAILS_PORT) })
+NestFactory.createMicroservice(KillmailModule, { port: parseInt(process.env.KILLMAILS_PORT, 10) })
 .then(() => Log.info(`Killmail started on port ${process.env.KILLMAILS_PORT}`))
 .catch(err => Log.error(err));

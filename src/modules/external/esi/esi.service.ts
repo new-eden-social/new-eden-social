@@ -196,7 +196,7 @@ export class ESIService {
 
     try {
       const response = await this.client.request(config);
-      const cacheTime = parseInt(response.headers['access-control-max-age']);
+      const cacheTime = parseInt(response.headers['access-control-max-age'], 10);
 
       await this.cacheService.store(hash, response.data, cacheTime);
 

@@ -6,7 +6,7 @@ import { AuthMiddleware } from '../authentication/authentication.middleware';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { CharacterModule } from '../character/character.module';
 import { postProviders } from './post.providers';
-import { CharacterExistsMiddleware, } from '../character/character.exists.middleware';
+import { CharacterExistsMiddleware } from '../character/character.exists.middleware';
 import { CorporationModule } from '../corporation/corporation.module';
 import { CorporationExistsMiddleware } from '../corporation/corporation.exists.middleware';
 
