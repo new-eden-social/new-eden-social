@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
 import { ICorporationStatistics } from '../external/zkillboard/zkillboard.interface';
 import { IGetCorporation } from '../external/esi/esi.interface';
 import { Character } from '../character/character.entity';
@@ -42,6 +42,8 @@ export class Corporation {
   @OneToMany(type => Post, post => post.corporation)
   posts: Post[];
 
+  @OneToOne(type => Alliance, alliance => alliance.executorCorporation)
+  executingAlliance: Alliance;
 
   @Column({ nullable: true })
   createdAt?: Date;

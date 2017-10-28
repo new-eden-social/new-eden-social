@@ -1,7 +1,8 @@
-import { Entity, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
 import { IAllianceStatistics } from '../external/zkillboard/zkillboard.interface';
 import { IGetAlliance } from '../external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
+import { IAllianceResponse } from './alliance.interface';
 
 @Entity()
 export class Alliance {
@@ -10,15 +11,20 @@ export class Alliance {
   id: number;
 
   @OneToMany(type => Corporation, corporation => corporation.alliance)
-  corporations: Corporation[] = [];
+  corporations: Corporation[];
 
-  /**
-   * Provided by ESI
-   */
+  @Column()
   name: string;
+
+  @Column()
   ticker: string;
+
+  @Column()
   dateFounded: Date;
-  executorCorp: number;
+
+  @OneToOne(type => Corporation, corporation => corporation.executingAlliance, { eager: true })
+  executorCorporation: Corporation;
+
   /**
    * Provided by zKillboard
    */
@@ -34,11 +40,35 @@ export class Alliance {
   memberCount: number;
   corpCount: number;
 
+  /**
+   * Get alliance response (This is what API returns)
+   * @returns {IAllianceResponse}
+   */
+  get response(): IAllianceResponse {
+    return {
+      id: this.id,
+      name: this.name,
+      ticker: this.ticker,
+      dateFounded: this.dateFounded,
+      executorCorporation: this.executorCorporation.response,
+      hasSupers: this.hasSupers,
+      iskDestroyed: this.iskDestroyed,
+      iskLost: this.iskLost,
+      pointsDestroyed: this.pointsDestroyed,
+      pointsLost: this.pointsLost,
+      shipsDestroyed: this.shipsDestroyed,
+      shipsLost: this.shipsLost,
+      soloKills: this.soloKills,
+      soloLosses: this.soloLosses,
+      memberCount: this.memberCount,
+      corpCount: this.corpCount,
+    };
+  }
+
   public populateESI(alliance: IGetAlliance) {
     this.name = alliance.alliance_name;
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.date_founded;
-    this.executorCorp = alliance.executor_corp;
   }
 
   public populateZKillboard(alliance: IAllianceStatistics) {

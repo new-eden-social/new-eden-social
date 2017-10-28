@@ -7,6 +7,7 @@ import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
 import { Corporation } from './corporation.entity';
 import { CORPORATION_REPOSITORY_TOKEN } from './corporation.constants';
 import { CharacterService } from '../character/character.service';
+import { AllianceService } from '../alliance/alliance.service';
 
 @Component()
 export class CorporationService implements IService<Corporation> {
@@ -17,6 +18,8 @@ export class CorporationService implements IService<Corporation> {
     private esiService: ESIService,
     @Inject(forwardRef(() => CharacterService))
     private characterService: CharacterService,
+    @Inject(forwardRef(() => AllianceService))
+    private allianceService: AllianceService,
   ) {
   }
 
@@ -49,7 +52,12 @@ export class CorporationService implements IService<Corporation> {
     corporation.populateESI(esiCorporation);
     corporation.updatedAt = new Date();
 
-    await this.updateCeoAndCreator(corporation, esiCorporation.ceo_id, esiCorporation.creator_id);
+    await this.updateCeoAndCreatorAndAlliance(
+      corporation,
+      esiCorporation.ceo_id,
+      esiCorporation.creator_id,
+      esiCorporation.alliance_id,
+    );
 
     return this.corporationRepository.save(corporation);
   }
@@ -87,7 +95,12 @@ export class CorporationService implements IService<Corporation> {
     corporation.populateESI(esiCorporation);
 
     await this.corporationRepository.save(corporation);
-    await this.updateCeoAndCreator(corporation, esiCorporation.ceo_id, esiCorporation.creator_id);
+    await this.updateCeoAndCreatorAndAlliance(
+      corporation,
+      esiCorporation.ceo_id,
+      esiCorporation.creator_id,
+      esiCorporation.alliance_id,
+    );
 
     return corporation;
   }
@@ -97,16 +110,19 @@ export class CorporationService implements IService<Corporation> {
    * @param {Corporation} corporation
    * @param {number} ceoId
    * @param {number} creatorId
+   * @param {number} allianceId
    * @returns {Promise<void>}
    */
-  private async updateCeoAndCreator(
+  private async updateCeoAndCreatorAndAlliance(
     corporation: Corporation,
     ceoId: number,
     creatorId: number,
+    allianceId: number,
   ): Promise<void> {
     // id = 1 means that ceo/creator isn't a real character (but a npc?)
-    if (ceoId !== 1 || creatorId !== 1) {
-      // TODO: corporation.alliance = this.allianceService.get(esiCorporation.alliance_id)
+    if (ceoId !== 1 || creatorId !== 1 || allianceId !== 1) {
+      if (allianceId !== 1)
+        corporation.alliance = await this.allianceService.get(allianceId);
 
       if (ceoId !== 1)
         corporation.ceo = await this.characterService.get(ceoId);
