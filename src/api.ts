@@ -17,6 +17,7 @@ import 'zone.js/dist/long-stack-trace-zone.js';
 async function bootstrap() {
   config();
   Log.init();
+  Log.debug('env', process.env);
 
   const instance = express();
   instance.use(bodyParser.json());
