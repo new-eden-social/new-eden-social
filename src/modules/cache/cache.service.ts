@@ -1,16 +1,13 @@
-import { Component } from '@nestjs/common';
-import { RedisService } from '../redis/redis.service';
+import { Component, Inject } from '@nestjs/common';
+import { REDIS_CONNECTION_TOKEN } from '../redis/redis.constants';
+import * as IORedis from 'ioredis';
 
 @Component()
 export class CacheService {
 
   private prefix = 'cache:';
 
-  constructor(private redisService: RedisService) {
-  }
-
-  private formatKey(key: string) {
-    return this.prefix + key;
+  constructor(@Inject(REDIS_CONNECTION_TOKEN) private redisClient: IORedis.Redis) {
   }
 
   /**
@@ -19,7 +16,7 @@ export class CacheService {
    * @return {Promise<T>}
    */
   public async fetch<T>(key: string): Promise<T> {
-    const data = await (await this.redisService.client).get(this.formatKey(key));
+    const data = await this.redisClient.get(this.formatKey(key));
 
     return JSON.parse(data);
   }
@@ -30,7 +27,7 @@ export class CacheService {
    * @return {Promise<boolean>}
    */
   public async exists(key: string): Promise<boolean> {
-    return await (await  this.redisService.client).exists(this.formatKey(key));
+    return await this.redisClient.exists(this.formatKey(key));
   }
 
   /**
@@ -42,7 +39,11 @@ export class CacheService {
    */
   public async store(key: string, data: any, expire: number = 600): Promise<any> {
     const json = JSON.stringify(data);
-    return await (await this.redisService.client).setex(this.formatKey(key), expire, json);
+    return await this.redisClient.setex(this.formatKey(key), expire, json);
+  }
+
+  private formatKey(key: string) {
+    return this.prefix + key;
   }
 
 }
