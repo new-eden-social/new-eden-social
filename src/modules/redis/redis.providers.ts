@@ -8,7 +8,7 @@ export const redisProviders = [
       if (process.env.REDIS_URL)
         return new IORedis(process.env.REDIS_URL);
 
-      return IORedis(<IORedis.RedisOptions>{
+      return new IORedis(<IORedis.RedisOptions>{
         port: parseInt(process.env.REDIS_PORT, 10),
         host: process.env.REDIS_HOST,
       });
