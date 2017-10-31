@@ -31,7 +31,7 @@ export class AllianceModule {
   configure(consumer: MiddlewaresConsumer) {
     consumer.apply(AllianceExistsMiddleware)
     .forRoutes({
-      path: 'alliance/:allianceId', method: RequestMethod.GET,
+      path: 'alliances/:allianceId', method: RequestMethod.GET,
     });
   }
 }

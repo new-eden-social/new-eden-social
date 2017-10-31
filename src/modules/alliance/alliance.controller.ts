@@ -8,7 +8,7 @@ export class AllianceController {
   }
 
   @Get('/:allianceId')
-  public async search(@Response() res, @Param('characterId') allianceId: number) {
+  public async search(@Response() res, @Param('allianceId') allianceId: number) {
     const alliance = await this.allianceService.get(allianceId);
 
     res.status(HttpStatus.OK).json(alliance.response);

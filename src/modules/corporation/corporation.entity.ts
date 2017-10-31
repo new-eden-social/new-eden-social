@@ -42,7 +42,7 @@ export class Corporation {
   @OneToMany(type => Post, post => post.corporation)
   posts: Post[];
 
-  @OneToOne(type => Alliance, alliance => alliance.executorCorporation)
+  @OneToOne(type => Alliance, alliance => alliance.executorCorporation, { nullable: true })
   executingAlliance: Alliance;
 
   @Column({ nullable: true })
@@ -78,6 +78,7 @@ export class Corporation {
       ticker: this.ticker,
       description: this.description,
       url: this.url,
+      alliance: this.alliance ? this.alliance.response : null,
       iskDestroyed: this.iskDestroyed,
       iskLost: this.iskLost,
       pointsDestroyed: this.pointsDestroyed,
@@ -94,7 +95,6 @@ export class Corporation {
     this.ticker = corp.ticker;
     this.description = corp.corporation_description;
     this.url = corp.url;
-    // TODO: Is casting this way okey?
     this.createdAt = corp.creation_date;
     this.taxRate = corp.tax_rate;
   }

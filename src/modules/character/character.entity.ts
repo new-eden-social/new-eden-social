@@ -28,7 +28,7 @@ export class Character {
   @OneToMany(type => Corporation, corporation => corporation.ceo)
   corporationCeo: Corporation[];
 
-  @ManyToOne(type => Corporation, corporation => corporation.characters, { eager: true })
+  @ManyToOne(type => Corporation, corporation => corporation.characters, { nullable: true })
   corporation: Corporation;
 
   @OneToMany(type => Post, post => post.characterWall)
@@ -96,7 +96,7 @@ export class Character {
       ancestryId: this.ancestryId,
       securityStatus: this.securityStatus,
       portrait: this.portrait,
-      corporation: this.corporation.response,
+      corporation: this.corporation ? this.corporation.response : null,
       iskDestroyed: this.iskDestroyed,
       iskLost: this.iskLost,
       pointsDestroyed: this.pointsDestroyed,

@@ -8,6 +8,7 @@ import { IService } from '../../interfaces/service.interface';
 import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
 import { CorporationService } from '../corporation/corporation.service';
 import { IGetCharacterRoles } from '../external/esi/esi.interface';
+import Log from '../../utils/Log';
 
 @Component()
 export class CharacterService implements IService<Character> {
@@ -27,11 +28,14 @@ export class CharacterService implements IService<Character> {
    * @return {Promise<Character>}
    */
   public async get(id: number): Promise<Character> {
+    Log.debug('get character', id);
     // Find character in database
     const character = await this.findCharacterById(id);
 
+    Log.debug('get character populating', id);
     const zkillChar = await this.zkillboardService.characterStatistics(id);
     character.populateZKillboard(zkillChar);
+    Log.debug('get character done populating', id);
 
     return character;
   }
@@ -89,13 +93,14 @@ export class CharacterService implements IService<Character> {
     // Save without corporation
     await this.characterRepository.save(character);
 
-    // Load corporation
-    character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
+    if (esiCharacter.corporation_id && esiCharacter.corporation_id !== 1) {
+      Log.debug('Character get corporation', esiCharacter.corporation_id);
+      // Load corporation
+      character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
 
-    // Update corporation id
-    await this.characterRepository.updateById(character.id, {
-      corporation: { id: character.corporation.id },
-    });
+      // Update corporation id
+      await this.characterRepository.save(character);
+    }
 
     return character;
   }

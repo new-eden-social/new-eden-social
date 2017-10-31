@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
 import { IAllianceStatistics } from '../external/zkillboard/zkillboard.interface';
 import { IGetAlliance } from '../external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
@@ -22,7 +22,8 @@ export class Alliance {
   @Column()
   dateFounded: Date;
 
-  @OneToOne(type => Corporation, corporation => corporation.executingAlliance, { eager: true })
+  @OneToOne(type => Corporation, corporation => corporation.executingAlliance)
+  @JoinColumn()
   executorCorporation: Corporation;
 
   /**
@@ -50,7 +51,7 @@ export class Alliance {
       name: this.name,
       ticker: this.ticker,
       dateFounded: this.dateFounded,
-      executorCorporation: this.executorCorporation.response,
+      executorCorporation: this.executorCorporation ? this.executorCorporation.response : null,
       hasSupers: this.hasSupers,
       iskDestroyed: this.iskDestroyed,
       iskLost: this.iskLost,

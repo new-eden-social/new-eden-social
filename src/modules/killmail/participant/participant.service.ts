@@ -58,7 +58,7 @@ export class KillmailParticipantService {
     const character = await this.charactersService.get(participant.character.id);
 
     return {
-      character,
+      character: character.response,
       shipId: participant.shipId,
       weaponId: participant.weaponId,
       damageDone: participant.damageDone,

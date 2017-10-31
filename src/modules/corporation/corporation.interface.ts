@@ -1,9 +1,12 @@
+import { IAllianceResponse } from '../alliance/alliance.interface';
+
 export interface ICorporationResponse {
   id: number;
   name: string;
   ticker: string;
   description: string;
   url: string;
+  alliance: IAllianceResponse;
 
   /* LIVE Data*/
   iskDestroyed: number;

@@ -8,6 +8,7 @@ import { Corporation } from './corporation.entity';
 import { CORPORATION_REPOSITORY_TOKEN } from './corporation.constants';
 import { CharacterService } from '../character/character.service';
 import { AllianceService } from '../alliance/alliance.service';
+import Log from '../../utils/Log';
 
 @Component()
 export class CorporationService implements IService<Corporation> {
@@ -29,14 +30,18 @@ export class CorporationService implements IService<Corporation> {
    * @return {Promise<Corporation>}
    */
   public async get(id: number): Promise<Corporation> {
+    Log.debug('get corporation', id);
+
     // Find corporation in database
     const corporation = await this.findCorporationById(id);
 
     // If exists, populate
     if (corporation) {
+      Log.debug('get corporation populating', id);
       const zkillCorporation = await this.zkillboardService.corporationStatistics(id);
       corporation.populateZKillboard(zkillCorporation);
     }
+    Log.debug('get corporation populating done', id);
 
     return corporation;
   }
@@ -95,6 +100,8 @@ export class CorporationService implements IService<Corporation> {
     corporation.populateESI(esiCorporation);
 
     await this.corporationRepository.save(corporation);
+
+    // Populate ceo/creator/alliance
     await this.updateCeoAndCreatorAndAlliance(
       corporation,
       esiCorporation.ceo_id,
@@ -121,14 +128,20 @@ export class CorporationService implements IService<Corporation> {
   ): Promise<void> {
     // id = 1 means that ceo/creator isn't a real character (but a npc?)
     if (ceoId !== 1 || creatorId !== 1 || allianceId !== 1) {
-      if (allianceId !== 1)
+      if (allianceId && allianceId !== 1) {
+        Log.debug('Corporation get alliance', allianceId);
         corporation.alliance = await this.allianceService.get(allianceId);
+      }
 
-      if (ceoId !== 1)
+      if (ceoId && ceoId !== 1) {
+        Log.debug('Corporation get ceo character', ceoId);
         corporation.ceo = await this.characterService.get(ceoId);
+      }
 
-      if (creatorId !== 1)
+      if (creatorId && creatorId !== 1) {
+        Log.debug('Corporation get creator character', creatorId);
         corporation.creator = await this.characterService.get(creatorId);
+      }
 
       await this.corporationRepository.save(corporation);
     }
