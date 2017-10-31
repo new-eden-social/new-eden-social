@@ -12,10 +12,12 @@ export class AllianceService implements IService<Alliance> {
 
   constructor(
     @Inject(ALLIANCE_REPOSITORY_TOKEN) private allianceRepository: Repository<Alliance>,
-    private esiService: ESIService,
-    private zkillboardService: ZKillboardService,
     @Inject(forwardRef(() => CorporationService))
     private corporationService: CorporationService,
+    @Inject(forwardRef(() => ZKillboardService)) // FIXME: This forwardRef probably isn't needed
+    private zkillboardService: ZKillboardService,
+    @Inject(forwardRef(() => ESIService)) // FIXME: This forwardRef probably isn't needed
+    private esiService: ESIService,
   ) {
   }
 
