@@ -7,7 +7,7 @@ export const databaseProviders = [
     provide: DB_CONNECTION_TOKEN,
     useFactory: async () => {
       console.log('setting database', process.env.REDIS_URL);
-      return await createConnection({
+      const dbCon = await createConnection({
         type: 'postgres',
         url: process.env.DB_URL,
         host: process.env.DB_HOST,
@@ -30,6 +30,8 @@ export const databaseProviders = [
                 alwaysEnabled: process.env.DB_ALWAYS_CACHE === 'true',
               },*/
       });
+      console.log('db con set up');
+      return dbCon;
     },
   },
 ];
