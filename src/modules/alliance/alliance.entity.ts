@@ -51,7 +51,7 @@ export class Alliance {
       name: this.name,
       ticker: this.ticker,
       dateFounded: this.dateFounded,
-      executorCorporation: this.executorCorporation ? this.executorCorporation.response : null,
+      executorCorporation: this.executorCorporation,
       hasSupers: this.hasSupers,
       iskDestroyed: this.iskDestroyed,
       iskLost: this.iskLost,

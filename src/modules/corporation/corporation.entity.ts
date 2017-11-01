@@ -24,13 +24,13 @@ export class Corporation {
   @Column()
   url: string;
 
-  @ManyToOne(type => Character, character => character.corporationCeo, { nullable: true })
+  @ManyToOne(type => Character, character => character.corporationCeo)
   ceo?: Character;
 
-  @ManyToOne(type => Character, character => character.createdCorporations, { nullable: true })
+  @ManyToOne(type => Character, character => character.createdCorporations)
   creator?: Character;
 
-  @ManyToOne(type => Alliance, alliance => alliance.corporations, { nullable: true })
+  @ManyToOne(type => Alliance, alliance => alliance.corporations, { eager: true })
   alliance?: Alliance;
 
   @OneToMany(type => Character, character => character.corporation)
@@ -42,7 +42,7 @@ export class Corporation {
   @OneToMany(type => Post, post => post.corporation)
   posts: Post[];
 
-  @OneToOne(type => Alliance, alliance => alliance.executorCorporation, { nullable: true })
+  @OneToOne(type => Alliance, alliance => alliance.executorCorporation)
   executingAlliance: Alliance;
 
   @Column({ nullable: true })

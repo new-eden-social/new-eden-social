@@ -143,7 +143,11 @@ export class CorporationService implements IService<Corporation> {
         corporation.creator = await this.characterService.get(creatorId);
       }
 
-      await this.corporationRepository.save(corporation);
+      await this.corporationRepository.updateById(corporation.id, {
+        alliance: corporation.alliance ? { id: corporation.alliance.id } : null,
+        ceo: corporation.ceo ? { id: corporation.ceo.id } : null,
+        creator: corporation.creator ? { id: corporation.creator.id } : null,
+      });
     }
   }
 }

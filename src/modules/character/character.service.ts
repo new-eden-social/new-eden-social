@@ -99,7 +99,9 @@ export class CharacterService implements IService<Character> {
       character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
 
       // Update corporation id
-      await this.characterRepository.save(character);
+      await this.characterRepository.updateById(character.id, {
+        corporation: { id: character.corporation.id },
+      });
     }
 
     return character;

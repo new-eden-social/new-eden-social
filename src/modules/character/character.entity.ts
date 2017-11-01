@@ -28,7 +28,7 @@ export class Character {
   @OneToMany(type => Corporation, corporation => corporation.ceo)
   corporationCeo: Corporation[];
 
-  @ManyToOne(type => Corporation, corporation => corporation.characters, { nullable: true })
+  @ManyToOne(type => Corporation, corporation => corporation.characters, { eager: true })
   corporation: Corporation;
 
   @OneToMany(type => Post, post => post.characterWall)

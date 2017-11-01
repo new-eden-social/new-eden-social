@@ -1,4 +1,5 @@
 import { ICorporationResponse } from '../corporation/corporation.interface';
+import { Corporation } from '../corporation/corporation.entity';
 
 export interface IAllianceResponse {
   id: number;
@@ -7,7 +8,7 @@ export interface IAllianceResponse {
   dateFounded: Date;
 
   // corporations: ICorporationResponse[];
-  executorCorporation: ICorporationResponse;
+  executorCorporation: ICorporationResponse | Corporation;
 
   hasSupers: boolean;
   iskDestroyed: number;
