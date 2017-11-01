@@ -1,0 +1,50 @@
+{
+  "name": "evebook/api",
+  "description": "evebook api heroku pipeline",
+  "scripts": {},
+  "env": {
+    "APP_AUTHENTICATION": {
+      "required": true
+    },
+    "DB_LOG": {
+      "required": true
+    },
+    "DB_SYNC": {
+      "required": true
+    },
+    "DB_URL": {
+      "required": true
+    },
+    "ESI_CLIENT": {
+      "required": true
+    },
+    "ESI_REDIRECT": {
+      "required": true
+    },
+    "ESI_SCOPE": {
+      "required": true
+    },
+    "ESI_SECRET": {
+      "required": true
+    },
+    "LOG_LEVEL": {
+      "required": true
+    },
+    "NPM_CONFIG_PRODUCTION": {
+      "required": true
+    },
+    "REDIS_URL": {
+      "required": true
+    }
+  },
+  "formation": {},
+  "addons": [
+    "heroku-postgresql",
+    "heroku-redis"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}

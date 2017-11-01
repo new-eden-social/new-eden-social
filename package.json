@@ -11,6 +11,10 @@
     "seed": "node seed",
     "lint": "tslint -c tslint.json -p tsconfig.json",
     "build": "tsc",
+    "prod": "node dist/api.js",
+    "prod:killmails": "node dist/killmails.js",
+    "prod:updater": "node dist/updater.js",
+    "heroku-postbuild": "npm run build",
     "test": "nyc --require ts-node/register mocha src/**/*.spec.ts --reporter spec",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },

@@ -5,6 +5,7 @@ import {
   IAllianceName,
   ICharacterName,
   ICorporationName,
+  IGetAlliance,
   IGetCharacter,
   IGetCharacterPortrait,
   IGetCharacterRoles,
@@ -166,6 +167,18 @@ export class ESIService {
   public async getCorporation(id: number): Promise<IGetCorporation> {
     return this.request<IGetCorporation>({
       url: `corporations/${id}/`,
+      method: 'GET',
+    });
+  }
+
+  /**
+   * Get alliance by id
+   * @param {number} id
+   * @returns {Promise<IGetAlliance>}
+   */
+  public async getAlliance(id: number): Promise<IGetAlliance> {
+    return this.request<IGetAlliance>({
+      url: `alliances/${id}`,
       method: 'GET',
     });
   }

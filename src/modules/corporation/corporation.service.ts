@@ -7,6 +7,8 @@ import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
 import { Corporation } from './corporation.entity';
 import { CORPORATION_REPOSITORY_TOKEN } from './corporation.constants';
 import { CharacterService } from '../character/character.service';
+import { AllianceService } from '../alliance/alliance.service';
+import Log from '../../utils/Log';
 
 @Component()
 export class CorporationService implements IService<Corporation> {
@@ -17,6 +19,8 @@ export class CorporationService implements IService<Corporation> {
     private esiService: ESIService,
     @Inject(forwardRef(() => CharacterService))
     private characterService: CharacterService,
+    @Inject(forwardRef(() => AllianceService))
+    private allianceService: AllianceService,
   ) {
   }
 
@@ -26,14 +30,18 @@ export class CorporationService implements IService<Corporation> {
    * @return {Promise<Corporation>}
    */
   public async get(id: number): Promise<Corporation> {
+    Log.debug('get corporation', id);
+
     // Find corporation in database
     const corporation = await this.findCorporationById(id);
 
     // If exists, populate
     if (corporation) {
+      Log.debug('get corporation populating', id);
       const zkillCorporation = await this.zkillboardService.corporationStatistics(id);
       corporation.populateZKillboard(zkillCorporation);
     }
+    Log.debug('get corporation populating done', id);
 
     return corporation;
   }
@@ -49,7 +57,12 @@ export class CorporationService implements IService<Corporation> {
     corporation.populateESI(esiCorporation);
     corporation.updatedAt = new Date();
 
-    await this.updateCeoAndCreator(corporation, esiCorporation.ceo_id, esiCorporation.creator_id);
+    await this.updateCeoAndCreatorAndAlliance(
+      corporation,
+      esiCorporation.ceo_id,
+      esiCorporation.creator_id,
+      esiCorporation.alliance_id,
+    );
 
     return this.corporationRepository.save(corporation);
   }
@@ -87,7 +100,14 @@ export class CorporationService implements IService<Corporation> {
     corporation.populateESI(esiCorporation);
 
     await this.corporationRepository.save(corporation);
-    await this.updateCeoAndCreator(corporation, esiCorporation.ceo_id, esiCorporation.creator_id);
+
+    // Populate ceo/creator/alliance
+    await this.updateCeoAndCreatorAndAlliance(
+      corporation,
+      esiCorporation.ceo_id,
+      esiCorporation.creator_id,
+      esiCorporation.alliance_id,
+    );
 
     return corporation;
   }
@@ -97,24 +117,37 @@ export class CorporationService implements IService<Corporation> {
    * @param {Corporation} corporation
    * @param {number} ceoId
    * @param {number} creatorId
+   * @param {number} allianceId
    * @returns {Promise<void>}
    */
-  private async updateCeoAndCreator(
+  private async updateCeoAndCreatorAndAlliance(
     corporation: Corporation,
     ceoId: number,
     creatorId: number,
+    allianceId: number,
   ): Promise<void> {
     // id = 1 means that ceo/creator isn't a real character (but a npc?)
-    if (ceoId !== 1 || creatorId !== 1) {
-      // TODO: corporation.alliance = this.allianceService.get(esiCorporation.alliance_id)
+    if (ceoId !== 1 || creatorId !== 1 || allianceId !== 1) {
+      if (allianceId && allianceId !== 1) {
+        Log.debug('Corporation get alliance', allianceId);
+        corporation.alliance = await this.allianceService.get(allianceId);
+      }
 
-      if (ceoId !== 1)
+      if (ceoId && ceoId !== 1) {
+        Log.debug('Corporation get ceo character', ceoId);
         corporation.ceo = await this.characterService.get(ceoId);
+      }
 
-      if (creatorId !== 1)
+      if (creatorId && creatorId !== 1) {
+        Log.debug('Corporation get creator character', creatorId);
         corporation.creator = await this.characterService.get(creatorId);
+      }
 
-      await this.corporationRepository.save(corporation);
+      await this.corporationRepository.updateById(corporation.id, {
+        alliance: corporation.alliance ? { id: corporation.alliance.id } : null,
+        ceo: corporation.ceo ? { id: corporation.ceo.id } : null,
+        creator: corporation.creator ? { id: corporation.creator.id } : null,
+      });
     }
   }
 }

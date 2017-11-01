@@ -8,6 +8,7 @@ import { corporationProviders } from './corporation.providers';
 import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
 import { CorporationExistsMiddleware } from './corporation.exists.middleware';
 import { CharacterModule } from '../character/character.module';
+import { AllianceModule } from '../alliance/alliance.module';
 
 @Module({
   modules: [
@@ -15,6 +16,7 @@ import { CharacterModule } from '../character/character.module';
     ZKillboardModule,
     ESIModule,
     forwardRef(() => CharacterModule),
+    forwardRef(() => AllianceModule),
   ],
   controllers: [
     CorporationController,

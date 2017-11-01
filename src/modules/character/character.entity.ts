@@ -96,7 +96,7 @@ export class Character {
       ancestryId: this.ancestryId,
       securityStatus: this.securityStatus,
       portrait: this.portrait,
-      corporation: this.corporation.response,
+      corporation: this.corporation ? this.corporation.response : null,
       iskDestroyed: this.iskDestroyed,
       iskLost: this.iskLost,
       pointsDestroyed: this.pointsDestroyed,

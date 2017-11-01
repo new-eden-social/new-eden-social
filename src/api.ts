@@ -24,9 +24,9 @@ async function bootstrap() {
 
   const app = await NestFactory.create(ApplicationModule, instance);
   app.useGlobalPipes(new ValidatorPipe());
-  await app.listen(parseInt(process.env.API_PORT, 10));
+  await app.listen(parseInt(process.env.PORT, 10));
 
-  Log.info(`Application is listening on port ${process.env.API_PORT}.`);
+  Log.info(`Application is listening on port ${process.env.PORT}.`);
 }
 
 bootstrap()
