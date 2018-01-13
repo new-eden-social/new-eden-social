@@ -81,6 +81,18 @@ export class PostController {
     res.status(HttpStatus.OK).json(posts);
   }
 
+  @Get('/location/:locationId')
+  public async getByLocation(
+    @Response() res,
+    @Param('locationId') locationId,
+    @Query('limit') limit,
+    @Query('page') page,
+  ) {
+    const posts = await this.postService.getByLocation(locationId, limit, page);
+
+    res.status(HttpStatus.OK).json(posts);
+  }
+
   @Get('/:id')
   public async get(@Response() res, @Param('id') postId) {
     const post = await this.postService.get(postId);

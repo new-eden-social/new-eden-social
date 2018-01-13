@@ -4,13 +4,14 @@ import { Post } from './post.entity';
 import { ICreatePostRequest } from './post.validate';
 import { Character } from '../character/character.entity';
 import { Killmail } from '../killmail/killmail.entity';
-import { POST_REPOSITORY_TOKEN, TYPES } from './post.constants';
+import { POST_REPOSITORY_TOKEN, POST_TYPES } from './post.constants';
 import { CorporationService } from '../corporation/corporation.service';
 import { CharacterService } from '../character/character.service';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { AllianceService } from '../alliance/alliance.service';
 import { HashtagService } from '../hashtag/hashtag.service';
+import { LocationService } from '../location/location.service';
 
 @Component()
 export class PostService {
@@ -21,6 +22,7 @@ export class PostService {
     private characterService: CharacterService,
     private allianceService: AllianceService,
     private hashtagService: HashtagService,
+    private locationService: LocationService,
   ) {
   }
 
@@ -98,6 +100,7 @@ export class PostService {
     .leftJoinAndSelect('post.character', 'author')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
     .leftJoinAndSelect('killmail.participants', 'participant')
     .leftJoinAndSelect('participant.character', 'character')
     .where(
@@ -126,6 +129,7 @@ export class PostService {
     .leftJoinAndSelect('post.character', 'author')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
     .leftJoinAndSelect('killmail.participants', 'participant')
     .leftJoinAndSelect('participant.character', 'character')
     .where(
@@ -154,6 +158,7 @@ export class PostService {
     .leftJoinAndSelect('post.character', 'author')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
     .leftJoinAndSelect('killmail.participants', 'participant')
     .leftJoinAndSelect('participant.character', 'character')
     .where(
@@ -175,9 +180,30 @@ export class PostService {
     .leftJoinAndSelect('post.character', 'author')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
     .leftJoinAndSelect('killmail.participants', 'participant')
     .leftJoinAndSelect('participant.character', 'character')
     .where('hashtag."name" = :hashtag', { hashtag })
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
+    .getMany();
+  }
+
+  public async getByLocation(
+    locationId: number,
+    limit = 10,
+    page = 0,
+  ): Promise<Post[]> {
+    return this.postRepository
+    .createQueryBuilder('post')
+    .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('post.killmail', 'killmail')
+    .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
+    .leftJoinAndSelect('killmail.participants', 'participant')
+    .leftJoinAndSelect('participant.character', 'character')
+    .where('location."id" = :locationId', { locationId })
     .orderBy({ 'post."createdAt"': 'DESC' })
     .offset(limit * page)
     .limit(limit)
@@ -192,11 +218,13 @@ export class PostService {
    */
   public async createKillmailPost(killmail: Killmail, finalBlow: Character): Promise<Post> {
     const post = new Post();
-    post.type = TYPES.KILLMAIL;
+    post.type = POST_TYPES.KILLMAIL;
     post.killmail = killmail;
     post.character = finalBlow;
-    post.locationId = killmail.locationId;
     post.createdAt = killmail.createdAt;
+
+    if (killmail.locationId)
+      post.location = await this.locationService.get(killmail.locationId);
 
     return this.postRepository.save(post);
   }
@@ -216,6 +244,9 @@ export class PostService {
 
     if (postData.characterId)
       post.characterWall = await this.characterService.get(postData.characterId);
+
+    if (postData.locationId)
+      post.location = await this.locationService.get(postData.locationId);
 
     post.hashtags = await this.hashtagService.parse(post.content);
 

@@ -69,6 +69,11 @@ export class CharacterService implements IService<Character> {
     return true;
   }
 
+  /**
+   * Get character corporation roles
+   * @param {number} id
+   * @returns {Promise<IGetCharacterRoles>}
+   */
   public async getRoles(id: number): Promise<IGetCharacterRoles> {
     return this.esiService.getCharacterRoles(id);
   }

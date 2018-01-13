@@ -1,4 +1,4 @@
-import { CREATABLE_TYPES } from './post.constants';
+import { POST_CREATABLE_TYPES, POST_TYPES } from './post.constants';
 import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export class ICreatePostRequest {
@@ -6,8 +6,8 @@ export class ICreatePostRequest {
   @IsString()
   content: string;
 
-  @IsIn(Object.keys(CREATABLE_TYPES))
-  type: string;
+  @IsIn(Object.keys(POST_CREATABLE_TYPES))
+  type: POST_TYPES;
 
   @IsOptional()
   @IsNumber()

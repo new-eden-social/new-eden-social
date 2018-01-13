@@ -17,6 +17,8 @@ import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { ICreatePostRequest } from './post.validate';
 import { Hashtag } from '../hashtag/hashtag.entity';
+import { Location } from '../location/location.entity';
+import { POST_TYPES } from './post.constants';
 
 @Entity()
 export class Post {
@@ -27,17 +29,17 @@ export class Post {
   @PrimaryColumn('uuid')
   id: string;
 
-  @Column({ nullable: true })
-  locationId: number;
-
-  @Column()
-  type: string;
+  @Column('varchar')
+  type: POST_TYPES;
 
   @ManyToOne(type => Killmail, killmail => killmail.posts)
   killmail: Killmail;
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @ManyToOne(type => Location, location => location.posts, { nullable: true })
+  location: Location;
 
   @ManyToOne(type => Character, character => character.posts, { nullable: true })
   character?: Character;
@@ -70,7 +72,6 @@ export class Post {
     if (postData) {
       this.content = postData.content;
       this.type = postData.type;
-      this.locationId = postData.locationId;
     }
   }
 

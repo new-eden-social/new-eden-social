@@ -12,6 +12,7 @@ import { CorporationExistsMiddleware } from '../corporation/corporation.exists.m
 import { AllianceModule } from '../alliance/alliance.module';
 import { AllianceExistsMiddleware } from '../alliance/alliance.exists.middleware';
 import { HashtagModule } from '../hashtag/hashtag.module';
+import { LocationModule } from '../location/location.module';
 
 @Module({
   modules: [
@@ -21,6 +22,7 @@ import { HashtagModule } from '../hashtag/hashtag.module';
     CorporationModule,
     AllianceModule,
     HashtagModule,
+    LocationModule,
   ],
   controllers: [
     PostController,
