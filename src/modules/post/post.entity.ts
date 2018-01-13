@@ -2,9 +2,11 @@ import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn }
 import { Character } from '../character/character.entity';
 import { Comment } from '../comment/comment.entity';
 import { v4 as uuid } from 'uuid';
-import { ICreatePostRequest, IPostResponse } from './post.interface';
+import { IPostResponse } from './post.interface';
 import { Killmail } from '../killmail/killmail.entity';
 import { Corporation } from '../corporation/corporation.entity';
+import { Alliance } from '../alliance/alliance.entity';
+import { ICreatePostRequest } from './post.validate';
 
 @Entity()
 export class Post {
@@ -33,6 +35,9 @@ export class Post {
   @ManyToOne(type => Corporation, corporation => corporation.posts, { nullable: true })
   corporation?: Corporation;
 
+  @ManyToOne(type => Alliance, alliance => alliance.posts, { nullable: true })
+  alliance?: Alliance;
+
   @OneToMany(type => Comment, comment => comment.post)
   comments: Comment[];
 
@@ -41,6 +46,9 @@ export class Post {
 
   @ManyToOne(type => Corporation, corporation => corporation.wall, { nullable: true })
   corporationWall?: Corporation;
+
+  @ManyToOne(type => Alliance, alliance => alliance.wall, { nullable: true })
+  allianceWall?: Alliance;
 
   constructor(postData?: ICreatePostRequest) {
     this.id = uuid();

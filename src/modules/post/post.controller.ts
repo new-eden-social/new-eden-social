@@ -11,21 +11,22 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { PostService } from './post.service';
-import { ICreatePostRequest } from './post.interface';
+import { ICreatePostRequest } from './post.validate';
 import { CharacterService } from '../character/character.service';
 import { CorporationService } from '../corporation/corporation.service';
 import { CorporationRoles } from '../corporation/corporation.roles.decorator';
-import { CorporationRolesGuard } from '../corporation/corporation.roles.guard';
 import { CORPORATION_ROLES } from '../corporation/corporation.constants';
+import { AllianceService } from '../alliance/alliance.service';
+import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
 
 @Controller('posts')
-@UseGuards(CorporationRolesGuard)
 export class PostController {
 
   constructor(
     private postService: PostService,
     private characterService: CharacterService,
     private corporationService: CorporationService,
+    private allianceService: AllianceService,
   ) {
   }
 
@@ -51,6 +52,19 @@ export class PostController {
   ) {
     const corporation = await this.corporationService.get(corporationId);
     const posts = await this.postService.getCorporationWall(corporation, limit, page);
+
+    res.status(HttpStatus.OK).json(posts);
+  }
+
+  @Get('/alliance/:allianceId')
+  public async getAllianceWall(
+    @Response() res,
+    @Param('allianceId') allianceId,
+    @Query('limit') limit,
+    @Query('page') page,
+  ) {
+    const alliance = await this.allianceService.get(allianceId);
+    const posts = await this.postService.getAllianceWall(alliance, limit, page);
 
     res.status(HttpStatus.OK).json(posts);
   }
@@ -84,6 +98,24 @@ export class PostController {
     @Body('post') postData: ICreatePostRequest,
   ) {
     const post = await this.postService.createAsCorporation(postData, req.character.corporation);
+
+    res.status(HttpStatus.CREATED).json(post);
+  }
+
+  @Post('/alliance')
+  @UseGuards(CorporationAllianceExecutorGuard)
+  @CorporationRoles(
+    CORPORATION_ROLES.DIRECTOR,
+    CORPORATION_ROLES.DIPLOMAT,
+    CORPORATION_ROLES.COMMUNICATION_OFFICER)
+  public async createAsAlliance(
+    @Request() req,
+    @Response() res,
+    @Body('post') postData: ICreatePostRequest,
+  ) {
+    const post = await this.postService.createAsAlliance(
+      postData,
+      req.character.corporation.alliance);
 
     res.status(HttpStatus.CREATED).json(post);
   }

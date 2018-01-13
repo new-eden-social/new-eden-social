@@ -9,6 +9,8 @@ import { postProviders } from './post.providers';
 import { CharacterExistsMiddleware } from '../character/character.exists.middleware';
 import { CorporationModule } from '../corporation/corporation.module';
 import { CorporationExistsMiddleware } from '../corporation/corporation.exists.middleware';
+import { AllianceModule } from '../alliance/alliance.module';
+import { AllianceExistsMiddleware } from '../alliance/alliance.exists.middleware';
 
 @Module({
   modules: [
@@ -16,6 +18,7 @@ import { CorporationExistsMiddleware } from '../corporation/corporation.exists.m
     AuthenticationModule,
     CharacterModule,
     CorporationModule,
+    AllianceModule,
   ],
   controllers: [
     PostController,
@@ -35,6 +38,7 @@ export class PostModule {
     .forRoutes(
       { path: 'posts/character', method: RequestMethod.POST },
       { path: 'posts/corporation', method: RequestMethod.POST },
+      { path: 'posts/alliance', method: RequestMethod.POST },
     );
 
     consumer.apply(CharacterExistsMiddleware)
@@ -45,6 +49,11 @@ export class PostModule {
     consumer.apply(CorporationExistsMiddleware)
     .forRoutes({
       path: 'posts/corporation/:corporationId', method: RequestMethod.GET,
+    });
+
+    consumer.apply(AllianceExistsMiddleware)
+    .forRoutes({
+      path: 'posts/alliance/:allianceId', method: RequestMethod.GET,
     });
   }
 }

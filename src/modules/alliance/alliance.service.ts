@@ -8,6 +8,7 @@ import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
 import { CorporationService } from '../corporation/corporation.service';
 import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
 import Log from '../../utils/Log';
+import { Corporation } from '../corporation/corporation.entity';
 
 export class AllianceService implements IService<Alliance> {
 
@@ -56,6 +57,20 @@ export class AllianceService implements IService<Alliance> {
   }
 
   /**
+   * Get alliance executor corporation
+   * @param {number} id
+   * @returns {Promise<Corporation>}
+   */
+  public async getExecutorCorporation(id: number): Promise<Corporation> {
+    const alliance = await this.allianceRepository.findOne({
+      where: { id },
+      relations: ['executorCorporation'],
+    });
+
+    return alliance.executorCorporation;
+  }
+
+  /**
    * Find alliance by id
    * @param {number} id
    * @returns {Promise<Alliance>}
@@ -75,11 +90,12 @@ export class AllianceService implements IService<Alliance> {
     // Save without corporation
     await this.allianceRepository.save(alliance);
 
-    if (esiAlliance.executor_corp && esiAlliance.executor_corp !== 1) {
-      Log.debug('Alliance get executor corporation', esiAlliance.executor_corp);
+    if (esiAlliance.executor_corporation_id && esiAlliance.executor_corporation_id !== 1) {
+      Log.debug('Alliance get executor corporation', esiAlliance.executor_corporation_id);
       // Load corporation
-      alliance.executorCorporation = await this.corporationService.get(esiAlliance.executor_corp);
-      Log.debug('Alliance done get executor corporation', esiAlliance.executor_corp);
+      alliance.executorCorporation =
+        await this.corporationService.get(esiAlliance.executor_corporation_id);
+      Log.debug('Alliance done get executor corporation', esiAlliance.executor_corporation_id);
 
       // Update corporation id
       await this.allianceRepository.updateById(alliance.id, {

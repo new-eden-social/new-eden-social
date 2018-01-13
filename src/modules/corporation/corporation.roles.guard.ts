@@ -20,7 +20,7 @@ export class CorporationRolesGuard implements CanActivate {
     const character = req.character;
     const { roles } = await this.characterService.getRoles(character.id);
 
-    Log.debug('[CorporationRolesGuard]', roles, requiredRoles);
+    Log.debug('[CorporationAllianceExecutorGuard]', roles, requiredRoles);
 
     const hasRole = () => !!roles.find(
       role => !!requiredRoles.find(item => item === role));

@@ -3,6 +3,7 @@ import { IAllianceStatistics } from '../external/zkillboard/zkillboard.interface
 import { IGetAlliance } from '../external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
 import { IAllianceResponse } from './alliance.interface';
+import { Post } from '../post/post.entity';
 
 @Entity()
 export class Alliance {
@@ -25,6 +26,12 @@ export class Alliance {
   @OneToOne(type => Corporation, corporation => corporation.executingAlliance)
   @JoinColumn()
   executorCorporation: Corporation;
+
+  @OneToMany(type => Post, post => post.allianceWall)
+  wall: Post[];
+
+  @OneToMany(type => Post, post => post.alliance)
+  posts: Post[];
 
   /**
    * Provided by zKillboard

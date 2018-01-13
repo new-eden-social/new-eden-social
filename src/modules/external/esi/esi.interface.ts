@@ -4,7 +4,9 @@ declare module ESI {
     readonly id: number;
     readonly ticker: string;
     readonly name: string;
-    readonly executor_corp: number;
+    readonly creator_id: number;
+    readonly creator_corporation_id: number;
+    readonly executor_corporation_id: number;
     readonly date_founded: Date;
   }
 
