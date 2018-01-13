@@ -1,4 +1,13 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+} from 'typeorm';
 import { Character } from '../character/character.entity';
 import { Comment } from '../comment/comment.entity';
 import { v4 as uuid } from 'uuid';
@@ -7,6 +16,7 @@ import { Killmail } from '../killmail/killmail.entity';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { ICreatePostRequest } from './post.validate';
+import { Hashtag } from '../hashtag/hashtag.entity';
 
 @Entity()
 export class Post {
@@ -49,6 +59,10 @@ export class Post {
 
   @ManyToOne(type => Alliance, alliance => alliance.wall, { nullable: true })
   allianceWall?: Alliance;
+
+  @ManyToMany(type => Hashtag, { eager: true })
+  @JoinTable()
+  hashtags: Hashtag[];
 
   constructor(postData?: ICreatePostRequest) {
     this.id = uuid();

@@ -69,6 +69,18 @@ export class PostController {
     res.status(HttpStatus.OK).json(posts);
   }
 
+  @Get('/hashtag/:hashtag')
+  public async getByHashtag(
+    @Response() res,
+    @Param('hashtag') hashtag,
+    @Query('limit') limit,
+    @Query('page') page,
+  ) {
+    const posts = await this.postService.getByHashtag(hashtag, limit, page);
+
+    res.status(HttpStatus.OK).json(posts);
+  }
+
   @Get('/:id')
   public async get(@Response() res, @Param('id') postId) {
     const post = await this.postService.get(postId);
