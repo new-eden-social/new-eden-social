@@ -7,8 +7,9 @@ import { Character } from '../character/character.entity';
 @Component()
 export class AuthenticationService {
 
-  constructor(private ssoService: SSOService,
-              private charactersService: CharacterService,
+  constructor(
+    private ssoService: SSOService,
+    private charactersService: CharacterService,
   ) {
   }
 

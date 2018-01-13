@@ -1,4 +1,4 @@
-import { IsIn, IsNumber, IsOptional, IsString, ValidateIf } from 'class-validator';
+import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ICharacterResponse } from '../character/character.interface';
 import { CREATABLE_TYPES } from './post.constants';
 
@@ -14,11 +14,11 @@ export class ICreatePostRequest {
   @IsNumber()
   locationId: number;
 
-  @ValidateIf(o => !o.characterId)
+  @IsOptional()
   @IsNumber()
   corporationId: number;
 
-  @ValidateIf(o => !o.corporationId)
+  @IsOptional()
   @IsNumber()
   characterId: number;
 

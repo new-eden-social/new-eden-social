@@ -73,6 +73,7 @@ export class PostController {
   }
 
   @Post('/corporation')
+  // TODO: Add roles to constants
   @CorporationRoles('Director', 'Diplomat', 'Communications Officer')
   public async createAsCorporation(
     @Request() req,
