@@ -5,7 +5,6 @@ export interface ICorporationResponse {
   name: string;
   ticker: string;
   description: string;
-  url: string;
   alliance: IAllianceResponse;
 
   /* LIVE Data*/

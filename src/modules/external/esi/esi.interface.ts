@@ -13,7 +13,6 @@ declare module ESI {
     readonly ticker: string;
     readonly name: string;
     readonly description: string;
-    readonly url: string;
     readonly creator_id: number;
     readonly ceo_id: number;
     readonly alliance_id: number;

@@ -21,9 +21,6 @@ export class Corporation {
   @Column('text')
   description: string;
 
-  @Column()
-  url: string;
-
   @ManyToOne(type => Character, character => character.corporationCeo)
   ceo?: Character;
 
@@ -77,7 +74,6 @@ export class Corporation {
       name: this.name,
       ticker: this.ticker,
       description: this.description,
-      url: this.url,
       alliance: this.alliance ? this.alliance.response : null,
       iskDestroyed: this.iskDestroyed,
       iskLost: this.iskLost,
@@ -94,7 +90,6 @@ export class Corporation {
     this.name = corp.name;
     this.ticker = corp.ticker;
     this.description = corp.description;
-    this.url = corp.url;
     this.createdAt = corp.creation_date;
     this.taxRate = corp.tax_rate;
   }
