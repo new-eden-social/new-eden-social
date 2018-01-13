@@ -11,13 +11,14 @@ import {
   IGetCharacterRoles,
   IGetCorporation,
   ISearch,
+  IUniverseNames,
 } from './esi.interface';
-import { Character } from '../../character/character.entity';
-import { Corporation } from '../../corporation/corporation.entity';
-import { Alliance } from '../../alliance/alliance.entity';
-import { Utils } from '../../../utils/utils.static';
+import { Character } from '../../../character/character.entity';
+import { Corporation } from '../../../corporation/corporation.entity';
+import { Alliance } from '../../../alliance/alliance.entity';
+import { Utils } from '../../../../utils/utils.static';
 import { ESIEntetyNotFoundException } from './esi.exceptions';
-import Log from '../../../utils/Log';
+import Log from '../../../../utils/Log';
 import { RequestContext } from '../../requestContext/requestContext';
 
 @Component()
@@ -41,6 +42,7 @@ export class ESIService {
    * Search for alliances, characters, corporations
    * @param query
    * @return {Promise<ISearch>}
+   * @url https://esi.tech.ccp.is/ui/#/operations/Search/get_search
    */
   public async search(query: string): Promise<ISearch> {
     return this.request<ISearch>({
@@ -54,9 +56,24 @@ export class ESIService {
   }
 
   /**
+   * Get universe names for ids
+   * @param {number[]} ids
+   * @returns {Promise<IUniverseNames>}
+   * @url https://esi.tech.ccp.is/ui/#/operations/Universe/post_universe_names
+   */
+  public async universeNames(ids: number[]): Promise<IUniverseNames> {
+    return this.request<IUniverseNames>({
+      url: 'universe/names/',
+      method: 'POST',
+      data: ids,
+    });
+  }
+
+  /**
    * Get character names for ids
    * @param ids
    * @return {Promise<ICharacterName>}
+   * @url https://esi.tech.ccp.is/ui/#/operations/Character/get_characters_names
    */
   public async characterNames(ids: number[]): Promise<Character[]> {
     const characters = await this.request<ICharacterName[]>({
@@ -80,6 +97,7 @@ export class ESIService {
    * Get corporation names for ids
    * @param ids
    * @return {Promise<Corporation[]>}
+   * @url https://esi.tech.ccp.is/ui/#/operations/Corporation/get_corporations_names
    */
   public async corporationNames(ids: number[]): Promise<Corporation[]> {
     const corporations = await this.request<ICorporationName[]>({
@@ -103,6 +121,7 @@ export class ESIService {
    * Get alliance names for ids
    * @param ids
    * @return {Promise<Alliance[]>}
+   * @url https://esi.tech.ccp.is/ui/#/operations/Alliance/get_alliances_names
    */
   public async allianceNames(ids: number[]): Promise<Alliance[]> {
     const alliances = await this.request<IAllianceName[]>({
@@ -127,6 +146,7 @@ export class ESIService {
    * Get character by id
    * @param id
    * @return {Promise<IGetCharacter>}
+   * @url https://esi.tech.ccp.is/ui/#/operations/Character/get_characters_character_id
    */
   public async getCharacter(id: number): Promise<IGetCharacter> {
     return this.request<IGetCharacter>({
@@ -139,6 +159,7 @@ export class ESIService {
    * Get character portrait
    * @param id
    * @return {Promise<IGetCharacterPortrait>}
+   * @url https://esi.tech.ccp.is/ui/#/operations/Character/get_characters_character_id_portrait
    */
   public async getCharacterPortrait(id: number): Promise<IGetCharacterPortrait> {
     return this.request<IGetCharacterPortrait>({
@@ -148,9 +169,11 @@ export class ESIService {
   }
 
   /**
-   * Get character roles [ Authenticated ]
+   * Get character roles
    * @param {number} id
    * @return {Promise<IGetCorporation>}
+   * @authenticated
+   * @url https://esi.tech.ccp.is/ui/#/operations/Character/get_characters_character_id_roles
    */
   public async getCharacterRoles(id: number): Promise<IGetCharacterRoles> {
     return this.request<IGetCharacterRoles>({
@@ -163,6 +186,7 @@ export class ESIService {
    * Get corporation by id
    * @param id
    * @return {Promise<IGetCorporation>}
+   * @url https://esi.tech.ccp.is/ui/#/operations/Corporation/get_corporations_corporation_id
    */
   public async getCorporation(id: number): Promise<IGetCorporation> {
     return this.request<IGetCorporation>({
@@ -175,6 +199,7 @@ export class ESIService {
    * Get alliance by id
    * @param {number} id
    * @returns {Promise<IGetAlliance>}
+   * @url https://esi.tech.ccp.is/ui/#/operations/Alliance/get_alliances_alliance_id
    */
   public async getAlliance(id: number): Promise<IGetAlliance> {
     return this.request<IGetAlliance>({
@@ -218,6 +243,7 @@ export class ESIService {
       return response.data;
     } catch (err) {
       Log.warning('ESI Error', err);
+      console.log(err);
       /**
        * Transform underlying request exceptions to ESI Exceptions
        */

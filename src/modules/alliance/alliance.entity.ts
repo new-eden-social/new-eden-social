@@ -1,8 +1,9 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
-import { IAllianceStatistics } from '../external/zkillboard/zkillboard.interface';
-import { IGetAlliance } from '../external/esi/esi.interface';
+import { IAllianceStatistics } from '../common/external/zkillboard/zkillboard.interface';
+import { IGetAlliance } from '../common/external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
 import { IAllianceResponse } from './alliance.interface';
+import { Post } from '../post/post.entity';
 
 @Entity()
 export class Alliance {
@@ -25,6 +26,12 @@ export class Alliance {
   @OneToOne(type => Corporation, corporation => corporation.executingAlliance)
   @JoinColumn()
   executorCorporation: Corporation;
+
+  @OneToMany(type => Post, post => post.allianceWall)
+  wall: Post[];
+
+  @OneToMany(type => Post, post => post.alliance)
+  posts: Post[];
 
   /**
    * Provided by zKillboard
@@ -67,7 +74,7 @@ export class Alliance {
   }
 
   public populateESI(alliance: IGetAlliance) {
-    this.name = alliance.alliance_name;
+    this.name = alliance.name;
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.date_founded;
   }

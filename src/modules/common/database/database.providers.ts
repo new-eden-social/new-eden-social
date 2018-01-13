@@ -13,7 +13,7 @@ export const databaseProviders = [
           url: process.env.DB_URL,
           logging: <LoggerOptions>process.env.DB_LOG,
           entities: [
-            __dirname + '/../**/*.entity.*',
+            __dirname + '/../../**/*.entity.*',
           ],
           synchronize: process.env.DB_SYNC === 'true',
           cache: {
@@ -36,7 +36,7 @@ export const databaseProviders = [
         database: process.env.DB_NAME,
         logging: <LoggerOptions>process.env.DB_LOG,
         entities: [
-          __dirname + '/../**/*.entity.ts',
+          __dirname + '/../../**/*.entity.ts',
         ],
         synchronize: process.env.DB_SYNC === 'true',
         cache: {

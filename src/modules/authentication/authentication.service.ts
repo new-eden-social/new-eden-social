@@ -1,14 +1,15 @@
 import { Component } from '@nestjs/common';
-import { SSOService } from '../external/sso/sso.service';
-import { IAuthenticationResponse } from '../external/sso/sso.interface';
+import { SSOService } from '../common/external/sso/sso.service';
+import { IAuthenticationResponse } from '../common/external/sso/sso.interface';
 import { CharacterService } from '../character/character.service';
 import { Character } from '../character/character.entity';
 
 @Component()
 export class AuthenticationService {
 
-  constructor(private ssoService: SSOService,
-              private charactersService: CharacterService,
+  constructor(
+    private ssoService: SSOService,
+    private charactersService: CharacterService,
   ) {
   }
 

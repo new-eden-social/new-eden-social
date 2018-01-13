@@ -1,5 +1,5 @@
 import { Connection } from 'typeorm';
-import { DB_CONNECTION_TOKEN } from '../database/database.constants';
+import { DB_CONNECTION_TOKEN } from '../common/database/database.constants';
 import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
 import { Killmail } from './killmail.entity';
 

@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
-import { ICorporationStatistics } from '../external/zkillboard/zkillboard.interface';
-import { IGetCorporation } from '../external/esi/esi.interface';
+import { ICorporationStatistics } from '../common/external/zkillboard/zkillboard.interface';
+import { IGetCorporation } from '../common/external/esi/esi.interface';
 import { Character } from '../character/character.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { ICorporationResponse } from './corporation.interface';
@@ -20,9 +20,6 @@ export class Corporation {
 
   @Column('text')
   description: string;
-
-  @Column()
-  url: string;
 
   @ManyToOne(type => Character, character => character.corporationCeo)
   ceo?: Character;
@@ -77,7 +74,6 @@ export class Corporation {
       name: this.name,
       ticker: this.ticker,
       description: this.description,
-      url: this.url,
       alliance: this.alliance ? this.alliance.response : null,
       iskDestroyed: this.iskDestroyed,
       iskLost: this.iskLost,
@@ -91,10 +87,9 @@ export class Corporation {
   }
 
   public populateESI(corp: IGetCorporation) {
-    this.name = corp.corporation_name;
+    this.name = corp.name;
     this.ticker = corp.ticker;
-    this.description = corp.corporation_description;
-    this.url = corp.url;
+    this.description = corp.description;
     this.createdAt = corp.creation_date;
     this.taxRate = corp.tax_rate;
   }

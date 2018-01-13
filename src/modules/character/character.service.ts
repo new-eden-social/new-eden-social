@@ -1,13 +1,13 @@
 import { Component, forwardRef, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Character } from './character.entity';
-import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
-import { ESIService } from '../external/esi/esi.service';
+import { ZKillboardService } from '../common/external/zkillboard/zkillboard.service';
+import { ESIService } from '../common/external/esi/esi.service';
 import { CHARACTER_REPOSITORY_TOKEN } from './character.constants';
 import { IService } from '../../interfaces/service.interface';
-import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
+import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
 import { CorporationService } from '../corporation/corporation.service';
-import { IGetCharacterRoles } from '../external/esi/esi.interface';
+import { IGetCharacterRoles } from '../common/external/esi/esi.interface';
 import Log from '../../utils/Log';
 
 @Component()
@@ -69,6 +69,11 @@ export class CharacterService implements IService<Character> {
     return true;
   }
 
+  /**
+   * Get character corporation roles
+   * @param {number} id
+   * @returns {Promise<IGetCharacterRoles>}
+   */
   public async getRoles(id: number): Promise<IGetCharacterRoles> {
     return this.esiService.getCharacterRoles(id);
   }

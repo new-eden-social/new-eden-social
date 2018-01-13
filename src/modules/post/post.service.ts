@@ -1,13 +1,17 @@
 import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Post } from './post.entity';
-import { ICreatePostRequest } from './post.interface';
+import { ICreatePostRequest } from './post.validate';
 import { Character } from '../character/character.entity';
 import { Killmail } from '../killmail/killmail.entity';
-import { POST_REPOSITORY_TOKEN, TYPES } from './post.constants';
+import { POST_REPOSITORY_TOKEN, POST_TYPES } from './post.constants';
 import { CorporationService } from '../corporation/corporation.service';
 import { CharacterService } from '../character/character.service';
 import { Corporation } from '../corporation/corporation.entity';
+import { Alliance } from '../alliance/alliance.entity';
+import { AllianceService } from '../alliance/alliance.service';
+import { HashtagService } from '../hashtag/hashtag.service';
+import { LocationService } from '../location/location.service';
 
 @Component()
 export class PostService {
@@ -16,6 +20,9 @@ export class PostService {
     @Inject(POST_REPOSITORY_TOKEN) private postRepository: Repository<Post>,
     private corporationService: CorporationService,
     private characterService: CharacterService,
+    private allianceService: AllianceService,
+    private hashtagService: HashtagService,
+    private locationService: LocationService,
   ) {
   }
 
@@ -41,13 +48,7 @@ export class PostService {
     const post = new Post(postData);
     post.character = character;
 
-    if (postData.corporationId)
-      post.corporationWall = await this.corporationService.get(postData.corporationId);
-
-    if (postData.characterId)
-      post.characterWall = await this.characterService.get(postData.characterId);
-
-    return this.postRepository.save(post);
+    return this.create(post, postData);
   }
 
   /**
@@ -63,13 +64,23 @@ export class PostService {
     const post = new Post(postData);
     post.corporation = corporation;
 
-    if (postData.corporationId)
-      post.corporationWall = await this.corporationService.get(postData.corporationId);
+    return this.create(post, postData);
+  }
 
-    if (postData.characterId)
-      post.characterWall = await this.characterService.get(postData.characterId);
+  /**
+   * Create Post as alliance
+   * @param {ICreatePostRequest} postData
+   * @param {Alliance} alliance
+   * @return {Promise<Post>}
+   */
+  public async createAsAlliance(
+    postData: ICreatePostRequest,
+    alliance: Alliance,
+  ): Promise<Post> {
+    const post = new Post(postData);
+    post.alliance = alliance;
 
-    return this.postRepository.save(post);
+    return this.create(post, postData);
   }
 
   /**
@@ -88,14 +99,16 @@ export class PostService {
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
     .leftJoinAndSelect('post.killmail', 'killmail')
+    .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
     .leftJoinAndSelect('killmail.participants', 'participant')
     .leftJoinAndSelect('participant.character', 'character')
     .where(
       'post."characterWallId" = :characterId OR character.id = :characterId',
       { characterId: character.id })
     .orderBy({ 'post."createdAt"': 'DESC' })
-    .skip(limit * page)
-    // FIXME: .take(limit)
+    .offset(limit * page)
+    .limit(limit)
     .getMany();
   }
 
@@ -115,14 +128,85 @@ export class PostService {
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
     .leftJoinAndSelect('post.killmail', 'killmail')
+    .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
     .leftJoinAndSelect('killmail.participants', 'participant')
     .leftJoinAndSelect('participant.character', 'character')
     .where(
-      'post."corporationWallId" = :corporationId OR character."corporationId" = :corporationId',
+      'post."corporationWallId" = :corporationId OR post."corporationId" = :corporationId',
       { corporationId: corporation.id })
     .orderBy({ 'post."createdAt"': 'DESC' })
-    .skip(limit * page)
-    // FIXME: .take(limit)
+    .offset(limit * page)
+    .limit(limit)
+    .getMany();
+  }
+
+  /**
+   * Get alliance wall
+   * @param {Alliance} alliance
+   * @param {Number} limit
+   * @param {Number} page
+   * @return {Promise<Post[]>}
+   */
+  public async getAllianceWall(
+    alliance: Alliance,
+    limit = 10,
+    page = 0,
+  ): Promise<Post[]> {
+    return this.postRepository
+    .createQueryBuilder('post')
+    .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('post.killmail', 'killmail')
+    .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
+    .leftJoinAndSelect('killmail.participants', 'participant')
+    .leftJoinAndSelect('participant.character', 'character')
+    .where(
+      'post."allianceWallId" = :allianceId OR post."allianceId" = :allianceId',
+      { allianceId: alliance.id })
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
+    .getMany();
+  }
+
+  public async getByHashtag(
+    hashtag: string,
+    limit = 10,
+    page = 0,
+  ): Promise<Post[]> {
+    return this.postRepository
+    .createQueryBuilder('post')
+    .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('post.killmail', 'killmail')
+    .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
+    .leftJoinAndSelect('killmail.participants', 'participant')
+    .leftJoinAndSelect('participant.character', 'character')
+    .where('hashtag."name" = :hashtag', { hashtag })
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
+    .getMany();
+  }
+
+  public async getByLocation(
+    locationId: number,
+    limit = 10,
+    page = 0,
+  ): Promise<Post[]> {
+    return this.postRepository
+    .createQueryBuilder('post')
+    .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('post.killmail', 'killmail')
+    .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
+    .leftJoinAndSelect('killmail.participants', 'participant')
+    .leftJoinAndSelect('participant.character', 'character')
+    .where('location."id" = :locationId', { locationId })
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
     .getMany();
   }
 
@@ -134,11 +218,37 @@ export class PostService {
    */
   public async createKillmailPost(killmail: Killmail, finalBlow: Character): Promise<Post> {
     const post = new Post();
-    post.type = TYPES.KILLMAIL;
+    post.type = POST_TYPES.KILLMAIL;
     post.killmail = killmail;
     post.character = finalBlow;
-    post.locationId = killmail.locationId;
     post.createdAt = killmail.createdAt;
+
+    if (killmail.locationId)
+      post.location = await this.locationService.get(killmail.locationId);
+
+    return this.postRepository.save(post);
+  }
+
+  /**
+   * Create post
+   * @param {Post} post
+   * @param {ICreatePostRequest} postData
+   * @returns {Promise<Post>}
+   */
+  private async create(post: Post, postData: ICreatePostRequest): Promise<Post> {
+    if (postData.allianceId)
+      post.allianceWall = await this.allianceService.get(postData.allianceId);
+
+    if (postData.corporationId)
+      post.corporationWall = await this.corporationService.get(postData.corporationId);
+
+    if (postData.characterId)
+      post.characterWall = await this.characterService.get(postData.characterId);
+
+    if (postData.locationId)
+      post.location = await this.locationService.get(postData.locationId);
+
+    post.hashtags = await this.hashtagService.parse(post.content);
 
     return this.postRepository.save(post);
   }

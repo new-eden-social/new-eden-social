@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm';
 import { Character } from './character.entity';
-import { DB_CONNECTION_TOKEN } from '../database/database.constants';
+import { DB_CONNECTION_TOKEN } from '../common/database/database.constants';
 import { CHARACTER_REPOSITORY_TOKEN } from './character.constants';
 
 export const characterProviders = [
