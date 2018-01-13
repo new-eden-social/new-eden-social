@@ -18,6 +18,11 @@
     <img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join Gitter Chat" />
   </a>
 </div>
+<div align="center">
+    <a target="_blank" href="https://waffle.io/evebook/api">
+    <img src="https://badge.waffle.io/evebook/api.svg?columns=all" alt="Waffle.io - Columns and their card count" />
+  </a>
+</div>
 
 ## What's it about
 Project was started with an idea of creating social platform for players of EVE Online. A place where players could connect and share their experiences, fan art, images, videos, thoughts, propaganda...
