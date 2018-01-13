@@ -118,7 +118,7 @@ export class PostService {
     .leftJoinAndSelect('killmail.participants', 'participant')
     .leftJoinAndSelect('participant.character', 'character')
     .where(
-      'post."corporationWallId" = :corporationId OR character."corporationId" = :corporationId',
+      'post."corporationWallId" = :corporationId OR post."corporationId" = :corporationId',
       { corporationId: corporation.id })
     .orderBy({ 'post."createdAt"': 'DESC' })
     .skip(limit * page)

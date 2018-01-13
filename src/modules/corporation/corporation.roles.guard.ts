@@ -12,14 +12,13 @@ export class CorporationRolesGuard implements CanActivate {
     const { parent, handler } = context;
 
     const requiredRoles = this.reflector.get<string[]>('corporationRoles', handler);
-    console.log(requiredRoles);
 
     if (!requiredRoles) {
       return true;
     }
 
     const character = req.character;
-    const roles = await this.characterService.getRoles(character.id);
+    const { roles } = await this.characterService.getRoles(character.id);
 
     Log.debug('[CorporationRolesGuard]', roles, requiredRoles);
 

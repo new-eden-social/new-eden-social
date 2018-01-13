@@ -16,6 +16,7 @@ import { CharacterService } from '../character/character.service';
 import { CorporationService } from '../corporation/corporation.service';
 import { CorporationRoles } from '../corporation/corporation.roles.decorator';
 import { CorporationRolesGuard } from '../corporation/corporation.roles.guard';
+import { CORPORATION_ROLES } from '../corporation/corporation.constants';
 
 @Controller('posts')
 @UseGuards(CorporationRolesGuard)
@@ -73,8 +74,10 @@ export class PostController {
   }
 
   @Post('/corporation')
-  // TODO: Add roles to constants
-  @CorporationRoles('Director', 'Diplomat', 'Communications Officer')
+  @CorporationRoles(
+    CORPORATION_ROLES.DIRECTOR,
+    CORPORATION_ROLES.DIPLOMAT,
+    CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsCorporation(
     @Request() req,
     @Response() res,
