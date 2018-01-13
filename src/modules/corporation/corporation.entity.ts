@@ -91,9 +91,9 @@ export class Corporation {
   }
 
   public populateESI(corp: IGetCorporation) {
-    this.name = corp.corporation_name;
+    this.name = corp.name;
     this.ticker = corp.ticker;
-    this.description = corp.corporation_description;
+    this.description = corp.description;
     this.url = corp.url;
     this.createdAt = corp.creation_date;
     this.taxRate = corp.tax_rate;

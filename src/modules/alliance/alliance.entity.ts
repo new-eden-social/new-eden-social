@@ -67,7 +67,7 @@ export class Alliance {
   }
 
   public populateESI(alliance: IGetAlliance) {
-    this.name = alliance.alliance_name;
+    this.name = alliance.name;
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.date_founded;
   }

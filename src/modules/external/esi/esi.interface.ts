@@ -3,7 +3,7 @@ declare module ESI {
   interface IGetAlliance {
     readonly id: number;
     readonly ticker: string;
-    readonly alliance_name: string;
+    readonly name: string;
     readonly executor_corp: number;
     readonly date_founded: Date;
   }
@@ -11,8 +11,8 @@ declare module ESI {
   interface IGetCorporation {
     readonly id: number;
     readonly ticker: string;
-    readonly corporation_name: string;
-    readonly corporation_description: string;
+    readonly name: string;
+    readonly description: string;
     readonly url: string;
     readonly creator_id: number;
     readonly ceo_id: number;
