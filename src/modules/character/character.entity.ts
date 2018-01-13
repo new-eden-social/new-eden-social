@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
-import { ICharacterStatistics } from '../external/zkillboard/zkillboard.interface';
-import { IGetCharacter } from '../external/esi/esi.interface';
+import { ICharacterStatistics } from '../common/external/zkillboard/zkillboard.interface';
+import { IGetCharacter } from '../common/external/esi/esi.interface';
 import { Post } from '../post/post.entity';
 import { Comment } from '../comment/comment.entity';
 import { ICharacterPortrait, ICharacterResponse } from './character.interface';

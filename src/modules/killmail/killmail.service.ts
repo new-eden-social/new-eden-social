@@ -1,11 +1,11 @@
 import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Killmail } from './killmail.entity';
-import { KillmailsStreamService } from '../external/killmailsStream/killmailsStream.service';
-import { IKillmailStream } from '../external/killmailsStream/killmailsStream.interface';
+import { KillmailsStreamService } from '../common/external/killmailsStream/killmailsStream.service';
+import { IKillmailStream } from '../common/external/killmailsStream/killmailsStream.interface';
 import { KillmailParticipantService } from './participant/participant.service';
 import { IKillmailResponse } from './killmail.interface';
-import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
+import { ZKillboardService } from '../common/external/zkillboard/zkillboard.service';
 import { PostService } from '../post/post.service';
 import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
 import Log from '../../utils/Log';

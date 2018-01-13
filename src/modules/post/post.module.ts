@@ -1,7 +1,7 @@
 import { MiddlewaresConsumer, Module, RequestMethod } from '@nestjs/common';
 import { PostController } from './post.controller';
 import { PostService } from './post.service';
-import { DatabaseModule } from '../database/database.module';
+import { DatabaseModule } from '../common/database/database.module';
 import { AuthMiddleware } from '../authentication/authentication.middleware';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { CharacterModule } from '../character/character.module';

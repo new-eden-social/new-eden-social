@@ -5,7 +5,7 @@ import {
   IKillmailStreamAttacker,
   IKillmailStreamVictim,
   TKillmailStreamParticipant,
-} from '../../external/killmailsStream/killmailsStream.interface';
+} from '../../common/external/killmailsStream/killmailsStream.interface';
 import { CharacterService } from '../../character/character.service';
 import { IParticipantResponse } from './participant.interface';
 import { KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN } from './participant.constants';

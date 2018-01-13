@@ -1,5 +1,5 @@
 import { Component } from '@nestjs/common';
-import { ESIService } from '../external/esi/esi.service';
+import { ESIService } from '../common/external/esi/esi.service';
 import { Character } from '../character/character.entity';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';

@@ -1,9 +1,9 @@
 import { Component, forwardRef, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
-import { ESIService } from '../external/esi/esi.service';
+import { ZKillboardService } from '../common/external/zkillboard/zkillboard.service';
+import { ESIService } from '../common/external/esi/esi.service';
 import { IService } from '../../interfaces/service.interface';
-import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
+import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
 import { Corporation } from './corporation.entity';
 import { CORPORATION_REPOSITORY_TOKEN } from './corporation.constants';
 import { CharacterService } from '../character/character.service';

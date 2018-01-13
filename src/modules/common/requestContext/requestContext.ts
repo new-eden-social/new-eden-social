@@ -1,4 +1,4 @@
-import { Character } from '../character/character.entity';
+import { Character } from '../../character/character.entity';
 import { Request, Response } from '@nestjs/common';
 
 declare const Zone;

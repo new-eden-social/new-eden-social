@@ -1,6 +1,6 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
-import { IAllianceStatistics } from '../external/zkillboard/zkillboard.interface';
-import { IGetAlliance } from '../external/esi/esi.interface';
+import { IAllianceStatistics } from '../common/external/zkillboard/zkillboard.interface';
+import { IGetAlliance } from '../common/external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
 import { IAllianceResponse } from './alliance.interface';
 import { Post } from '../post/post.entity';

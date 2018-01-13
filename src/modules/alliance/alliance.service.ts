@@ -3,10 +3,10 @@ import { Alliance } from './alliance.entity';
 import { forwardRef, Inject } from '@nestjs/common';
 import { ALLIANCE_REPOSITORY_TOKEN } from './alliance.constants';
 import { IService } from '../../interfaces/service.interface';
-import { ESIService } from '../external/esi/esi.service';
-import { ZKillboardService } from '../external/zkillboard/zkillboard.service';
+import { ESIService } from '../common/external/esi/esi.service';
+import { ZKillboardService } from '../common/external/zkillboard/zkillboard.service';
 import { CorporationService } from '../corporation/corporation.service';
-import { ESIEntetyNotFoundException } from '../external/esi/esi.exceptions';
+import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
 import Log from '../../utils/Log';
 import { Corporation } from '../corporation/corporation.entity';
 

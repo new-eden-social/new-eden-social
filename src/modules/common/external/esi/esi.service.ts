@@ -12,12 +12,12 @@ import {
   IGetCorporation,
   ISearch,
 } from './esi.interface';
-import { Character } from '../../character/character.entity';
-import { Corporation } from '../../corporation/corporation.entity';
-import { Alliance } from '../../alliance/alliance.entity';
-import { Utils } from '../../../utils/utils.static';
+import { Character } from '../../../character/character.entity';
+import { Corporation } from '../../../corporation/corporation.entity';
+import { Alliance } from '../../../alliance/alliance.entity';
+import { Utils } from '../../../../utils/utils.static';
 import { ESIEntetyNotFoundException } from './esi.exceptions';
-import Log from '../../../utils/Log';
+import Log from '../../../../utils/Log';
 import { RequestContext } from '../../requestContext/requestContext';
 
 @Component()

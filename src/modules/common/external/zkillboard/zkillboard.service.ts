@@ -6,7 +6,7 @@ import {
   ICorporationStatistics,
 } from './zkillboard.interface';
 import { CacheService } from '../../cache/cache.service';
-import { Utils } from '../../../utils/utils.static';
+import { Utils } from '../../../../utils/utils.static';
 
 @Component()
 export class ZKillboardService {
