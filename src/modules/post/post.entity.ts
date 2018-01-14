@@ -11,7 +11,6 @@ import {
 import { Character } from '../character/character.entity';
 import { Comment } from '../comment/comment.entity';
 import { v4 as uuid } from 'uuid';
-import { IPostResponse } from './post.interface';
 import { Killmail } from '../killmail/killmail.entity';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
@@ -73,19 +72,5 @@ export class Post {
       this.content = postData.content;
       this.type = postData.type;
     }
-  }
-
-  /**
-   * Get Response
-   * @return {IPostResponse}
-   */
-  get response(): IPostResponse {
-    return {
-      id: this.id,
-      content: this.content,
-      type: this.type,
-
-      character: this.character.response,
-    };
   }
 }

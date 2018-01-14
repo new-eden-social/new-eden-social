@@ -4,8 +4,6 @@ import { Killmail } from './killmail.entity';
 import { KillmailsStreamService } from '../common/external/killmailsStream/killmailsStream.service';
 import { IKillmailStream } from '../common/external/killmailsStream/killmailsStream.interface';
 import { KillmailParticipantService } from './participant/participant.service';
-import { IKillmailResponse } from './killmail.interface';
-import { ZKillboardService } from '../common/external/zkillboard/zkillboard.service';
 import { PostService } from '../post/post.service';
 import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
 import Log from '../../utils/Log';
@@ -20,33 +18,6 @@ export class KillmailService {
     private postService: PostService,
   ) {
     this.killmailsStreamService.subscribe(this.create.bind(this));
-  }
-
-  /**
-   *
-   * @param {Killmail} killmail
-   * @return {Promise<IKillmailResponse>}
-   */
-  public async formatKillmailResponse(killmail: Killmail): Promise<IKillmailResponse> {
-    const victim = await this.killmailParticipantService
-    .formatParticipantResponse(killmail.participants.filter(
-      participant => participant.type === 'victim')[0]);
-
-    const attackers = await Promise.all(killmail.participants
-    .filter(participant => participant.type === 'attacker')
-    .map(killer => this.killmailParticipantService.formatParticipantResponse(killer)));
-
-    return {
-      victim,
-      attackers,
-      id: killmail.id,
-      url: ZKillboardService.createKillUrl(killmail.id),
-      locationId: killmail.locationId,
-      totalValue: killmail.totalValue,
-      npc: killmail.npc,
-      warId: killmail.warId,
-      createdAt: killmail.createdAt,
-    };
   }
 
   /**

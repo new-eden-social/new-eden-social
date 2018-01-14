@@ -2,6 +2,7 @@ import { Component, HttpStatus } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { CacheService } from '../../cache/cache.service';
 import {
+  Categories,
   IAllianceName,
   ICharacterName,
   ICorporationName,
@@ -13,7 +14,6 @@ import {
   ISearch,
   IUniverseNames,
 } from './esi.interface';
-import { Character } from '../../../character/character.entity';
 import { Corporation } from '../../../corporation/corporation.entity';
 import { Alliance } from '../../../alliance/alliance.entity';
 import { Utils } from '../../../../utils/utils.static';
@@ -24,15 +24,16 @@ import { RequestContext } from '../../requestContext/requestContext';
 @Component()
 export class ESIService {
 
-  private baseUrl = 'https://esi.tech.ccp.is/latest/';
-  private userAgent = `eve-book/${process.env.npm_package_version} https://github.com/evebook/api`;
+  private static baseUrl = 'https://esi.tech.ccp.is/latest/';
+  private static userAgent = `eve-book/${process.env.npm_package_version}`
+    + ` https://github.com/evebook/api`;
   private client: AxiosInstance;
 
   constructor(private cacheService: CacheService) {
     this.client = axios.create({
-      baseURL: this.baseUrl,
+      baseURL: ESIService.baseUrl,
       headers: {
-        'User-Agent': this.userAgent,
+        'User-Agent': ESIService.userAgent,
         Accept: 'application/json',
       },
     });
@@ -49,7 +50,7 @@ export class ESIService {
       url: 'search/',
       method: 'GET',
       params: {
-        categories: ['alliance', 'character', 'corporation'].join(','),
+        categories: [Categories.alliance, Categories.character, Categories.corporation].join(','),
         search: query,
       },
     });
@@ -75,21 +76,13 @@ export class ESIService {
    * @return {Promise<ICharacterName>}
    * @url https://esi.tech.ccp.is/ui/#/operations/Character/get_characters_names
    */
-  public async characterNames(ids: number[]): Promise<Character[]> {
-    const characters = await this.request<ICharacterName[]>({
+  public async characterNames(ids: number[]): Promise<ICharacterName[]> {
+    return await this.request<ICharacterName[]>({
       url: 'characters/names/',
       method: 'GET',
       params: {
         character_ids: ids.join(','),
       },
-    });
-
-    // Transform api response to Character
-    return characters.map((characterName) => {
-      const character = new Character();
-      character.id = characterName.character_id;
-      character.name = characterName.character_name;
-      return character;
     });
   }
 
@@ -99,21 +92,13 @@ export class ESIService {
    * @return {Promise<Corporation[]>}
    * @url https://esi.tech.ccp.is/ui/#/operations/Corporation/get_corporations_names
    */
-  public async corporationNames(ids: number[]): Promise<Corporation[]> {
-    const corporations = await this.request<ICorporationName[]>({
+  public async corporationNames(ids: number[]): Promise<ICorporationName[]> {
+    return await this.request<ICorporationName[]>({
       url: 'corporations/names/',
       method: 'GET',
       params: {
         corporation_ids: ids.join(','),
       },
-    });
-
-    // Transform api response to Corporation
-    return corporations.map((corporationName) => {
-      const corporation = new Corporation();
-      corporation.id = corporationName.corporation_id;
-      corporation.name = corporationName.corporation_name;
-      return corporation;
     });
   }
 
@@ -123,22 +108,13 @@ export class ESIService {
    * @return {Promise<Alliance[]>}
    * @url https://esi.tech.ccp.is/ui/#/operations/Alliance/get_alliances_names
    */
-  public async allianceNames(ids: number[]): Promise<Alliance[]> {
-    const alliances = await this.request<IAllianceName[]>({
+  public async allianceNames(ids: number[]): Promise<IAllianceName[]> {
+    return await this.request<IAllianceName[]>({
       url: 'alliances/names/',
       method: 'GET',
       params: {
         alliance_ids: ids.join(','),
       },
-    });
-
-
-    // Transform api response to Alliance
-    return alliances.map((allianceName) => {
-      const alliance = new Alliance();
-      alliance.id = allianceName.alliance_id;
-      alliance.name = allianceName.alliance_name;
-      return alliance;
     });
   }
 

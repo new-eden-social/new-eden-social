@@ -2,7 +2,6 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from '
 import { IAllianceStatistics } from '../common/external/zkillboard/zkillboard.interface';
 import { IGetAlliance } from '../common/external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
-import { IAllianceResponse } from './alliance.interface';
 import { Post } from '../post/post.entity';
 
 @Entity()
@@ -47,31 +46,6 @@ export class Alliance {
   soloLosses: number;
   memberCount: number;
   corpCount: number;
-
-  /**
-   * Get alliance response (This is what API returns)
-   * @returns {IAllianceResponse}
-   */
-  get response(): IAllianceResponse {
-    return {
-      id: this.id,
-      name: this.name,
-      ticker: this.ticker,
-      dateFounded: this.dateFounded,
-      executorCorporation: this.executorCorporation,
-      hasSupers: this.hasSupers,
-      iskDestroyed: this.iskDestroyed,
-      iskLost: this.iskLost,
-      pointsDestroyed: this.pointsDestroyed,
-      pointsLost: this.pointsLost,
-      shipsDestroyed: this.shipsDestroyed,
-      shipsLost: this.shipsLost,
-      soloKills: this.soloKills,
-      soloLosses: this.soloLosses,
-      memberCount: this.memberCount,
-      corpCount: this.corpCount,
-    };
-  }
 
   public populateESI(alliance: IGetAlliance) {
     this.name = alliance.name;

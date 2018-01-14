@@ -1,8 +1,10 @@
 import { Component } from '@nestjs/common';
 import { ESIService } from '../common/external/esi/esi.service';
-import { Character } from '../character/character.entity';
-import { Corporation } from '../corporation/corporation.entity';
-import { Alliance } from '../alliance/alliance.entity';
+import {
+  IAllianceName,
+  ICharacterName,
+  ICorporationName,
+} from '../common/external/esi/esi.interface';
 
 @Component()
 export class SearchService {
@@ -11,9 +13,9 @@ export class SearchService {
   }
 
   public async search(query: string): Promise<{
-    characters: Character[],
-    corporations: Corporation[],
-    alliances: Alliance[],
+    characters: ICharacterName[],
+    corporations: ICorporationName[],
+    alliances: IAllianceName[],
   }> {
     const searchResponse = await this.esiService.search(query);
 
