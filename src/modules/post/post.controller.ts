@@ -17,7 +17,7 @@ import { CorporationService } from '../corporation/corporation.service';
 import { CorporationRoles } from '../corporation/corporation.roles.decorator';
 import { CORPORATION_ROLES } from '../corporation/corporation.constants';
 import { AllianceService } from '../alliance/alliance.service';
-import { CorporationAllianceExecutorGuard, } from '../corporation/corporation.allianceExecutor.guard';
+import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
 import { DPost, DPostList } from './post.dto';
 
 @Controller('posts')
