@@ -2,7 +2,7 @@ import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Killmail } from './killmail.entity';
 import { KillmailsStreamService } from '../common/external/killmailsStream/killmailsStream.service';
-import { IKillmailStream, } from '../common/external/killmailsStream/killmailsStream.interface';
+import { IKillmailStream } from '../common/external/killmailsStream/killmailsStream.interface';
 import { KillmailParticipantService } from './participant/participant.service';
 import { PostService } from '../post/post.service';
 import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';

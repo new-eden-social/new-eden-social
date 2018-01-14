@@ -1,5 +1,6 @@
-import { DCorporationShortWithoutAlliance, } from '../corporation/corporation.dto';
+import { DCorporationShortWithoutAlliance } from '../corporation/corporation.dto';
 import { Alliance } from './alliance.entity';
+import { DPagination } from '../../dto/paggination.dto';
 
 export class DAllianceShort {
   id: number;
@@ -56,10 +57,9 @@ export class DAlliance {
   }
 }
 
-export class DAllianceList {
-  corporations: DAllianceShort[];
-
-  constructor(alliances: Alliance[]) {
-    this.corporations = alliances.map(alliance => new DAllianceShort(alliance));
+export class DAllianceList extends DPagination {
+  constructor(alliances: Alliance[], page: number, perPage: number, count: number) {
+    const formattedAlliances = alliances.map(alliance => new DAllianceShort(alliance));
+    super(formattedAlliances, page, perPage, count);
   }
 }

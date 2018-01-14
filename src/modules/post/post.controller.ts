@@ -17,7 +17,7 @@ import { CorporationService } from '../corporation/corporation.service';
 import { CorporationRoles } from '../corporation/corporation.roles.decorator';
 import { CORPORATION_ROLES } from '../corporation/corporation.constants';
 import { AllianceService } from '../alliance/alliance.service';
-import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
+import { CorporationAllianceExecutorGuard, } from '../corporation/corporation.allianceExecutor.guard';
 import { DPost, DPostList } from './post.dto';
 
 @Controller('posts')
@@ -35,13 +35,13 @@ export class PostController {
   public async getCharacterWall(
     @Response() res,
     @Param('characterId') characterId,
-    @Query('limit') limit,
-    @Query('page') page,
+    @Query('limit') limit = 10,
+    @Query('page') page = 0,
   ) {
     const character = await this.characterService.get(characterId);
-    const posts = await this.postService.getCharacterWall(character, limit, page);
+    const { posts, count } = await this.postService.getCharacterWall(character, limit, page);
 
-    const response = new DPostList(posts);
+    const response = new DPostList(posts, page, limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }
@@ -54,9 +54,9 @@ export class PostController {
     @Query('page') page,
   ) {
     const corporation = await this.corporationService.get(corporationId);
-    const posts = await this.postService.getCorporationWall(corporation, limit, page);
+    const { posts, count } = await this.postService.getCorporationWall(corporation, limit, page);
 
-    const response = new DPostList(posts);
+    const response = new DPostList(posts, page, limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }
@@ -69,9 +69,9 @@ export class PostController {
     @Query('page') page,
   ) {
     const alliance = await this.allianceService.get(allianceId);
-    const posts = await this.postService.getAllianceWall(alliance, limit, page);
+    const { posts, count } = await this.postService.getAllianceWall(alliance, limit, page);
 
-    const response = new DPostList(posts);
+    const response = new DPostList(posts, page, limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }
@@ -83,9 +83,9 @@ export class PostController {
     @Query('limit') limit,
     @Query('page') page,
   ) {
-    const posts = await this.postService.getByHashtag(hashtag, limit, page);
+    const { posts, count } = await this.postService.getByHashtag(hashtag, limit, page);
 
-    const response = new DPostList(posts);
+    const response = new DPostList(posts, page, limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }
@@ -97,9 +97,9 @@ export class PostController {
     @Query('limit') limit,
     @Query('page') page,
   ) {
-    const posts = await this.postService.getByLocation(locationId, limit, page);
+    const { posts, count } = await this.postService.getByLocation(locationId, limit, page);
 
-    const response = new DPostList(posts);
+    const response = new DPostList(posts, page, limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }

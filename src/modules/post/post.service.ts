@@ -1,5 +1,5 @@
 import { Component, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
+import { Brackets, ObjectLiteral, Repository } from 'typeorm';
 import { Post } from './post.entity';
 import { ICreatePostRequest } from './post.validate';
 import { Character } from '../character/character.entity';
@@ -96,26 +96,12 @@ export class PostService {
     character: Character,
     limit = 10,
     page = 0,
-  ): Promise<Post[]> {
-    return this.postRepository
-    .createQueryBuilder('post')
-    .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'authorCorporation')
-    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
-    .leftJoinAndSelect('post.killmail', 'killmail')
-    .leftJoinAndSelect('post.hashtags', 'hashtag')
-    .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
-    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
-    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
-    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
-    .where(
+  ): Promise<{ posts: Post[], count: number }> {
+    return this.getAll(
+      limit,
+      page,
       'post."characterWallId" = :characterId OR author.id = :characterId',
-      { characterId: character.id })
-    .orderBy({ 'post."createdAt"': 'DESC' })
-    .offset(limit * page)
-    .limit(limit)
-    .getMany();
+      { characterId: character.id });
   }
 
   /**
@@ -129,26 +115,12 @@ export class PostService {
     corporation: Corporation,
     limit = 10,
     page = 0,
-  ): Promise<Post[]> {
-    return this.postRepository
-    .createQueryBuilder('post')
-    .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'authorCorporation')
-    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
-    .leftJoinAndSelect('post.killmail', 'killmail')
-    .leftJoinAndSelect('post.hashtags', 'hashtag')
-    .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
-    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
-    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
-    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
-    .where(
+  ): Promise<{ posts: Post[], count: number }> {
+    return this.getAll(
+      limit,
+      page,
       'post."corporationWallId" = :corporationId OR post."corporationId" = :corporationId',
-      { corporationId: corporation.id })
-    .orderBy({ 'post."createdAt"': 'DESC' })
-    .offset(limit * page)
-    .limit(limit)
-    .getMany();
+      { corporationId: corporation.id });
   }
 
   /**
@@ -162,74 +134,42 @@ export class PostService {
     alliance: Alliance,
     limit = 10,
     page = 0,
-  ): Promise<Post[]> {
-    return this.postRepository
-    .createQueryBuilder('post')
-    .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'authorCorporation')
-    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
-    .leftJoinAndSelect('post.killmail', 'killmail')
-    .leftJoinAndSelect('post.hashtags', 'hashtag')
-    .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
-    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
-    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
-    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
-    .where(
+  ): Promise<{ posts: Post[], count: number }> {
+    return this.getAll(
+      limit,
+      page,
       'post."allianceWallId" = :allianceId OR post."allianceId" = :allianceId',
-      { allianceId: alliance.id })
-    .orderBy({ 'post."createdAt"': 'DESC' })
-    .offset(limit * page)
-    .limit(limit)
-    .getMany();
+      { allianceId: alliance.id });
   }
 
+  /**
+   * Get all posts for specific hashtag
+   * @param {string} hashtag
+   * @param {number} limit
+   * @param {number} page
+   * @returns {Promise<{posts: Post[]; count: number}>}
+   */
   public async getByHashtag(
     hashtag: string,
     limit = 10,
     page = 0,
-  ): Promise<Post[]> {
-    return this.postRepository
-    .createQueryBuilder('post')
-    .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'authorCorporation')
-    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
-    .leftJoinAndSelect('post.killmail', 'killmail')
-    .leftJoinAndSelect('post.hashtags', 'hashtag')
-    .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
-    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
-    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
-    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
-    .where('hashtag."name" = :hashtag', { hashtag })
-    .orderBy({ 'post."createdAt"': 'DESC' })
-    .offset(limit * page)
-    .limit(limit)
-    .getMany();
+  ): Promise<{ posts: Post[], count: number }> {
+    return this.getAll(limit, page, 'hashtag."name" = :hashtag', { hashtag });
   }
 
+  /**
+   * Get all posts for specific location
+   * @param {number} locationId
+   * @param {number} limit
+   * @param {number} page
+   * @returns {Promise<{posts: Post[]; count: number}>}
+   */
   public async getByLocation(
     locationId: number,
     limit = 10,
     page = 0,
-  ): Promise<Post[]> {
-    return this.postRepository
-    .createQueryBuilder('post')
-    .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'authorCorporation')
-    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
-    .leftJoinAndSelect('post.killmail', 'killmail')
-    .leftJoinAndSelect('post.hashtags', 'hashtag')
-    .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
-    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
-    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
-    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
-    .where('location."id" = :locationId', { locationId })
-    .orderBy({ 'post."createdAt"': 'DESC' })
-    .offset(limit * page)
-    .limit(limit)
-    .getMany();
+  ): Promise<{ posts: Post[], count: number }> {
+    return this.getAll(limit, page, 'location."id" = :locationId', { locationId });
   }
 
   /**
@@ -255,6 +195,41 @@ export class PostService {
     }
 
     return this.postRepository.save(post);
+  }
+
+  /**
+   * Wrapper for querying posts
+   * @param {number} limit
+   * @param {number} page
+   * @param {Brackets | string} where
+   * @param {ObjectLiteral} parameters
+   * @returns {Promise<{posts: Post[]; count: number}>}
+   */
+  private async getAll(
+    limit: number,
+    page: number,
+    where: Brackets | string,
+    parameters?: ObjectLiteral,
+  ): Promise<{ posts: Post[], count: number }> {
+    const [posts, count] = await this.postRepository
+    .createQueryBuilder('post')
+    .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('author.corporation', 'authorCorporation')
+    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
+    .leftJoinAndSelect('post.killmail', 'killmail')
+    .leftJoinAndSelect('post.hashtags', 'hashtag')
+    .leftJoinAndSelect('post.location', 'location')
+    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
+    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
+    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
+    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
+    .where(where, parameters)
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
+    .getManyAndCount();
+
+    return { posts, count };
   }
 
   /**

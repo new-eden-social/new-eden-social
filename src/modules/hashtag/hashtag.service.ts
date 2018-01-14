@@ -18,11 +18,13 @@ export class HashtagService {
    */
   public async parse(text: string): Promise<Hashtag[]> {
     const hashtags = text.match(/(#\w+)/g) || [];
-    const unique = hashtags.reduce((unique, name) => {
-      const trimName = name.replace('#', '');
-      if (unique.indexOf(trimName) !== -1) return unique;
-      return [...unique, trimName];
-    }, []);
+    const unique = hashtags.reduce(
+      (unique, name) => {
+        const trimName = name.replace('#', '');
+        if (unique.indexOf(trimName) !== -1) return unique;
+        return [...unique, trimName];
+      },
+      []);
 
     const hashtagEntities = unique.map(name => new Hashtag(name));
 

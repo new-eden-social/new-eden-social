@@ -3,6 +3,7 @@ import { Post } from './post.entity';
 import { DCharacterShort } from '../character/character.dto';
 import { DLocation } from '../location/location.dto';
 import { DKillmailShort } from '../killmail/killmail.dto';
+import { DPagination } from '../../dto/paggination.dto';
 
 export class DPost {
   id: string;
@@ -24,10 +25,9 @@ export class DPost {
   }
 }
 
-export class DPostList {
-  posts: DPost[];
-
-  constructor(posts: Post[]) {
-    this.posts = posts.map(post => new DPost(post));
+export class DPostList extends DPagination {
+  constructor(posts: Post[], page: number, perPage: number, count: number) {
+    const formattedPosts = posts.map(post => new DPost(post));
+    super(formattedPosts, page, perPage, count);
   }
 }

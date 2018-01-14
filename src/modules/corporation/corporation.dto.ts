@@ -1,5 +1,6 @@
 import { DAllianceShort } from '../alliance/alliance.dto';
 import { Corporation } from './corporation.entity';
+import { DPagination } from '../../dto/paggination.dto';
 
 export class DCorporationShort {
   id: number;
@@ -66,10 +67,10 @@ export class DCorporation {
   }
 }
 
-export class DCorporationList {
-  corporations: DCorporationShort[];
-
-  constructor(corporations: Corporation[]) {
-    this.corporations = corporations.map(corporation => new DCorporationShort(corporation));
+export class DCorporationList extends DPagination {
+  constructor(corporations: Corporation[], page: number, perPage: number, count: number) {
+    const formattedCorporations = corporations.map(
+      corporation => new DCorporationShort(corporation));
+    super(formattedCorporations, page, perPage, count);
   }
 }

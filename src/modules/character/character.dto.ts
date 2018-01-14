@@ -1,6 +1,7 @@
 import { DCorporationShort } from '../corporation/corporation.dto';
 import { Character } from './character.entity';
 import { ICharacterPortrait } from './character.interface';
+import { DPagination } from '../../dto/paggination.dto';
 
 export class DCharacterPortrait {
   px64x64: string;
@@ -87,10 +88,9 @@ export class DCharacter {
   }
 }
 
-export class DCharacterList {
-  characters: DCharacterShort[];
-
-  constructor(characters: Character[]) {
-    this.characters = characters.map(character => new DCharacterShort(character));
+export class DCharacterList extends DPagination {
+  constructor(characters: Character[], page: number, perPage: number, count: number) {
+    const formattedCharacters = characters.map(character => new DCharacterShort(character));
+    super(formattedCharacters, page, perPage, count);
   }
 }
