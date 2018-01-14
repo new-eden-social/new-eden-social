@@ -1,4 +1,12 @@
-import { Column, Entity, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ICorporationStatistics } from '../common/external/zkillboard/zkillboard.interface';
 import { IGetCorporation } from '../common/external/esi/esi.interface';
 import { Character } from '../character/character.entity';
@@ -44,8 +52,8 @@ export class Corporation {
   @Column({ nullable: true })
   createdAt?: Date;
 
-  @Column()
-  updatedAt: Date = new Date();
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @Column('real')
   taxRate: number;

@@ -7,6 +7,9 @@ import Log from '../../utils/Log';
 import { CorporationService } from '../corporation/corporation.service';
 import { CORPORATION_REPOSITORY_TOKEN } from '../corporation/corporation.constants';
 import { Corporation } from '../corporation/corporation.entity';
+import { ALLIANCE_REPOSITORY_TOKEN } from '../alliance/alliance.constants';
+import { Alliance } from '../alliance/alliance.entity';
+import { AllianceService } from '../alliance/alliance.service';
 
 @Component()
 export class UpdaterService {
@@ -18,8 +21,10 @@ export class UpdaterService {
   constructor(
     @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,
     @Inject(CORPORATION_REPOSITORY_TOKEN) private corporationRepository: Repository<Corporation>,
+    @Inject(ALLIANCE_REPOSITORY_TOKEN) private allianceRepository: Repository<Alliance>,
     private characterService: CharacterService,
     private corporationService: CorporationService,
+    private allianceService: AllianceService,
   ) {
     this.loop();
     setInterval(this.loop.bind(this), this.LOOP_INTERVAL);
@@ -32,6 +37,7 @@ export class UpdaterService {
     Promise.all([
       this.updateCharacters(),
       this.updateCorporations(),
+      this.updateAlliances(),
     ])
     .then(() => {
       Log.info('Update loop done');
@@ -82,4 +88,25 @@ export class UpdaterService {
     });
   }
 
+  /**
+   * Update Alliances
+   * @return {Promise<void>}
+   */
+  private async updateAlliances(): Promise<void> {
+    const idsStream = await this.allianceRepository
+    .createQueryBuilder('alliance')
+    .select('id')
+    .where(`"updatedAt" < (NOW() - interval '${this.UPDATE_INTERVAL}')`)
+    .limit(this.UPDATE_LIMIT)
+    .stream();
+
+    idsStream.on('error', (err) => {
+      throw err;
+    });
+
+    idsStream.on('data', ({ id }) => {
+      this.allianceService.get(id)
+      .then(alliance => this.allianceService.update(alliance));
+    });
+  }
 }

@@ -1,4 +1,12 @@
-import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToMany,
+  OneToOne,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { IAllianceStatistics } from '../common/external/zkillboard/zkillboard.interface';
 import { IGetAlliance } from '../common/external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
@@ -31,6 +39,9 @@ export class Alliance {
 
   @OneToMany(type => Post, post => post.alliance)
   posts: Post[];
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   /**
    * Provided by zKillboard

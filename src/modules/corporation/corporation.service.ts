@@ -55,7 +55,6 @@ export class CorporationService implements IService<Corporation> {
     const esiCorporation = await this.esiService.getCorporation(corporation.id);
 
     corporation.populateESI(esiCorporation);
-    corporation.updatedAt = new Date();
 
     await this.updateCeoAndCreatorAndAlliance(
       corporation,

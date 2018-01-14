@@ -1,4 +1,12 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ICharacterStatistics } from '../common/external/zkillboard/zkillboard.interface';
 import { IGetCharacter } from '../common/external/esi/esi.interface';
 import { Post } from '../post/post.entity';
@@ -37,8 +45,8 @@ export class Character {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
-  updatedAt: Date = new Date();
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @Column()
   name: string;

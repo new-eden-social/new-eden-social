@@ -48,7 +48,6 @@ export class CharacterService implements IService<Character> {
   public async update(character: Character): Promise<Character> {
     const esiCharacter = await this.esiService.getCharacter(character.id);
     character.populateESI(esiCharacter);
-    character.updatedAt = new Date();
     character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
 
     return this.characterRepository.save(character);

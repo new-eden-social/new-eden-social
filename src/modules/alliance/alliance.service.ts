@@ -71,6 +71,19 @@ export class AllianceService implements IService<Alliance> {
   }
 
   /**
+   * Update corporation by id
+   * @param {Alliance} alliance
+   * @return {Promise<Corporation>}
+   */
+  public async update(alliance: Alliance): Promise<Alliance> {
+    const esiAlliance = await this.esiService.getAlliance(alliance.id);
+
+    alliance.populateESI(esiAlliance);
+
+    return this.allianceRepository.save(alliance);
+  }
+
+  /**
    * Find alliance by id
    * @param {number} id
    * @returns {Promise<Alliance>}

@@ -5,6 +5,10 @@ import 'reflect-metadata';
 import Log from './utils/Log';
 // Import config
 import { config } from 'dotenv';
+// Request context
+import 'zone.js';
+import 'zone.js/dist/zone-node.js';
+import 'zone.js/dist/long-stack-trace-zone.js';
 
 config();
 Log.init();
