@@ -3,7 +3,6 @@ import { ICorporationStatistics } from '../common/external/zkillboard/zkillboard
 import { IGetCorporation } from '../common/external/esi/esi.interface';
 import { Character } from '../character/character.entity';
 import { Alliance } from '../alliance/alliance.entity';
-import { ICorporationResponse } from './corporation.interface';
 import { Post } from '../post/post.entity';
 
 @Entity()
@@ -63,28 +62,6 @@ export class Corporation {
   shipsLost: number;
   soloKills: number;
   soloLosses: number;
-
-  /**
-   * Get corporation response (this is what API returns)
-   * @return {ICorporationResponse}
-   */
-  get response(): ICorporationResponse {
-    return {
-      id: this.id,
-      name: this.name,
-      ticker: this.ticker,
-      description: this.description,
-      alliance: this.alliance ? this.alliance.response : null,
-      iskDestroyed: this.iskDestroyed,
-      iskLost: this.iskLost,
-      pointsDestroyed: this.pointsDestroyed,
-      pointsLost: this.pointsLost,
-      shipsDestroyed: this.shipsDestroyed,
-      shipsLost: this.shipsLost,
-      soloKills: this.soloKills,
-      soloLosses: this.soloLosses,
-    };
-  }
 
   public populateESI(corp: IGetCorporation) {
     this.name = corp.name;

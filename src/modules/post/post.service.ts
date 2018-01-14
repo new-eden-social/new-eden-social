@@ -98,6 +98,8 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('author.corporation', 'corporation')
+    .leftJoinAndSelect('corporation.alliance', 'alliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
@@ -127,6 +129,8 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('author.corporation', 'corporation')
+    .leftJoinAndSelect('corporation.alliance', 'alliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
@@ -156,6 +160,8 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('author.corporation', 'corporation')
+    .leftJoinAndSelect('corporation.alliance', 'alliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
@@ -178,6 +184,8 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('author.corporation', 'corporation')
+    .leftJoinAndSelect('corporation.alliance', 'alliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
@@ -198,6 +206,8 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
+    .leftJoinAndSelect('author.corporation', 'corporation')
+    .leftJoinAndSelect('corporation.alliance', 'alliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')

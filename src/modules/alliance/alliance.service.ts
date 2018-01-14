@@ -76,7 +76,9 @@ export class AllianceService implements IService<Alliance> {
    * @returns {Promise<Alliance>}
    */
   private async findAllianceById(id: number) {
-    const foundAlliance = await this.allianceRepository.findOneById(id);
+    const foundAlliance = await this.allianceRepository.findOneById(
+      id,
+      { relations: ['executorCorporation'] });
 
     if (foundAlliance) return foundAlliance;
 

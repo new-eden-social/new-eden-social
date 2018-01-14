@@ -18,6 +18,7 @@ import { CorporationRoles } from '../corporation/corporation.roles.decorator';
 import { CORPORATION_ROLES } from '../corporation/corporation.constants';
 import { AllianceService } from '../alliance/alliance.service';
 import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
+import { DPost, DPostList } from './post.dto';
 
 @Controller('posts')
 export class PostController {
@@ -40,7 +41,9 @@ export class PostController {
     const character = await this.characterService.get(characterId);
     const posts = await this.postService.getCharacterWall(character, limit, page);
 
-    res.status(HttpStatus.OK).json(posts);
+    const response = new DPostList(posts);
+
+    res.status(HttpStatus.OK).json(response);
   }
 
   @Get('/corporation/:corporationId')
@@ -53,7 +56,9 @@ export class PostController {
     const corporation = await this.corporationService.get(corporationId);
     const posts = await this.postService.getCorporationWall(corporation, limit, page);
 
-    res.status(HttpStatus.OK).json(posts);
+    const response = new DPostList(posts);
+
+    res.status(HttpStatus.OK).json(response);
   }
 
   @Get('/alliance/:allianceId')
@@ -66,7 +71,9 @@ export class PostController {
     const alliance = await this.allianceService.get(allianceId);
     const posts = await this.postService.getAllianceWall(alliance, limit, page);
 
-    res.status(HttpStatus.OK).json(posts);
+    const response = new DPostList(posts);
+
+    res.status(HttpStatus.OK).json(response);
   }
 
   @Get('/hashtag/:hashtag')
@@ -78,7 +85,9 @@ export class PostController {
   ) {
     const posts = await this.postService.getByHashtag(hashtag, limit, page);
 
-    res.status(HttpStatus.OK).json(posts);
+    const response = new DPostList(posts);
+
+    res.status(HttpStatus.OK).json(response);
   }
 
   @Get('/location/:locationId')
@@ -90,14 +99,18 @@ export class PostController {
   ) {
     const posts = await this.postService.getByLocation(locationId, limit, page);
 
-    res.status(HttpStatus.OK).json(posts);
+    const response = new DPostList(posts);
+
+    res.status(HttpStatus.OK).json(response);
   }
 
   @Get('/:id')
   public async get(@Response() res, @Param('id') postId) {
     const post = await this.postService.get(postId);
 
-    res.status(HttpStatus.OK).json(post);
+    const response = new DPost(post);
+
+    res.status(HttpStatus.OK).json(response);
   }
 
   @Post('/character')
@@ -108,7 +121,9 @@ export class PostController {
   ) {
     const post = await this.postService.createAsCharacter(postData, req.character);
 
-    res.status(HttpStatus.CREATED).json(post);
+    const response = new DPost(post);
+
+    res.status(HttpStatus.CREATED).json(response);
   }
 
   @Post('/corporation')
@@ -123,7 +138,9 @@ export class PostController {
   ) {
     const post = await this.postService.createAsCorporation(postData, req.character.corporation);
 
-    res.status(HttpStatus.CREATED).json(post);
+    const response = new DPost(post);
+
+    res.status(HttpStatus.CREATED).json(response);
   }
 
   @Post('/alliance')
@@ -141,7 +158,9 @@ export class PostController {
       postData,
       req.character.corporation.alliance);
 
-    res.status(HttpStatus.CREATED).json(post);
+    const response = new DPost(post);
+
+    res.status(HttpStatus.CREATED).json(response);
   }
 
 }

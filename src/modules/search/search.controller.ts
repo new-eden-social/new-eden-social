@@ -1,5 +1,6 @@
-import { Response, Param, Controller, Get, Post, Body, HttpStatus, Query } from '@nestjs/common';
+import { Controller, Get, HttpStatus, Query, Response } from '@nestjs/common';
 import { SearchService } from './search.service';
+import { DSearch } from './search.dto';
 
 @Controller('search')
 export class SearchController {
@@ -11,7 +12,9 @@ export class SearchController {
   public async search(@Response() res, @Query('query') query) {
     const data = await this.searchService.search(query);
 
-    res.status(HttpStatus.OK).json(data);
+    const response = new DSearch(data);
+
+    res.status(HttpStatus.OK).json(response);
   }
 
 }

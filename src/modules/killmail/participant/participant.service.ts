@@ -7,7 +7,6 @@ import {
   TKillmailStreamParticipant,
 } from '../../common/external/killmailsStream/killmailsStream.interface';
 import { CharacterService } from '../../character/character.service';
-import { IParticipantResponse } from './participant.interface';
 import { KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN } from './participant.constants';
 
 @Component()
@@ -45,26 +44,6 @@ export class KillmailParticipantService {
     participant.shipId = data.shipId;
 
     return this.killmailParticipantRepository.save(participant);
-  }
-
-  /**
-   * Format Participant Response
-   * @param {KillmailParticipant} participant
-   * @return {Promise<IParticipantResponse>}
-   */
-  public async formatParticipantResponse(
-    participant: KillmailParticipant,
-  ): Promise<IParticipantResponse> {
-    const character = await this.charactersService.get(participant.character.id);
-
-    return {
-      character: character.response,
-      shipId: participant.shipId,
-      weaponId: participant.weaponId,
-      damageDone: participant.damageDone,
-      damageTaken: participant.damageTaken,
-      finalBlow: participant.finalBlow,
-    };
   }
 
 }

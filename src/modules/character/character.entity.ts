@@ -3,7 +3,7 @@ import { ICharacterStatistics } from '../common/external/zkillboard/zkillboard.i
 import { IGetCharacter } from '../common/external/esi/esi.interface';
 import { Post } from '../post/post.entity';
 import { Comment } from '../comment/comment.entity';
-import { ICharacterPortrait, ICharacterResponse } from './character.interface';
+import { ICharacterPortrait } from './character.interface';
 import { KillmailParticipant } from '../killmail/participant/participant.entity';
 import { Corporation } from '../corporation/corporation.entity';
 
@@ -78,33 +78,6 @@ export class Character {
       px128x128: `https://imageserver.eveonline.com/Character/${this.id}_128.jpg`,
       px256x256: `https://imageserver.eveonline.com/Character/${this.id}_256.jpg`,
       px512x512: `https://imageserver.eveonline.com/Character/${this.id}_512.jpg`,
-    };
-  }
-
-  /**
-   * Get character response (this is what API returns)
-   * @return {ICharacterResponse}
-   */
-  get response(): ICharacterResponse {
-    return {
-      id: this.id,
-      name: this.name,
-      description: this.description,
-      gender: this.gender,
-      raceId: this.raceId,
-      bloodlineId: this.bloodlineId,
-      ancestryId: this.ancestryId,
-      securityStatus: this.securityStatus,
-      portrait: this.portrait,
-      corporation: this.corporation ? this.corporation.response : null,
-      iskDestroyed: this.iskDestroyed,
-      iskLost: this.iskLost,
-      pointsDestroyed: this.pointsDestroyed,
-      pointsLost: this.pointsLost,
-      shipsDestroyed: this.shipsDestroyed,
-      shipsLost: this.shipsLost,
-      soloKills: this.soloKills,
-      soloLosses: this.soloLosses,
     };
   }
 

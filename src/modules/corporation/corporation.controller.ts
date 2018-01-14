@@ -1,5 +1,6 @@
 import { Controller, Get, HttpStatus, Param, Response } from '@nestjs/common';
 import { CorporationService } from './corporation.service';
+import { DCorporation } from './corporation.dto';
 
 @Controller('corporations')
 export class CorporationController {
@@ -11,7 +12,9 @@ export class CorporationController {
   public async search(@Response() res, @Param('corporationId') corporationId: number) {
     const corporation = await this.characterService.get(corporationId);
 
-    res.status(HttpStatus.OK).json(corporation.response);
+    const response = new DCorporation(corporation);
+
+    res.status(HttpStatus.OK).json(response);
   }
 
 }
