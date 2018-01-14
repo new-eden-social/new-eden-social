@@ -219,7 +219,6 @@ export class ESIService {
       return response.data;
     } catch (err) {
       Log.warning('ESI Error', err);
-      console.log(err);
       /**
        * Transform underlying request exceptions to ESI Exceptions
        */

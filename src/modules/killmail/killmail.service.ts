@@ -2,7 +2,7 @@ import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Killmail } from './killmail.entity';
 import { KillmailsStreamService } from '../common/external/killmailsStream/killmailsStream.service';
-import { IKillmailStream } from '../common/external/killmailsStream/killmailsStream.interface';
+import { IKillmailStream, } from '../common/external/killmailsStream/killmailsStream.interface';
 import { KillmailParticipantService } from './participant/participant.service';
 import { PostService } from '../post/post.service';
 import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
@@ -22,7 +22,7 @@ export class KillmailService {
 
   /**
    * Create killmail from killmail stream
-   * @param {KillmailsStream.IKillmailStream} killmailStream
+   * @param {IKillmailStream} killmailStream
    * @return {Promise<void>}
    */
   private async create(killmailStream: IKillmailStream) {
@@ -39,17 +39,23 @@ export class KillmailService {
     killmail.locationId = killmailStream.locationId;
     killmail.npc = killmailStream.npc;
     killmail.totalValue = killmailStream.totalValue;
+    killmail.participants = [];
 
     // Create attackers
-    await Promise.all(killmailStream.attackers.map((attacker) => {
-      if (!attacker.id) return null; // If NPC, ignore
-      return this.killmailParticipantService.create(attacker, 'attacker')
-      .then(participant => killmail.participants.push(participant));
-    }));
+    for (const attackerId in killmailStream.attackers) {
+      const attacker = killmailStream.attackers[attackerId];
 
-    // Create Victims
-    await this.killmailParticipantService.create(killmailStream.victim, 'victim')
-    .then(participant => killmail.participants.push(participant));
+      if (attacker.id) // If NPC, ignore
+        killmail.participants.push(await this.killmailParticipantService.create(
+          attacker,
+          'attacker'));
+    }
+
+
+    // Create Victim
+    killmail.participants.push(await this.killmailParticipantService.create(
+      killmailStream.victim,
+      'victim'));
 
     await this.killmailRepository.save(killmail);
 

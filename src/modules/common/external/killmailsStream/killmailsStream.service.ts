@@ -47,29 +47,29 @@ export class KillmailsStreamService {
 
   /**
    * Format raw Killmail to standardized
-   * @param {KillmailsStream.IKillmailStreamRaw} raw
-   * @return {KillmailsStream.IKillmailStream}
+   * @param {IKillmailStreamRaw} raw
+   * @return {IKillmailStream}
    */
   private formatRawKillmail(raw: IKillmailStreamRaw): IKillmailStream {
     return <IKillmailStream>{
-      id: raw.killID,
-      date: new Date(raw.killmail.killTime),
+      id: raw.killmail.killmail_id,
+      date: new Date(raw.killmail.killmail_time),
       warId: raw.killmail.war ? raw.killmail.war.id : null,
       locationId: raw.zkb.locationID,
       totalValue: raw.zkb.totalValue,
       points: raw.zkb.points,
       npc: !!raw.zkb.npc,
       attackers: <IKillmailStreamAttacker[]>raw.killmail.attackers.map(attackerRaw => ({
-        id: attackerRaw.character ? attackerRaw.character.id : null,
-        shipId: attackerRaw.shipType ? attackerRaw.shipType.id : null,
-        weaponId: attackerRaw.weaponType ? attackerRaw.weaponType.id : null,
-        damageDone: attackerRaw.damageDone,
-        finalBlow: attackerRaw.finalBlow,
+        id: attackerRaw.character_id,
+        shipId: attackerRaw.ship_type_id,
+        weaponId: attackerRaw.weapon_type_id,
+        damageDone: attackerRaw.damage_done,
+        finalBlow: !!attackerRaw.final_blow,
       })),
       victim: <IKillmailStreamVictim>{
-        id: raw.killmail.victim.character ? raw.killmail.victim.character.id : null,
-        shipId: raw.killmail.victim.shipType ? raw.killmail.victim.shipType.id : null,
-        damageTaken: raw.killmail.victim.damageTaken,
+        id: raw.killmail.victim.character_id,
+        shipId: raw.killmail.victim.ship_type_id,
+        // damageTaken: raw.killmail.victim.damageTaken,
         position: raw.killmail.victim.position,
       },
     };

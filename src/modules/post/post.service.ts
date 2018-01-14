@@ -12,6 +12,8 @@ import { Alliance } from '../alliance/alliance.entity';
 import { AllianceService } from '../alliance/alliance.service';
 import { HashtagService } from '../hashtag/hashtag.service';
 import { LocationService } from '../location/location.service';
+import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
+import Log from '../../utils/Log';
 
 @Component()
 export class PostService {
@@ -98,15 +100,17 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'corporation')
-    .leftJoinAndSelect('corporation.alliance', 'alliance')
+    .leftJoinAndSelect('author.corporation', 'authorCorporation')
+    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'participant')
-    .leftJoinAndSelect('participant.character', 'character')
+    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
+    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
+    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
+    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
     .where(
-      'post."characterWallId" = :characterId OR character.id = :characterId',
+      'post."characterWallId" = :characterId OR author.id = :characterId',
       { characterId: character.id })
     .orderBy({ 'post."createdAt"': 'DESC' })
     .offset(limit * page)
@@ -129,13 +133,15 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'corporation')
-    .leftJoinAndSelect('corporation.alliance', 'alliance')
+    .leftJoinAndSelect('author.corporation', 'authorCorporation')
+    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'participant')
-    .leftJoinAndSelect('participant.character', 'character')
+    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
+    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
+    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
+    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
     .where(
       'post."corporationWallId" = :corporationId OR post."corporationId" = :corporationId',
       { corporationId: corporation.id })
@@ -160,13 +166,15 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'corporation')
-    .leftJoinAndSelect('corporation.alliance', 'alliance')
+    .leftJoinAndSelect('author.corporation', 'authorCorporation')
+    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'participant')
-    .leftJoinAndSelect('participant.character', 'character')
+    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
+    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
+    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
+    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
     .where(
       'post."allianceWallId" = :allianceId OR post."allianceId" = :allianceId',
       { allianceId: alliance.id })
@@ -184,13 +192,15 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'corporation')
-    .leftJoinAndSelect('corporation.alliance', 'alliance')
+    .leftJoinAndSelect('author.corporation', 'authorCorporation')
+    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'participant')
-    .leftJoinAndSelect('participant.character', 'character')
+    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
+    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
+    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
+    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
     .where('hashtag."name" = :hashtag', { hashtag })
     .orderBy({ 'post."createdAt"': 'DESC' })
     .offset(limit * page)
@@ -206,13 +216,15 @@ export class PostService {
     return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'corporation')
-    .leftJoinAndSelect('corporation.alliance', 'alliance')
+    .leftJoinAndSelect('author.corporation', 'authorCorporation')
+    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'participant')
-    .leftJoinAndSelect('participant.character', 'character')
+    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
+    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
+    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
+    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
     .where('location."id" = :locationId', { locationId })
     .orderBy({ 'post."createdAt"': 'DESC' })
     .offset(limit * page)
@@ -233,8 +245,14 @@ export class PostService {
     post.character = finalBlow;
     post.createdAt = killmail.createdAt;
 
-    if (killmail.locationId)
-      post.location = await this.locationService.get(killmail.locationId);
+    if (killmail.locationId) {
+      try {
+        post.location = await this.locationService.get(killmail.locationId);
+      } catch (e) {
+        if (e instanceof ESIEntetyNotFoundException) Log.warning('locationId was not found!');
+        else throw e;
+      }
+    }
 
     return this.postRepository.save(post);
   }

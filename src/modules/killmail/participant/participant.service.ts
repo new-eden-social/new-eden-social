@@ -21,7 +21,7 @@ export class KillmailParticipantService {
 
   /**
    *
-   * @param {KillmailsStream.TKillmailStreamParticipant} data
+   * @param {TKillmailStreamParticipant} data
    * @param {"attacker" | "victim"} type
    * @return {Promise<KillmailParticipant>}
    */
