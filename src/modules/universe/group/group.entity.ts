@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
 import { IUniverseGroup } from '../../common/external/esi/esi.interface';
+import { UniverseCategory } from '../category/category.entity';
 
 @Entity()
 export class UniverseGroup {
@@ -10,11 +11,10 @@ export class UniverseGroup {
   @Column()
   name: string;
 
-  @Column()
-  categoryId: number;
+  @ManyToOne(type => UniverseCategory, { nullable: true, eager: true })
+  category: UniverseCategory;
 
   public populateESI(esiData: IUniverseGroup) {
     this.name = esiData.name;
-    this.categoryId = esiData.category_id;
   }
 }

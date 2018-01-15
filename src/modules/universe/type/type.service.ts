@@ -41,7 +41,7 @@ export class UniverseTypeService {
   }
 
   /**
-   * Find UniverseGroup in db. If it doesn't exists, create it.
+   * Find UniverseCategory in db. If it doesn't exists, create it.
    * @param {number} id
    * @return {Promise<UniverseType>}
    */

@@ -4,6 +4,7 @@ import { UNIVERSE_GROUP_REPOSITORY_TOKEN } from './group.constants';
 import { UniverseGroup } from './group.entity';
 import { ESIService } from '../../common/external/esi/esi.service';
 import { ESIEntetyNotFoundException } from '../../common/external/esi/esi.exceptions';
+import { UniverseCategoryService } from '../category/category.service';
 
 @Component()
 export class UniverseGroupService {
@@ -11,6 +12,7 @@ export class UniverseGroupService {
   constructor(
     @Inject(UNIVERSE_GROUP_REPOSITORY_TOKEN) private groupRepository: Repository<UniverseGroup>,
     private esiService: ESIService,
+    private universeCategoryService: UniverseCategoryService,
   ) {
   }
 
@@ -39,7 +41,7 @@ export class UniverseGroupService {
   }
 
   /**
-   * Find UniverseGroup in db. If it doesn't exists, create it.
+   * Find UniverseCategory in db. If it doesn't exists, create it.
    * @param {number} id
    * @return {Promise<UniverseGroup>}
    */
@@ -53,8 +55,11 @@ export class UniverseGroupService {
     group.id = id;
 
     const esiGroup = await this.esiService.universeGroup(id);
-
     group.populateESI(esiGroup);
+
+    group.category = await this.universeCategoryService.get(esiGroup.category_id);
+
+    // FIXME: Nekak se category ne nastavi prav
     await this.groupRepository.save(group);
 
     return group;

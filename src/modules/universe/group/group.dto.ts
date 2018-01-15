@@ -1,13 +1,14 @@
 import { UniverseGroup } from './group.entity';
+import { DUniverseCategory } from '../category/category.dto';
 
 export class DUniverseGroup {
   id: number;
   name: string;
-  categoryId: number;
+  category: DUniverseCategory;
 
   constructor(group: UniverseGroup) {
     this.id = group.id;
     this.name = group.name;
-    this.categoryId = group.categoryId;
+    this.category = new DUniverseCategory(group.category);
   }
 }

@@ -12,6 +12,7 @@ import {
   IGetCharacterRoles,
   IGetCorporation,
   ISearch,
+  IUniverseCategory,
   IUniverseGroup,
   IUniverseNames,
   IUniverseType,
@@ -92,6 +93,18 @@ export class ESIService {
   public async universeGroup(id: number): Promise<IUniverseGroup> {
     return this.request<IUniverseGroup>({
       url: `universe/groups/${id}`,
+      method: 'GET',
+    });
+  }
+
+  /**
+   * Get universe category by id
+   * @param {number} id
+   * @returns {Promise<IUniverseCategory>}
+   */
+  public async universeCategory(id: number): Promise<IUniverseCategory> {
+    return this.request<IUniverseCategory>({
+      url: `universe/categories/${id}`,
       method: 'GET',
     });
   }

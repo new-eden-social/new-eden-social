@@ -94,6 +94,13 @@ export interface IUniverseGroup {
   readonly types: number[];
 }
 
+export interface IUniverseCategory {
+  readonly category_id: number;
+  readonly name: string;
+  readonly published: boolean;
+  readonly groups: number[];
+}
+
 export interface IAllianceName {
   readonly alliance_id: number;
   readonly alliance_name: string;
