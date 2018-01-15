@@ -16,8 +16,8 @@ import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { ICreatePostRequest } from './post.validate';
 import { Hashtag } from '../hashtag/hashtag.entity';
-import { Location } from '../location/location.entity';
 import { POST_TYPES } from './post.constants';
+import { UniverseLocation } from '../universe/location/location.entity';
 
 @Entity()
 export class Post {
@@ -37,8 +37,8 @@ export class Post {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(type => Location, location => location.posts, { nullable: true, eager: true })
-  location: Location;
+  @ManyToOne(type => UniverseLocation, location => location.posts, { nullable: true, eager: true })
+  location: UniverseLocation;
 
   @ManyToOne(type => Character, character => character.posts, { nullable: true, eager: true })
   character?: Character;

@@ -12,7 +12,10 @@ import {
   IGetCharacterRoles,
   IGetCorporation,
   ISearch,
+  IUniverseCategory,
+  IUniverseGroup,
   IUniverseNames,
+  IUniverseType,
 } from './esi.interface';
 import { Corporation } from '../../../corporation/corporation.entity';
 import { Alliance } from '../../../alliance/alliance.entity';
@@ -67,6 +70,42 @@ export class ESIService {
       url: 'universe/names/',
       method: 'POST',
       data: ids,
+    });
+  }
+
+  /**
+   * Get universe type by id
+   * @param {number} id
+   * @returns {Promise<IUniverseType>}
+   */
+  public async universeType(id: number): Promise<IUniverseType> {
+    return this.request<IUniverseType>({
+      url: `universe/types/${id}`,
+      method: 'GET',
+    });
+  }
+
+  /**
+   * Get universe group by id
+   * @param {number} id
+   * @returns {Promise<IUniverseGroup>}
+   */
+  public async universeGroup(id: number): Promise<IUniverseGroup> {
+    return this.request<IUniverseGroup>({
+      url: `universe/groups/${id}`,
+      method: 'GET',
+    });
+  }
+
+  /**
+   * Get universe category by id
+   * @param {number} id
+   * @returns {Promise<IUniverseCategory>}
+   */
+  public async universeCategory(id: number): Promise<IUniverseCategory> {
+    return this.request<IUniverseCategory>({
+      url: `universe/categories/${id}`,
+      method: 'GET',
     });
   }
 

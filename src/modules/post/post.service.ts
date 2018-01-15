@@ -11,9 +11,9 @@ import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { AllianceService } from '../alliance/alliance.service';
 import { HashtagService } from '../hashtag/hashtag.service';
-import { LocationService } from '../location/location.service';
 import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
 import Log from '../../utils/Log';
+import { UniverseLocationService } from '../universe/location/location.service';
 
 @Component()
 export class PostService {
@@ -24,7 +24,7 @@ export class PostService {
     private characterService: CharacterService,
     private allianceService: AllianceService,
     private hashtagService: HashtagService,
-    private locationService: LocationService,
+    private universeLocationService: UniverseLocationService,
   ) {
   }
 
@@ -187,7 +187,7 @@ export class PostService {
 
     if (killmail.locationId) {
       try {
-        post.location = await this.locationService.get(killmail.locationId);
+        post.location = await this.universeLocationService.get(killmail.locationId);
       } catch (e) {
         if (e instanceof ESIEntetyNotFoundException) Log.warning('locationId was not found!');
         else throw e;
@@ -219,10 +219,16 @@ export class PostService {
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
-    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
-    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
-    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
+    .leftJoinAndSelect('killmail.participants', 'killmailP')
+    .leftJoinAndSelect('killmailP.character', 'killmailPCharacter')
+    .leftJoinAndSelect('killmailPCharacter.corporation', 'killmailPCorporation')
+    .leftJoinAndSelect('killmailPCorporation.alliance', 'killmailPAlliance')
+    .leftJoinAndSelect('killmailP.ship', 'killmailPShip')
+    .leftJoinAndSelect('killmailPShip.group', 'killmailPShipGroup')
+    .leftJoinAndSelect('killmailPShipGroup.category', 'killmailPShipGroupCategory')
+    .leftJoinAndSelect('killmailP.weapon', 'killmailPWeapon')
+    .leftJoinAndSelect('killmailPWeapon.group', 'killmailPWeaponGroup')
+    .leftJoinAndSelect('killmailPWeaponGroup.category', 'killmailPWeaponGroupCategory')
     .where(where, parameters)
     .orderBy({ 'post."createdAt"': 'DESC' })
     .offset(limit * page)
@@ -249,7 +255,7 @@ export class PostService {
       post.characterWall = await this.characterService.get(postData.characterId);
 
     if (postData.locationId)
-      post.location = await this.locationService.get(postData.locationId);
+      post.location = await this.universeLocationService.get(postData.locationId);
 
     post.hashtags = await this.hashtagService.parse(post.content);
 

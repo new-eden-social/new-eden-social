@@ -1,9 +1,9 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { Categories, IUniverseName } from '../common/external/esi/esi.interface';
-import { Post } from '../post/post.entity';
+import { Categories, IUniverseName } from '../../common/external/esi/esi.interface';
+import { Post } from '../../post/post.entity';
 
 @Entity()
-export class Location {
+export class UniverseLocation {
 
   @PrimaryColumn()
   id: number;

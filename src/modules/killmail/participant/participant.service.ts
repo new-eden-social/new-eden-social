@@ -8,6 +8,7 @@ import {
 } from '../../common/external/killmailsStream/killmailsStream.interface';
 import { CharacterService } from '../../character/character.service';
 import { KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN } from './participant.constants';
+import { UniverseTypeService } from '../../universe/type/type.service';
 
 @Component()
 export class KillmailParticipantService {
@@ -16,6 +17,7 @@ export class KillmailParticipantService {
     @Inject(KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN)
     private killmailParticipantRepository: Repository<KillmailParticipant>,
     private charactersService: CharacterService,
+    private universeTypeService: UniverseTypeService,
   ) {
   }
 
@@ -33,7 +35,7 @@ export class KillmailParticipantService {
 
     if (type === 'attacker') {
       participant.damageDone = (<IKillmailStreamAttacker>data).damageDone;
-      participant.weaponId = (<IKillmailStreamAttacker>data).weaponId;
+      participant.weapon = await this.universeTypeService.get((<IKillmailStreamAttacker>data).weaponId);
       participant.finalBlow = (<IKillmailStreamAttacker>data).finalBlow;
     } else if (type === 'victim') {
       participant.damageTaken = (<IKillmailStreamVictim>data).damageTaken;
@@ -41,7 +43,7 @@ export class KillmailParticipantService {
 
     participant.type = type;
     participant.character = await this.charactersService.get(data.id);
-    participant.shipId = data.shipId;
+    participant.ship = await this.universeTypeService.get(data.shipId);
 
     return this.killmailParticipantRepository.save(participant);
   }
