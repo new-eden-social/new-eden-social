@@ -9,7 +9,7 @@ If you've noticed a bug or have a question, you should check if someone else in 
 community has already created a ticket by
 [searching the issue tracker](https://github.com/evebook/api/issues?q=something).
 If not, go ahead and [make one](https://github.com/evebook/api/issues/new)
-or ask directly on [gitter](https://gitter.im/EVE-Book/Lobby). For bigger questions
+or ask directly on [slack](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/) in `#evebook`. For bigger questions
 is better to use issue tracking.
 
 ### 2. Fork & create a branch
