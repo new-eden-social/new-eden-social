@@ -59,8 +59,12 @@ export class KillmailService {
 
     await this.killmailRepository.save(killmail);
 
-    // FIXME: Can it happen that finalBlow is NPC or Structure?
     const finalBlow = killmail.participants.find(participant => participant.finalBlow);
+
+    if (!finalBlow.character) {
+      Log.debug('skipping killmail - finalBlow has no character');
+      return;
+    }
 
     await this.postService.createKillmailPost(killmail, finalBlow.character);
   }

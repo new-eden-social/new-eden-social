@@ -219,21 +219,21 @@ export class PostService {
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'killmailParticipant')
-    .leftJoinAndSelect('killmailParticipant.character', 'killmailCharacter')
-    .leftJoinAndSelect('killmailCharacter.corporation', 'killmailCorporation')
-    .leftJoinAndSelect('killmailCorporation.alliance', 'killmailAlliance')
-    .leftJoinAndSelect('killmailParticipant.ship', 'killmailParticipantShip')
-    .leftJoinAndSelect('killmailParticipantShip.group', 'killmailParticipantShipGroup')
-    .leftJoinAndSelect('killmailParticipant.weapon', 'killmailParticipantWeapon')
-    .leftJoinAndSelect('killmailParticipantWeapon.group', 'killmailParticipantWeaponGroup')
+    .leftJoinAndSelect('killmail.participants', 'killmailP')
+    .leftJoinAndSelect('killmailP.character', 'killmailPCharacter')
+    .leftJoinAndSelect('killmailPCharacter.corporation', 'killmailPCorporation')
+    .leftJoinAndSelect('killmailPCorporation.alliance', 'killmailPAlliance')
+    .leftJoinAndSelect('killmailP.ship', 'killmailPShip')
+    .leftJoinAndSelect('killmailPShip.group', 'killmailPShipGroup')
+    .leftJoinAndSelect('killmailPShipGroup.category', 'killmailPShipGroupCategory')
+    .leftJoinAndSelect('killmailP.weapon', 'killmailPWeapon')
+    .leftJoinAndSelect('killmailPWeapon.group', 'killmailPWeaponGroup')
+    .leftJoinAndSelect('killmailPWeaponGroup.category', 'killmailPWeaponGroupCategory')
     .where(where, parameters)
     .orderBy({ 'post."createdAt"': 'DESC' })
     .offset(limit * page)
     .limit(limit)
     .getManyAndCount();
-
-    console.log(posts[0].killmail.participants[1]);
 
     return { posts, count };
   }
