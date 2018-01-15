@@ -14,8 +14,8 @@
   <a target="_blank" href="https://coveralls.io/github/evebook/api">
     <img src="https://coveralls.io/repos/github/evebook/api/badge.svg" alt="Coverage Status" />
   </a>
-  <a target="_blank" href="https://gitter.im/EVE-Book/Lobby">
-    <img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join Gitter Chat" />
+  <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
+    <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
   </a>
 </div>
 
@@ -29,7 +29,7 @@ Whole platform would heavily relay on EVE Online API, so that you could send in 
 Think of it as combination of r/eve and twitter. A hub of EVE Online community.
 
 ## Contribution
-We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/evebook/api/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/evebook/api/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/evebook/api/issues) or directly on [gitter](https://gitter.im/EVE-Book/Lobby).
+We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/evebook/api/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/evebook/api/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/evebook/api/issues) or directly on [slack](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/) in `#evebook`.
 
 
 ## Installation
