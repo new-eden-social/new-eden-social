@@ -1,6 +1,7 @@
 import { Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Character } from '../../character/character.entity';
 import { Killmail } from '../killmail.entity';
+import { UniverseType } from '../../universe/type/type.entity';
 
 @Entity()
 export class KillmailParticipant {
@@ -19,8 +20,8 @@ export class KillmailParticipant {
   @Column()
   type: 'attacker' | 'victim';
 
-  @Column({ nullable: true })
-  shipId?: number; // Sometimes, for some reason. shipId can be null
+  @ManyToOne(type => UniverseType, { nullable: true, eager: true })
+  ship?: UniverseType; // Sometimes, for some reason. shipId can be null
 
   // Attacker
   @Column('real', { nullable: true })
@@ -29,8 +30,8 @@ export class KillmailParticipant {
   @Column({ nullable: true })
   finalBlow?: boolean;
 
-  @Column({ nullable: true })
-  weaponId?: number;
+  @ManyToOne(type => UniverseType, { nullable: true, eager: true })
+  weapon?: UniverseType;
 
   // Victim
   @Column('real', { nullable: true })

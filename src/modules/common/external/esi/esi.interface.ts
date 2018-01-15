@@ -78,6 +78,22 @@ export interface IUniverseName {
 export interface IUniverseNames extends Array<IUniverseName> {
 }
 
+export interface IUniverseType {
+  readonly type_id: number;
+  readonly name: string;
+  readonly description: string;
+  readonly published: boolean;
+  readonly group_id: number;
+}
+
+export interface IUniverseGroup {
+  readonly group_id: number;
+  readonly name: string;
+  readonly published: boolean;
+  readonly category_id: number;
+  readonly types: number[];
+}
+
 export interface IAllianceName {
   readonly alliance_id: number;
   readonly alliance_name: string;

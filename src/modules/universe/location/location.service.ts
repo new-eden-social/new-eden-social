@@ -1,16 +1,17 @@
 import { Component, Inject } from '@nestjs/common';
-import { Location } from './location.entity';
-import { LOCATION_REPOSITORY_TOKEN } from './location.constants';
+import { UniverseLocation } from './location.entity';
+import { UNIVERSE_LOCATION_REPOSITORY_TOKEN } from './location.constants';
 import { Repository } from 'typeorm';
-import { ESIService } from '../common/external/esi/esi.service';
-import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
-import { Categories } from '../common/external/esi/esi.interface';
+import { ESIService } from '../../common/external/esi/esi.service';
+import { ESIEntetyNotFoundException } from '../../common/external/esi/esi.exceptions';
+import { Categories } from '../../common/external/esi/esi.interface';
 
 @Component()
-export class LocationService {
+export class UniverseLocationService {
 
   constructor(
-    @Inject(LOCATION_REPOSITORY_TOKEN) private locationRepository: Repository<Location>,
+    @Inject(UNIVERSE_LOCATION_REPOSITORY_TOKEN)
+    private locationRepository: Repository<UniverseLocation>,
     private esiService: ESIService,
   ) {
   }
@@ -18,9 +19,9 @@ export class LocationService {
   /**
    * Get location data
    * @param id
-   * @return {Promise<Location>}
+   * @return {Promise<UniverseLocation>}
    */
-  public async get(id: number): Promise<Location> {
+  public async get(id: number): Promise<UniverseLocation> {
     return this.findLocationById(id);
   }
 
@@ -42,15 +43,15 @@ export class LocationService {
   /**
    * Find location in db. If it doesn't exists, create it.
    * @param {number} id
-   * @return {Promise<Location>}
+   * @return {Promise<UniverseLocation>}
    */
-  private async findLocationById(id: number): Promise<Location> {
+  private async findLocationById(id: number): Promise<UniverseLocation> {
     const foundLocation = await this.locationRepository.findOneById(id);
 
     if (foundLocation) return foundLocation;
 
-    // If character not in DB, load it from ESI
-    const location = new Location();
+    // If location not in DB, load it from ESI
+    const location = new UniverseLocation();
     location.id = id;
 
     const universeNames = await this.esiService.universeNames([id]);

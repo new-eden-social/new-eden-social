@@ -1,9 +1,9 @@
 import { POST_TYPES } from './post.constants';
 import { Post } from './post.entity';
 import { DCharacterShort } from '../character/character.dto';
-import { DLocation } from '../location/location.dto';
 import { DKillmailShort } from '../killmail/killmail.dto';
 import { DPagination } from '../../dto/paggination.dto';
+import { DUniverseLocation } from '../universe/location/location.dto';
 
 export class DPost {
   id: string;
@@ -12,7 +12,7 @@ export class DPost {
   character: DCharacterShort;
   killmail?: DKillmailShort;
   hashtags: string[];
-  location?: DLocation;
+  location?: DUniverseLocation;
 
   constructor(post: Post) {
     this.id = post.id;
@@ -20,7 +20,7 @@ export class DPost {
     this.type = post.type;
     this.character = new DCharacterShort(post.character);
     this.hashtags = post.hashtags.map(h => h.name);
-    if (post.location) this.location = new DLocation(post.location);
+    if (post.location) this.location = new DUniverseLocation(post.location);
     if (post.killmail) this.killmail = new DKillmailShort(post.killmail);
   }
 }

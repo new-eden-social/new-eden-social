@@ -7,14 +7,14 @@ export class DCorporationShort {
   name: string;
   ticker: string;
   description: string;
-  alliance: DAllianceShort;
+  alliance?: DAllianceShort;
 
   constructor(corporation: Corporation) {
     this.id = corporation.id;
     this.name = corporation.name;
     this.ticker = corporation.ticker;
     this.description = corporation.description;
-    this.alliance = new DAllianceShort(corporation.alliance);
+    this.alliance = corporation.alliance ? new DAllianceShort(corporation.alliance) : null;
   }
 }
 
@@ -37,7 +37,7 @@ export class DCorporation {
   name: string;
   ticker: string;
   description: string;
-  alliance: DAllianceShort;
+  alliance?: DAllianceShort;
 
   /* LIVE Data*/
   iskDestroyed: number;
