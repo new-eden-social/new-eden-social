@@ -31,6 +31,20 @@ export class PostController {
   ) {
   }
 
+  @Get('latest')
+  public async getLatestPosts(
+    @Request() req,
+    @Response() res,
+    @Query('limit') limit = 10,
+    @Query('page') page = 0,
+  ) {
+    const { posts, count } = await this.postService.getLatest(limit, page);
+
+    const response = new DPostList(posts, page, limit, count);
+
+    res.status(HttpStatus.OK).json(response);
+  }
+
   @Get('/character/:characterId')
   public async getCharacterWall(
     @Response() res,
@@ -50,8 +64,8 @@ export class PostController {
   public async getCorporationWall(
     @Response() res,
     @Param('corporationId') corporationId,
-    @Query('limit') limit,
-    @Query('page') page,
+    @Query('limit') limit = 10,
+    @Query('page') page = 0,
   ) {
     const corporation = await this.corporationService.get(corporationId);
     const { posts, count } = await this.postService.getCorporationWall(corporation, limit, page);
@@ -65,8 +79,8 @@ export class PostController {
   public async getAllianceWall(
     @Response() res,
     @Param('allianceId') allianceId,
-    @Query('limit') limit,
-    @Query('page') page,
+    @Query('limit') limit = 10,
+    @Query('page') page = 0,
   ) {
     const alliance = await this.allianceService.get(allianceId);
     const { posts, count } = await this.postService.getAllianceWall(alliance, limit, page);
@@ -80,8 +94,8 @@ export class PostController {
   public async getByHashtag(
     @Response() res,
     @Param('hashtag') hashtag,
-    @Query('limit') limit,
-    @Query('page') page,
+    @Query('limit') limit = 10,
+    @Query('page') page = 0,
   ) {
     const { posts, count } = await this.postService.getByHashtag(hashtag, limit, page);
 
@@ -94,8 +108,8 @@ export class PostController {
   public async getByLocation(
     @Response() res,
     @Param('locationId') locationId,
-    @Query('limit') limit,
-    @Query('page') page,
+    @Query('limit') limit = 10,
+    @Query('page') page = 0,
   ) {
     const { posts, count } = await this.postService.getByLocation(locationId, limit, page);
 

@@ -1,5 +1,5 @@
 import { Component, Inject } from '@nestjs/common';
-import { Brackets, ObjectLiteral, Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import { Post } from './post.entity';
 import { ICreatePostRequest } from './post.validate';
 import { Character } from '../character/character.entity';
@@ -97,11 +97,15 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    return this.getAll(
-      limit,
-      page,
+
+    const query = this.getAll(limit, page);
+    query.where(
       'post."characterWallId" = :characterId OR author.id = :characterId',
       { characterId: character.id });
+
+    const [posts, count] = await query.getManyAndCount();
+
+    return { posts, count };
   }
 
   /**
@@ -116,11 +120,14 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    return this.getAll(
-      limit,
-      page,
+    const query = this.getAll(limit, page);
+    query.where(
       'post."corporationWallId" = :corporationId OR post."corporationId" = :corporationId',
       { corporationId: corporation.id });
+
+    const [posts, count] = await query.getManyAndCount();
+
+    return { posts, count };
   }
 
   /**
@@ -135,11 +142,14 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    return this.getAll(
-      limit,
-      page,
+    const query = this.getAll(limit, page);
+    query.where(
       'post."allianceWallId" = :allianceId OR post."allianceId" = :allianceId',
       { allianceId: alliance.id });
+
+    const [posts, count] = await query.getManyAndCount();
+
+    return { posts, count };
   }
 
   /**
@@ -154,7 +164,12 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    return this.getAll(limit, page, 'hashtag."name" = :hashtag', { hashtag });
+    const query = this.getAll(limit, page);
+    query.where('hashtag."name" = :hashtag', { hashtag });
+
+    const [posts, count] = await query.getManyAndCount();
+
+    return { posts, count };
   }
 
   /**
@@ -169,7 +184,30 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    return this.getAll(limit, page, 'location."id" = :locationId', { locationId });
+    const query = this.getAll(limit, page);
+    query.where('location."id" = :locationId', { locationId });
+
+    const [posts, count] = await query.getManyAndCount();
+
+    return { posts, count };
+  }
+
+  /**
+   * Get latest posts
+   * @param {Number} limit
+   * @param {Number} page
+   * @return {Promise<Post[]>}
+   */
+  public async getLatest(
+    limit = 10,
+    page = 0,
+  ): Promise<{ posts: Post[], count: number }> {
+    const query = this.getAll(limit, page);
+    query.orderBy({ 'post."createdAt"': 'DESC' });
+
+    const [posts, count] = await query.getManyAndCount();
+
+    return { posts, count };
   }
 
   /**
@@ -197,21 +235,15 @@ export class PostService {
     return this.postRepository.save(post);
   }
 
+
   /**
    * Wrapper for querying posts
    * @param {number} limit
    * @param {number} page
-   * @param {Brackets | string} where
-   * @param {ObjectLiteral} parameters
-   * @returns {Promise<{posts: Post[]; count: number}>}
+   * @returns {SelectQueryBuilder<Post>}
    */
-  private async getAll(
-    limit: number,
-    page: number,
-    where: Brackets | string,
-    parameters?: ObjectLiteral,
-  ): Promise<{ posts: Post[], count: number }> {
-    const [posts, count] = await this.postRepository
+  private getAll(limit: number, page: number): SelectQueryBuilder<Post> {
+    return this.postRepository
     .createQueryBuilder('post')
     .leftJoinAndSelect('post.character', 'author')
     .leftJoinAndSelect('author.corporation', 'authorCorporation')
@@ -229,13 +261,8 @@ export class PostService {
     .leftJoinAndSelect('killmailP.weapon', 'killmailPWeapon')
     .leftJoinAndSelect('killmailPWeapon.group', 'killmailPWeaponGroup')
     .leftJoinAndSelect('killmailPWeaponGroup.category', 'killmailPWeaponGroupCategory')
-    .where(where, parameters)
-    .orderBy({ 'post."createdAt"': 'DESC' })
     .offset(limit * page)
-    .limit(limit)
-    .getManyAndCount();
-
-    return { posts, count };
+    .limit(limit);
   }
 
   /**
