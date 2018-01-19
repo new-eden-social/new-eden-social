@@ -25,7 +25,7 @@ export class DPost {
   }
 }
 
-export class DPostList extends DPagination {
+export class DPostList extends DPagination<DPost> {
   constructor(posts: Post[], page: number, perPage: number, count: number) {
     const formattedPosts = posts.map(post => new DPost(post));
     super(formattedPosts, page, perPage, count);

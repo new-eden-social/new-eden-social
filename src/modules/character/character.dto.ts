@@ -99,7 +99,7 @@ export class DCharacter {
   }
 }
 
-export class DCharacterList extends DPagination {
+export class DCharacterList extends DPagination<DCharacterShort> {
   constructor(characters: Character[], page: number, perPage: number, count: number) {
     const formattedCharacters = characters.map(character => new DCharacterShort(character));
     super(formattedCharacters, page, perPage, count);

@@ -78,7 +78,7 @@ export class DCorporation {
   }
 }
 
-export class DCorporationList extends DPagination {
+export class DCorporationList extends DPagination<DCorporationShort> {
   constructor(corporations: Corporation[], page: number, perPage: number, count: number) {
     const formattedCorporations = corporations.map(
       corporation => new DCorporationShort(corporation));

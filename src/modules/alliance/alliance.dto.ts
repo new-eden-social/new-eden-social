@@ -68,7 +68,7 @@ export class DAlliance {
   }
 }
 
-export class DAllianceList extends DPagination {
+export class DAllianceList extends DPagination<DAllianceShort> {
   constructor(alliances: Alliance[], page: number, perPage: number, count: number) {
     const formattedAlliances = alliances.map(alliance => new DAllianceShort(alliance));
     super(formattedAlliances, page, perPage, count);
