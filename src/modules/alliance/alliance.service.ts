@@ -57,6 +57,31 @@ export class AllianceService implements IService<Alliance> {
   }
 
   /**
+   * Get all alliances by ids
+   * @param {number[]} ids
+   * @returns {Promise<Alliance[]>}
+   */
+  public async getAllById(ids: number[]): Promise<Alliance[]> {
+    const alliances = await this.allianceRepository.createQueryBuilder('alliance')
+    .where('alliance.id IN (:ids)', { ids })
+    .getMany();
+
+    for (const id of ids) {
+      const alliance = alliances.find(a => a.id === id);
+      // If we didn't found in database, try to populate it
+      if (!alliance) alliances.push(await this.findAllianceById(id));
+    }
+
+    for (const key in alliances) {
+      const zkillAlliance = await this.zkillboardService.allianceStatistics(alliances[key].id);
+      alliances[key].populateZKillboard(zkillAlliance);
+    }
+
+    return alliances;
+  }
+
+
+  /**
    * Get alliance executor corporation
    * @param {number} id
    * @returns {Promise<Corporation>}
@@ -91,7 +116,8 @@ export class AllianceService implements IService<Alliance> {
   private async findAllianceById(id: number) {
     const foundAlliance = await this.allianceRepository.findOneById(
       id,
-      { relations: ['executorCorporation'] });
+      { relations: ['executorCorporation'] },
+    );
 
     if (foundAlliance) return foundAlliance;
 

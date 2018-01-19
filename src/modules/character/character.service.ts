@@ -41,6 +41,32 @@ export class CharacterService implements IService<Character> {
   }
 
   /**
+   * Get all characters by ids
+   * @param {number[]} ids
+   * @returns {Promise<Character[]>}
+   */
+  public async getAllById(ids: number[]): Promise<Character[]> {
+    const characters = await this.characterRepository.createQueryBuilder('character')
+    .where('character.id IN (:ids)', { ids })
+    .leftJoinAndSelect('character.corporation', 'corporation')
+    .leftJoinAndSelect('corporation.alliance', 'alliance')
+    .getMany();
+
+    for (const id of ids) {
+      const character = characters.find(c => c.id === id);
+      // If we didn't found in database, try to populate it
+      if (!character) characters.push(await this.findCharacterById(id));
+    }
+
+    for (const key in characters) {
+      const zkillChar = await this.zkillboardService.characterStatistics(characters[key].id);
+      characters[key].populateZKillboard(zkillChar);
+    }
+
+    return characters;
+  }
+
+  /**
    * Update character by id
    * @param {Character} character
    * @return {Promise<Character>}

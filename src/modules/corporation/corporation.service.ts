@@ -47,6 +47,33 @@ export class CorporationService implements IService<Corporation> {
   }
 
   /**
+   * Get all corporations by ids
+   * @param {number[]} ids
+   * @returns {Promise<Corporation[]>}
+   */
+  public async getAllById(ids: number[]): Promise<Corporation[]> {
+    const corporations = await this.corporationRepository.createQueryBuilder('corporation')
+    .where('corporation.id IN (:ids)', { ids })
+    .leftJoinAndSelect('corporation.alliance', 'alliance')
+    .getMany();
+
+    for (const id of ids) {
+      const corporation = corporations.find(c => c.id === id);
+      // If we didn't found in database, try to populate it
+      if (!corporation) corporations.push(await this.findCorporationById(id));
+    }
+
+    for (const key in corporations) {
+      const zkillCorporation = await this.zkillboardService
+      .corporationStatistics(corporations[key].id);
+
+      corporations[key].populateZKillboard(zkillCorporation);
+    }
+
+    return corporations;
+  }
+
+  /**
    * Update corporation by id
    * @param {Corporation} corporation
    * @return {Promise<Corporation>}

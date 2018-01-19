@@ -1,6 +1,17 @@
 import { DAllianceShort } from '../alliance/alliance.dto';
 import { Corporation } from './corporation.entity';
 import { DPagination } from '../../dto/paggination.dto';
+import { ICorporationName } from '../common/external/esi/esi.interface';
+
+export class DCorporationName {
+  id: number;
+  name: string;
+
+  constructor(corporation: ICorporationName) {
+    this.id = corporation.corporation_id;
+    this.name = corporation.corporation_name;
+  }
+}
 
 export class DCorporationShort {
   id: number;

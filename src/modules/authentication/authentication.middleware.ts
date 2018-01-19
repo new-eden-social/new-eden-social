@@ -10,6 +10,12 @@ export class AuthMiddleware implements NestMiddleware {
 
   resolve(): (req, res, next) => void {
     return async (req, res, next) => {
+      if (!req.headers['authorization']) {
+        throw new HttpException(
+          'Authorization token is required',
+          400,
+        );
+      }
 
       try {
         const token = req.headers['authorization'].slice('Bearer '.length);
