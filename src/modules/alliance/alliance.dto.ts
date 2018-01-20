@@ -2,6 +2,17 @@ import { DCorporationShortWithoutAlliance } from '../corporation/corporation.dto
 import { Alliance } from './alliance.entity';
 import { DPagination } from '../../dto/paggination.dto';
 import { IAllianceName } from '../common/external/esi/esi.interface';
+import { IAllianceIcon } from './alliance.interface';
+
+export class DAllianceIcon {
+  px64x64: string;
+  px128x128: string;
+
+  constructor(icon: IAllianceIcon) {
+    this.px64x64 = icon.px64x64;
+    this.px128x128 = icon.px128x128;
+  }
+}
 
 export class DAllianceName {
   id: number;
@@ -18,12 +29,14 @@ export class DAllianceShort {
   name: string;
   ticker: string;
   dateFounded: Date;
+  icon: DAllianceIcon;
 
   constructor(alliance: Alliance) {
     this.id = alliance.id;
     this.name = alliance.name;
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.dateFounded;
+    this.icon = new DAllianceIcon(alliance.icon);
   }
 }
 
@@ -33,6 +46,7 @@ export class DAlliance {
   ticker: string;
   dateFounded: Date;
   executorCorporation: DCorporationShortWithoutAlliance;
+  icon: DAllianceIcon;
 
   /* LIVE Data */
   hasSupers: boolean;
@@ -53,6 +67,7 @@ export class DAlliance {
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.dateFounded;
     this.executorCorporation = new DCorporationShortWithoutAlliance(alliance.executorCorporation);
+    this.icon = new DAllianceIcon(alliance.icon);
 
     this.hasSupers = alliance.hasSupers;
     this.iskDestroyed = alliance.iskDestroyed;

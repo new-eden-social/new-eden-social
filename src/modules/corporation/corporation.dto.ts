@@ -2,6 +2,19 @@ import { DAllianceShort } from '../alliance/alliance.dto';
 import { Corporation } from './corporation.entity';
 import { DPagination } from '../../dto/paggination.dto';
 import { ICorporationName } from '../common/external/esi/esi.interface';
+import { ICorporationIcon } from './corporation.interface';
+
+export class DCorporationIcon {
+  px64x64: string;
+  px128x128: string;
+  px256x256: string;
+
+  constructor(icon: ICorporationIcon) {
+    this.px64x64 = icon.px64x64;
+    this.px128x128 = icon.px128x128;
+    this.px256x256 = icon.px256x256;
+  }
+}
 
 export class DCorporationName {
   id: number;
@@ -19,6 +32,7 @@ export class DCorporationShort {
   ticker: string;
   description: string;
   alliance?: DAllianceShort;
+  icon: DCorporationIcon;
 
   constructor(corporation: Corporation) {
     this.id = corporation.id;
@@ -26,6 +40,7 @@ export class DCorporationShort {
     this.ticker = corporation.ticker;
     this.description = corporation.description;
     this.alliance = corporation.alliance ? new DAllianceShort(corporation.alliance) : null;
+    this.icon = new DCorporationIcon(corporation.icon);
   }
 }
 
@@ -34,12 +49,14 @@ export class DCorporationShortWithoutAlliance {
   name: string;
   ticker: string;
   description: string;
+  icon: DCorporationIcon;
 
   constructor(corporation: Corporation) {
     this.id = corporation.id;
     this.name = corporation.name;
     this.ticker = corporation.ticker;
     this.description = corporation.description;
+    this.icon = new DCorporationIcon(corporation.icon);
   }
 }
 
@@ -49,6 +66,7 @@ export class DCorporation {
   ticker: string;
   description: string;
   alliance?: DAllianceShort;
+  icon: DCorporationIcon;
 
   /* LIVE Data*/
   iskDestroyed: number;
@@ -66,6 +84,7 @@ export class DCorporation {
     this.ticker = corporation.ticker;
     this.description = corporation.description;
     this.alliance = corporation.alliance ? new DAllianceShort(corporation.alliance) : null;
+    this.icon = new DCorporationIcon(corporation.icon);
 
     this.iskDestroyed = corporation.iskDestroyed;
     this.iskLost = corporation.iskLost;

@@ -1,6 +1,7 @@
 import { ArgumentMetadata, Pipe, PipeTransform } from '@nestjs/common';
 import { validate } from 'class-validator';
 import ApiValidationException from '../errors/ApiValidationException';
+import { plainToClass } from 'class-transformer';
 
 /**
  * Example from: http://www.docs.nestjs.com/pipes
@@ -9,10 +10,10 @@ import ApiValidationException from '../errors/ApiValidationException';
 export class ValidatorPipe implements PipeTransform<any> {
   public async transform(value, metadata: ArgumentMetadata) {
     const { metatype } = metadata;
-    if (!this.toValidate(metatype)) {
+    if (!metatype || !this.toValidate(metatype)) {
       return value;
     }
-    const object = Object.assign(new metatype(), value);
+    const object = plainToClass(metatype, value);
     const errors = await validate(object);
     if (errors.length > 0) {
       const apiValidationErrors = errors.map(error => ({
@@ -21,7 +22,7 @@ export class ValidatorPipe implements PipeTransform<any> {
       }));
       throw new ApiValidationException(apiValidationErrors);
     }
-    return value;
+    return object;
   }
 
   private toValidate(metatype = null): boolean {

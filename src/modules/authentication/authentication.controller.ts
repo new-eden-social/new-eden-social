@@ -1,6 +1,7 @@
 import { Body, Controller, Get, Headers, HttpStatus, Post, Query, Response } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { HttpException } from '@nestjs/core';
+import { DCharacterShort } from '../character/character.dto';
 
 @Controller('authentication')
 export class AuthenticationController {
@@ -19,10 +20,10 @@ export class AuthenticationController {
       'Authorization header is required!',
       HttpStatus.BAD_REQUEST);
 
-    const response = await this.authenticationService
+    const character = await this.authenticationService
     .verifyAuthentication(token.slice('Bearer '.length));
 
-    res.json(response);
+    res.json(new DCharacterShort(character));
   }
 
   @Get('/sso/callback')

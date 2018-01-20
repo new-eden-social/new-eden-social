@@ -12,6 +12,7 @@ import { IGetCorporation } from '../common/external/esi/esi.interface';
 import { Character } from '../character/character.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { Post } from '../post/post.entity';
+import { ICorporationIcon } from './corporation.interface';
 
 @Entity()
 export class Corporation {
@@ -70,6 +71,14 @@ export class Corporation {
   shipsLost: number;
   soloKills: number;
   soloLosses: number;
+
+  get icon(): ICorporationIcon {
+    return {
+      px64x64: `http://image.eveonline.com/Corporation/${this.id}_64.png`,
+      px128x128: `http://image.eveonline.com/Corporation/${this.id}_128.png`,
+      px256x256: `http://image.eveonline.com/Corporation/${this.id}_256.png`,
+    };
+  }
 
   public populateESI(corp: IGetCorporation) {
     this.name = corp.name;

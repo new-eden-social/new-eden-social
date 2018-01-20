@@ -11,6 +11,7 @@ import { IAllianceStatistics } from '../common/external/zkillboard/zkillboard.in
 import { IGetAlliance } from '../common/external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
 import { Post } from '../post/post.entity';
+import { IAllianceIcon } from './alliance.interface';
 
 @Entity()
 export class Alliance {
@@ -57,6 +58,13 @@ export class Alliance {
   soloLosses: number;
   memberCount: number;
   corpCount: number;
+
+  get icon(): IAllianceIcon {
+    return {
+      px64x64: `http://image.eveonline.com/Alliance/${this.id}_64.png`,
+      px128x128: `http://image.eveonline.com/Alliance/${this.id}_128.png`,
+    };
+  }
 
   public populateESI(alliance: IGetAlliance) {
     this.name = alliance.name;

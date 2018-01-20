@@ -19,6 +19,7 @@ import { CORPORATION_ROLES } from '../corporation/corporation.constants';
 import { AllianceService } from '../alliance/alliance.service';
 import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
 import { DPost, DPostList } from './post.dto';
+import { VPagination } from '../../validate/pagination.validate';
 
 @Controller('posts')
 export class PostController {
@@ -35,12 +36,11 @@ export class PostController {
   public async getLatestPosts(
     @Request() req,
     @Response() res,
-    @Query('limit') limit = 10,
-    @Query('page') page = 0,
+    @Query() query: VPagination,
   ) {
-    const { posts, count } = await this.postService.getLatest(limit, page);
+    const { posts, count } = await this.postService.getLatest(query.limit, query.page);
 
-    const response = new DPostList(posts, page, limit, count);
+    const response = new DPostList(posts, query.page, query.limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }
@@ -49,13 +49,15 @@ export class PostController {
   public async getCharacterWall(
     @Response() res,
     @Param('characterId') characterId,
-    @Query('limit') limit = 10,
-    @Query('page') page = 0,
+    @Query() query: VPagination,
   ) {
     const character = await this.characterService.get(characterId);
-    const { posts, count } = await this.postService.getCharacterWall(character, limit, page);
+    const { posts, count } = await this.postService.getCharacterWall(
+      character,
+      query.limit,
+      query.page);
 
-    const response = new DPostList(posts, page, limit, count);
+    const response = new DPostList(posts, query.page, query.limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }
@@ -64,13 +66,15 @@ export class PostController {
   public async getCorporationWall(
     @Response() res,
     @Param('corporationId') corporationId,
-    @Query('limit') limit = 10,
-    @Query('page') page = 0,
+    @Query() query: VPagination,
   ) {
     const corporation = await this.corporationService.get(corporationId);
-    const { posts, count } = await this.postService.getCorporationWall(corporation, limit, page);
+    const { posts, count } = await this.postService.getCorporationWall(
+      corporation,
+      query.limit,
+      query.page);
 
-    const response = new DPostList(posts, page, limit, count);
+    const response = new DPostList(posts, query.page, query.limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }
@@ -79,13 +83,15 @@ export class PostController {
   public async getAllianceWall(
     @Response() res,
     @Param('allianceId') allianceId,
-    @Query('limit') limit = 10,
-    @Query('page') page = 0,
+    @Query() query: VPagination,
   ) {
     const alliance = await this.allianceService.get(allianceId);
-    const { posts, count } = await this.postService.getAllianceWall(alliance, limit, page);
+    const { posts, count } = await this.postService.getAllianceWall(
+      alliance,
+      query.limit,
+      query.page);
 
-    const response = new DPostList(posts, page, limit, count);
+    const response = new DPostList(posts, query.page, query.limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }
@@ -94,12 +100,11 @@ export class PostController {
   public async getByHashtag(
     @Response() res,
     @Param('hashtag') hashtag,
-    @Query('limit') limit = 10,
-    @Query('page') page = 0,
+    @Query() query: VPagination,
   ) {
-    const { posts, count } = await this.postService.getByHashtag(hashtag, limit, page);
+    const { posts, count } = await this.postService.getByHashtag(hashtag, query.limit, query.page);
 
-    const response = new DPostList(posts, page, limit, count);
+    const response = new DPostList(posts, query.page, query.limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }
@@ -108,12 +113,14 @@ export class PostController {
   public async getByLocation(
     @Response() res,
     @Param('locationId') locationId,
-    @Query('limit') limit = 10,
-    @Query('page') page = 0,
+    @Query() query: VPagination,
   ) {
-    const { posts, count } = await this.postService.getByLocation(locationId, limit, page);
+    const { posts, count } = await this.postService.getByLocation(
+      locationId,
+      query.limit,
+      query.page);
 
-    const response = new DPostList(posts, page, limit, count);
+    const response = new DPostList(posts, query.page, query.limit, count);
 
     res.status(HttpStatus.OK).json(response);
   }

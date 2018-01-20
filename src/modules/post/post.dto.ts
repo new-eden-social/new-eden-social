@@ -13,6 +13,7 @@ export class DPost {
   killmail?: DKillmailShort;
   hashtags: string[];
   location?: DUniverseLocation;
+  createdAt: Date;
 
   constructor(post: Post) {
     this.id = post.id;
@@ -20,6 +21,7 @@ export class DPost {
     this.type = post.type;
     this.character = new DCharacterShort(post.character);
     this.hashtags = post.hashtags.map(h => h.name);
+    this.createdAt = post.createdAt;
     if (post.location) this.location = new DUniverseLocation(post.location);
     if (post.killmail) this.killmail = new DKillmailShort(post.killmail);
   }

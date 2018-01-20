@@ -48,6 +48,7 @@
     "axios": "^0.16.2",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "class-transformer": "^0.1.8",
     "class-validator": "^0.7.1",
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
