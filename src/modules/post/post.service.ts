@@ -212,7 +212,6 @@ export class PostService {
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
     const query = this.getAll(limit, page);
-    query.orderBy({ 'post."createdAt"': 'DESC' });
 
     const [posts, count] = await query.getManyAndCount();
 
@@ -270,6 +269,7 @@ export class PostService {
     .leftJoinAndSelect('killmailP.weapon', 'killmailPWeapon')
     .leftJoinAndSelect('killmailPWeapon.group', 'killmailPWeaponGroup')
     .leftJoinAndSelect('killmailPWeaponGroup.category', 'killmailPWeaponGroupCategory')
+    .orderBy({ 'post."createdAt"': 'DESC' })
     .offset(limit * page)
     .limit(limit);
   }
