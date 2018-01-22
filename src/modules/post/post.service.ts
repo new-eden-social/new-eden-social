@@ -100,7 +100,10 @@ export class PostService {
 
     const query = this.getAll(limit, page);
     query.where(
-      'post."characterWallId" = :characterId OR author.id = :characterId',
+      `
+      post."characterWallId" = :characterId OR
+      (author.id = :characterId AND post."characterWallId" IS NULL)
+      `,
       { characterId: character.id });
 
     const [posts, count] = await query.getManyAndCount();
@@ -122,7 +125,10 @@ export class PostService {
   ): Promise<{ posts: Post[], count: number }> {
     const query = this.getAll(limit, page);
     query.where(
-      'post."corporationWallId" = :corporationId OR post."corporationId" = :corporationId',
+      `
+      post."corporationWallId" = :corporationId OR
+      (post."corporationId" = :corporationId AND post."corporationWallId" IS NULL)
+      `,
       { corporationId: corporation.id });
 
     const [posts, count] = await query.getManyAndCount();
@@ -144,7 +150,10 @@ export class PostService {
   ): Promise<{ posts: Post[], count: number }> {
     const query = this.getAll(limit, page);
     query.where(
-      'post."allianceWallId" = :allianceId OR post."allianceId" = :allianceId',
+      `
+      post."allianceWallId" = :allianceId OR
+      (post."allianceId" = :allianceId AND post."allianceWallId" IS NULL)
+      `,
       { allianceId: alliance.id });
 
     const [posts, count] = await query.getManyAndCount();
