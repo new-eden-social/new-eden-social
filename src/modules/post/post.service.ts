@@ -102,7 +102,7 @@ export class PostService {
     query.where(
       `
       post."characterWallId" = :characterId OR
-      (author.id = :characterId AND post."characterWallId" IS NULL)
+      (authorCharacter.id = :characterId AND post."characterWallId" IS NULL)
       `,
       { characterId: character.id });
 
@@ -127,7 +127,7 @@ export class PostService {
     query.where(
       `
       post."corporationWallId" = :corporationId OR
-      (post."corporationId" = :corporationId AND post."corporationWallId" IS NULL)
+      (authorCorporation.id = :corporationId AND post."corporationWallId" IS NULL)
       `,
       { corporationId: corporation.id });
 
@@ -152,7 +152,7 @@ export class PostService {
     query.where(
       `
       post."allianceWallId" = :allianceId OR
-      (post."allianceId" = :allianceId AND post."allianceWallId" IS NULL)
+      (authorAlliance.id = :allianceId AND post."allianceWallId" IS NULL)
       `,
       { allianceId: alliance.id });
 
