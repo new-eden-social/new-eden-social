@@ -20,6 +20,7 @@ import { AllianceService } from '../alliance/alliance.service';
 import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
 import { DPost, DPostList } from './post.dto';
 import { VPagination } from '../../validate/pagination.validate';
+import { CorporationRolesGuard } from '../corporation/corporation.roles.guard';
 
 @Controller('posts')
 export class PostController {
@@ -165,7 +166,7 @@ export class PostController {
   }
 
   @Post('/alliance')
-  @UseGuards(CorporationAllianceExecutorGuard)
+  @UseGuards(CorporationRolesGuard, CorporationAllianceExecutorGuard)
   @CorporationRoles(
     CORPORATION_ROLES.DIRECTOR,
     CORPORATION_ROLES.DIPLOMAT,

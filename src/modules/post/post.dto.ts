@@ -4,12 +4,16 @@ import { DCharacterShort } from '../character/character.dto';
 import { DKillmailShort } from '../killmail/killmail.dto';
 import { DPagination } from '../../dto/paggination.dto';
 import { DUniverseLocation } from '../universe/location/location.dto';
+import { DCorporationShort } from '../corporation/corporation.dto';
+import { DAllianceShort } from '../alliance/alliance.dto';
 
 export class DPost {
   id: string;
   content: string;
   type: POST_TYPES;
-  character: DCharacterShort;
+  character?: DCharacterShort;
+  corporation?: DCorporationShort;
+  alliance?: DAllianceShort;
   killmail?: DKillmailShort;
   hashtags: string[];
   location?: DUniverseLocation;
@@ -19,7 +23,9 @@ export class DPost {
     this.id = post.id;
     this.content = post.content;
     this.type = post.type;
-    this.character = new DCharacterShort(post.character);
+    if (post.character) this.character = new DCharacterShort(post.character);
+    if (post.corporation) this.corporation = new DCorporationShort(post.corporation);
+    if (post.alliance) this.alliance = new DAllianceShort(post.alliance);
     this.hashtags = post.hashtags.map(h => h.name);
     this.createdAt = post.createdAt;
     if (post.location) this.location = new DUniverseLocation(post.location);

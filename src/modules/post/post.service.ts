@@ -253,9 +253,12 @@ export class PostService {
   private getAll(limit: number, page: number): SelectQueryBuilder<Post> {
     return this.postRepository
     .createQueryBuilder('post')
-    .leftJoinAndSelect('post.character', 'author')
-    .leftJoinAndSelect('author.corporation', 'authorCorporation')
-    .leftJoinAndSelect('authorCorporation.alliance', 'authorAlliance')
+    .leftJoinAndSelect('post.character', 'authorCharacter')
+    .leftJoinAndSelect('authorCharacter.corporation', 'authorCharacterCorporation')
+    .leftJoinAndSelect('authorCharacterCorporation.alliance', 'authorCharacterAlliance')
+    .leftJoinAndSelect('post.corporation', 'authorCorporation')
+    .leftJoinAndSelect('authorCorporation.alliance', 'authorCorporationAlliance')
+    .leftJoinAndSelect('post.alliance', 'authorAlliance')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')
