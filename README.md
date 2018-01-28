@@ -34,13 +34,12 @@ Whole platform would heavily relay on EVE Online API, so that you could send in 
 Think of it as combination of r/eve and twitter. A hub of EVE Online community.
 
 ### Releases
-For branches `develop` and `master` servers are automaticly deployed and all data gets lost on each deploy.
+Branch `develop` is automatically deployed on each commit/merge.
 
-| Branch  | API                       | WEB                       |
-| ------- | ------------------------- | ------------------------- |
-| develop | api.dev.evebook.online    |web.dev.evebook.online     |
-| master  | api.staging.evebook.online|web.staging.evebook.online |
-| release | api.evebook.online        |evebook.online             |
+| Branch  | API                            | WEB                       |
+| ------- | ------------------------------ | ------------------------- |
+| develop | api.development.evebook.online |development.evebook.online |
+| master  | api.evebook.online             |evebook.online             |
 
 ## Contribution
 We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/evebook/api/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/evebook/api/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/evebook/api/issues) or directly on [gitter](https://gitter.im/EVE-Book/Lobby).
@@ -64,9 +63,9 @@ $ cp example.env .env
 ```
 
 ## Start
-Project consits of microservices.
+Project consits of different services.
 
-Main service is API (which isnt "micro"), that servs all the data for web. Then we have Updater, which periodicly updates characters/corporations/alliances with changing/live data. And Killmails, which is listening for new killmails that happen in game and creates appropriate posts/events. 
+Main service is AP, that serves all the data for web. Then we have Updater, which periodically updates characters/corporations/alliances with changing/live data. And Killmails, which is listening for new killmails that happen in game and creates appropriate posts/events.
 
 ### API
 ```
