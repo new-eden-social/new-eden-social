@@ -76,6 +76,7 @@
     "@types/ws": "^3.2.0",
     "chai": "^4.0.2",
     "coveralls": "^2.13.3",
+    "cz-conventional-changelog": "^2.1.0",
     "faker": "^4.1.0",
     "mocha": "^3.4.2",
     "nyc": "^11.0.2",
@@ -84,5 +85,10 @@
     "tslint": "^5.4.3",
     "tslint-config-airbnb": "^5.2.0",
     "zone.js": "^0.8.18"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
