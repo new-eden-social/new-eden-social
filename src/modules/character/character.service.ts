@@ -9,6 +9,7 @@ import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exception
 import { CorporationService } from '../corporation/corporation.service';
 import { IGetCharacterRoles } from '../common/external/esi/esi.interface';
 import Log from '../../utils/Log';
+import { Utils } from '../../utils/utils.static';
 
 @Component()
 export class CharacterService implements IService<Character> {
@@ -119,6 +120,9 @@ export class CharacterService implements IService<Character> {
 
     const esiCharacter = await this.esiService.getCharacter(id);
     character.populateESI(esiCharacter);
+
+    // Create handle
+    character.handle = Utils.createHandle(character.id, character.name);
 
     // Save without corporation
     await this.characterRepository.save(character);

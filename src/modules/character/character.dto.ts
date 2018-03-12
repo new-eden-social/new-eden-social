@@ -30,6 +30,7 @@ export class DCharacterName {
 
 export class DCharacterShort {
   id: number;
+  handle: string;
   name: string;
   description: string;
   gender: string;
@@ -42,6 +43,7 @@ export class DCharacterShort {
 
   constructor(character: Character) {
     this.id = character.id;
+    this.handle = character.handle;
     this.name = character.name;
     this.description = character.description;
     this.gender = character.gender;
@@ -56,6 +58,7 @@ export class DCharacterShort {
 
 export class DCharacter {
   id: number;
+  handle: string;
   name: string;
   description: string;
   gender: string;
@@ -78,6 +81,7 @@ export class DCharacter {
 
   constructor(character: Character) {
     this.id = character.id;
+    this.handle = character.handle;
     this.name = character.name;
     this.description = character.description;
     this.gender = character.gender;

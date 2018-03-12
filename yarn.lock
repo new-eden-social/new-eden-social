@@ -46,6 +46,12 @@
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/@types/faker/-/faker-4.1.1.tgz#989666efde54c07b7f960a552b5fceb5d5e570e0"
 
+"@types/hashids@^1.0.30":
+  version "1.0.30"
+  resolved "https://registry.yarnpkg.com/@types/hashids/-/hashids-1.0.30.tgz#c0a056b25c5b13c80bf330fb8d379ac4d4049999"
+  dependencies:
+    "@types/node" "*"
+
 "@types/ioredis@0.0.25":
   version "0.0.25"
   resolved "https://registry.yarnpkg.com/@types/ioredis/-/ioredis-0.0.25.tgz#e3484c3ccc1bdf3bd310e413a3ce6f721018fbd2"
@@ -1220,6 +1226,10 @@ has-flag@^1.0.0:
 has-flag@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/has-flag/-/has-flag-2.0.0.tgz#e8207af1cc7b30d446cc70b734b5e8be18f88d51"
+
+hashids@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/hashids/-/hashids-1.1.4.tgz#e4ff92ad66b684a3bd6aace7c17d66618ee5fa21"
 
 hawk@~3.1.3:
   version "3.1.3"

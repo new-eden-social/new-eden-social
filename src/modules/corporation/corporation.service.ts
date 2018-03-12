@@ -9,6 +9,7 @@ import { CORPORATION_REPOSITORY_TOKEN } from './corporation.constants';
 import { CharacterService } from '../character/character.service';
 import { AllianceService } from '../alliance/alliance.service';
 import Log from '../../utils/Log';
+import { Utils } from '../../utils/utils.static';
 
 @Component()
 export class CorporationService implements IService<Corporation> {
@@ -124,6 +125,9 @@ export class CorporationService implements IService<Corporation> {
 
     const esiCorporation = await this.esiService.getCorporation(id);
     corporation.populateESI(esiCorporation);
+
+    // Create handle
+    corporation.handle = Utils.createHandle(corporation.id, corporation.name);
 
     await this.corporationRepository.save(corporation);
 

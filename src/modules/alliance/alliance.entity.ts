@@ -19,6 +19,9 @@ export class Alliance {
   @PrimaryColumn('int')
   id: number;
 
+  @Column({ unique: true })
+  handle: string;
+
   @OneToMany(type => Corporation, corporation => corporation.alliance)
   corporations: Corporation[];
 

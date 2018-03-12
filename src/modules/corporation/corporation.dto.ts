@@ -28,6 +28,7 @@ export class DCorporationName {
 
 export class DCorporationShort {
   id: number;
+  handle: string;
   name: string;
   ticker: string;
   description: string;
@@ -36,6 +37,7 @@ export class DCorporationShort {
 
   constructor(corporation: Corporation) {
     this.id = corporation.id;
+    this.handle = corporation.handle;
     this.name = corporation.name;
     this.ticker = corporation.ticker;
     this.description = corporation.description;
@@ -46,6 +48,7 @@ export class DCorporationShort {
 
 export class DCorporationShortWithoutAlliance {
   id: number;
+  handle: string;
   name: string;
   ticker: string;
   description: string;
@@ -53,6 +56,7 @@ export class DCorporationShortWithoutAlliance {
 
   constructor(corporation: Corporation) {
     this.id = corporation.id;
+    this.handle = corporation.handle;
     this.name = corporation.name;
     this.ticker = corporation.ticker;
     this.description = corporation.description;
@@ -62,6 +66,7 @@ export class DCorporationShortWithoutAlliance {
 
 export class DCorporation {
   id: number;
+  handle: string;
   name: string;
   ticker: string;
   description: string;
@@ -80,6 +85,7 @@ export class DCorporation {
 
   constructor(corporation: Corporation) {
     this.id = corporation.id;
+    this.handle = corporation.handle;
     this.name = corporation.name;
     this.ticker = corporation.ticker;
     this.description = corporation.description;

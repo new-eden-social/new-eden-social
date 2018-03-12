@@ -21,6 +21,9 @@ export class Character {
   @PrimaryColumn('int')
   id: number;
 
+  @Column({ unique: true })
+  handle: string;
+
   @OneToMany(type => Post, post => post.character)
   posts: Post[];
 

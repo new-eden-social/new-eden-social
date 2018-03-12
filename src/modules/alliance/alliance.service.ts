@@ -9,6 +9,7 @@ import { CorporationService } from '../corporation/corporation.service';
 import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
 import Log from '../../utils/Log';
 import { Corporation } from '../corporation/corporation.entity';
+import { Utils } from '../../utils/utils.static';
 
 export class AllianceService implements IService<Alliance> {
 
@@ -127,6 +128,9 @@ export class AllianceService implements IService<Alliance> {
 
     const esiAlliance = await this.esiService.getAlliance(id);
     alliance.populateESI(esiAlliance);
+
+    // Create handle
+    alliance.handle = Utils.createHandle(alliance.id, alliance.name);
 
     // Save without corporation
     await this.allianceRepository.save(alliance);

@@ -20,6 +20,9 @@ export class Corporation {
   @PrimaryColumn('int')
   id: number;
 
+  @Column({ unique: true })
+  handle: string;
+
   @Column()
   name: string;
 
