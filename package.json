@@ -62,8 +62,8 @@
   "devDependencies": {
     "@types/chai": "^4.0.1",
     "@types/faker": "^4.1.0",
+    "@types/mocha": "^5.0.0",
     "@types/ioredis": "3.2.6",
-    "@types/mocha": "^2.2.41",
     "@types/moment": "^2.13.0",
     "@types/node": "^9.3.0",
     "chai": "^4.0.2",
