@@ -27,6 +27,7 @@ export class DAllianceName {
 export class DAllianceShort {
   id: number;
   name: string;
+  handle: string;
   ticker: string;
   dateFounded: Date;
   icon: DAllianceIcon;
@@ -34,6 +35,7 @@ export class DAllianceShort {
   constructor(alliance: Alliance) {
     this.id = alliance.id;
     this.name = alliance.name;
+    this.handle = alliance.handle;
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.dateFounded;
     this.icon = new DAllianceIcon(alliance.icon);
@@ -43,6 +45,7 @@ export class DAllianceShort {
 export class DAlliance {
   id: number;
   name: string;
+  handle: string;
   ticker: string;
   dateFounded: Date;
   executorCorporation: DCorporationShortWithoutAlliance;
@@ -64,6 +67,7 @@ export class DAlliance {
   constructor(alliance: Alliance) {
     this.id = alliance.id;
     this.name = alliance.name;
+    this.handle = alliance.handle;
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.dateFounded;
     this.executorCorporation = new DCorporationShortWithoutAlliance(alliance.executorCorporation);
