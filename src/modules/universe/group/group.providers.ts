@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { UNIVERSE_GROUP_REPOSITORY_TOKEN } from './group.constants';
 import { UniverseGroup } from './group.entity';
-import { DB_CONNECTION_TOKEN } from '../../common/database/database.constants';
+import { DB_CONNECTION_TOKEN } from '../../core/database/database.constants';
 
 export const universeGroupProviders = [
   {

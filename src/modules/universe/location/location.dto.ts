@@ -1,5 +1,5 @@
 import { UniverseLocation } from './location.entity';
-import { Categories } from '../../common/external/esi/esi.interface';
+import { Categories } from '../../core/external/esi/esi.interface';
 
 export class DUniverseLocation {
   id: number;

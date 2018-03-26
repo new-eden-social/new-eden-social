@@ -19,8 +19,10 @@ import { CORPORATION_ROLES } from '../corporation/corporation.constants';
 import { AllianceService } from '../alliance/alliance.service';
 import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
 import { DPost, DPostList } from './post.dto';
-import { VPagination } from '../../validate/pagination.validate';
+import { VPagination } from '../../validation/pagination.validate';
 import { CorporationRolesGuard } from '../corporation/corporation.roles.guard';
+import { AuthenticatedCharacter } from '../core/authentication/authentication.decorators';
+import { Character } from '../character/character.entity';
 
 @Controller('posts')
 export class PostController {
@@ -35,7 +37,6 @@ export class PostController {
 
   @Get('latest')
   public async getLatestPosts(
-    @Request() req,
     @Response() res,
     @Query() query: VPagination,
   ) {
@@ -137,11 +138,11 @@ export class PostController {
 
   @Post('/character')
   public async createAsCharacter(
-    @Request() req,
     @Response() res,
     @Body('post') postData: ICreatePostRequest,
+    @AuthenticatedCharacter() character: Character,
   ) {
-    const post = await this.postService.createAsCharacter(postData, req.character);
+    const post = await this.postService.createAsCharacter(postData, character);
 
     const response = new DPost(post);
 
@@ -154,11 +155,11 @@ export class PostController {
     CORPORATION_ROLES.DIPLOMAT,
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsCorporation(
-    @Request() req,
     @Response() res,
     @Body('post') postData: ICreatePostRequest,
+    @AuthenticatedCharacter() character: Character,
   ) {
-    const post = await this.postService.createAsCorporation(postData, req.character.corporation);
+    const post = await this.postService.createAsCorporation(postData, character.corporation);
 
     const response = new DPost(post);
 
@@ -172,13 +173,13 @@ export class PostController {
     CORPORATION_ROLES.DIPLOMAT,
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsAlliance(
-    @Request() req,
     @Response() res,
     @Body('post') postData: ICreatePostRequest,
+    @AuthenticatedCharacter() character: Character,
   ) {
     const post = await this.postService.createAsAlliance(
       postData,
-      req.character.corporation.alliance);
+      character.corporation.alliance);
 
     const response = new DPost(post);
 

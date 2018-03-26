@@ -1,7 +1,7 @@
 import { DCorporationShortWithoutAlliance } from '../corporation/corporation.dto';
 import { Alliance } from './alliance.entity';
-import { DPagination } from '../../dto/paggination.dto';
-import { IAllianceName } from '../common/external/esi/esi.interface';
+import { DPagination } from '../core/pagination/paggination.dto';
+import { IAllianceName } from '../core/external/esi/esi.interface';
 import { IAllianceIcon } from './alliance.interface';
 
 export class DAllianceIcon {

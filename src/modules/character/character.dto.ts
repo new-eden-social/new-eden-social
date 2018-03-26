@@ -1,8 +1,8 @@
 import { DCorporationShort } from '../corporation/corporation.dto';
 import { Character } from './character.entity';
 import { ICharacterPortrait } from './character.interface';
-import { DPagination } from '../../dto/paggination.dto';
-import { ICharacterName } from '../common/external/esi/esi.interface';
+import { DPagination } from '../core/pagination/paggination.dto';
+import { ICharacterName } from '../core/external/esi/esi.interface';
 
 export class DCharacterPortrait {
   px64x64: string;

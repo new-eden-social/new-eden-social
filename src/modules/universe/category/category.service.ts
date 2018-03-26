@@ -2,8 +2,8 @@ import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { UNIVERSE_CATEGORY_REPOSITORY_TOKEN } from './category.constants';
 import { UniverseCategory } from './category.entity';
-import { ESIService } from '../../common/external/esi/esi.service';
-import { ESIEntetyNotFoundException } from '../../common/external/esi/esi.exceptions';
+import { ESIService } from '../../core/external/esi/esi.service';
+import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
 
 @Component()
 export class UniverseCategoryService {

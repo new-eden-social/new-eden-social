@@ -6,7 +6,7 @@ import {
   IAllianceName,
   ICharacterName,
   ICorporationName,
-} from '../common/external/esi/esi.interface';
+} from '../core/external/esi/esi.interface';
 
 export class DSearch {
   characters: DCharacterName[];

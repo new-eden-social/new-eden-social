@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { UniverseLocation } from './location.entity';
 import { UNIVERSE_LOCATION_REPOSITORY_TOKEN } from './location.constants';
-import { DB_CONNECTION_TOKEN } from '../../common/database/database.constants';
+import { DB_CONNECTION_TOKEN } from '../../core/database/database.constants';
 
 export const universeLocationProviders = [
   {

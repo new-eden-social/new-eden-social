@@ -1,23 +1,25 @@
 import { Component, forwardRef, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { ZKillboardService } from '../common/external/zkillboard/zkillboard.service';
-import { ESIService } from '../common/external/esi/esi.service';
+import { ZKillboardService } from '../core/external/zkillboard/zkillboard.service';
+import { ESIService } from '../core/external/esi/esi.service';
 import { IService } from '../../interfaces/service.interface';
-import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
+import { ESIEntetyNotFoundException } from '../core/external/esi/esi.exceptions';
 import { Corporation } from './corporation.entity';
 import { CORPORATION_REPOSITORY_TOKEN } from './corporation.constants';
 import { CharacterService } from '../character/character.service';
 import { AllianceService } from '../alliance/alliance.service';
-import Log from '../../utils/Log';
-import { Utils } from '../../utils/utils.static';
+import { LoggerService } from '../core/logger/logger.service';
+import { UtilsService } from '../core/utils/utils.service';
 
 @Component()
 export class CorporationService implements IService<Corporation> {
 
   constructor(
+    private utilsService: UtilsService,
+    private loggerService: LoggerService,
+    private esiService: ESIService,
     @Inject(CORPORATION_REPOSITORY_TOKEN) private corporationRepository: Repository<Corporation>,
     private zkillboardService: ZKillboardService,
-    private esiService: ESIService,
     @Inject(forwardRef(() => CharacterService))
     private characterService: CharacterService,
     @Inject(forwardRef(() => AllianceService))
@@ -31,18 +33,18 @@ export class CorporationService implements IService<Corporation> {
    * @return {Promise<Corporation>}
    */
   public async get(id: number): Promise<Corporation> {
-    Log.debug('get corporation', id);
+    this.loggerService.debug('get corporation', id);
 
     // Find corporation in database
     const corporation = await this.findCorporationById(id);
 
     // If exists, populate
     if (corporation) {
-      Log.debug('get corporation populating', id);
+      this.loggerService.debug('get corporation populating', id);
       const zkillCorporation = await this.zkillboardService.corporationStatistics(id);
       corporation.populateZKillboard(zkillCorporation);
     }
-    Log.debug('get corporation populating done', id);
+    this.loggerService.debug('get corporation populating done', id);
 
     return corporation;
   }
@@ -127,7 +129,7 @@ export class CorporationService implements IService<Corporation> {
     corporation.populateESI(esiCorporation);
 
     // Create handle
-    corporation.handle = Utils.createHandle(corporation.id, corporation.name);
+    corporation.handle = this.utilsService.createHandle(corporation.id, corporation.name);
 
     await this.corporationRepository.save(corporation);
 
@@ -159,17 +161,17 @@ export class CorporationService implements IService<Corporation> {
     // id = 1 means that ceo/creator isn't a real character (but a npc?)
     if (ceoId !== 1 || creatorId !== 1 || allianceId !== 1) {
       if (allianceId && allianceId !== 1) {
-        Log.debug('Corporation get alliance', allianceId);
+        this.loggerService.debug('Corporation get alliance', allianceId);
         corporation.alliance = await this.allianceService.get(allianceId);
       }
 
       if (ceoId && ceoId !== 1) {
-        Log.debug('Corporation get ceo character', ceoId);
+        this.loggerService.debug('Corporation get ceo character', ceoId);
         corporation.ceo = await this.characterService.get(ceoId);
       }
 
       if (creatorId && creatorId !== 1) {
-        Log.debug('Corporation get creator character', creatorId);
+        this.loggerService.debug('Corporation get creator character', creatorId);
         corporation.creator = await this.characterService.get(creatorId);
       }
 

@@ -1,23 +1,25 @@
 import { Component, forwardRef, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Character } from './character.entity';
-import { ZKillboardService } from '../common/external/zkillboard/zkillboard.service';
-import { ESIService } from '../common/external/esi/esi.service';
+import { ZKillboardService } from '../core/external/zkillboard/zkillboard.service';
+import { ESIService } from '../core/external/esi/esi.service';
 import { CHARACTER_REPOSITORY_TOKEN } from './character.constants';
 import { IService } from '../../interfaces/service.interface';
-import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
+import { ESIEntetyNotFoundException } from '../core/external/esi/esi.exceptions';
 import { CorporationService } from '../corporation/corporation.service';
-import { IGetCharacterRoles } from '../common/external/esi/esi.interface';
-import Log from '../../utils/Log';
-import { Utils } from '../../utils/utils.static';
+import { IGetCharacterRoles } from '../core/external/esi/esi.interface';
+import { LoggerService } from '../core/logger/logger.service';
+import { UtilsService } from '../core/utils/utils.service';
 
 @Component()
 export class CharacterService implements IService<Character> {
 
   constructor(
+    private esiService: ESIService,
+    private loggerService: LoggerService,
+    private utilsService: UtilsService,
     @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,
     private zkillboardService: ZKillboardService,
-    private esiService: ESIService,
     @Inject(forwardRef(() => CorporationService))
     private corporationService: CorporationService,
   ) {
@@ -29,14 +31,14 @@ export class CharacterService implements IService<Character> {
    * @return {Promise<Character>}
    */
   public async get(id: number): Promise<Character> {
-    Log.debug('get character', id);
+    this.loggerService.debug('get character', id);
     // Find character in database
     const character = await this.findCharacterById(id);
 
-    Log.debug('get character populating', id);
+    this.loggerService.debug('get character populating', id);
     const zkillChar = await this.zkillboardService.characterStatistics(id);
     character.populateZKillboard(zkillChar);
-    Log.debug('get character done populating', id);
+    this.loggerService.debug('get character done populating', id);
 
     return character;
   }
@@ -122,13 +124,13 @@ export class CharacterService implements IService<Character> {
     character.populateESI(esiCharacter);
 
     // Create handle
-    character.handle = Utils.createHandle(character.id, character.name);
+    character.handle = this.utilsService.createHandle(character.id, character.name);
 
     // Save without corporation
     await this.characterRepository.save(character);
 
     if (esiCharacter.corporation_id && esiCharacter.corporation_id !== 1) {
-      Log.debug('Character get corporation', esiCharacter.corporation_id);
+      this.loggerService.debug('Character get corporation', esiCharacter.corporation_id);
       // Load corporation
       character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
 

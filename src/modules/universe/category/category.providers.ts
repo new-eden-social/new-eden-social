@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 import { UNIVERSE_CATEGORY_REPOSITORY_TOKEN } from './category.constants';
 import { UniverseCategory } from './category.entity';
-import { DB_CONNECTION_TOKEN } from '../../common/database/database.constants';
+import { DB_CONNECTION_TOKEN } from '../../core/database/database.constants';
 
 export const universeCategoryProviders = [
   {

@@ -1,12 +1,12 @@
 import { Component, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { Killmail } from './killmail.entity';
-import { KillmailsStreamService } from '../common/external/killmailsStream/killmailsStream.service';
-import { IKillmailStream } from '../common/external/killmailsStream/killmailsStream.interface';
+import { KillmailsStreamService } from '../core/external/killmailsStream/killmailsStream.service';
+import { IKillmailStream } from '../core/external/killmailsStream/killmailsStream.interface';
 import { KillmailParticipantService } from './participant/participant.service';
 import { PostService } from '../post/post.service';
 import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
-import Log from '../../utils/Log';
+import { LoggerService } from '../core/logger/logger.service';
 
 @Component()
 export class KillmailService {
@@ -16,6 +16,7 @@ export class KillmailService {
     private killmailsStreamService: KillmailsStreamService,
     private killmailParticipantService: KillmailParticipantService,
     private postService: PostService,
+    private loggerService: LoggerService,
   ) {
     this.killmailsStreamService.subscribe(this.create.bind(this));
   }
@@ -26,10 +27,10 @@ export class KillmailService {
    * @return {Promise<void>}
    */
   private async create(killmailStream: IKillmailStream) {
-    Log.debug(`Killmail create ${killmailStream.id}`);
+    this.loggerService.debug(`Killmail create ${killmailStream.id}`);
 
     if (!killmailStream.victim.id) {
-      Log.debug('skipping killmail - victim has no character id');
+      this.loggerService.debug('skipping killmail - victim has no character id');
       return;
     }
 
@@ -62,7 +63,7 @@ export class KillmailService {
     const finalBlow = killmail.participants.find(participant => participant.finalBlow);
 
     if (!finalBlow.character) {
-      Log.debug('skipping killmail - finalBlow has no character');
+      this.loggerService.debug('skipping killmail - finalBlow has no character');
       return;
     }
 

@@ -3,18 +3,21 @@ import { Alliance } from './alliance.entity';
 import { forwardRef, Inject } from '@nestjs/common';
 import { ALLIANCE_REPOSITORY_TOKEN } from './alliance.constants';
 import { IService } from '../../interfaces/service.interface';
-import { ESIService } from '../common/external/esi/esi.service';
-import { ZKillboardService } from '../common/external/zkillboard/zkillboard.service';
+import { ESIService } from '../core/external/esi/esi.service';
+import { ZKillboardService } from '../core/external/zkillboard/zkillboard.service';
 import { CorporationService } from '../corporation/corporation.service';
-import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
-import Log from '../../utils/Log';
+import { ESIEntetyNotFoundException } from '../core/external/esi/esi.exceptions';
 import { Corporation } from '../corporation/corporation.entity';
-import { Utils } from '../../utils/utils.static';
+import { LoggerService } from '../core/logger/logger.service';
+import { UtilsService } from '../core/utils/utils.service';
 
 export class AllianceService implements IService<Alliance> {
 
   constructor(
-    @Inject(ALLIANCE_REPOSITORY_TOKEN) private allianceRepository: Repository<Alliance>,
+    private utilsService: UtilsService,
+    private loggerService: LoggerService,
+    @Inject(ALLIANCE_REPOSITORY_TOKEN)
+    private allianceRepository: Repository<Alliance>,
     @Inject(forwardRef(() => CorporationService))
     private corporationService: CorporationService,
     @Inject(forwardRef(() => ZKillboardService)) // FIXME: This forwardRef probably isn't needed
@@ -45,14 +48,14 @@ export class AllianceService implements IService<Alliance> {
    * @returns {Promise<Alliance>}
    */
   public async get(id: number): Promise<Alliance> {
-    Log.debug('get alliance', id);
+    this.loggerService.debug('get alliance', id);
     // Find alliance in database
     const alliance = await this.findAllianceById(id);
 
-    Log.debug('get alliance populating', id);
+    this.loggerService.debug('get alliance populating', id);
     const zkillAlliance = await this.zkillboardService.allianceStatistics(id);
     alliance.populateZKillboard(zkillAlliance);
-    Log.debug('get alliance done populating', id);
+    this.loggerService.debug('get alliance done populating', id);
 
     return alliance;
   }
@@ -130,17 +133,19 @@ export class AllianceService implements IService<Alliance> {
     alliance.populateESI(esiAlliance);
 
     // Create handle
-    alliance.handle = Utils.createHandle(alliance.id, alliance.name);
+    alliance.handle = this.utilsService.createHandle(alliance.id, alliance.name);
 
     // Save without corporation
     await this.allianceRepository.save(alliance);
 
     if (esiAlliance.executor_corporation_id && esiAlliance.executor_corporation_id !== 1) {
-      Log.debug('Alliance get executor corporation', esiAlliance.executor_corporation_id);
+      this.loggerService.debug(
+        'Alliance get executor corporation', esiAlliance.executor_corporation_id);
       // Load corporation
       alliance.executorCorporation =
         await this.corporationService.get(esiAlliance.executor_corporation_id);
-      Log.debug('Alliance done get executor corporation', esiAlliance.executor_corporation_id);
+      this.loggerService.debug(
+        'Alliance done get executor corporation', esiAlliance.executor_corporation_id);
 
       // Update corporation id
       await this.allianceRepository.updateById(alliance.id, {

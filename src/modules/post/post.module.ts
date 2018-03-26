@@ -1,9 +1,9 @@
 import { MiddlewaresConsumer, Module, RequestMethod } from '@nestjs/common';
 import { PostController } from './post.controller';
 import { PostService } from './post.service';
-import { DatabaseModule } from '../common/database/database.module';
-import { AuthMiddleware } from '../authentication/authentication.middleware';
-import { AuthenticationModule } from '../authentication/authentication.module';
+import { DatabaseModule } from '../core/database/database.module';
+import { AuthMiddleware } from '../core/authentication/authentication.middleware';
+import { AuthenticationModule } from '../core/authentication/authentication.module';
 import { CharacterModule } from '../character/character.module';
 import { postProviders } from './post.providers';
 import { CharacterExistsMiddleware } from '../character/character.exists.middleware';
@@ -15,7 +15,7 @@ import { HashtagModule } from '../hashtag/hashtag.module';
 import { UniverseLocationModule } from '../universe/location/location.module';
 
 @Module({
-  modules: [
+  imports: [
     DatabaseModule,
     AuthenticationModule,
     CharacterModule,

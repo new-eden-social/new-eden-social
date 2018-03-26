@@ -1,5 +1,5 @@
 import { Connection } from 'typeorm';
-import { DB_CONNECTION_TOKEN } from '../common/database/database.constants';
+import { DB_CONNECTION_TOKEN } from '../core/database/database.constants';
 import { Hashtag } from './hashtag.entity';
 import { HASHTAG_REPOSITORY_TOKEN } from './hashtag.constants';
 

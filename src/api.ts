@@ -3,8 +3,7 @@ import * as express from 'express';
 import * as cors from 'cors';
 import { NestFactory } from '@nestjs/core';
 import { ApplicationModule } from './modules/app.module';
-import { ValidatorPipe } from './pipes/validator.pipe';
-import Log from './utils/Log';
+import { ValidatorPipe } from './modules/core/validation/validator.pipe';
 // Used for TypeORM
 import 'reflect-metadata';
 // Import config
@@ -13,20 +12,28 @@ import { config } from 'dotenv';
 import 'zone.js';
 import 'zone.js/dist/zone-node.js';
 import 'zone.js/dist/long-stack-trace-zone.js';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   config();
-  Log.init();
 
   const instance = express();
   instance.use(bodyParser.json());
   instance.use(cors());
 
-  const app = await NestFactory.create(ApplicationModule, instance);
-  app.useGlobalPipes(new ValidatorPipe());
-  await app.listen(parseInt(process.env.PORT, 10));
+  const nestApp = await NestFactory.create(ApplicationModule, instance);
+  nestApp.useGlobalPipes(new ValidatorPipe());
 
-  Log.info(`Application is listening on port ${process.env.PORT}.`);
+  // Swagger
+  const options = new DocumentBuilder()
+  .setTitle('EVE-Book API')
+  .setDescription('Automatically generated API Description')
+  .setVersion('development')
+  .build();
+  const document = SwaggerModule.createDocument(nestApp, options);
+  SwaggerModule.setup('/docs', nestApp, document);
+
+  await nestApp.listen(parseInt(process.env.PORT, 10));
 }
 
 bootstrap()

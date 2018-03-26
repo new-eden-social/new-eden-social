@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { Categories, IUniverseName } from '../../common/external/esi/esi.interface';
+import { Categories, IUniverseName } from '../../core/external/esi/esi.interface';
 import { Post } from '../../post/post.entity';
 
 @Entity()

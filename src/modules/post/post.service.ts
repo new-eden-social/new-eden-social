@@ -11,9 +11,9 @@ import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { AllianceService } from '../alliance/alliance.service';
 import { HashtagService } from '../hashtag/hashtag.service';
-import { ESIEntetyNotFoundException } from '../common/external/esi/esi.exceptions';
-import Log from '../../utils/Log';
+import { ESIEntetyNotFoundException } from '../core/external/esi/esi.exceptions';
 import { UniverseLocationService } from '../universe/location/location.service';
+import { LoggerService } from '../core/logger/logger.service';
 
 @Component()
 export class PostService {
@@ -25,6 +25,7 @@ export class PostService {
     private allianceService: AllianceService,
     private hashtagService: HashtagService,
     private universeLocationService: UniverseLocationService,
+    private loggerService: LoggerService,
   ) {
   }
 
@@ -235,7 +236,8 @@ export class PostService {
       try {
         post.location = await this.universeLocationService.get(killmail.locationId);
       } catch (e) {
-        if (e instanceof ESIEntetyNotFoundException) Log.warning('locationId was not found!');
+        if (e instanceof ESIEntetyNotFoundException)
+          this.loggerService.warning('locationId was not found!');
         else throw e;
       }
     }

@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
-import { IUniverseType } from '../../common/external/esi/esi.interface';
+import { IUniverseType } from '../../core/external/esi/esi.interface';
 import { UniverseGroup } from '../group/group.entity';
 
 @Entity()

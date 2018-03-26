@@ -1,5 +1,5 @@
 import { Connection } from 'typeorm';
-import { DB_CONNECTION_TOKEN } from '../common/database/database.constants';
+import { DB_CONNECTION_TOKEN } from '../core/database/database.constants';
 import { Alliance } from './alliance.entity';
 import { ALLIANCE_REPOSITORY_TOKEN } from './alliance.constants';
 
