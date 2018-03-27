@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { Alliance } from './alliance.entity';
-import { forwardRef, Inject } from '@nestjs/common';
+import { forwardRef, Inject, Component } from '@nestjs/common';
 import { ALLIANCE_REPOSITORY_TOKEN } from './alliance.constants';
 import { IService } from '../../interfaces/service.interface';
 import { ESIService } from '../core/external/esi/esi.service';
@@ -11,11 +11,12 @@ import { Corporation } from '../corporation/corporation.entity';
 import { LoggerService } from '../core/logger/logger.service';
 import { UtilsService } from '../core/utils/utils.service';
 
+@Component()
 export class AllianceService implements IService<Alliance> {
 
   constructor(
-    private utilsService: UtilsService,
     private loggerService: LoggerService,
+    private utilsService: UtilsService,
     @Inject(ALLIANCE_REPOSITORY_TOKEN)
     private allianceRepository: Repository<Alliance>,
     @Inject(forwardRef(() => CorporationService))

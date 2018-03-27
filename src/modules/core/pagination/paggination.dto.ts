@@ -1,8 +1,15 @@
+import { ApiModelProperty } from '@nestjs/swagger';
+
 export class DPagination<T> {
+  @ApiModelProperty()
   data: T[];
+  @ApiModelProperty()
   page: number;
+  @ApiModelProperty()
   pages: number;
+  @ApiModelProperty()
   perPage: number;
+  @ApiModelProperty()
   count: number;
 
   constructor(data: T[], page: number, perPage: number, count: number) {

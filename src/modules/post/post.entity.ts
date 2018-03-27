@@ -14,7 +14,7 @@ import { v4 as uuid } from 'uuid';
 import { Killmail } from '../killmail/killmail.entity';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
-import { ICreatePostRequest } from './post.validate';
+import { VCreatePostRequest } from './post.validate';
 import { Hashtag } from '../hashtag/hashtag.entity';
 import { POST_TYPES } from './post.constants';
 import { UniverseLocation } from '../universe/location/location.entity';
@@ -65,7 +65,7 @@ export class Post {
   @JoinTable()
   hashtags: Hashtag[];
 
-  constructor(postData?: ICreatePostRequest) {
+  constructor(postData?: VCreatePostRequest) {
     this.id = uuid();
 
     if (postData) {

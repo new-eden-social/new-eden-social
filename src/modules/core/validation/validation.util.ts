@@ -1,8 +1,12 @@
 import { plainToClass } from 'class-transformer';
 import { sanitize } from 'class-sanitizer';
-import { validate as classValidate, validateSync as classValidateSync } from 'class-validator';
+import {
+  validate as classValidate, validateSync as classValidateSync,
+  ValidatorOptions,
+} from 'class-validator';
 import { ValidationException } from './validation.exception';
 import { ClassType } from 'class-transformer/ClassTransformer';
+import { ObjectType } from 'typeorm';
 
 /**
  * Validate value for validator
@@ -19,7 +23,10 @@ export const lynxValidate = async <T>(validation: ClassType<T>, value: object): 
   sanitize(entity);
 
   // Validate
-  const errors = await classValidate(entity, { skipMissingProperties: true, whitelist: true });
+  const errors = await classValidate(
+    entity,
+    <ValidatorOptions>{ skipMissingProperties: true, whitelist: true });
+
   if (errors.length > 0) {
     throw new ValidationException(errors);
   }
@@ -43,7 +50,10 @@ export const lynxValidateSync = <T>(validation: ClassType<T>, value: object): T 
   sanitize(entity);
 
   // Validate
-  const errors = classValidateSync(entity, { skipMissingProperties: true, whitelist: true });
+  const errors = classValidateSync(
+    entity,
+    <ValidatorOptions>{ skipMissingProperties: true, whitelist: true });
+
   if (errors.length > 0) throw new ValidationException(errors);
 
   return entity;

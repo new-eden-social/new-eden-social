@@ -1,7 +1,7 @@
 import { Component, Inject } from '@nestjs/common';
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { Post } from './post.entity';
-import { ICreatePostRequest } from './post.validate';
+import { VCreatePostRequest } from './post.validate';
 import { Character } from '../character/character.entity';
 import { Killmail } from '../killmail/killmail.entity';
 import { POST_REPOSITORY_TOKEN, POST_TYPES } from './post.constants';
@@ -40,12 +40,12 @@ export class PostService {
 
   /**
    * Create Post as character
-   * @param {ICreatePostRequest} postData
+   * @param {VCreatePostRequest} postData
    * @param {Character} character
    * @return {Promise<Post>}
    */
   public async createAsCharacter(
-    postData: ICreatePostRequest,
+    postData: VCreatePostRequest,
     character: Character,
   ): Promise<Post> {
     const post = new Post(postData);
@@ -56,12 +56,12 @@ export class PostService {
 
   /**
    * Create Post as corporation
-   * @param {ICreatePostRequest} postData
+   * @param {VCreatePostRequest} postData
    * @param {Corporation} corporation
    * @return {Promise<Post>}
    */
   public async createAsCorporation(
-    postData: ICreatePostRequest,
+    postData: VCreatePostRequest,
     corporation: Corporation,
   ): Promise<Post> {
     const post = new Post(postData);
@@ -72,12 +72,12 @@ export class PostService {
 
   /**
    * Create Post as alliance
-   * @param {ICreatePostRequest} postData
+   * @param {VCreatePostRequest} postData
    * @param {Alliance} alliance
    * @return {Promise<Post>}
    */
   public async createAsAlliance(
-    postData: ICreatePostRequest,
+    postData: VCreatePostRequest,
     alliance: Alliance,
   ): Promise<Post> {
     const post = new Post(postData);
@@ -282,10 +282,10 @@ export class PostService {
   /**
    * Create post
    * @param {Post} post
-   * @param {ICreatePostRequest} postData
+   * @param {VCreatePostRequest} postData
    * @returns {Promise<Post>}
    */
-  private async create(post: Post, postData: ICreatePostRequest): Promise<Post> {
+  private async create(post: Post, postData: VCreatePostRequest): Promise<Post> {
     if (postData.allianceId)
       post.allianceWall = await this.allianceService.get(postData.allianceId);
 

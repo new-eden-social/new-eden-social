@@ -2,7 +2,6 @@ import { HttpException } from '@nestjs/core';
 import { Middleware, NestMiddleware } from '@nestjs/common';
 import { ExpressMiddleware } from '@nestjs/common/interfaces/middlewares';
 import { IService } from '../interfaces/service.interface';
-import Log from '../utils/Log';
 
 @Middleware()
 export abstract class ExistsMiddleware<T> implements NestMiddleware {

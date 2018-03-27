@@ -5,13 +5,11 @@ import {
   HttpStatus,
   Param,
   Post,
-  Query,
-  Request,
   Response,
   UseGuards,
 } from '@nestjs/common';
 import { PostService } from './post.service';
-import { ICreatePostRequest } from './post.validate';
+import { VCreatePostRequest } from './post.validate';
 import { CharacterService } from '../character/character.service';
 import { CorporationService } from '../corporation/corporation.service';
 import { CorporationRoles } from '../corporation/corporation.roles.decorator';
@@ -19,11 +17,14 @@ import { CORPORATION_ROLES } from '../corporation/corporation.constants';
 import { AllianceService } from '../alliance/alliance.service';
 import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
 import { DPost, DPostList } from './post.dto';
-import { VPagination } from '../../validation/pagination.validate';
 import { CorporationRolesGuard } from '../corporation/corporation.roles.guard';
-import { AuthenticatedCharacter } from '../core/authentication/authentication.decorators';
+import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { Character } from '../character/character.entity';
+import { Pagination } from '../core/pagination/pagination.decorator';
+import { ApiBearerAuth, ApiImplicitBody, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { VPagination } from '../core/pagination/pagination.validation';
 
+@ApiUseTags('posts')
 @Controller('posts')
 export class PostController {
 
@@ -35,137 +36,166 @@ export class PostController {
   ) {
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: DPostList,
+    description: 'Get latest posts',
+  })
   @Get('latest')
   public async getLatestPosts(
-    @Response() res,
-    @Query() query: VPagination,
+    @Pagination() pagination: VPagination,
   ) {
-    const { posts, count } = await this.postService.getLatest(query.limit, query.page);
+    const { posts, count } = await this.postService.getLatest(pagination.limit, pagination.page);
 
-    const response = new DPostList(posts, query.page, query.limit, count);
-
-    res.status(HttpStatus.OK).json(response);
+    return new DPostList(posts, pagination.page, pagination.limit, count);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: DPostList,
+    description: 'Get Character Wall',
+  })
   @Get('/character/:characterId')
   public async getCharacterWall(
-    @Response() res,
-    @Param('characterId') characterId,
-    @Query() query: VPagination,
-  ) {
+    @Param('characterId') characterId: number,
+    @Pagination() pagination: VPagination,
+  ): Promise<DPostList> {
     const character = await this.characterService.get(characterId);
     const { posts, count } = await this.postService.getCharacterWall(
       character,
-      query.limit,
-      query.page);
+      pagination.limit,
+      pagination.page);
 
-    const response = new DPostList(posts, query.page, query.limit, count);
-
-    res.status(HttpStatus.OK).json(response);
+    return new DPostList(posts, pagination.page, pagination.limit, count);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: DPostList,
+    description: 'Get Corporation Wall',
+  })
   @Get('/corporation/:corporationId')
   public async getCorporationWall(
-    @Response() res,
-    @Param('corporationId') corporationId,
-    @Query() query: VPagination,
-  ) {
+    @Param('corporationId') corporationId: number,
+    @Pagination() pagination: VPagination,
+  ): Promise<DPostList> {
     const corporation = await this.corporationService.get(corporationId);
     const { posts, count } = await this.postService.getCorporationWall(
       corporation,
-      query.limit,
-      query.page);
+      pagination.limit,
+      pagination.page);
 
-    const response = new DPostList(posts, query.page, query.limit, count);
-
-    res.status(HttpStatus.OK).json(response);
+    return new DPostList(posts, pagination.page, pagination.limit, count);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: DPostList,
+    description: 'Get Alliance Wall',
+  })
   @Get('/alliance/:allianceId')
   public async getAllianceWall(
-    @Response() res,
-    @Param('allianceId') allianceId,
-    @Query() query: VPagination,
-  ) {
+    @Param('allianceId') allianceId: number,
+    @Pagination() pagination: VPagination,
+  ): Promise<DPostList> {
     const alliance = await this.allianceService.get(allianceId);
     const { posts, count } = await this.postService.getAllianceWall(
       alliance,
-      query.limit,
-      query.page);
+      pagination.limit,
+      pagination.page);
 
-    const response = new DPostList(posts, query.page, query.limit, count);
-
-    res.status(HttpStatus.OK).json(response);
+    return new DPostList(posts, pagination.page, pagination.limit, count);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: DPostList,
+    description: 'Get posts for Hashtag',
+  })
   @Get('/hashtag/:hashtag')
   public async getByHashtag(
-    @Response() res,
-    @Param('hashtag') hashtag,
-    @Query() query: VPagination,
-  ) {
-    const { posts, count } = await this.postService.getByHashtag(hashtag, query.limit, query.page);
+    @Param('hashtag') hashtag: string,
+    @Pagination() pagination: VPagination,
+  ): Promise<DPostList> {
+    const { posts, count } = await this.postService.getByHashtag(
+      hashtag,
+      pagination.limit,
+      pagination.page);
 
-    const response = new DPostList(posts, query.page, query.limit, count);
-
-    res.status(HttpStatus.OK).json(response);
+    return new DPostList(posts, pagination.page, pagination.limit, count);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: DPostList,
+    description: 'Get posts for Location',
+  })
   @Get('/location/:locationId')
   public async getByLocation(
-    @Response() res,
-    @Param('locationId') locationId,
-    @Query() query: VPagination,
-  ) {
+    @Param('locationId') locationId: number,
+    @Pagination() pagination: VPagination,
+  ): Promise<DPostList> {
     const { posts, count } = await this.postService.getByLocation(
       locationId,
-      query.limit,
-      query.page);
+      pagination.limit,
+      pagination.page);
 
-    const response = new DPostList(posts, query.page, query.limit, count);
-
-    res.status(HttpStatus.OK).json(response);
+    return new DPostList(posts, pagination.page, pagination.limit, count);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: DPost,
+    description: 'Get specific post by id',
+  })
   @Get('/:id')
-  public async get(@Response() res, @Param('id') postId) {
+  public async get(
+    @Param('id') postId: number,
+  ): Promise<DPost> {
     const post = await this.postService.get(postId);
-
-    const response = new DPost(post);
-
-    res.status(HttpStatus.OK).json(response);
+    return new DPost(post);
   }
 
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    type: DPost,
+    description: 'Post as Character',
+  })
+  @ApiBearerAuth()
   @Post('/character')
   public async createAsCharacter(
-    @Response() res,
-    @Body('post') postData: ICreatePostRequest,
+    @Body() postData: VCreatePostRequest,
     @AuthenticatedCharacter() character: Character,
-  ) {
+  ): Promise<DPost> {
     const post = await this.postService.createAsCharacter(postData, character);
-
-    const response = new DPost(post);
-
-    res.status(HttpStatus.CREATED).json(response);
+    return new DPost(post);
   }
 
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    type: DPost,
+    description: 'Post as Corporation',
+  })
+  @ApiBearerAuth()
   @Post('/corporation')
   @CorporationRoles(
     CORPORATION_ROLES.DIRECTOR,
     CORPORATION_ROLES.DIPLOMAT,
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsCorporation(
-    @Response() res,
-    @Body('post') postData: ICreatePostRequest,
+    @Body() postData: VCreatePostRequest,
     @AuthenticatedCharacter() character: Character,
-  ) {
+  ): Promise<DPost> {
     const post = await this.postService.createAsCorporation(postData, character.corporation);
-
-    const response = new DPost(post);
-
-    res.status(HttpStatus.CREATED).json(response);
+    return new DPost(post);
   }
 
+  @ApiResponse({
+    status: HttpStatus.CREATED,
+    type: DPost,
+    description: 'Post as Alliance',
+  })
+  @ApiBearerAuth()
   @Post('/alliance')
   @UseGuards(CorporationRolesGuard, CorporationAllianceExecutorGuard)
   @CorporationRoles(
@@ -173,17 +203,14 @@ export class PostController {
     CORPORATION_ROLES.DIPLOMAT,
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsAlliance(
-    @Response() res,
-    @Body('post') postData: ICreatePostRequest,
+    @Body() postData: VCreatePostRequest,
     @AuthenticatedCharacter() character: Character,
-  ) {
+  ): Promise<DPost> {
     const post = await this.postService.createAsAlliance(
       postData,
       character.corporation.alliance);
 
-    const response = new DPost(post);
-
-    res.status(HttpStatus.CREATED).json(response);
+    return new DPost(post);
   }
 
 }

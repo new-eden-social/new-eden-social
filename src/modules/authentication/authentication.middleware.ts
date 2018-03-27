@@ -1,7 +1,7 @@
 import { HttpException } from '@nestjs/core';
 import { Middleware, NestMiddleware } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { TokenExpiredException } from '../external/sso/sso.exceptions';
+import { TokenExpiredException } from '../core/external/sso/sso.exceptions';
 import { InvalidTokenException } from './invalidToken.exception';
 
 @Middleware()

@@ -1,14 +1,22 @@
 import { DCharacterShort } from '../../character/character.dto';
 import { KillmailParticipant } from './participant.entity';
 import { DUniverseType } from '../../universe/type/type.dto';
+import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 
 export class DParticipantShort {
+  @ApiModelProperty()
   character: DCharacterShort;
+  @ApiModelProperty()
   type: 'attacker' | 'victim';
+  @ApiModelPropertyOptional()
   ship?: DUniverseType;
+  @ApiModelPropertyOptional()
   damageDone?: number;
+  @ApiModelPropertyOptional()
   finalBlow?: boolean;
+  @ApiModelPropertyOptional()
   weapon?: DUniverseType;
+  @ApiModelPropertyOptional()
   damageTaken?: number;
 
   constructor(participant: KillmailParticipant) {

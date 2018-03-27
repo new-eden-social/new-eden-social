@@ -7,10 +7,14 @@ import {
   ICharacterName,
   ICorporationName,
 } from '../core/external/esi/esi.interface';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class DSearch {
+  @ApiModelProperty({ type: DCharacterName, isArray: true })
   characters: DCharacterName[];
+  @ApiModelProperty({ type: DCorporationName, isArray: true })
   corporations: DCorporationName[];
+  @ApiModelProperty({ type: DAllianceName, isArray: true })
   alliances: DAllianceName[];
 
   constructor(data: {

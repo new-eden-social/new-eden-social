@@ -1,11 +1,12 @@
 import { Component } from '@nestjs/common';
 import { createHash } from 'crypto';
-import Hashids from 'hashids';
+// tslint:disable-next-line:variable-name
+const Hashids = require('hashids');
 
 @Component()
 export class UtilsService {
 
-  private hashids: Hashids;
+  private hashids;
 
   constructor() {
     this.hashids = new Hashids(

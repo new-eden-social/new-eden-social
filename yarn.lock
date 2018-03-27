@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@nestjs/common@^4.6.3":
+"@nestjs/common@^4.6.6":
   version "4.6.6"
   resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-4.6.6.tgz#c1043647a05824a4d950f12743fb4e1107bf60cc"
   dependencies:
@@ -11,7 +11,7 @@
     class-validator "0.8.1"
     cli-color "1.1.0"
 
-"@nestjs/core@^4.6.3":
+"@nestjs/core@^4.6.6":
   version "4.6.6"
   resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-4.6.6.tgz#9f9bab0f3ebc473ca5aa30b7aa80ad5ffba9ab3a"
   dependencies:
@@ -22,7 +22,7 @@
     multer "1.3.0"
     optional "0.1.4"
 
-"@nestjs/microservices@^4.6.1":
+"@nestjs/microservices@^4.6.6":
   version "4.6.6"
   resolved "https://registry.yarnpkg.com/@nestjs/microservices/-/microservices-4.6.6.tgz#c8c3457b01e12940635465089dc99b16e309d1bc"
   dependencies:
@@ -38,7 +38,7 @@
     lodash "4.17.4"
     swagger-ui-express "2.0.11"
 
-"@nestjs/testing@^4.6.1":
+"@nestjs/testing@^4.6.6":
   version "4.6.6"
   resolved "https://registry.yarnpkg.com/@nestjs/testing/-/testing-4.6.6.tgz#e47c9a9ff8da666eb31eafcf2c4c84ac8c2e99fa"
   dependencies:

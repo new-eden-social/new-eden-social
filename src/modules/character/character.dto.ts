@@ -3,11 +3,16 @@ import { Character } from './character.entity';
 import { ICharacterPortrait } from './character.interface';
 import { DPagination } from '../core/pagination/paggination.dto';
 import { ICharacterName } from '../core/external/esi/esi.interface';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class DCharacterPortrait {
+  @ApiModelProperty()
   px64x64: string;
+  @ApiModelProperty()
   px128x128: string;
+  @ApiModelProperty()
   px256x256: string;
+  @ApiModelProperty()
   px512x512: string;
 
   constructor(portrait: ICharacterPortrait) {
@@ -19,7 +24,9 @@ export class DCharacterPortrait {
 }
 
 export class DCharacterName {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   name: string;
 
   constructor(character: ICharacterName) {
@@ -29,16 +36,27 @@ export class DCharacterName {
 }
 
 export class DCharacterShort {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   handle: string;
+  @ApiModelProperty()
   name: string;
+  @ApiModelProperty()
   description: string;
+  @ApiModelProperty()
   gender: string;
+  @ApiModelProperty()
   raceId: number;
+  @ApiModelProperty()
   bloodlineId: number;
+  @ApiModelProperty()
   ancestryId?: number;
+  @ApiModelProperty()
   securityStatus: number;
+  @ApiModelProperty()
   portrait: DCharacterPortrait;
+  @ApiModelProperty()
   corporation: DCorporationShort;
 
   constructor(character: Character) {
@@ -57,26 +75,45 @@ export class DCharacterShort {
 }
 
 export class DCharacter {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   handle: string;
+  @ApiModelProperty()
   name: string;
+  @ApiModelProperty()
   description: string;
+  @ApiModelProperty()
   gender: string;
+  @ApiModelProperty()
   raceId: number;
+  @ApiModelProperty()
   bloodlineId: number;
+  @ApiModelProperty()
   ancestryId?: number;
+  @ApiModelProperty()
   securityStatus: number;
+  @ApiModelProperty()
   portrait: DCharacterPortrait;
+  @ApiModelProperty()
   corporation: DCorporationShort;
 
   /* LIVE Data*/
+  @ApiModelProperty()
   iskDestroyed: number;
+  @ApiModelProperty()
   iskLost: number;
+  @ApiModelProperty()
   pointsDestroyed: number;
+  @ApiModelProperty()
   pointsLost: number;
+  @ApiModelProperty()
   shipsDestroyed: number;
+  @ApiModelProperty()
   shipsLost: number;
+  @ApiModelProperty()
   soloKills: number;
+  @ApiModelProperty()
   soloLosses: number;
 
   constructor(character: Character) {

@@ -9,6 +9,6 @@ export class FormatterInterceptor implements NestInterceptor {
     context: ExecutionContext,
     stream$: Observable<any>,
   ): Observable<any> {
-    return stream$.map(data => ({ data }));
+    return stream$.map(data => data);
   }
 }

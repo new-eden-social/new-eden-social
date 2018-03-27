@@ -3,9 +3,12 @@ import { Alliance } from './alliance.entity';
 import { DPagination } from '../core/pagination/paggination.dto';
 import { IAllianceName } from '../core/external/esi/esi.interface';
 import { IAllianceIcon } from './alliance.interface';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class DAllianceIcon {
+  @ApiModelProperty()
   px64x64: string;
+  @ApiModelProperty()
   px128x128: string;
 
   constructor(icon: IAllianceIcon) {
@@ -15,7 +18,9 @@ export class DAllianceIcon {
 }
 
 export class DAllianceName {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   name: string;
 
   constructor(alliance: IAllianceName) {
@@ -25,11 +30,17 @@ export class DAllianceName {
 }
 
 export class DAllianceShort {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   name: string;
+  @ApiModelProperty()
   handle: string;
+  @ApiModelProperty()
   ticker: string;
+  @ApiModelProperty({ type: String })
   dateFounded: Date;
+  @ApiModelProperty()
   icon: DAllianceIcon;
 
   constructor(alliance: Alliance) {
@@ -43,25 +54,43 @@ export class DAllianceShort {
 }
 
 export class DAlliance {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   name: string;
+  @ApiModelProperty()
   handle: string;
+  @ApiModelProperty()
   ticker: string;
+  @ApiModelProperty({ type: String })
   dateFounded: Date;
+  @ApiModelProperty()
   executorCorporation: DCorporationShortWithoutAlliance;
+  @ApiModelProperty()
   icon: DAllianceIcon;
 
   /* LIVE Data */
+  @ApiModelProperty()
   hasSupers: boolean;
+  @ApiModelProperty()
   iskDestroyed: number;
+  @ApiModelProperty()
   iskLost: number;
+  @ApiModelProperty()
   pointsDestroyed: number;
+  @ApiModelProperty()
   pointsLost: number;
+  @ApiModelProperty()
   shipsDestroyed: number;
+  @ApiModelProperty()
   shipsLost: number;
+  @ApiModelProperty()
   soloKills: number;
+  @ApiModelProperty()
   soloLosses: number;
+  @ApiModelProperty()
   memberCount: number;
+  @ApiModelProperty()
   corpCount: number;
 
   constructor(alliance: Alliance) {

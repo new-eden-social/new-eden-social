@@ -1,10 +1,13 @@
 import { CanActivate, ExecutionContext, Guard } from '@nestjs/common';
-import Log from '../../utils/Log';
 import { AllianceService } from '../alliance/alliance.service';
+import { LoggerService } from '../core/logger/logger.service';
 
 @Guard()
 export class CorporationAllianceExecutorGuard implements CanActivate {
-  constructor(private allianceService: AllianceService) {
+  constructor(
+    private allianceService: AllianceService,
+    private loggerService: LoggerService,
+  ) {
   }
 
   async canActivate(req, context: ExecutionContext): Promise<boolean> {
@@ -17,7 +20,7 @@ export class CorporationAllianceExecutorGuard implements CanActivate {
     const executorCorporation = await this.allianceService.getExecutorCorporation(
       character.corporation.alliance.id);
 
-    Log.debug(
+    this.loggerService.debug(
       '[CorporationAllianceExecutorGuard]',
       character.alliance,
       executorCorporation);

@@ -3,10 +3,14 @@ import { Corporation } from './corporation.entity';
 import { DPagination } from '../core/pagination/paggination.dto';
 import { ICorporationName } from '../core/external/esi/esi.interface';
 import { ICorporationIcon } from './corporation.interface';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 export class DCorporationIcon {
+  @ApiModelProperty()
   px64x64: string;
+  @ApiModelProperty()
   px128x128: string;
+  @ApiModelProperty()
   px256x256: string;
 
   constructor(icon: ICorporationIcon) {
@@ -17,7 +21,9 @@ export class DCorporationIcon {
 }
 
 export class DCorporationName {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   name: string;
 
   constructor(corporation: ICorporationName) {
@@ -27,12 +33,19 @@ export class DCorporationName {
 }
 
 export class DCorporationShort {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   handle: string;
+  @ApiModelProperty()
   name: string;
+  @ApiModelProperty()
   ticker: string;
+  @ApiModelProperty()
   description: string;
+  @ApiModelProperty()
   alliance?: DAllianceShort;
+  @ApiModelProperty()
   icon: DCorporationIcon;
 
   constructor(corporation: Corporation) {
@@ -47,11 +60,17 @@ export class DCorporationShort {
 }
 
 export class DCorporationShortWithoutAlliance {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   handle: string;
+  @ApiModelProperty()
   name: string;
+  @ApiModelProperty()
   ticker: string;
+  @ApiModelProperty()
   description: string;
+  @ApiModelProperty()
   icon: DCorporationIcon;
 
   constructor(corporation: Corporation) {
@@ -65,22 +84,37 @@ export class DCorporationShortWithoutAlliance {
 }
 
 export class DCorporation {
+  @ApiModelProperty()
   id: number;
+  @ApiModelProperty()
   handle: string;
+  @ApiModelProperty()
   name: string;
+  @ApiModelProperty()
   ticker: string;
+  @ApiModelProperty()
   description: string;
+  @ApiModelProperty()
   alliance?: DAllianceShort;
+  @ApiModelProperty()
   icon: DCorporationIcon;
 
   /* LIVE Data*/
+  @ApiModelProperty()
   iskDestroyed: number;
+  @ApiModelProperty()
   iskLost: number;
+  @ApiModelProperty()
   pointsDestroyed: number;
+  @ApiModelProperty()
   pointsLost: number;
+  @ApiModelProperty()
   shipsDestroyed: number;
+  @ApiModelProperty()
   shipsLost: number;
+  @ApiModelProperty()
   soloKills: number;
+  @ApiModelProperty()
   soloLosses: number;
 
   constructor(corporation: Corporation) {

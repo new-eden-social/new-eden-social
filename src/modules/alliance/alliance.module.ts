@@ -8,7 +8,6 @@ import { CorporationModule } from '../corporation/corporation.module';
 import { AllianceExistsMiddleware } from './alliance.exists.middleware';
 import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
 import { DatabaseModule } from '../core/database/database.module';
-import { UtilsModule } from '../core/utils/utils.module';
 
 @Module({
   imports: [
