@@ -1,10 +1,12 @@
-import { Middleware, NestMiddleware } from '@nestjs/common';
+import { Middleware } from '@nestjs/common';
 import { ExistsMiddleware } from '../../middlewares/exists.middleware';
 import { AllianceService } from './alliance.service';
 import { Alliance } from './alliance.entity';
 
 @Middleware()
 export class AllianceExistsMiddleware extends ExistsMiddleware<Alliance> {
+
+  protected entityName = 'Alliance';
 
   constructor(protected service: AllianceService) {
     super();

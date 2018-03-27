@@ -1,15 +1,14 @@
 import { Component, Inject } from '@nestjs/common';
 import { CharacterService } from '../character/character.service';
-import { Character } from '../character/character.entity';
 import { CHARACTER_REPOSITORY_TOKEN } from '../character/character.constants';
-import { Repository } from 'typeorm';
-import Log from '../../utils/Log';
 import { CorporationService } from '../corporation/corporation.service';
 import { CORPORATION_REPOSITORY_TOKEN } from '../corporation/corporation.constants';
-import { Corporation } from '../corporation/corporation.entity';
 import { ALLIANCE_REPOSITORY_TOKEN } from '../alliance/alliance.constants';
-import { Alliance } from '../alliance/alliance.entity';
 import { AllianceService } from '../alliance/alliance.service';
+import { CharacterRepository } from '../character/character.repository';
+import { CorporationRepository } from '../corporation/corporation.repository';
+import { AllianceRepository } from '../alliance/alliance.repository';
+import { LoggerService } from '../core/logger/logger.service';
 
 @Component()
 export class UpdaterService {
@@ -19,12 +18,16 @@ export class UpdaterService {
   private readonly UPDATE_LIMIT = 100;
 
   constructor(
-    @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,
-    @Inject(CORPORATION_REPOSITORY_TOKEN) private corporationRepository: Repository<Corporation>,
-    @Inject(ALLIANCE_REPOSITORY_TOKEN) private allianceRepository: Repository<Alliance>,
     private characterService: CharacterService,
     private corporationService: CorporationService,
     private allianceService: AllianceService,
+    private loggerService: LoggerService,
+    @Inject(CHARACTER_REPOSITORY_TOKEN)
+    private characterRepository: CharacterRepository,
+    @Inject(CORPORATION_REPOSITORY_TOKEN)
+    private corporationRepository: CorporationRepository,
+    @Inject(ALLIANCE_REPOSITORY_TOKEN)
+    private allianceRepository: AllianceRepository,
   ) {
     this.loop();
     setInterval(this.loop.bind(this), this.LOOP_INTERVAL);
@@ -40,7 +43,7 @@ export class UpdaterService {
       this.updateAlliances(),
     ])
     .then(() => {
-      Log.info('Update loop done');
+      this.loggerService.info('Update loop done');
     });
   }
 

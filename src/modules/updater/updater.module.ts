@@ -7,9 +7,15 @@ import { CorporationModule } from '../corporation/corporation.module';
 import { corporationProviders } from '../corporation/corporation.providers';
 import { AllianceModule } from '../alliance/alliance.module';
 import { allianceProviders } from '../alliance/alliance.providers';
+import { UtilsModule } from '../core/utils/utils.module';
+import { LoggerModule } from '../core/logger/logger.module';
 
 @Module({
   imports: [
+    // Globals
+    UtilsModule,
+    LoggerModule,
+
     CharacterModule,
     CorporationModule,
     AllianceModule,

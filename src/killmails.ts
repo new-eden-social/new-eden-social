@@ -1,8 +1,7 @@
 import { NestFactory } from '@nestjs/core';
+import { KillmailsModule } from './modules/killmails.module';
 // Used for TypeORM
 import 'reflect-metadata';
-import Log from './utils/Log';
-import { KillmailModule } from './modules/killmail/killmail.module';
 // Import config
 import { config } from 'dotenv';
 // Request context
@@ -11,8 +10,6 @@ import 'zone.js/dist/zone-node.js';
 import 'zone.js/dist/long-stack-trace-zone.js';
 
 config();
-Log.init();
-
-NestFactory.createMicroservice(KillmailModule, { port: parseInt(process.env.KILLMAILS_PORT, 10) })
-.then(() => Log.info(`Killmail started on port ${process.env.KILLMAILS_PORT}`))
-.catch(err => Log.error(err));
+NestFactory.createMicroservice(KillmailsModule, { port: parseInt(process.env.KILLMAILS_PORT, 10) })
+.then(() => console.info(`Killmail started on port ${process.env.KILLMAILS_PORT}`))
+.catch(err => console.error(err));
