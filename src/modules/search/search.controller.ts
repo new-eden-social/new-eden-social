@@ -17,7 +17,6 @@ export class SearchController {
   })
   @Get()
   public async search(
-    @Response() res,
     @Query('query') query: string,
   ): Promise<DSearch> {
     const data = await this.searchService.search(query);
