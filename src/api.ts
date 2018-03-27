@@ -40,7 +40,7 @@ async function bootstrap() {
   .addTag('posts')
   .addTag('search')
   .addTag('authentication', 'Authentication proxy for EVE SSO service')
-  .addBearerAuth('SSO Token', 'header')
+  .addBearerAuth('Authorization', 'header')
   .build();
   const document = SwaggerModule.createDocument(nestApp, options);
   SwaggerModule.setup('/docs', nestApp, document);
