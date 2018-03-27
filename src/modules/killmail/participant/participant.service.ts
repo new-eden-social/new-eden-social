@@ -1,23 +1,23 @@
 import { Component, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { KillmailParticipant } from './participant.entity';
 import {
   IKillmailStreamAttacker,
   IKillmailStreamVictim,
   TKillmailStreamParticipant,
-} from '../../common/external/killmailsStream/killmailsStream.interface';
+} from '../../core/external/killmailsStream/killmailsStream.interface';
 import { CharacterService } from '../../character/character.service';
 import { KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN } from './participant.constants';
 import { UniverseTypeService } from '../../universe/type/type.service';
+import { KillmailParticipantRepository } from './participant.repository';
 
 @Component()
 export class KillmailParticipantService {
 
   constructor(
-    @Inject(KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN)
-    private killmailParticipantRepository: Repository<KillmailParticipant>,
     private charactersService: CharacterService,
     private universeTypeService: UniverseTypeService,
+    @Inject(KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN)
+    private killmailParticipantRepository: KillmailParticipantRepository,
   ) {
   }
 
@@ -35,7 +35,8 @@ export class KillmailParticipantService {
 
     if (type === 'attacker') {
       participant.damageDone = (<IKillmailStreamAttacker>data).damageDone;
-      participant.weapon = await this.universeTypeService.get((<IKillmailStreamAttacker>data).weaponId);
+      participant.weapon = await this.universeTypeService.get(
+        (<IKillmailStreamAttacker>data).weaponId);
       participant.finalBlow = (<IKillmailStreamAttacker>data).finalBlow;
     } else if (type === 'victim') {
       participant.damageTaken = (<IKillmailStreamVictim>data).damageTaken;

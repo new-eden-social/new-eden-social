@@ -2,21 +2,32 @@ import { POST_TYPES } from './post.constants';
 import { Post } from './post.entity';
 import { DCharacterShort } from '../character/character.dto';
 import { DKillmailShort } from '../killmail/killmail.dto';
-import { DPagination } from '../../dto/paggination.dto';
+import { DPagination } from '../core/pagination/paggination.dto';
 import { DUniverseLocation } from '../universe/location/location.dto';
 import { DCorporationShort } from '../corporation/corporation.dto';
-import { DAllianceShort } from '../alliance/alliance.dto';
+import { DAllianceName, DAllianceShort } from '../alliance/alliance.dto';
+import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 
 export class DPost {
+  @ApiModelProperty()
   id: string;
+  @ApiModelProperty()
   content: string;
+  @ApiModelProperty()
   type: POST_TYPES;
+  @ApiModelPropertyOptional()
   character?: DCharacterShort;
+  @ApiModelPropertyOptional()
   corporation?: DCorporationShort;
+  @ApiModelPropertyOptional()
   alliance?: DAllianceShort;
+  @ApiModelPropertyOptional()
   killmail?: DKillmailShort;
+  @ApiModelProperty({ type: String, isArray: true })
   hashtags: string[];
+  @ApiModelPropertyOptional()
   location?: DUniverseLocation;
+  @ApiModelProperty({ type: String })
   createdAt: Date;
 
   constructor(post: Post) {

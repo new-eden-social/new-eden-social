@@ -40,15 +40,24 @@
     "instrument": true
   },
   "dependencies": {
-    "@nestjs/common": "^4.1.0",
-    "@nestjs/core": "^4.1.0",
-    "@nestjs/microservices": "^4.1.0",
-    "@nestjs/testing": "^4.1.0",
-    "@nestjs/websockets": "^4.1.0",
+    "@nestjs/common": "^4.6.6",
+    "@nestjs/core": "^4.6.6",
+    "@nestjs/microservices": "^4.6.6",
+    "@nestjs/swagger": "^1.1.4",
+    "@nestjs/testing": "^4.6.6",
+    "@nestjs/typeorm": "^2.0.0",
+    "@nestjs/websockets": "^4.5.8",
+    "@types/bluebird": "^3.5.14",
     "@types/hashids": "^1.0.30",
+    "@types/ioredis": "0.0.25",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^8.0.33",
+    "@types/winston": "^2.3.6",
+    "@types/ws": "^3.2.0",
     "axios": "^0.16.2",
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
+    "class-sanitizer": "^0.0.5",
     "class-transformer": "^0.1.8",
     "class-validator": "^0.7.1",
     "cors": "^2.8.3",
@@ -64,18 +73,13 @@
     "typeorm": "0.1.0-alpha.50",
     "typescript": "^2.5.3",
     "winston": "^2.4.0",
-    "ws": "^3.1.0"
+    "ws": "^3.1.0",
+    "zone.js": "^0.8.18"
   },
   "devDependencies": {
-    "@types/bluebird": "^3.5.14",
     "@types/chai": "^4.0.1",
     "@types/faker": "^4.1.0",
-    "@types/ioredis": "0.0.25",
     "@types/mocha": "^2.2.41",
-    "@types/moment": "^2.13.0",
-    "@types/node": "^8.0.33",
-    "@types/winston": "^2.3.6",
-    "@types/ws": "^3.2.0",
     "chai": "^4.0.2",
     "coveralls": "^2.13.3",
     "cz-conventional-changelog": "^2.1.0",
@@ -85,8 +89,7 @@
     "supertest": "^3.0.0",
     "ts-node": "^3.1.0",
     "tslint": "^5.4.3",
-    "tslint-config-airbnb": "^5.2.0",
-    "zone.js": "^0.8.18"
+    "tslint-config-airbnb": "^5.2.0"
   },
   "config": {
     "commitizen": {

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { HashtagService } from './hashtag.service';
 import { hashtagProviders } from './hashtag.providers';
-import { ESIModule } from '../common/external/esi/esi.module';
+import { ESIModule } from '../core/external/esi/esi.module';
 
 @Module({
-  modules: [
+  imports: [
     ESIModule,
   ],
   components: [

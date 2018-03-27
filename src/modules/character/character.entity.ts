@@ -7,8 +7,8 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { ICharacterStatistics } from '../common/external/zkillboard/zkillboard.interface';
-import { IGetCharacter } from '../common/external/esi/esi.interface';
+import { ICharacterStatistics } from '../core/external/zkillboard/zkillboard.interface';
+import { IGetCharacter } from '../core/external/esi/esi.interface';
 import { Post } from '../post/post.entity';
 import { Comment } from '../comment/comment.entity';
 import { ICharacterPortrait } from './character.interface';

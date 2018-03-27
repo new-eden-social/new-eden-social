@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { SearchService } from './search.service';
 import { SearchController } from './search.controller';
-import { ESIModule } from '../common/external/esi/esi.module';
+import { ESIModule } from '../core/external/esi/esi.module';
 
 @Module({
-  modules: [
+  imports: [
     ESIModule,
   ],
   controllers: [

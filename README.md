@@ -34,12 +34,13 @@ Whole platform would heavily relay on EVE Online API, so that you could send in 
 Think of it as combination of r/eve and twitter. A hub of EVE Online community.
 
 ### Releases
-Branch `develop` is automatically deployed on each commit/merge.
+Branch `develop` is automatically deployed on each commit/merge, `master`
+is manually deployed and is latest released version.
 
-| Branch  | API                            | WEB                       |
-| ------- | ------------------------------ | ------------------------- |
-| develop | api.development.evebook.online |development.evebook.online |
-| master  | api.evebook.online             |evebook.online             |
+| Branch  | API                            | WEB                       |Documentation|
+| ------- | ------------------------------ | ------------------------- |-------------|
+| develop | api.development.evebook.online |development.evebook.online | [Develop](http://api.development.evebook.online/docs)
+| master  | api.evebook.online             |evebook.online             | [Master](http://api.evebook.online/docs)
 
 ## Contribution
 We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/evebook/api/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/evebook/api/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/evebook/api/issues) or directly on [gitter](https://gitter.im/EVE-Book/Lobby).

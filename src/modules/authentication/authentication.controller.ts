@@ -2,20 +2,35 @@ import { Body, Controller, Get, Headers, HttpStatus, Post, Query, Response } fro
 import { AuthenticationService } from './authentication.service';
 import { HttpException } from '@nestjs/core';
 import { DCharacterShort } from '../character/character.dto';
+import { ApiBearerAuth, ApiImplicitBody, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { IAuthenticationResponse } from '../core/external/sso/sso.interface';
 
+@ApiUseTags('authentication')
 @Controller('authentication')
 export class AuthenticationController {
 
   constructor(private authenticationService: AuthenticationService) {
   }
 
+  @ApiResponse({
+    status: HttpStatus.FOUND,
+    description: 'Redirects to EVE SSO Authentication Page',
+  })
   @Get('/sso')
   public async authenticate(@Response() res) {
     res.redirect(this.authenticationService.authenticationRedirect);
   }
 
+  @ApiResponse({
+    status: HttpStatus.OK,
+    type: DCharacterShort,
+    description: 'Returns authenticated character',
+  })
+  @ApiBearerAuth()
   @Get('/sso/verify')
-  public async verify(@Response() res, @Headers('authorization') token: string) {
+  public async verify(
+    @Headers('authorization') token: string,
+  ): Promise<DCharacterShort> {
     if (!token) throw new HttpException(
       'Authorization header is required!',
       HttpStatus.BAD_REQUEST);
@@ -23,11 +38,19 @@ export class AuthenticationController {
     const character = await this.authenticationService
     .verifyAuthentication(token.slice('Bearer '.length));
 
-    res.json(new DCharacterShort(character));
+    return new DCharacterShort(character);
   }
 
+  @ApiResponse({
+    status: HttpStatus.FOUND,
+    description: 'Callback from EVE SSO, redirects to EVE-Book APP with credentials',
+  })
   @Get('/sso/callback')
-  public async callback(@Response() res, @Query('state') state, @Query('code') code) {
+  public async callback(
+    @Response() res,
+    @Query('state') state: string,
+    @Query('code') code: string,
+  ) {
     const response = await this.authenticationService.authenticationToken(state, code);
 
     // Redirect back to application
@@ -38,10 +61,17 @@ export class AuthenticationController {
       + `&token_type=${response.token_type}`);
   }
 
+  // TODO: Add response DTO to ApiResponse
+  @ApiResponse({
+    status: HttpStatus.FOUND,
+    description: 'Callback from EVE SSO, redirects to EVE-Book APP with credentials',
+  })
+  @ApiImplicitBody({ name: 'refresh_token', type: String })
   @Post('/sso/refresh')
-  public async refresh(@Response() res, @Body('refresh_token') refreshToken) {
-    const response = await this.authenticationService.refreshToken(refreshToken);
-    res.json(response);
+  public async refresh(
+    @Body('refresh_token') refreshToken: string,
+  ): Promise<IAuthenticationResponse> {
+    return await this.authenticationService.refreshToken(refreshToken);
   }
 
 }

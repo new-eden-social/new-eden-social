@@ -1,16 +1,16 @@
 import { Component, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { UNIVERSE_CATEGORY_REPOSITORY_TOKEN } from './category.constants';
 import { UniverseCategory } from './category.entity';
-import { ESIService } from '../../common/external/esi/esi.service';
-import { ESIEntetyNotFoundException } from '../../common/external/esi/esi.exceptions';
+import { ESIService } from '../../core/external/esi/esi.service';
+import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
+import { UniverseCategoryRepository } from './category.repository';
 
 @Component()
 export class UniverseCategoryService {
 
   constructor(
     @Inject(UNIVERSE_CATEGORY_REPOSITORY_TOKEN)
-    private categoryRepository: Repository<UniverseCategory>,
+    private categoryRepository: UniverseCategoryRepository,
     private esiService: ESIService,
   ) {
   }

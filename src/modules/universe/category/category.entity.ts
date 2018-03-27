@@ -1,5 +1,5 @@
 import { Column, Entity, PrimaryColumn } from 'typeorm';
-import { IUniverseCategory } from '../../common/external/esi/esi.interface';
+import { IUniverseCategory } from '../../core/external/esi/esi.interface';
 
 @Entity()
 export class UniverseCategory {

@@ -1,10 +1,10 @@
 import { Component } from '@nestjs/common';
-import { ESIService } from '../common/external/esi/esi.service';
+import { ESIService } from '../core/external/esi/esi.service';
 import {
   IAllianceName,
   ICharacterName,
   ICorporationName,
-} from '../common/external/esi/esi.interface';
+} from '../core/external/esi/esi.interface';
 
 @Component()
 export class SearchService {

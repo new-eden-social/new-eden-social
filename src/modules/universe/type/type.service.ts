@@ -1,18 +1,19 @@
 import { Component, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { UNIVERSE_TYPE_REPOSITORY_TOKEN } from './type.constants';
 import { UniverseType } from './type.entity';
-import { ESIService } from '../../common/external/esi/esi.service';
-import { ESIEntetyNotFoundException } from '../../common/external/esi/esi.exceptions';
+import { ESIService } from '../../core/external/esi/esi.service';
+import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
 import { UniverseGroupService } from '../group/group.service';
+import { UniverseTypeRepository } from './type.repository';
 
 @Component()
 export class UniverseTypeService {
 
   constructor(
-    @Inject(UNIVERSE_TYPE_REPOSITORY_TOKEN) private typeRepository: Repository<UniverseType>,
     private esiService: ESIService,
     private groupService: UniverseGroupService,
+    @Inject(UNIVERSE_TYPE_REPOSITORY_TOKEN)
+    private typeRepository: UniverseTypeRepository,
   ) {
   }
 
