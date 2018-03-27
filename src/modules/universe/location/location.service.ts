@@ -1,18 +1,18 @@
 import { Component, Inject } from '@nestjs/common';
 import { UniverseLocation } from './location.entity';
 import { UNIVERSE_LOCATION_REPOSITORY_TOKEN } from './location.constants';
-import { Repository } from 'typeorm';
 import { ESIService } from '../../core/external/esi/esi.service';
 import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
 import { Categories } from '../../core/external/esi/esi.interface';
+import { UniverseLocationRepository } from './location.repository';
 
 @Component()
 export class UniverseLocationService {
 
   constructor(
-    @Inject(UNIVERSE_LOCATION_REPOSITORY_TOKEN)
-    private locationRepository: Repository<UniverseLocation>,
     private esiService: ESIService,
+    @Inject(UNIVERSE_LOCATION_REPOSITORY_TOKEN)
+    private locationRepository: UniverseLocationRepository,
   ) {
   }
 

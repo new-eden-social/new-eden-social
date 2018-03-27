@@ -1,5 +1,4 @@
 import { Component, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { Killmail } from './killmail.entity';
 import { KillmailsStreamService } from '../core/external/killmailsStream/killmailsStream.service';
 import { IKillmailStream } from '../core/external/killmailsStream/killmailsStream.interface';
@@ -7,16 +6,18 @@ import { KillmailParticipantService } from './participant/participant.service';
 import { PostService } from '../post/post.service';
 import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
 import { LoggerService } from '../core/logger/logger.service';
+import { KillmailRepository } from './killmail.repository';
 
 @Component()
 export class KillmailService {
 
   constructor(
-    @Inject(KILLMAIL_REPOSITORY_TOKEN) private killmailRepository: Repository<Killmail>,
     private killmailsStreamService: KillmailsStreamService,
     private killmailParticipantService: KillmailParticipantService,
     private postService: PostService,
     private loggerService: LoggerService,
+    @Inject(KILLMAIL_REPOSITORY_TOKEN)
+    private killmailRepository: KillmailRepository,
   ) {
     this.killmailsStreamService.subscribe(this.create.bind(this));
   }

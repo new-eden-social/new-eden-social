@@ -1,18 +1,19 @@
 import { Component, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { UNIVERSE_GROUP_REPOSITORY_TOKEN } from './group.constants';
 import { UniverseGroup } from './group.entity';
 import { ESIService } from '../../core/external/esi/esi.service';
 import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
 import { UniverseCategoryService } from '../category/category.service';
+import { UniverseGroupRepository } from './group.repository';
 
 @Component()
 export class UniverseGroupService {
 
   constructor(
-    @Inject(UNIVERSE_GROUP_REPOSITORY_TOKEN) private groupRepository: Repository<UniverseGroup>,
     private esiService: ESIService,
     private universeCategoryService: UniverseCategoryService,
+    @Inject(UNIVERSE_GROUP_REPOSITORY_TOKEN)
+    private groupRepository: UniverseGroupRepository,
   ) {
   }
 

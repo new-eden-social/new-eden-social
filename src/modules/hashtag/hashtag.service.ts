@@ -1,13 +1,14 @@
 import { Component, Inject } from '@nestjs/common';
 import { Hashtag } from './hashtag.entity';
 import { HASHTAG_REPOSITORY_TOKEN } from './hashtag.constants';
-import { Repository } from 'typeorm';
+import { HashtagRepository } from './hashtag.repository';
 
 @Component()
 export class HashtagService {
 
   constructor(
-    @Inject(HASHTAG_REPOSITORY_TOKEN) private hashtagRepository: Repository<Hashtag>,
+    @Inject(HASHTAG_REPOSITORY_TOKEN)
+    private hashtagRepository: HashtagRepository,
   ) {
   }
 

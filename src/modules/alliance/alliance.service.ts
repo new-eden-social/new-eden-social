@@ -1,4 +1,3 @@
-import { Repository } from 'typeorm';
 import { Alliance } from './alliance.entity';
 import { forwardRef, Inject, Component } from '@nestjs/common';
 import { ALLIANCE_REPOSITORY_TOKEN } from './alliance.constants';
@@ -10,6 +9,7 @@ import { ESIEntetyNotFoundException } from '../core/external/esi/esi.exceptions'
 import { Corporation } from '../corporation/corporation.entity';
 import { LoggerService } from '../core/logger/logger.service';
 import { UtilsService } from '../core/utils/utils.service';
+import { AllianceRepository } from './alliance.repository';
 
 @Component()
 export class AllianceService implements IService<Alliance> {
@@ -18,7 +18,7 @@ export class AllianceService implements IService<Alliance> {
     private loggerService: LoggerService,
     private utilsService: UtilsService,
     @Inject(ALLIANCE_REPOSITORY_TOKEN)
-    private allianceRepository: Repository<Alliance>,
+    private allianceRepository: AllianceRepository,
     @Inject(forwardRef(() => CorporationService))
     private corporationService: CorporationService,
     @Inject(forwardRef(() => ZKillboardService)) // FIXME: This forwardRef probably isn't needed
@@ -67,9 +67,7 @@ export class AllianceService implements IService<Alliance> {
    * @returns {Promise<Alliance[]>}
    */
   public async getAllById(ids: number[]): Promise<Alliance[]> {
-    const alliances = await this.allianceRepository.createQueryBuilder('alliance')
-    .where('alliance.id IN (:ids)', { ids })
-    .getMany();
+    const alliances = await this.allianceRepository.getAllByIds(ids);
 
     for (const id of ids) {
       const alliance = alliances.find(a => a.id === id);

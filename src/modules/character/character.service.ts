@@ -1,5 +1,4 @@
 import { Component, forwardRef, Inject } from '@nestjs/common';
-import { Repository } from 'typeorm';
 import { Character } from './character.entity';
 import { ZKillboardService } from '../core/external/zkillboard/zkillboard.service';
 import { ESIService } from '../core/external/esi/esi.service';
@@ -10,6 +9,7 @@ import { CorporationService } from '../corporation/corporation.service';
 import { IGetCharacterRoles } from '../core/external/esi/esi.interface';
 import { LoggerService } from '../core/logger/logger.service';
 import { UtilsService } from '../core/utils/utils.service';
+import { CharacterRepository } from './character.repository';
 
 @Component()
 export class CharacterService implements IService<Character> {
@@ -18,8 +18,9 @@ export class CharacterService implements IService<Character> {
     private esiService: ESIService,
     private loggerService: LoggerService,
     private utilsService: UtilsService,
-    @Inject(CHARACTER_REPOSITORY_TOKEN) private characterRepository: Repository<Character>,
     private zkillboardService: ZKillboardService,
+    @Inject(CHARACTER_REPOSITORY_TOKEN)
+    private characterRepository: CharacterRepository,
     @Inject(forwardRef(() => CorporationService))
     private corporationService: CorporationService,
   ) {
@@ -49,11 +50,7 @@ export class CharacterService implements IService<Character> {
    * @returns {Promise<Character[]>}
    */
   public async getAllById(ids: number[]): Promise<Character[]> {
-    const characters = await this.characterRepository.createQueryBuilder('character')
-    .where('character.id IN (:ids)', { ids })
-    .leftJoinAndSelect('character.corporation', 'corporation')
-    .leftJoinAndSelect('corporation.alliance', 'alliance')
-    .getMany();
+    const characters = await this.characterRepository.getAllByIds(ids);
 
     for (const id of ids) {
       const character = characters.find(c => c.id === id);

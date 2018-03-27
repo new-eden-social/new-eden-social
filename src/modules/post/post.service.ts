@@ -1,5 +1,4 @@
 import { Component, Inject } from '@nestjs/common';
-import { Repository, SelectQueryBuilder } from 'typeorm';
 import { Post } from './post.entity';
 import { VCreatePostRequest } from './post.validate';
 import { Character } from '../character/character.entity';
@@ -14,18 +13,21 @@ import { HashtagService } from '../hashtag/hashtag.service';
 import { ESIEntetyNotFoundException } from '../core/external/esi/esi.exceptions';
 import { UniverseLocationService } from '../universe/location/location.service';
 import { LoggerService } from '../core/logger/logger.service';
+import { PostRepository } from './post.repository';
 
 @Component()
 export class PostService {
 
   constructor(
-    @Inject(POST_REPOSITORY_TOKEN) private postRepository: Repository<Post>,
     private corporationService: CorporationService,
     private characterService: CharacterService,
     private allianceService: AllianceService,
     private hashtagService: HashtagService,
     private universeLocationService: UniverseLocationService,
     private loggerService: LoggerService,
+    @Inject(POST_REPOSITORY_TOKEN)
+    private postRepository: PostRepository
+    ,
   ) {
   }
 
@@ -98,16 +100,7 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-
-    const query = this.getAll(limit, page);
-    query.where(
-      `
-      post."characterWallId" = :characterId OR
-      (authorCharacter.id = :characterId AND post."characterWallId" IS NULL)
-      `,
-      { characterId: character.id });
-
-    const [posts, count] = await query.getManyAndCount();
+    const [posts, count] = await this.postRepository.getCharacterWall(character, limit, page);
 
     return { posts, count };
   }
@@ -124,15 +117,7 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    const query = this.getAll(limit, page);
-    query.where(
-      `
-      post."corporationWallId" = :corporationId OR
-      (authorCorporation.id = :corporationId AND post."corporationWallId" IS NULL)
-      `,
-      { corporationId: corporation.id });
-
-    const [posts, count] = await query.getManyAndCount();
+    const [posts, count] = await this.postRepository.getCorporationWall(corporation, limit, page);
 
     return { posts, count };
   }
@@ -149,15 +134,7 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    const query = this.getAll(limit, page);
-    query.where(
-      `
-      post."allianceWallId" = :allianceId OR
-      (authorAlliance.id = :allianceId AND post."allianceWallId" IS NULL)
-      `,
-      { allianceId: alliance.id });
-
-    const [posts, count] = await query.getManyAndCount();
+    const [posts, count] = await this.postRepository.getAllianceWall(alliance, limit, page);
 
     return { posts, count };
   }
@@ -174,10 +151,7 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    const query = this.getAll(limit, page);
-    query.where('hashtag."name" = :hashtag', { hashtag });
-
-    const [posts, count] = await query.getManyAndCount();
+    const [posts, count] = await this.postRepository.getByHashtag(hashtag, limit, page);
 
     return { posts, count };
   }
@@ -194,10 +168,7 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    const query = this.getAll(limit, page);
-    query.where('location."id" = :locationId', { locationId });
-
-    const [posts, count] = await query.getManyAndCount();
+    const [posts, count] = await this.postRepository.getByLocation(locationId, limit, page);
 
     return { posts, count };
   }
@@ -212,9 +183,7 @@ export class PostService {
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    const query = this.getAll(limit, page);
-
-    const [posts, count] = await query.getManyAndCount();
+    const [posts, count] = await this.postRepository.getLatest(limit, page);
 
     return { posts, count };
   }
@@ -245,39 +214,6 @@ export class PostService {
     return this.postRepository.save(post);
   }
 
-
-  /**
-   * Wrapper for querying posts
-   * @param {number} limit
-   * @param {number} page
-   * @returns {SelectQueryBuilder<Post>}
-   */
-  private getAll(limit: number, page: number): SelectQueryBuilder<Post> {
-    return this.postRepository
-    .createQueryBuilder('post')
-    .leftJoinAndSelect('post.character', 'authorCharacter')
-    .leftJoinAndSelect('authorCharacter.corporation', 'authorCharacterCorporation')
-    .leftJoinAndSelect('authorCharacterCorporation.alliance', 'authorCharacterAlliance')
-    .leftJoinAndSelect('post.corporation', 'authorCorporation')
-    .leftJoinAndSelect('authorCorporation.alliance', 'authorCorporationAlliance')
-    .leftJoinAndSelect('post.alliance', 'authorAlliance')
-    .leftJoinAndSelect('post.killmail', 'killmail')
-    .leftJoinAndSelect('post.hashtags', 'hashtag')
-    .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'killmailP')
-    .leftJoinAndSelect('killmailP.character', 'killmailPCharacter')
-    .leftJoinAndSelect('killmailPCharacter.corporation', 'killmailPCorporation')
-    .leftJoinAndSelect('killmailPCorporation.alliance', 'killmailPAlliance')
-    .leftJoinAndSelect('killmailP.ship', 'killmailPShip')
-    .leftJoinAndSelect('killmailPShip.group', 'killmailPShipGroup')
-    .leftJoinAndSelect('killmailPShipGroup.category', 'killmailPShipGroupCategory')
-    .leftJoinAndSelect('killmailP.weapon', 'killmailPWeapon')
-    .leftJoinAndSelect('killmailPWeapon.group', 'killmailPWeaponGroup')
-    .leftJoinAndSelect('killmailPWeaponGroup.category', 'killmailPWeaponGroupCategory')
-    .orderBy({ 'post."createdAt"': 'DESC' })
-    .offset(limit * page)
-    .limit(limit);
-  }
 
   /**
    * Create post
