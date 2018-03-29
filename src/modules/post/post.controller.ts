@@ -23,6 +23,7 @@ import { Character } from '../character/character.entity';
 import { Pagination } from '../core/pagination/pagination.decorator';
 import { ApiBearerAuth, ApiImplicitBody, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { VPagination } from '../core/pagination/pagination.validation';
+import { AuthenticationGuard } from '../authentication/authentication.guard';
 
 @ApiUseTags('posts')
 @Controller('posts')
@@ -150,7 +151,7 @@ export class PostController {
   })
   @Get('/:id')
   public async get(
-    @Param('id') postId: number,
+    @Param('id') postId: string,
   ): Promise<DPost> {
     const post = await this.postService.get(postId);
     return new DPost(post);
@@ -162,6 +163,7 @@ export class PostController {
     description: 'Post as Character',
   })
   @ApiBearerAuth()
+  @UseGuards(AuthenticationGuard)
   @Post('/character')
   public async createAsCharacter(
     @Body() postData: VCreatePostRequest,
@@ -178,6 +180,7 @@ export class PostController {
   })
   @ApiBearerAuth()
   @Post('/corporation')
+  @UseGuards(CorporationRolesGuard)
   @CorporationRoles(
     CORPORATION_ROLES.DIRECTOR,
     CORPORATION_ROLES.DIPLOMAT,

@@ -5,7 +5,7 @@ import { DKillmailShort } from '../killmail/killmail.dto';
 import { DPagination } from '../core/pagination/paggination.dto';
 import { DUniverseLocation } from '../universe/location/location.dto';
 import { DCorporationShort } from '../corporation/corporation.dto';
-import { DAllianceName, DAllianceShort } from '../alliance/alliance.dto';
+import { DAllianceShort } from '../alliance/alliance.dto';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 
 export class DPost {

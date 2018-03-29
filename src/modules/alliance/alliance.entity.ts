@@ -12,6 +12,7 @@ import { IGetAlliance } from '../core/external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
 import { Post } from '../post/post.entity';
 import { IAllianceIcon } from './alliance.interface';
+import { Comment } from '../comment/comment.entity';
 
 @Entity()
 export class Alliance {
@@ -43,6 +44,9 @@ export class Alliance {
 
   @OneToMany(type => Post, post => post.alliance)
   posts: Post[];
+
+  @OneToMany(type => Comment, comment => comment.alliance)
+  comments: Comment[];
 
   @UpdateDateColumn()
   updatedAt: Date;

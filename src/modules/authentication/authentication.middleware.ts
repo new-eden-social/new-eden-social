@@ -1,4 +1,3 @@
-import { HttpException } from '@nestjs/core';
 import { Middleware, NestMiddleware } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { TokenExpiredException } from '../core/external/sso/sso.exceptions';
@@ -11,8 +10,10 @@ export class AuthMiddleware implements NestMiddleware {
 
   resolve(): (req, res, next) => void {
     return async (req, res, next) => {
-      if (!req.headers['authorization']) throw new InvalidTokenException();
+      // If no headers continue
+      if (!req.headers['authorization']) return next();
 
+      // Else, we validate provided token
       try {
         const token = req.headers['authorization'].slice('Bearer '.length);
         req.token = token;
