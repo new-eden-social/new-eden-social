@@ -22,6 +22,7 @@ export class DComment {
   constructor(comment: Comment) {
     this.id = comment.id;
     this.content = comment.content;
+    this.createdAt = comment.createdAt;
     if (comment.character) this.character = new DCharacterShort(comment.character);
     if (comment.corporation) this.corporation = new DCorporationShort(comment.corporation);
     if (comment.alliance) this.alliance = new DAllianceShort(comment.alliance);

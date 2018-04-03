@@ -28,14 +28,6 @@ export class SSOService {
   }
 
   /**
-   * Get authorization header for verifying authentication
-   * @return {string}
-   */
-  private get authorizationHeader() {
-    return 'Basic ' + new Buffer(this.clientId + ':' + this.secretKey).toString('base64');
-  }
-
-  /**
    * Get authentication url
    * @return {string}
    */
@@ -46,6 +38,14 @@ export class SSOService {
       + `&client_id=${this.clientId}`
       + `&scope=${this.scope}`;
     // TODO + `&state=someRandomThingThatWeCanVerify
+  }
+
+  /**
+   * Get authorization header for verifying authentication
+   * @return {string}
+   */
+  private get authorizationHeader() {
+    return 'Basic ' + new Buffer(this.clientId + ':' + this.secretKey).toString('base64');
   }
 
   /**
