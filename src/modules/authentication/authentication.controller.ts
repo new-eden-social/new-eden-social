@@ -71,7 +71,6 @@ export class AuthenticationController {
   public async refresh(
     @Body('refresh_token') refreshToken: string,
   ): Promise<IAuthenticationResponse> {
-    console.log(refreshToken);
     return await this.authenticationService.refreshToken(refreshToken);
   }
 
