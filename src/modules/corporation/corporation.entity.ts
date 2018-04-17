@@ -13,6 +13,7 @@ import { Character } from '../character/character.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { Post } from '../post/post.entity';
 import { ICorporationIcon } from './corporation.interface';
+import { Comment } from '../comment/comment.entity';
 
 @Entity()
 export class Corporation {
@@ -49,6 +50,9 @@ export class Corporation {
 
   @OneToMany(type => Post, post => post.corporation)
   posts: Post[];
+
+  @OneToMany(type => Comment, comment => comment.corporation)
+  comments: Comment[];
 
   @OneToOne(type => Alliance, alliance => alliance.executorCorporation)
   executingAlliance: Alliance;

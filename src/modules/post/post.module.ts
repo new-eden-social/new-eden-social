@@ -38,13 +38,6 @@ import { UniverseLocationModule } from '../universe/location/location.module';
 export class PostModule {
   configure(consumer: MiddlewaresConsumer) {
 
-    consumer.apply(AuthMiddleware)
-    .forRoutes(
-      { path: 'posts/character', method: RequestMethod.POST },
-      { path: 'posts/corporation', method: RequestMethod.POST },
-      { path: 'posts/alliance', method: RequestMethod.POST },
-    );
-
     consumer.apply(CharacterExistsMiddleware)
     .forRoutes({
       path: 'posts/character/:characterId', method: RequestMethod.GET,

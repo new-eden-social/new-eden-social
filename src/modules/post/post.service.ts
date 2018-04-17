@@ -36,7 +36,7 @@ export class PostService {
    * @param id
    * @return {Promise<Post>}
    */
-  public async get(id: number): Promise<Post> {
+  public async get(id: string): Promise<Post> {
     return this.postRepository.findOneById(id);
   }
 

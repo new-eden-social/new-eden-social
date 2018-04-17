@@ -6,11 +6,10 @@ import {
   ManyToMany,
   ManyToOne,
   OneToMany,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Character } from '../character/character.entity';
 import { Comment } from '../comment/comment.entity';
-import { v4 as uuid } from 'uuid';
 import { Killmail } from '../killmail/killmail.entity';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
@@ -22,11 +21,11 @@ import { UniverseLocation } from '../universe/location/location.entity';
 @Entity()
 export class Post {
 
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
   @Column('text', { nullable: true })
   content: string;
-
-  @PrimaryColumn('uuid')
-  id: string;
 
   @Column('varchar')
   type: POST_TYPES;
@@ -66,8 +65,6 @@ export class Post {
   hashtags: Hashtag[];
 
   constructor(postData?: VCreatePostRequest) {
-    this.id = uuid();
-
     if (postData) {
       this.content = postData.content;
       this.type = postData.type;

@@ -37,6 +37,7 @@ async function bootstrap() {
   .addTag('characters')
   .addTag('corporations')
   .addTag('alliances')
+  .addTag('comments')
   .addTag('posts')
   .addTag('search')
   .addTag('authentication', 'Authentication proxy for EVE SSO service')

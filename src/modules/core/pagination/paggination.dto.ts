@@ -1,7 +1,7 @@
 import { ApiModelProperty } from '@nestjs/swagger';
 
 export class DPagination<T> {
-  @ApiModelProperty()
+  @ApiModelProperty({ isArray: true, type: Object })
   data: T[];
   @ApiModelProperty()
   page: number;
