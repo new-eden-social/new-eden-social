@@ -66,7 +66,7 @@ $ cp example.env .env
 ## Start
 Project consits of different services.
 
-Main service is AP, that serves all the data for web. Then we have Updater, which periodically updates characters/corporations/alliances with changing/live data. And Killmails, which is listening for new killmails that happen in game and creates appropriate posts/events.
+Main service is API, that serves all the data for web. Then we have Updater, which periodically updates characters/corporations/alliances with changing/live data. And Killmails, which is listening for new killmails that happen in game and creates appropriate posts/events.
 
 ### API
 ```
@@ -75,6 +75,9 @@ $ npm run start
 
 # Using Yarn
 $ yarn start
+
+# Using Docker
+$ docker-compose up api
 ```
 
 ### Updater
@@ -84,6 +87,9 @@ $ npm run start:updater
 
 # Using Yarn
 $ yarn start:updater
+
+# Using Docker
+$ docker-compose up updater
 ```
 
 ### Killmails
@@ -93,4 +99,7 @@ $ npm run start:killmails
 
 # Using Yarn
 $ yarn start:killmails
+
+# Using Docker
+$ docker-compose up killmails
 ```
