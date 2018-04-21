@@ -1,4 +1,4 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as WebSocket from 'ws';
 import {
   IKillmailStream,
@@ -8,7 +8,7 @@ import {
 } from './killmailsStream.interface';
 
 
-@Component()
+@Injectable()
 export class KillmailsStreamService {
 
   private baseUrl = 'wss://api.pizza.moe/stream/killmails/';

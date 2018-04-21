@@ -14,7 +14,7 @@ import { killmailProviders } from './killmail.providers';
     PostModule,
   ],
   controllers: [],
-  components: [
+  providers: [
     ...killmailProviders,
     KillmailService,
   ],

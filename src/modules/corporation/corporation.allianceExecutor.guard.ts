@@ -1,8 +1,8 @@
-import { CanActivate, ExecutionContext, Guard } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { AllianceService } from '../alliance/alliance.service';
 import { LoggerService } from '../core/logger/logger.service';
 
-@Guard()
+@Injectable()
 export class CorporationAllianceExecutorGuard implements CanActivate {
   constructor(
     private allianceService: AllianceService,

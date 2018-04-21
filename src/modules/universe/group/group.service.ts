@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { UNIVERSE_GROUP_REPOSITORY_TOKEN } from './group.constants';
 import { UniverseGroup } from './group.entity';
 import { ESIService } from '../../core/external/esi/esi.service';
@@ -6,7 +6,7 @@ import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptio
 import { UniverseCategoryService } from '../category/category.service';
 import { UniverseGroupRepository } from './group.repository';
 
-@Component()
+@Injectable()
 export class UniverseGroupService {
 
   constructor(

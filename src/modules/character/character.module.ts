@@ -19,7 +19,7 @@ import { CorporationModule } from '../corporation/corporation.module';
   controllers: [
     CharactersController,
   ],
-  components: [
+  providers: [
     ...characterProviders,
     CharacterService,
   ],

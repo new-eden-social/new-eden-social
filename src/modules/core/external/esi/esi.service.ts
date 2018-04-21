@@ -1,4 +1,4 @@
-import { Component, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { CacheService } from '../../cache/cache.service';
 import {
@@ -24,7 +24,7 @@ import { RequestContext } from '../../requestContext/requestContext';
 import { LoggerService } from '../../logger/logger.service';
 import { UtilsService } from '../../utils/utils.service';
 
-@Component()
+@Injectable()
 export class ESIService {
 
   private static baseUrl = 'https://esi.tech.ccp.is/latest/';

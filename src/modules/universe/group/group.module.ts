@@ -11,7 +11,7 @@ import { UniverseCategoryModule } from '../category/category.module';
     ESIModule,
     UniverseCategoryModule,
   ],
-  components: [
+  providers: [
     UniverseGroupService,
     ...universeGroupProviders,
   ],

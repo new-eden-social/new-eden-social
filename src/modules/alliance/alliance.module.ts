@@ -19,7 +19,7 @@ import { DatabaseModule } from '../core/database/database.module';
   controllers: [
     AllianceController,
   ],
-  components: [
+  providers: [
     ...allianceProviders,
     AllianceService,
   ],

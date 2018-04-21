@@ -1,11 +1,11 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { UNIVERSE_CATEGORY_REPOSITORY_TOKEN } from './category.constants';
 import { UniverseCategory } from './category.entity';
 import { ESIService } from '../../core/external/esi/esi.service';
 import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
 import { UniverseCategoryRepository } from './category.repository';
 
-@Component()
+@Injectable()
 export class UniverseCategoryService {
 
   constructor(

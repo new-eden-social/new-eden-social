@@ -13,7 +13,7 @@ import { AuthMiddleware } from './authentication.middleware';
   controllers: [
     AuthenticationController,
   ],
-  components: [
+  providers: [
     AuthenticationService,
   ],
 })

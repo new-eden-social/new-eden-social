@@ -21,7 +21,7 @@ import { LoggerModule } from '../core/logger/logger.module';
     AllianceModule,
     DatabaseModule,
   ],
-  components: [
+  providers: [
     ...characterProviders,
     ...corporationProviders,
     ...allianceProviders,

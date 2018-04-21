@@ -1,8 +1,8 @@
-import { ExecutionContext, Interceptor, NestInterceptor } from '@nestjs/common';
+import { ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
-@Interceptor()
+@Injectable()
 export class FormatterInterceptor implements NestInterceptor {
   intercept(
     dataOrRequest: Request | any,

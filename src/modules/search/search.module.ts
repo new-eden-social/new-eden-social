@@ -7,7 +7,7 @@ import { ESIModule } from '../core/external/esi/esi.module';
   imports: [
     ESIModule,
   ],
-  controllers: [
+  providers: [
     SearchController,
   ],
   components: [

@@ -9,7 +9,7 @@ import { ESIModule } from '../../core/external/esi/esi.module';
     DatabaseModule,
     ESIModule,
   ],
-  components: [
+  providers: [
     UniverseLocationService,
     ...universeLocationProviders,
   ],

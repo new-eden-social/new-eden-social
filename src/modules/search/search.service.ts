@@ -1,4 +1,4 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ESIService } from '../core/external/esi/esi.service';
 import {
   IAllianceName,
@@ -6,7 +6,7 @@ import {
   ICorporationName,
 } from '../core/external/esi/esi.interface';
 
-@Component()
+@Injectable()
 export class SearchService {
 
   constructor(private esiService: ESIService) {

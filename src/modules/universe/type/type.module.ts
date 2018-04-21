@@ -11,7 +11,7 @@ import { UniverseGroupModule } from '../group/group.module';
     ESIModule,
     UniverseGroupModule,
   ],
-  components: [
+  providers: [
     UniverseTypeService,
     ...universeTypeProviders,
   ],

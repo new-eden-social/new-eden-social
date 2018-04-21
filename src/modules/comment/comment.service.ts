@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { COMMENT_REPOSITORY_TOKEN } from './comment.constants';
 import { Comment } from './comment.entity';
@@ -6,7 +6,7 @@ import { VCreateComment } from './comment.validate';
 import { Character } from '../character/character.entity';
 import { Post } from '../post/post.entity';
 
-@Component()
+@Injectable()
 export class CommentService {
 
   constructor(

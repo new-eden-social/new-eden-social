@@ -12,7 +12,7 @@ import { UniverseTypeModule } from '../../universe/type/type.module';
     UniverseTypeModule,
   ],
   controllers: [],
-  components: [
+  providers: [
     ...killmailParticipantProviders,
     KillmailParticipantService,
   ],

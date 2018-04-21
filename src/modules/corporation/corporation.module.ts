@@ -21,7 +21,7 @@ import { AllianceModule } from '../alliance/alliance.module';
   controllers: [
     CorporationController,
   ],
-  components: [
+  providers: [
     ...corporationProviders,
     CorporationService,
   ],

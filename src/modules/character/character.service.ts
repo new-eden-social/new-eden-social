@@ -1,4 +1,4 @@
-import { Component, forwardRef, Inject } from '@nestjs/common';
+import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { Character } from './character.entity';
 import { ZKillboardService } from '../core/external/zkillboard/zkillboard.service';
 import { ESIService } from '../core/external/esi/esi.service';
@@ -11,7 +11,7 @@ import { LoggerService } from '../core/logger/logger.service';
 import { UtilsService } from '../core/utils/utils.service';
 import { CharacterRepository } from './character.repository';
 
-@Component()
+@Injectable()
 export class CharacterService implements IService<Character> {
 
   constructor(

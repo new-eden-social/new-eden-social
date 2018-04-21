@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { UniverseLocation } from './location.entity';
 import { UNIVERSE_LOCATION_REPOSITORY_TOKEN } from './location.constants';
 import { ESIService } from '../../core/external/esi/esi.service';
@@ -6,7 +6,7 @@ import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptio
 import { Categories } from '../../core/external/esi/esi.interface';
 import { UniverseLocationRepository } from './location.repository';
 
-@Component()
+@Injectable()
 export class UniverseLocationService {
 
   constructor(

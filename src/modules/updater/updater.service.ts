@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { CharacterService } from '../character/character.service';
 import { CHARACTER_REPOSITORY_TOKEN } from '../character/character.constants';
 import { CorporationService } from '../corporation/corporation.service';
@@ -10,7 +10,7 @@ import { CorporationRepository } from '../corporation/corporation.repository';
 import { AllianceRepository } from '../alliance/alliance.repository';
 import { LoggerService } from '../core/logger/logger.service';
 
-@Component()
+@Injectable()
 export class UpdaterService {
 
   private readonly LOOP_INTERVAL = 60000; // 1min timeout

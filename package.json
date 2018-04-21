@@ -40,13 +40,13 @@
     "instrument": true
   },
   "dependencies": {
-    "@nestjs/common": "^4.6.6",
-    "@nestjs/core": "^4.6.6",
-    "@nestjs/microservices": "^4.6.6",
+    "@nestjs/common": "^5.0.0-beta.2",
+    "@nestjs/core": "^5.0.0-beta.2",
+    "@nestjs/microservices": "^5.0.0-beta.2",
     "@nestjs/swagger": "^1.1.4",
     "@nestjs/testing": "^4.6.6",
     "@nestjs/typeorm": "^2.0.0",
-    "@nestjs/websockets": "^4.5.8",
+    "@nestjs/websockets": "^5.0.0-beta.2",
     "@types/bluebird": "^3.5.14",
     "@types/hashids": "^1.0.30",
     "@types/ioredis": "0.0.25",

@@ -1,5 +1,5 @@
 import { Alliance } from './alliance.entity';
-import { forwardRef, Inject, Component } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { ALLIANCE_REPOSITORY_TOKEN } from './alliance.constants';
 import { IService } from '../../interfaces/service.interface';
 import { ESIService } from '../core/external/esi/esi.service';
@@ -11,7 +11,7 @@ import { LoggerService } from '../core/logger/logger.service';
 import { UtilsService } from '../core/utils/utils.service';
 import { AllianceRepository } from './alliance.repository';
 
-@Component()
+@Injectable()
 export class AllianceService implements IService<Alliance> {
 
   constructor(

@@ -6,7 +6,7 @@ import { CacheModule } from '../../cache/cache.module';
   imports: [
     CacheModule,
   ],
-  components: [
+  providers: [
     SSOService,
   ],
   exports: [

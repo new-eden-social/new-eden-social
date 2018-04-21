@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { KillmailParticipant } from './participant.entity';
 import {
   IKillmailStreamAttacker,
@@ -10,7 +10,7 @@ import { KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN } from './participant.constants';
 import { UniverseTypeService } from '../../universe/type/type.service';
 import { KillmailParticipantRepository } from './participant.repository';
 
-@Component()
+@Injectable()
 export class KillmailParticipantService {
 
   constructor(

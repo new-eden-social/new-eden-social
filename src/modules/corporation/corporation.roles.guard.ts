@@ -1,9 +1,9 @@
-import { CanActivate, ExecutionContext, Guard } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { CharacterService } from '../character/character.service';
 import { LoggerService } from '../core/logger/logger.service';
 
-@Guard()
+@Injectable()
 export class CorporationRolesGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,

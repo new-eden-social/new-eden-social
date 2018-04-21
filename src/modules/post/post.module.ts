@@ -27,7 +27,7 @@ import { UniverseLocationModule } from '../universe/location/location.module';
   controllers: [
     PostController,
   ],
-  components: [
+  providers: [
     ...postProviders,
     PostService,
   ],

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Killmail } from './killmail.entity';
 import { KillmailsStreamService } from '../core/external/killmailsStream/killmailsStream.service';
 import { IKillmailStream } from '../core/external/killmailsStream/killmailsStream.interface';
@@ -8,7 +8,7 @@ import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
 import { LoggerService } from '../core/logger/logger.service';
 import { KillmailRepository } from './killmail.repository';
 
-@Component()
+@Injectable()
 export class KillmailService {
 
   constructor(
