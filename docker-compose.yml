@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+
+    postgres:
+        image: postgres:latest
+
+    redis:
+        image: redis:latest
+
+    api:
+        command: yarn run start
+        build: .
+        ports:
+          - "3000:3000"
+        volumes:
+          - .:/app/src
+          - /app/src/node_modules
+        links:
+          - postgres
+          - redis
+        depends_on:
+          - postgres
+          - redis
+
+    updater:
+        command: yarn run start:updater
+        build: .
+        ports:
+          - "3001:3001"
+        volumes:
+          - .:/app/src
+          - /app/src/node_modules
+        links:
+          - postgres
+          - redis
+        depends_on:
+          - postgres
+          - redis
+
+    killmails:
+        command: yarn run start:killmails
+        build: .
+        ports:
+          - "3002:3002"
+        volumes:
+          - .:/app/src
+          - /app/src/node_modules
+        links:
+          - postgres
+          - redis
+        depends_on:
+          - postgres
+          - redis
