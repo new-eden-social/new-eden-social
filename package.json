@@ -39,7 +39,7 @@
     "@nestjs/core": "^4.0.0",
     "@nestjs/microservices": "^4.0.0",
     "@nestjs/testing": "^4.0.0",
-    "@nestjs/websockets": "^4.0.0",
+    "@nestjs/websockets": "^5.0.0",
     "@types/bluebird": "^3.5.8",
     "@types/ws": "^4.0.0",
     "axios": "^0.18.0",
