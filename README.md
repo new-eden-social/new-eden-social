@@ -14,8 +14,8 @@
   <a target="_blank" href="https://coveralls.io/github/evebook/api">
     <img src="https://coveralls.io/repos/github/evebook/api/badge.svg" alt="Coverage Status" />
   </a>
-  <a target="_blank" href="https://gitter.im/EVE-Book/Lobby">
-    <img src="https://badges.gitter.im/Join%20Chat.svg" alt="Join Gitter Chat" />
+  <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
+    <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
   </a>
 </div>
 <div align="center">
@@ -46,6 +46,19 @@ is manually deployed and is latest released version.
 We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/evebook/api/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/evebook/api/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/evebook/api/issues) or directly on [gitter](https://gitter.im/EVE-Book/Lobby).
 
 
+## What's it about
+Project was started with an idea of creating social platform for players of EVE Online. A place where players could connect and share their experiences, fan art, images, videos, thoughts, propaganda...
+
+Each "user" would be an actual EVE Online character and you could only login using game's credentials (SSO), this way characters could interact outside of eve online. Alliances and corporations could share propaganda videos/art and gather followers who could re-share and spread the word.
+
+Whole platform would heavily relay on EVE Online API, so that you could send in game emails, money, create events (calendar). It would feel as an extension of game itself.
+
+Think of it as combination of r/eve and twitter. A hub of EVE Online community.
+
+## Contribution
+We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/evebook/api/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/evebook/api/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/evebook/api/issues) or directly on [gitter](https://gitter.im/EVE-Book/Lobby).
+
+
 ## Installation
 
 ```
@@ -64,9 +77,9 @@ $ cp example.env .env
 ```
 
 ## Start
-Project consits of different services.
+Project consist of different services.
 
-Main service is AP, that serves all the data for web. Then we have Updater, which periodically updates characters/corporations/alliances with changing/live data. And Killmails, which is listening for new killmails that happen in game and creates appropriate posts/events.
+Main service is API, that serves all the data for web. Then we have Updater, which periodically updates characters/corporations/alliances with changing/live data. And Killmails, which is listening for new killmails that happen in game and creates appropriate posts/events.
 
 ### API
 ```
@@ -75,6 +88,9 @@ $ npm run start
 
 # Using Yarn
 $ yarn start
+
+# Using Docker
+$ docker-compose up api
 ```
 
 ### Updater
@@ -84,6 +100,9 @@ $ npm run start:updater
 
 # Using Yarn
 $ yarn start:updater
+
+# Using Docker
+$ docker-compose up updater
 ```
 
 ### Killmails
@@ -93,4 +112,7 @@ $ npm run start:killmails
 
 # Using Yarn
 $ yarn start:killmails
+
+# Using Docker
+$ docker-compose up killmails
 ```
