@@ -1,6 +1,5 @@
 import { Alliance } from './alliance.entity';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { ALLIANCE_REPOSITORY_TOKEN } from './alliance.constants';
 import { IService } from '../../interfaces/service.interface';
 import { ESIService } from '../core/external/esi/esi.service';
 import { ZKillboardService } from '../core/external/zkillboard/zkillboard.service';
@@ -10,6 +9,7 @@ import { Corporation } from '../corporation/corporation.entity';
 import { LoggerService } from '../core/logger/logger.service';
 import { UtilsService } from '../core/utils/utils.service';
 import { AllianceRepository } from './alliance.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class AllianceService implements IService<Alliance> {
@@ -17,7 +17,7 @@ export class AllianceService implements IService<Alliance> {
   constructor(
     private loggerService: LoggerService,
     private utilsService: UtilsService,
-    @Inject(ALLIANCE_REPOSITORY_TOKEN)
+    @InjectRepository(AllianceRepository)
     private allianceRepository: AllianceRepository,
     @Inject(forwardRef(() => CorporationService))
     private corporationService: CorporationService,
@@ -117,7 +117,7 @@ export class AllianceService implements IService<Alliance> {
    * @returns {Promise<Alliance>}
    */
   private async findAllianceById(id: number) {
-    const foundAlliance = await this.allianceRepository.findOneById(
+    const foundAlliance = await this.allianceRepository.findOne(
       id,
       { relations: ['executorCorporation'] },
     );
@@ -147,7 +147,7 @@ export class AllianceService implements IService<Alliance> {
         'Alliance done get executor corporation', esiAlliance.executor_corporation_id);
 
       // Update corporation id
-      await this.allianceRepository.updateById(alliance.id, {
+      await this.allianceRepository.update(alliance.id, {
         executorCorporation: { id: alliance.executorCorporation.id },
       });
     }

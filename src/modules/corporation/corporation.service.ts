@@ -4,12 +4,12 @@ import { ESIService } from '../core/external/esi/esi.service';
 import { IService } from '../../interfaces/service.interface';
 import { ESIEntetyNotFoundException } from '../core/external/esi/esi.exceptions';
 import { Corporation } from './corporation.entity';
-import { CORPORATION_REPOSITORY_TOKEN } from './corporation.constants';
 import { CharacterService } from '../character/character.service';
 import { AllianceService } from '../alliance/alliance.service';
 import { LoggerService } from '../core/logger/logger.service';
 import { UtilsService } from '../core/utils/utils.service';
 import { CorporationRepository } from './corporation.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CorporationService implements IService<Corporation> {
@@ -19,7 +19,7 @@ export class CorporationService implements IService<Corporation> {
     private loggerService: LoggerService,
     private esiService: ESIService,
     private zkillboardService: ZKillboardService,
-    @Inject(CORPORATION_REPOSITORY_TOKEN)
+    @InjectRepository(CorporationRepository)
     private corporationRepository: CorporationRepository,
     @Inject(forwardRef(() => CharacterService))
     private characterService: CharacterService,
@@ -115,7 +115,7 @@ export class CorporationService implements IService<Corporation> {
    * @return {Promise<Corporation>}
    */
   private async findCorporationById(id: number) {
-    const foundCorporation = await this.corporationRepository.findOneById(id);
+    const foundCorporation = await this.corporationRepository.findOne(id);
 
     if (foundCorporation) return foundCorporation;
 
@@ -173,7 +173,7 @@ export class CorporationService implements IService<Corporation> {
         corporation.creator = await this.characterService.get(creatorId);
       }
 
-      await this.corporationRepository.updateById(corporation.id, {
+      await this.corporationRepository.update(corporation.id, {
         alliance: corporation.alliance ? { id: corporation.alliance.id } : null,
         ceo: corporation.ceo ? { id: corporation.ceo.id } : null,
         creator: corporation.creator ? { id: corporation.creator.id } : null,

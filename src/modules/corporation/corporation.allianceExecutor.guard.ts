@@ -10,10 +10,12 @@ export class CorporationAllianceExecutorGuard implements CanActivate {
   ) {
   }
 
-  async canActivate(req, context: ExecutionContext): Promise<boolean> {
-    const { parent, handler } = context;
+  async canActivate(
+    context: ExecutionContext,
+  ): Promise<boolean> {
+    const request = context.switchToHttp().getRequest();
 
-    const character = req.character;
+    const character = request.character;
 
     // TODO: Handle "not in alliance" exception! #74
 

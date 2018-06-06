@@ -1,16 +1,16 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
-import { COMMENT_REPOSITORY_TOKEN } from './comment.constants';
 import { Comment } from './comment.entity';
 import { VCreateComment } from './comment.validate';
 import { Character } from '../character/character.entity';
 import { Post } from '../post/post.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CommentService {
 
   constructor(
-    @Inject(COMMENT_REPOSITORY_TOKEN)
+    @InjectRepository(CommentRepository)
     private commentRepository: CommentRepository,
   ) {
   }

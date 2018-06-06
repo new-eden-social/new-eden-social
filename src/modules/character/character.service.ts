@@ -2,7 +2,6 @@ import { Injectable, forwardRef, Inject } from '@nestjs/common';
 import { Character } from './character.entity';
 import { ZKillboardService } from '../core/external/zkillboard/zkillboard.service';
 import { ESIService } from '../core/external/esi/esi.service';
-import { CHARACTER_REPOSITORY_TOKEN } from './character.constants';
 import { IService } from '../../interfaces/service.interface';
 import { ESIEntetyNotFoundException } from '../core/external/esi/esi.exceptions';
 import { CorporationService } from '../corporation/corporation.service';
@@ -10,6 +9,7 @@ import { IGetCharacterRoles } from '../core/external/esi/esi.interface';
 import { LoggerService } from '../core/logger/logger.service';
 import { UtilsService } from '../core/utils/utils.service';
 import { CharacterRepository } from './character.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class CharacterService implements IService<Character> {
@@ -19,7 +19,7 @@ export class CharacterService implements IService<Character> {
     private loggerService: LoggerService,
     private utilsService: UtilsService,
     private zkillboardService: ZKillboardService,
-    @Inject(CHARACTER_REPOSITORY_TOKEN)
+    @InjectRepository(CharacterRepository)
     private characterRepository: CharacterRepository,
     @Inject(forwardRef(() => CorporationService))
     private corporationService: CorporationService,
@@ -109,7 +109,7 @@ export class CharacterService implements IService<Character> {
    * @return {Promise<Character>}
    */
   private async findCharacterById(id: number) {
-    const foundCharacter = await this.characterRepository.findOneById(id);
+    const foundCharacter = await this.characterRepository.findOne(id);
 
     if (foundCharacter) return foundCharacter;
 
@@ -132,7 +132,7 @@ export class CharacterService implements IService<Character> {
       character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
 
       // Update corporation id
-      await this.characterRepository.updateById(character.id, {
+      await this.characterRepository.update(character.id, {
         corporation: { id: character.corporation.id },
       });
     }

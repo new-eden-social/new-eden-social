@@ -4,6 +4,8 @@ import * as cors from 'cors';
 import { NestFactory } from '@nestjs/core';
 import { ApiModule } from './modules/api.module';
 import { ValidatorPipe } from './modules/core/validation/validator.pipe';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { FormatterInterceptor } from './interceptors/formatter.interceptor';
 // Used for TypeORM
 import 'reflect-metadata';
 // Import config
@@ -12,8 +14,6 @@ import { config } from 'dotenv';
 import 'zone.js';
 import 'zone.js/dist/zone-node.js';
 import 'zone.js/dist/long-stack-trace-zone.js';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { FormatterInterceptor } from './interceptors/formatter.interceptor';
 
 async function bootstrap() {
   config();

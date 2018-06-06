@@ -1,17 +1,16 @@
-import { forwardRef, Module, RequestMethod } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { CharactersController } from './character.controller';
 import { CharacterService } from './character.service';
-import { DatabaseModule } from '../core/database/database.module';
 import { ZKillboardModule } from '../core/external/zkillboard/zkillboard.module';
 import { ESIModule } from '../core/external/esi/esi.module';
-import { characterProviders } from './character.providers';
-import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
-import { CharacterExistsMiddleware } from './character.exists.middleware';
 import { CorporationModule } from '../corporation/corporation.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { CharacterRepository } from './character.repository';
 
 @Module({
   imports: [
-    DatabaseModule,
+    TypeOrmModule.forFeature([CharacterRepository]),
+
     ZKillboardModule,
     ESIModule,
     forwardRef(() => CorporationModule),
@@ -20,7 +19,6 @@ import { CorporationModule } from '../corporation/corporation.module';
     CharactersController,
   ],
   providers: [
-    ...characterProviders,
     CharacterService,
   ],
   exports: [
@@ -28,10 +26,4 @@ import { CorporationModule } from '../corporation/corporation.module';
   ],
 })
 export class CharacterModule {
-  configure(consumer: MiddlewaresConsumer) {
-    consumer.apply(CharacterExistsMiddleware)
-    .forRoutes({
-      path: 'characters/:characterId', method: RequestMethod.GET,
-    });
-  }
 }

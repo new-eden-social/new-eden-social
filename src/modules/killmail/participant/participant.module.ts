@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from '../../core/database/database.module';
 import { CharacterModule } from '../../character/character.module';
 import { KillmailParticipantService } from './participant.service';
-import { killmailParticipantProviders } from './participant.providers';
 import { UniverseTypeModule } from '../../universe/type/type.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { KillmailParticipantRepository } from './participant.repository';
 
 @Module({
   imports: [
-    DatabaseModule,
+    TypeOrmModule.forFeature([KillmailParticipantRepository]),
+
     CharacterModule,
     UniverseTypeModule,
   ],
   controllers: [],
   providers: [
-    ...killmailParticipantProviders,
     KillmailParticipantService,
   ],
   exports: [

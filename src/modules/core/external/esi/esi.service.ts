@@ -265,8 +265,9 @@ export class ESIService {
       /**
        * Transform underlying request exceptions to ESI Exceptions
        */
-      if (err.response && err.response.status === HttpStatus.NOT_FOUND)
+      if (err.response && err.response.status === HttpStatus.NOT_FOUND) {
         throw new ESIEntetyNotFoundException();
+      }
       else throw err;
     }
 

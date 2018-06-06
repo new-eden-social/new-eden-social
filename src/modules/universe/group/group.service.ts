@@ -1,10 +1,10 @@
 import { Injectable, Inject } from '@nestjs/common';
-import { UNIVERSE_GROUP_REPOSITORY_TOKEN } from './group.constants';
 import { UniverseGroup } from './group.entity';
 import { ESIService } from '../../core/external/esi/esi.service';
 import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
 import { UniverseCategoryService } from '../category/category.service';
 import { UniverseGroupRepository } from './group.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UniverseGroupService {
@@ -12,7 +12,7 @@ export class UniverseGroupService {
   constructor(
     private esiService: ESIService,
     private universeCategoryService: UniverseCategoryService,
-    @Inject(UNIVERSE_GROUP_REPOSITORY_TOKEN)
+    @InjectRepository(UniverseGroupRepository)
     private groupRepository: UniverseGroupRepository,
   ) {
   }
@@ -47,7 +47,7 @@ export class UniverseGroupService {
    * @return {Promise<UniverseGroup>}
    */
   private async findTypeById(id: number): Promise<UniverseGroup> {
-    const foundGroup = await this.groupRepository.findOneById(id);
+    const foundGroup = await this.groupRepository.findOne(id);
 
     if (foundGroup) return foundGroup;
 

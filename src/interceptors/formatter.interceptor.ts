@@ -5,7 +5,6 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class FormatterInterceptor implements NestInterceptor {
   intercept(
-    dataOrRequest: Request | any,
     context: ExecutionContext,
     stream$: Observable<any>,
   ): Observable<any> {

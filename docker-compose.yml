@@ -11,6 +11,8 @@ services:
     api:
         command: yarn run start
         build: .
+        env_file:
+          - .env
         ports:
           - "3000:3000"
         volumes:
@@ -26,6 +28,8 @@ services:
     updater:
         command: yarn run start:updater
         build: .
+        env_file:
+          - .env
         ports:
           - "3001:3001"
         volumes:
@@ -41,6 +45,8 @@ services:
     killmails:
         command: yarn run start:killmails
         build: .
+        env_file:
+          - .env
         ports:
           - "3002:3002"
         volumes:

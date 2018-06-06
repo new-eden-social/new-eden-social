@@ -81,7 +81,6 @@ export class PostRepository extends Repository<Post> {
     .getManyAndCount();
   }
 
-
   /**
    * Wrapper for querying posts
    * @param {number} limit

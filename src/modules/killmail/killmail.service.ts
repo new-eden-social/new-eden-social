@@ -4,9 +4,9 @@ import { KillmailsStreamService } from '../core/external/killmailsStream/killmai
 import { IKillmailStream } from '../core/external/killmailsStream/killmailsStream.interface';
 import { KillmailParticipantService } from './participant/participant.service';
 import { PostService } from '../post/post.service';
-import { KILLMAIL_REPOSITORY_TOKEN } from './killmail.constants';
 import { LoggerService } from '../core/logger/logger.service';
 import { KillmailRepository } from './killmail.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class KillmailService {
@@ -16,7 +16,7 @@ export class KillmailService {
     private killmailParticipantService: KillmailParticipantService,
     private postService: PostService,
     private loggerService: LoggerService,
-    @Inject(KILLMAIL_REPOSITORY_TOKEN)
+    @InjectRepository(KillmailRepository)
     private killmailRepository: KillmailRepository,
   ) {
     this.killmailsStreamService.subscribe(this.create.bind(this));
@@ -47,12 +47,13 @@ export class KillmailService {
     for (const attackerId in killmailStream.attackers) {
       const attacker = killmailStream.attackers[attackerId];
 
-      if (attacker.id) // If NPC, ignore
+      // If NPC, ignore
+      if (attacker.id)  {
         killmail.participants.push(await this.killmailParticipantService.create(
           attacker,
           'attacker'));
+      }
     }
-
 
     // Create Victim
     killmail.participants.push(await this.killmailParticipantService.create(

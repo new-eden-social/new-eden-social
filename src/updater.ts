@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { UpdaterModule } from './modules/updater/updater.module';
+import { Transport } from '@nestjs/microservices';
 // Used for TypeORM
 import 'reflect-metadata';
 // Import config
@@ -11,6 +12,11 @@ import 'zone.js/dist/long-stack-trace-zone.js';
 
 config();
 
-NestFactory.createMicroservice(UpdaterModule, { port: parseInt(process.env.UPDATER_PORT, 10) })
+NestFactory.createMicroservice(UpdaterModule, {
+  transport: Transport.TCP,
+  options: {
+    port: parseInt(process.env.UPDATER_PORT, 10),
+  },
+})
 .then(() => console.info(`Updater started on port ${process.env.UPDATER_PORT}`))
 .catch(err => console.error(err));

@@ -1,17 +1,16 @@
-import { forwardRef, Module, RequestMethod } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AllianceService } from './alliance.service';
 import { AllianceController } from './alliance.controller';
-import { allianceProviders } from './alliance.providers';
 import { ESIModule } from '../core/external/esi/esi.module';
 import { ZKillboardModule } from '../core/external/zkillboard/zkillboard.module';
 import { CorporationModule } from '../corporation/corporation.module';
-import { AllianceExistsMiddleware } from './alliance.exists.middleware';
-import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
-import { DatabaseModule } from '../core/database/database.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { AllianceRepository } from './alliance.repository';
 
 @Module({
   imports: [
-    DatabaseModule,
+    TypeOrmModule.forFeature([AllianceRepository]),
+
     ZKillboardModule,
     ESIModule,
     forwardRef(() => CorporationModule),
@@ -20,7 +19,6 @@ import { DatabaseModule } from '../core/database/database.module';
     AllianceController,
   ],
   providers: [
-    ...allianceProviders,
     AllianceService,
   ],
   exports: [
@@ -28,10 +26,4 @@ import { DatabaseModule } from '../core/database/database.module';
   ],
 })
 export class AllianceModule {
-  configure(consumer: MiddlewaresConsumer) {
-    consumer.apply(AllianceExistsMiddleware)
-    .forRoutes({
-      path: 'alliances/:allianceId', method: RequestMethod.GET,
-    });
-  }
 }

@@ -1,5 +1,3 @@
-export const CORPORATION_REPOSITORY_TOKEN = 'CORPORATION_REPOSITORY_TOKEN';
-
 export const CORPORATION_ROLES = {
   DIRECTOR: 'Director',
   DIPLOMAT: 'Diplomat',

@@ -7,7 +7,6 @@ import {
   IKillmailStreamVictim,
 } from './killmailsStream.interface';
 
-
 @Injectable()
 export class KillmailsStreamService {
 

@@ -9,4 +9,3 @@ export class ESIEntetyNotFoundException extends ESIException {
     super('Entety doesn\'t exists');
   }
 }
-

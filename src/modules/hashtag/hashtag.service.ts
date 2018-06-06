@@ -1,13 +1,13 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Hashtag } from './hashtag.entity';
-import { HASHTAG_REPOSITORY_TOKEN } from './hashtag.constants';
 import { HashtagRepository } from './hashtag.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class HashtagService {
 
   constructor(
-    @Inject(HASHTAG_REPOSITORY_TOKEN)
+    @InjectRepository(HashtagRepository)
     private hashtagRepository: HashtagRepository,
   ) {
   }

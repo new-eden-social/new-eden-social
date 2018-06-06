@@ -1,17 +1,17 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UniverseLocation } from './location.entity';
-import { UNIVERSE_LOCATION_REPOSITORY_TOKEN } from './location.constants';
 import { ESIService } from '../../core/external/esi/esi.service';
 import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
 import { Categories } from '../../core/external/esi/esi.interface';
 import { UniverseLocationRepository } from './location.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UniverseLocationService {
 
   constructor(
     private esiService: ESIService,
-    @Inject(UNIVERSE_LOCATION_REPOSITORY_TOKEN)
+    @InjectRepository(UniverseLocationRepository)
     private locationRepository: UniverseLocationRepository,
   ) {
   }
@@ -46,7 +46,7 @@ export class UniverseLocationService {
    * @return {Promise<UniverseLocation>}
    */
   private async findLocationById(id: number): Promise<UniverseLocation> {
-    const foundLocation = await this.locationRepository.findOneById(id);
+    const foundLocation = await this.locationRepository.findOne(id);
 
     if (foundLocation) return foundLocation;
 

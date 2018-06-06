@@ -1,19 +1,19 @@
 import { Module } from '@nestjs/common';
 import { UniverseTypeService } from './type.service';
-import { universeTypeProviders } from './type.providers';
-import { DatabaseModule } from '../../core/database/database.module';
 import { ESIModule } from '../../core/external/esi/esi.module';
 import { UniverseGroupModule } from '../group/group.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UniverseTypeRepository } from './type.repository';
 
 @Module({
   imports: [
-    DatabaseModule,
+    TypeOrmModule.forFeature([UniverseTypeRepository]),
+
     ESIModule,
     UniverseGroupModule,
   ],
   providers: [
     UniverseTypeService,
-    ...universeTypeProviders,
   ],
   exports: [UniverseTypeService],
 })
