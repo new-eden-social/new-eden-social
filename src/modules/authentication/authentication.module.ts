@@ -15,6 +15,9 @@ import { CharacterModule } from '../character/character.module';
   providers: [
     AuthenticationService,
   ],
+  exports: [
+    AuthenticationService,
+  ],
 })
 export class AuthenticationModule {
 }

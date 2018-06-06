@@ -11,10 +11,8 @@ import { LoggerModule } from './core/logger/logger.module';
 import { UtilsModule } from './core/utils/utils.module';
 import { CommentModule } from './comment/comment.module';
 import { AuthMiddleware } from './authentication/authentication.middleware';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
-
-console.log(process.env);
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
