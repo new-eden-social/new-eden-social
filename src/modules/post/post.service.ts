@@ -1,9 +1,9 @@
-import { Component, Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
 import { VCreatePost } from './post.validate';
 import { Character } from '../character/character.entity';
 import { Killmail } from '../killmail/killmail.entity';
-import { POST_REPOSITORY_TOKEN, POST_TYPES } from './post.constants';
+import { POST_TYPES } from './post.constants';
 import { CorporationService } from '../corporation/corporation.service';
 import { CharacterService } from '../character/character.service';
 import { Corporation } from '../corporation/corporation.entity';
@@ -16,8 +16,9 @@ import { LoggerService } from '../core/logger/logger.service';
 import { PostRepository } from './post.repository';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreatePostCommand } from './commands/create.command';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@Component()
+@Injectable()
 export class PostService {
 
   constructor(
@@ -28,7 +29,7 @@ export class PostService {
     private universeLocationService: UniverseLocationService,
     private loggerService: LoggerService,
     private commandBus: CommandBus,
-    @Inject(POST_REPOSITORY_TOKEN)
+    @InjectRepository(PostRepository)
     private postRepository: PostRepository,
   ) {
   }
@@ -39,7 +40,7 @@ export class PostService {
    * @return {Promise<Post>}
    */
   public async get(id: string): Promise<Post> {
-    return this.postRepository.findOneById(id);
+    return this.postRepository.findOne(id);
   }
 
   /**

@@ -1,16 +1,14 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CharacterService } from '../character/character.service';
-import { CHARACTER_REPOSITORY_TOKEN } from '../character/character.constants';
 import { CorporationService } from '../corporation/corporation.service';
-import { CORPORATION_REPOSITORY_TOKEN } from '../corporation/corporation.constants';
-import { ALLIANCE_REPOSITORY_TOKEN } from '../alliance/alliance.constants';
 import { AllianceService } from '../alliance/alliance.service';
 import { CharacterRepository } from '../character/character.repository';
 import { CorporationRepository } from '../corporation/corporation.repository';
 import { AllianceRepository } from '../alliance/alliance.repository';
 import { LoggerService } from '../core/logger/logger.service';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@Component()
+@Injectable()
 export class UpdaterService {
 
   private readonly LOOP_INTERVAL = 60000; // 1min timeout
@@ -22,11 +20,11 @@ export class UpdaterService {
     private corporationService: CorporationService,
     private allianceService: AllianceService,
     private loggerService: LoggerService,
-    @Inject(CHARACTER_REPOSITORY_TOKEN)
+    @InjectRepository(CharacterRepository)
     private characterRepository: CharacterRepository,
-    @Inject(CORPORATION_REPOSITORY_TOKEN)
+    @InjectRepository(CorporationRepository)
     private corporationRepository: CorporationRepository,
-    @Inject(ALLIANCE_REPOSITORY_TOKEN)
+    @InjectRepository(AllianceRepository)
     private allianceRepository: AllianceRepository,
   ) {
     this.loop();

@@ -1,16 +1,17 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from '../core/database/database.module';
 import { CorporationModule } from '../corporation/corporation.module';
 import { AllianceModule } from '../alliance/alliance.module';
 import { PostModule } from '../post/post.module';
-import { commentProviders } from './comment.providers';
 import { CommentService } from './comment.service';
 import { CharacterModule } from '../character/character.module';
 import { CommentController } from './comment.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { CommentRepository } from './comment.repository';
 
 @Module({
   imports: [
-    DatabaseModule,
+    TypeOrmModule.forFeature([CommentRepository]),
+
     CorporationModule,
     AllianceModule,
     CharacterModule,
@@ -19,8 +20,7 @@ import { CommentController } from './comment.controller';
   controllers: [
     CommentController,
   ],
-  components: [
-    ...commentProviders,
+  providers: [
     CommentService,
   ],
   exports: [

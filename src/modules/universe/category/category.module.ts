@@ -1,17 +1,16 @@
 import { Module } from '@nestjs/common';
 import { UniverseCategoryService } from './category.service';
-import { universeCategoryProviders } from './category.providers';
-import { DatabaseModule } from '../../core/database/database.module';
 import { ESIModule } from '../../core/external/esi/esi.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UniverseCategoryRepository } from './category.repository';
 
 @Module({
   imports: [
-    DatabaseModule,
+    TypeOrmModule.forFeature([UniverseCategoryRepository]),
     ESIModule,
   ],
-  components: [
+  providers: [
     UniverseCategoryService,
-    ...universeCategoryProviders,
   ],
   exports: [UniverseCategoryService],
 })

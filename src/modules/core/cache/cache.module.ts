@@ -6,7 +6,7 @@ import { CacheService } from './cache.service';
   imports: [
     RedisModule,
   ],
-  components: [
+  providers: [
     CacheService,
   ],
   exports: [

@@ -6,7 +6,7 @@ import { ESIService } from './esi.service';
   imports: [
     CacheModule,
   ],
-  components: [
+  providers: [
     ESIService,
   ],
   exports: [

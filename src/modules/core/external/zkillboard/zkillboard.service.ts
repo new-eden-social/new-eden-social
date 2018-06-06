@@ -1,4 +1,4 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import {
   IAllianceStatistics,
@@ -8,7 +8,7 @@ import {
 import { CacheService } from '../../cache/cache.service';
 import { UtilsService } from '../../utils/utils.service';
 
-@Component()
+@Injectable()
 export class ZKillboardService {
 
   private baseUrl = 'https://zkillboard.com/api/';

@@ -1,11 +1,11 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
 import { IAuthenticationResponse, IAuthenticationVerify } from './sso.interface';
 import { CacheService } from '../../cache/cache.service';
 import * as moment from 'moment';
 import { TokenExpiredException } from './sso.exceptions';
 
-@Component()
+@Injectable()
 export class SSOService {
 
   private baseUrl = 'https://login.eveonline.com/oauth/';

@@ -1,9 +1,9 @@
-import { CanActivate, ExecutionContext, Guard } from '@nestjs/common';
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { CharacterService } from '../character/character.service';
 import { LoggerService } from '../core/logger/logger.service';
 
-@Guard()
+@Injectable()
 export class CorporationRolesGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
@@ -12,8 +12,11 @@ export class CorporationRolesGuard implements CanActivate {
   ) {
   }
 
-  async canActivate(req, context: ExecutionContext): Promise<boolean> {
-    const { parent, handler } = context;
+  async canActivate(
+    context: ExecutionContext,
+  ): Promise<boolean> {
+    const handler = context.getHandler();
+    const request = context.switchToHttp().getRequest();
 
     const requiredRoles = this.reflector.get<string[]>('corporationRoles', handler);
 
@@ -21,7 +24,7 @@ export class CorporationRolesGuard implements CanActivate {
       return true;
     }
 
-    const character = req.character;
+    const character = request.character;
     const { roles } = await this.characterService.getRoles(character.id);
 
     this.loggerService.debug('[CorporationRolesGuard]', roles, requiredRoles);

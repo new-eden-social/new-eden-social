@@ -6,7 +6,7 @@ import { ZKillboardService } from './zkillboard.service';
   imports: [
     CacheModule,
   ],
-  components: [
+  providers: [
     ZKillboardService,
   ],
   exports: [
