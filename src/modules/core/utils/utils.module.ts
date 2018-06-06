@@ -3,7 +3,7 @@ import { UtilsService } from './utils.service';
 
 @Global()
 @Module({
-  components: [
+  providers: [
     UtilsService,
   ],
   exports: [

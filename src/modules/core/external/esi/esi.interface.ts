@@ -115,4 +115,3 @@ export interface ICorporationName {
   readonly corporation_id: number;
   readonly corporation_name: string;
 }
-

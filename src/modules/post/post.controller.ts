@@ -5,7 +5,6 @@ import {
   HttpStatus,
   Param,
   Post,
-  Response,
   UseGuards,
 } from '@nestjs/common';
 import { PostService } from './post.service';
@@ -21,7 +20,7 @@ import { CorporationRolesGuard } from '../corporation/corporation.roles.guard';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { Character } from '../character/character.entity';
 import { Pagination } from '../core/pagination/pagination.decorator';
-import { ApiBearerAuth, ApiImplicitBody, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { VPagination } from '../core/pagination/pagination.validation';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
 

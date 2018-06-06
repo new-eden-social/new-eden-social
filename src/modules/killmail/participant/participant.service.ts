@@ -1,4 +1,4 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { KillmailParticipant } from './participant.entity';
 import {
   IKillmailStreamAttacker,
@@ -6,17 +6,17 @@ import {
   TKillmailStreamParticipant,
 } from '../../core/external/killmailsStream/killmailsStream.interface';
 import { CharacterService } from '../../character/character.service';
-import { KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN } from './participant.constants';
 import { UniverseTypeService } from '../../universe/type/type.service';
 import { KillmailParticipantRepository } from './participant.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@Component()
+@Injectable()
 export class KillmailParticipantService {
 
   constructor(
     private charactersService: CharacterService,
     private universeTypeService: UniverseTypeService,
-    @Inject(KILLMAIL_PARTICIPANT_REPOSITORY_TOKEN)
+    @InjectRepository(KillmailParticipantRepository)
     private killmailParticipantRepository: KillmailParticipantRepository,
   ) {
   }

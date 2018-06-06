@@ -1,9 +1,9 @@
-import { Middleware, NestMiddleware } from '@nestjs/common';
+import { Injectable, NestMiddleware } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { TokenExpiredException } from '../core/external/sso/sso.exceptions';
 import { InvalidTokenException } from './invalidToken.exception';
 
-@Middleware()
+@Injectable()
 export class AuthMiddleware implements NestMiddleware {
   constructor(private authenticationService: AuthenticationService) {
   }

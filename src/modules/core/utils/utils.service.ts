@@ -1,9 +1,9 @@
-import { Component } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { createHash } from 'crypto';
 // tslint:disable-next-line:variable-name
 const Hashids = require('hashids');
 
-@Component()
+@Injectable()
 export class UtilsService {
 
   private hashids;

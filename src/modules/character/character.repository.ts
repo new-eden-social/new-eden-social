@@ -5,7 +5,6 @@ import { Character } from './character.entity';
 @EntityRepository(Character)
 export class CharacterRepository extends Repository<Character> {
 
-
   public async getAllByIds(ids: number[]): Promise<Character[]> {
     return this.createQueryBuilder('character')
     .where('character.id IN (:ids)', { ids })

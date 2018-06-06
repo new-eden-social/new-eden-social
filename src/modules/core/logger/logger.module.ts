@@ -5,7 +5,7 @@ import { LoggerExceptionInterceptor } from './loggerException.interceptor';
 
 @Global()
 @Module({
-  components: [
+  providers: [
     ...loggerProviders,
     LoggerService,
     LoggerExceptionInterceptor,

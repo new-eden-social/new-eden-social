@@ -1,8 +1,8 @@
-import { Component, Inject } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { REDIS_CONNECTION_TOKEN } from '../redis/redis.constants';
 import * as IORedis from 'ioredis';
 
-@Component()
+@Injectable()
 export class CacheService {
 
   private prefix = 'cache:';

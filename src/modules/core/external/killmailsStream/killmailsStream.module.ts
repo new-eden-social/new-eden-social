@@ -3,7 +3,7 @@ import { KillmailsStreamService } from './killmailsStream.service';
 
 @Module({
   imports: [],
-  components: [
+  providers: [
     KillmailsStreamService,
   ],
   exports: [

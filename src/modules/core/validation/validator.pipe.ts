@@ -1,8 +1,8 @@
-import { ArgumentMetadata, Pipe, PipeTransform } from '@nestjs/common';
+import { ArgumentMetadata, Injectable, PipeTransform } from '@nestjs/common';
 import { isNil } from '@nestjs/common/utils/shared.utils';
 import { lynxValidate } from './validation.util';
 
-@Pipe()
+@Injectable()
 export class ValidatorPipe implements PipeTransform<any> {
   public async transform(value: any, metadata: ArgumentMetadata): Promise<any> {
     const { metatype } = metadata;

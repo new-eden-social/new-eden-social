@@ -6,7 +6,6 @@ import {
 } from 'class-validator';
 import { ValidationException } from './validation.exception';
 import { ClassType } from 'class-transformer/ClassTransformer';
-import { ObjectType } from 'typeorm';
 
 /**
  * Validate value for validator

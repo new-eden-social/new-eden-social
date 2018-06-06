@@ -1,18 +1,18 @@
-import { Component, Inject } from '@nestjs/common';
-import { UNIVERSE_TYPE_REPOSITORY_TOKEN } from './type.constants';
+import { Injectable, Inject } from '@nestjs/common';
 import { UniverseType } from './type.entity';
 import { ESIService } from '../../core/external/esi/esi.service';
 import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
 import { UniverseGroupService } from '../group/group.service';
 import { UniverseTypeRepository } from './type.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
-@Component()
+@Injectable()
 export class UniverseTypeService {
 
   constructor(
     private esiService: ESIService,
     private groupService: UniverseGroupService,
-    @Inject(UNIVERSE_TYPE_REPOSITORY_TOKEN)
+    @InjectRepository(UniverseTypeRepository)
     private typeRepository: UniverseTypeRepository,
   ) {
   }
@@ -47,7 +47,7 @@ export class UniverseTypeService {
    * @return {Promise<UniverseType>}
    */
   private async findTypeById(id: number): Promise<UniverseType> {
-    const foundType = await this.typeRepository.findOneById(id);
+    const foundType = await this.typeRepository.findOne(id);
 
     if (foundType) return foundType;
 

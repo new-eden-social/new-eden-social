@@ -1,6 +1,8 @@
-import { Body, Controller, Get, Headers, HttpStatus, Post, Query, Response } from '@nestjs/common';
+import {
+  Body, Controller, Get, Headers, HttpException, HttpStatus, Post, Query,
+  Response,
+} from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { HttpException } from '@nestjs/core';
 import { DCharacterShort } from '../character/character.dto';
 import { ApiBearerAuth, ApiImplicitBody, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { IAuthenticationResponse } from '../core/external/sso/sso.interface';
