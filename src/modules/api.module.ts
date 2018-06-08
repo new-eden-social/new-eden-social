@@ -10,9 +10,9 @@ import { CorporationModule } from './corporation/corporation.module';
 import { LoggerModule } from './core/logger/logger.module';
 import { UtilsModule } from './core/utils/utils.module';
 import { CommentModule } from './comment/comment.module';
-import { AuthMiddleware } from './authentication/authentication.middleware';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { NotificationModule } from './notification/notification.module';
 
 @Module({
   imports: [
@@ -32,21 +32,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       synchronize: process.env.DB_SYNC === 'true',
     }),
 
+    AuthenticationModule,
     SearchModule,
     AllianceModule,
     CharacterModule,
     CorporationModule,
     PostModule,
-    AuthenticationModule,
     CommentModule,
+    NotificationModule,
   ],
 })
 export class ApiModule implements NestModule {
   configure(consumer: MiddlewaresConsumer) {
     consumer
     .apply(RequestContextMiddleware)
-    .forRoutes('*')
-    .apply(AuthMiddleware)
     .forRoutes('*');
   }
 }

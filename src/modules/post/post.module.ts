@@ -10,7 +10,6 @@ import { UniverseLocationModule } from '../universe/location/location.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostRepository } from './post.repository';
 import { CommandBus, CQRSModule, EventBus } from '@nestjs/cqrs';
-import { PostNotificationSagas } from './sagas/notification.saga';
 import { commandHandlers } from './commands/handlers';
 import { eventHandlers } from './events/handlers';
 import { ModuleRef } from '@nestjs/core';
@@ -32,7 +31,6 @@ import { ModuleRef } from '@nestjs/core';
   ],
   providers: [
     PostService,
-    PostNotificationSagas,
     ...commandHandlers,
     ...eventHandlers,
   ],
@@ -45,9 +43,8 @@ export class PostModule implements OnModuleInit {
     private readonly moduleRef: ModuleRef,
     private readonly command$: CommandBus,
     private readonly event$: EventBus,
-    private readonly postNotificationSagas: PostNotificationSagas,
   ) {
-    // Nasty hack, for some reason onModuleInit isn't executed
+    // FIXME: Nasty hack, for some reason onModuleInit isn't executed
     this.onModuleInit();
   }
 
@@ -57,8 +54,5 @@ export class PostModule implements OnModuleInit {
 
     this.event$.register(eventHandlers);
     this.command$.register(commandHandlers);
-    this.event$.combineSagas([
-      this.postNotificationSagas.characterCreatedPost,
-    ]);
   }
 }

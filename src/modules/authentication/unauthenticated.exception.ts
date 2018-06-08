@@ -1,14 +1,24 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { createHttpExceptionBody } from '@nestjs/common/utils/http-exception-body.util';
+import { WsException } from '@nestjs/websockets';
+import { createExceptionBody } from '../../utils/exception-body.util';
 
-export class UnauthenticatedException extends HttpException {
+export const ERROR_CODE = 'CHARACTER_NOT_AUTHENTICATED';
+export const ERROR_MESSAGE = 'You aren\'t authenticated!';
+
+export class HttpUnauthenticatedException extends HttpException {
   constructor() {
     super(
-      createHttpExceptionBody(
-        'You aren\'t authenticated!',
-        'CHARACTER_NOT_AUTHENTICATED',
-        HttpStatus.UNAUTHORIZED),
+      createExceptionBody(ERROR_MESSAGE, ERROR_CODE, HttpStatus.UNAUTHORIZED),
       HttpStatus.UNAUTHORIZED,
     );
   }
 }
+
+export class WsUnauthenticatedException extends WsException {
+  constructor() {
+    super(
+      createExceptionBody(ERROR_MESSAGE, ERROR_CODE, HttpStatus.UNAUTHORIZED),
+    );
+  }
+}
+

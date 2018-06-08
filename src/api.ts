@@ -6,6 +6,8 @@ import { ApiModule } from './modules/api.module';
 import { ValidatorPipe } from './modules/core/validation/validator.pipe';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { FormatterInterceptor } from './interceptors/formatter.interceptor';
+import { AuthenticationModule } from './modules/authentication/authentication.module';
+import { AuthenticationInterceptor } from './modules/authentication/authentication.interceptor';
 // Used for TypeORM
 import 'reflect-metadata';
 // Import config
@@ -24,7 +26,10 @@ async function bootstrap() {
 
   const nestApp = await NestFactory.create(ApiModule, instance);
   nestApp.useGlobalPipes(new ValidatorPipe());
-  nestApp.useGlobalInterceptors(new FormatterInterceptor());
+  nestApp.useGlobalInterceptors(
+    new FormatterInterceptor(),
+    nestApp.select(AuthenticationModule).get(AuthenticationInterceptor),
+  );
 
   // Swagger
   const options = new DocumentBuilder()
