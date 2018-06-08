@@ -13,13 +13,11 @@ import { Comment } from '../comment/comment.entity';
 import { Killmail } from '../killmail/killmail.entity';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
-import { VCreatePost } from './post.validate';
 import { Hashtag } from '../hashtag/hashtag.entity';
 import { POST_TYPES } from './post.constants';
 import { UniverseLocation } from '../universe/location/location.entity';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { CreatePostCommand } from './commands/create.command';
-import { CreatePostEvent } from './events/create.event';
+import { CharacterCreatedPostEvent } from './events/create.event';
 
 @Entity()
 export class Post extends AggregateRoot {
@@ -72,7 +70,9 @@ export class Post extends AggregateRoot {
    * @return {Promise<Post>}
    */
   public async create(): Promise<Post> {
-    await this.apply(new CreatePostEvent(this));
+    if (this.character) {
+      await this.apply(new CharacterCreatedPostEvent(this));
+    }
     return this;
   }
 }

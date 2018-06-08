@@ -47,13 +47,18 @@ export class PostModule implements OnModuleInit {
     private readonly event$: EventBus,
     private readonly postNotificationSagas: PostNotificationSagas,
   ) {
+    // Nasty hack, for some reason onModuleInit isn't executed
+    this.onModuleInit();
   }
+
   onModuleInit() {
     this.command$.setModuleRef(this.moduleRef);
     this.event$.setModuleRef(this.moduleRef);
 
     this.event$.register(eventHandlers);
     this.command$.register(commandHandlers);
-    this.event$.combineSagas([this.postNotificationSagas.postCreated]);
+    this.event$.combineSagas([
+      this.postNotificationSagas.characterCreatedPost,
+    ]);
   }
 }

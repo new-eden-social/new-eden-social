@@ -17,7 +17,11 @@ export class CreatePostHandler implements ICommandHandler<CreatePostCommand> {
     const entity = this.publisher.mergeObjectContext(
       await this.repository.save(post),
     );
+
+    // Sends actual event
+    await entity.create();
+
     entity.commit();
-    resolve();
+    resolve(entity);
   }
 }

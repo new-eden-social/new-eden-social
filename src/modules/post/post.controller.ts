@@ -167,7 +167,7 @@ export class PostController {
   public async createAsCharacter(
     @Body() postData: VCreatePost,
     @AuthenticatedCharacter() character: Character,
-  ): Promise<DPost> {
+  ): Promise<any> {
     const post = await this.postService.createAsCharacter(postData, character);
     return new DPost(post);
   }

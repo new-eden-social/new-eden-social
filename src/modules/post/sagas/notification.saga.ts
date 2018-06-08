@@ -1,13 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { EventObservable } from '@nestjs/cqrs';
 import { Observable } from 'rxjs/Observable';
-import { CreatePostEvent } from '../events/create.event';
-import 'rxjs/add/operator/map';
+import { CharacterCreatedPostEvent } from '../events/create.event';
+import { map } from 'rxjs/operators';
+import { Post } from '../post.entity';
 
 @Injectable()
 export class PostNotificationSagas {
-  postCreated = (events$: EventObservable<any>): Observable<void> => {
-    return events$.ofType(CreatePostEvent)
-    .map(event => console.log('CREATE POST EVEN ', event));
+  characterCreatedPost = (events$: EventObservable<any>): Observable<void> => {
+    return events$
+    .ofType(CharacterCreatedPostEvent)
+    .pipe(
+      map((event: Post) => console.log('Character CREATE POST EVENT!! ')),
+    );
   }
 }

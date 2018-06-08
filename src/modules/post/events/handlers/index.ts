@@ -1,3 +1,3 @@
-import { CreatePostHandler } from './create.handler';
+import { CharacterCreatedPostEventHandler } from './create.handler';
 
-export const eventHandlers = [CreatePostHandler];
+export const eventHandlers = [CharacterCreatedPostEventHandler];
