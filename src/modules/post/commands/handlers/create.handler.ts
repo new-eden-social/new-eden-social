@@ -1,13 +1,12 @@
 import { CommandHandler, EventPublisher, ICommandHandler } from '@nestjs/cqrs';
 import { PostRepository } from '../../post.repository';
 import { CreatePostCommand } from '../create.command';
-import { Inject } from '@nestjs/common';
-import { POST_REPOSITORY_TOKEN } from '../../post.constants';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @CommandHandler(CreatePostCommand)
 export class CreatePostHandler implements ICommandHandler<CreatePostCommand> {
   constructor(
-    @Inject(POST_REPOSITORY_TOKEN)
+    @InjectRepository(PostRepository)
     private readonly repository: PostRepository,
     private readonly publisher: EventPublisher,
   ) {
