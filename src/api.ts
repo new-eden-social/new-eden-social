@@ -6,8 +6,6 @@ import { ApiModule } from './modules/api.module';
 import { ValidatorPipe } from './modules/core/validation/validator.pipe';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { FormatterInterceptor } from './interceptors/formatter.interceptor';
-import { AuthenticationModule } from './modules/authentication/authentication.module';
-import { AuthenticationInterceptor } from './modules/authentication/authentication.interceptor';
 // Used for TypeORM
 import 'reflect-metadata';
 // Import config
@@ -16,12 +14,9 @@ import { config } from 'dotenv';
 import 'zone.js';
 import 'zone.js/dist/zone-node.js';
 import 'zone.js/dist/long-stack-trace-zone.js';
-import { createExceptionBody } from './exceptions/exceptionBody.util';
 
 async function bootstrap() {
   config();
-
-  console.log(createExceptionBody);
 
   const instance = express();
   instance.use(bodyParser.json());
@@ -31,7 +26,6 @@ async function bootstrap() {
   nestApp.useGlobalPipes(new ValidatorPipe());
   nestApp.useGlobalInterceptors(
     new FormatterInterceptor(),
-    nestApp.select(AuthenticationModule).get(AuthenticationInterceptor),
   );
 
   // Swagger

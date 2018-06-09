@@ -18,7 +18,7 @@ export class UniverseTypeService {
   }
 
   /**
-   * Get type data
+   * Get event data
    * @param id
    * @return {Promise<UniverseType>}
    */
@@ -51,7 +51,7 @@ export class UniverseTypeService {
 
     if (foundType) return foundType;
 
-    // If type not in DB, load it from ESI
+    // If event not in DB, load it from ESI
     const type = new UniverseType();
     type.id = id;
 

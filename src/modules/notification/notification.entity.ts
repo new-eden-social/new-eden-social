@@ -14,7 +14,7 @@ export class Notification extends AggregateRoot {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @Column({ nullable: true })
   seenAt: Date;
 
   @Column('varchar')

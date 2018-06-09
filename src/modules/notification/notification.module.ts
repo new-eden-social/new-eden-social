@@ -4,11 +4,11 @@ import { AuthenticationModule } from '../authentication/authentication.module';
 import { Module, OnModuleInit } from '@nestjs/common';
 import { ModuleRef } from '@nestjs/core';
 import { NotificationController } from './notification.controller';
-import { NotificationGateway } from './notification.gateway';
 import { NotificationService } from './notification.service';
 import { NotificationRepository } from './notification.repository';
 import { commandHandlers } from './commands/handlers';
 import { eventHandlers } from './events/handlers';
+import { WebsocketModule } from '../websocket/websocket.module';
 
 @Module({
   imports: [
@@ -16,12 +16,12 @@ import { eventHandlers } from './events/handlers';
     TypeOrmModule.forFeature([NotificationRepository]),
 
     AuthenticationModule,
+    WebsocketModule,
   ],
   controllers: [
     NotificationController,
   ],
   providers: [
-    NotificationGateway,
     NotificationService,
     ...commandHandlers,
     ...eventHandlers,

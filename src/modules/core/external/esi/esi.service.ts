@@ -78,7 +78,7 @@ export class ESIService {
   }
 
   /**
-   * Get universe type by id
+   * Get universe event by id
    * @param {number} id
    * @returns {Promise<IUniverseType>}
    */

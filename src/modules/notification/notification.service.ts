@@ -1,10 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { NotificationGateway } from './notification.gateway';
+import { WebsocketGateway } from '../websocket/websocket.gateway';
 import { NOTIFICATION_TYPE } from './notification.constants';
 import { Character } from '../character/character.entity';
 import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
+import { DWsNotificationForNewPost } from './notification.dto';
 
 @Injectable()
 export class NotificationService {
@@ -12,7 +13,7 @@ export class NotificationService {
   constructor(
     @InjectRepository(NotificationRepository)
     private notificationRepository: NotificationRepository,
-    private notificationGateway: NotificationGateway,
+    private notificationGateway: WebsocketGateway,
   ) {
   }
 
@@ -25,7 +26,9 @@ export class NotificationService {
 
     await this.notificationRepository.save(notification);
 
-    this.notificationGateway.sendNotificationToCharacter(recipient, notification);
+    this.notificationGateway.sendEventToCharacter(
+      recipient,
+      new DWsNotificationForNewPost(notification));
   }
 
 }

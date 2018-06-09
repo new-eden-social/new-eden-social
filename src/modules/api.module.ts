@@ -13,6 +13,8 @@ import { CommentModule } from './comment/comment.module';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { NotificationModule } from './notification/notification.module';
+import { AuthMiddleware } from './authentication/authentication.middleware';
+import { WebsocketModule } from './websocket/websocket.module';
 
 @Module({
   imports: [
@@ -40,12 +42,13 @@ import { NotificationModule } from './notification/notification.module';
     PostModule,
     CommentModule,
     NotificationModule,
+    WebsocketModule,
   ],
 })
 export class ApiModule implements NestModule {
   configure(consumer: MiddlewaresConsumer) {
     consumer
-    .apply(RequestContextMiddleware)
+    .apply([RequestContextMiddleware, AuthMiddleware])
     .forRoutes('*');
   }
 }
