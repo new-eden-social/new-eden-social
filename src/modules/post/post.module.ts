@@ -13,6 +13,7 @@ import { CommandBus, CQRSModule, EventBus } from '@nestjs/cqrs';
 import { commandHandlers } from './commands/handlers';
 import { eventHandlers } from './events/handlers';
 import { ModuleRef } from '@nestjs/core';
+import { NotificationModule } from '../notification/notification.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { ModuleRef } from '@nestjs/core';
     AllianceModule,
     HashtagModule,
     UniverseLocationModule,
+    NotificationModule,
   ],
   controllers: [
     PostController,

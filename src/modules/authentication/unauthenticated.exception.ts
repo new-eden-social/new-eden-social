@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
 import { WsException } from '@nestjs/websockets';
-import { createExceptionBody } from '../../utils/exception-body.util';
+import { createExceptionBody } from '../../exceptions/exceptionBody.util';
 
 export const ERROR_CODE = 'CHARACTER_NOT_AUTHENTICATED';
 export const ERROR_MESSAGE = 'You aren\'t authenticated!';

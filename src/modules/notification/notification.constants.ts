@@ -1,3 +1,3 @@
-
 export enum NOTIFICATION_TYPE {
+  'NEW_POST_ON_YOUR_WALL',
 }

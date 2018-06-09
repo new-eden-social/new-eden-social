@@ -14,6 +14,7 @@ import { Comment } from '../comment/comment.entity';
 import { ICharacterPortrait } from './character.interface';
 import { KillmailParticipant } from '../killmail/participant/participant.entity';
 import { Corporation } from '../corporation/corporation.entity';
+import { Notification } from '../notification/notification.entity';
 
 @Entity()
 export class Character {
@@ -44,6 +45,9 @@ export class Character {
 
   @OneToMany(type => Post, post => post.characterWall)
   wall: Post[];
+
+  @OneToMany(type => Notification, notification => notification.recipient)
+  notifications: Notification[];
 
   @CreateDateColumn()
   createdAt: Date;

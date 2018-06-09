@@ -16,9 +16,12 @@ import { config } from 'dotenv';
 import 'zone.js';
 import 'zone.js/dist/zone-node.js';
 import 'zone.js/dist/long-stack-trace-zone.js';
+import { createExceptionBody } from './exceptions/exceptionBody.util';
 
 async function bootstrap() {
   config();
+
+  console.log(createExceptionBody);
 
   const instance = express();
   instance.use(bodyParser.json());
