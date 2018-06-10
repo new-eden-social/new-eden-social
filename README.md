@@ -67,6 +67,9 @@ $ npm install
 
 # Using Yarn
 $ yarn
+
+# Using Docker
+$ docker-compose build
 ```
 
 ## Configuration
