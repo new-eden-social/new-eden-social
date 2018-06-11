@@ -11,6 +11,7 @@ import { AuthenticationGuard } from '../authentication/authentication.guard';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { VWebsocketAuthentication } from './websocket.validate';
 import { DWsAuthentication } from './websocket.dto';
+import { WS_EVENT_AUTHENTICATION } from './websocket.constants';
 
 @WebSocketGateway()
 @UsePipes(new ValidationPipe())
@@ -43,17 +44,20 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
     return { event, data };
   }
 
-  @SubscribeMessage('authenticate')
+  @SubscribeMessage(WS_EVENT_AUTHENTICATION)
   async onAuthenticateEvent(
     client: ISocket,
     data: VWebsocketAuthentication,
   ): Promise<DWsAuthentication> {
-    client.character = await this.authenticationService.verifyAuthentication(data.token);
-    this.logger.debug(
-      `[Websocket.Gateway] authenticate => ${client.character.id} = success`,
-    );
-
-    return new DWsAuthentication(client.character);
+    try {
+      client.character = await this.authenticationService.verifyAuthentication(data.token);
+      this.logger.debug(
+        `[Websocket.Gateway] authenticate => ${client.character.id} = success`,
+      );
+      return new DWsAuthentication(true);
+    } catch (e) {
+      return new DWsAuthentication(false);
+    }
   }
 
   public sendEventToCharacter<T>(character: Character, event: WsResponse): void {
