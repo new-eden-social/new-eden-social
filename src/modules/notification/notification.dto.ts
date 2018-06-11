@@ -1,5 +1,5 @@
 import {
-  NOTIFICATION_TYPE, WS_NOTIFICATION_NEW_POST_ON_YOUR_WALL,
+  NOTIFICATION_TYPE, WS_NOTIFICATION_EVENT,
 } from './notification.constants';
 import { Notification } from './notification.entity';
 import { WsResponse } from '@nestjs/websockets';
@@ -25,8 +25,8 @@ export class DNotification {
   }
 }
 
-export class DWsNotificationForNewPost implements WsResponse<DNotification> {
-  event: string = WS_NOTIFICATION_NEW_POST_ON_YOUR_WALL;
+export class DWsNotificationEvent implements WsResponse<DNotification> {
+  event = WS_NOTIFICATION_EVENT;
   data: DNotification;
 
   constructor(notification: Notification) {

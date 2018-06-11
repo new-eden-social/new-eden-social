@@ -5,7 +5,7 @@ import { Character } from '../character/character.entity';
 import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
-import { DWsNotificationForNewPost } from './notification.dto';
+import { DWsNotificationEvent } from './notification.dto';
 
 @Injectable()
 export class NotificationService {
@@ -18,7 +18,6 @@ export class NotificationService {
   }
 
   public async createNotificationForNewPost(recipient: Character, type: NOTIFICATION_TYPE) {
-    console.log('Storing notification to db', type);
 
     const notification = new Notification();
     notification.type = type;
@@ -28,7 +27,7 @@ export class NotificationService {
 
     this.notificationGateway.sendEventToCharacter(
       recipient,
-      new DWsNotificationForNewPost(notification));
+      new DWsNotificationEvent(notification));
   }
 
 }
