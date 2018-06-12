@@ -66,10 +66,7 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
       `[Websocket.Gateway] sendEventToCharacter [${clients.length}]` +
       ` => ${character.id} = ${event.event}`,
     );
-    clients.forEach(socket => {
-      console.log(socket.character.name);
-      socket.emit(event.event, event.data);
-    });
+    clients.forEach(socket => socket.emit(event.event, event.data));
   }
 
   private getSocketsForCharacter(character: Character): ISocket[] {

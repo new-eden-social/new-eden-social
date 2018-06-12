@@ -3,6 +3,7 @@ import {
 } from './notification.constants';
 import { Notification } from './notification.entity';
 import { WsResponse } from '@nestjs/websockets';
+import { DPagination } from '../core/pagination/paggination.dto';
 
 export class DNotification {
   id: string;
@@ -22,6 +23,13 @@ export class DNotification {
 
     if (notification.post) this.postId = notification.post.id;
     if (notification.comment) this.commentId = notification.comment.id;
+  }
+}
+
+export class DNotificationList extends DPagination<DNotification> {
+  constructor(notifications: Notification[], page: number, perPage: number, count: number) {
+    const formattedNotifications = notifications.map(item => new DNotification(item));
+    super(formattedNotifications, page, perPage, count);
   }
 }
 
