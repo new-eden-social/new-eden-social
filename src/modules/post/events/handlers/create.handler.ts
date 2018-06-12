@@ -12,9 +12,8 @@ export class CharacterCreatedPostEventHandler implements IEventHandler<Character
   }
 
   async handle(event: CharacterCreatedPostEvent) {
-    console.log('CharacterCreatedPostEvent handler');
     await this.notificationService.createNotificationForNewPost(
-      event.post.character,
+      event.post.characterWall,
       NOTIFICATION_TYPE.NOTIFICATION_NEW_POST_ON_YOUR_WALL);
   }
 }

@@ -70,7 +70,7 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
   }
 
   private getSocketsForCharacter(character: Character): ISocket[] {
-    return this.clients.filter(c => c.character && c.character.id !== character.id);
+    return this.clients.filter(c => c.character && c.character.id === character.id);
   }
 
 }
