@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
 import { DWsNotificationEvent } from './notification.dto';
 import { HttpNotificationAlreadySeenException } from './notificationAlreadySeen.exception';
+import { CharacterRepository } from '../character/character.repository';
 
 @Injectable()
 export class NotificationService {
@@ -14,23 +15,7 @@ export class NotificationService {
   constructor(
     @InjectRepository(NotificationRepository)
     private notificationRepository: NotificationRepository,
-    private notificationGateway: WebsocketGateway,
   ) {
-  }
-
-  public async createNotificationForNewPost(
-    recipient: Character,
-    type: NOTIFICATION_TYPE,
-  ): Promise<void> {
-    const notification = new Notification();
-    notification.type = type;
-    notification.recipient = recipient;
-
-    await this.notificationRepository.save(notification);
-
-    this.notificationGateway.sendEventToCharacter(
-      recipient,
-      new DWsNotificationEvent(notification));
   }
 
   public async getLatest(
@@ -49,7 +34,6 @@ export class NotificationService {
   public async markAsSeen(
     notification: Notification,
   ): Promise<void> {
-    console.log(notification);
     if (notification.seenAt) {
       throw new HttpNotificationAlreadySeenException();
     }

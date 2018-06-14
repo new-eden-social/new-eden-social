@@ -1,3 +1,3 @@
-import { CharacterCreatedPostEventHandler } from './create.handler';
+import { CharacterPostedOnWallEventHandler } from './create.character.wall.handler';
 
-export const eventHandlers = [CharacterCreatedPostEventHandler];
+export const eventHandlers = [CharacterPostedOnWallEventHandler];

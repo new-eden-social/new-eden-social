@@ -4,22 +4,49 @@ import {
 import { Notification } from './notification.entity';
 import { WsResponse } from '@nestjs/websockets';
 import { DPagination } from '../core/pagination/paggination.dto';
+import { DCharacterShort } from '../character/character.dto';
+import { DCorporationShort } from '../corporation/corporation.dto';
+import { DAllianceShort } from '../alliance/alliance.dto';
+import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 
 export class DNotification {
+  @ApiModelProperty()
   id: string;
+  @ApiModelProperty({ type: String })
   createdAt: Date;
+  @ApiModelProperty({ type: String })
   seenAt: Date;
 
+  @ApiModelProperty()
   type: NOTIFICATION_TYPE;
 
+  @ApiModelPropertyOptional()
   postId?: string;
+  @ApiModelPropertyOptional()
   commentId?: string;
+
+  @ApiModelPropertyOptional()
+  senderCharacter?: DCharacterShort;
+  @ApiModelPropertyOptional()
+  senderCorporation?: DCorporationShort;
+  @ApiModelPropertyOptional()
+  senderAlliance?: DAllianceShort;
 
   constructor(notification: Notification) {
     this.id = notification.id;
     this.createdAt = notification.createdAt;
     this.seenAt = notification.seenAt;
     this.type = notification.type;
+
+    if (notification.senderCharacter) {
+      this.senderCharacter = new DCharacterShort(notification.senderCharacter);
+    }
+    if (notification.senderCorporation) {
+      this.senderCorporation = new DCorporationShort(notification.senderCorporation);
+    }
+    if (notification.senderAlliance) {
+      this.senderAlliance = new DAllianceShort(notification.senderAlliance);
+    }
 
     if (notification.post) this.postId = notification.post.id;
     if (notification.comment) this.commentId = notification.comment.id;

@@ -1,2 +1,5 @@
+import { CreatedNotificationHandler } from './create.handler';
 
-export const eventHandlers = [];
+export const eventHandlers = [
+  CreatedNotificationHandler,
+];

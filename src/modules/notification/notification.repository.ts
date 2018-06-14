@@ -22,6 +22,12 @@ export class NotificationRepository extends Repository<Notification> {
     page: number,
   ): Promise<[Notification[], number]> {
     return this.createQueryBuilder('notification')
+    .leftJoinAndSelect('notification.senderCharacter', 'senderCharacter')
+    .leftJoinAndSelect('senderCharacter.corporation', 'senderCharacterCorporation')
+    .leftJoinAndSelect('senderCharacterCorporation.alliance', 'senderCharacterAlliance')
+    .leftJoinAndSelect('notification.senderCorporation', 'senderCorporation')
+    .leftJoinAndSelect('senderCorporation.alliance', 'senderCorporationAlliance')
+    .leftJoinAndSelect('notification.senderAlliance', 'senderAlliance')
     .where('notification."recipientId" = :characterId', { characterId: character.id })
     .orderBy({ 'notification."createdAt"': 'DESC' })
     .offset(limit * page)

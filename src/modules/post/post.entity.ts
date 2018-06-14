@@ -17,7 +17,22 @@ import { Hashtag } from '../hashtag/hashtag.entity';
 import { POST_TYPES } from './post.constants';
 import { UniverseLocation } from '../universe/location/location.entity';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { CharacterCreatedPostEvent } from './events/create.event';
+import {
+  CharacterPostedEvent,
+  CharacterPostedOnAllianceWallEvent, CharacterPostedOnCharacterWallEvent,
+  CharacterPostedOnCorporationWallEvent,
+} from './events/create.character.event';
+import {
+  AlliancePostedEvent,
+  AlliancePostedOnAllianceWallEvent, AlliancePostedOnCharacterWallEvent,
+  AlliancePostedOnCorporationWallEvent,
+} from './events/create.alliance.event';
+import {
+  CorporationPostedEvent,
+  CorporationPostedOnAllianceWallEvent,
+  CorporationPostedOnCharacterWallEvent,
+  CorporationPostedOnCorporationWallEvent,
+} from './events/create.corporation.event';
 
 @Entity()
 export class Post extends AggregateRoot {
@@ -66,12 +81,42 @@ export class Post extends AggregateRoot {
   hashtags: Hashtag[];
 
   /**
-   * Sends CreatePostCommand
+   * Sends proper events on post creation
    * @return {Promise<Post>}
    */
   public async create(): Promise<Post> {
     if (this.character) {
-      await this.apply(new CharacterCreatedPostEvent(this));
+      if (this.characterWall) {
+        await this.apply(new CharacterPostedOnCharacterWallEvent(this));
+      } else if (this.corporationWall) {
+        await this.apply(new CharacterPostedOnCorporationWallEvent(this));
+      } else if (this.allianceWall) {
+        await this.apply(new CharacterPostedOnAllianceWallEvent(this));
+      } else {
+        await this.apply(new CharacterPostedEvent(this));
+      }
+    }
+    if (this.corporation) {
+      if (this.characterWall) {
+        await this.apply(new CorporationPostedOnCharacterWallEvent(this));
+      } else if (this.corporationWall) {
+        await this.apply(new CorporationPostedOnCorporationWallEvent(this));
+      } else if (this.allianceWall) {
+        await this.apply(new CorporationPostedOnAllianceWallEvent(this));
+      } else {
+        await this.apply(new CorporationPostedEvent(this));
+      }
+    }
+    if (this.alliance) {
+      if (this.characterWall) {
+        await this.apply(new AlliancePostedOnCharacterWallEvent(this));
+      } else if (this.corporationWall) {
+        await this.apply(new AlliancePostedOnCorporationWallEvent(this));
+      } else if (this.allianceWall) {
+        await this.apply(new AlliancePostedOnAllianceWallEvent(this));
+      } else {
+        await this.apply(new AlliancePostedEvent(this));
+      }
     }
     return this;
   }
