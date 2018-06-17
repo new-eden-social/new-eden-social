@@ -29,6 +29,12 @@ export class DPost {
   location?: DUniverseLocation;
   @ApiModelProperty({ type: String })
   createdAt: Date;
+  @ApiModelPropertyOptional()
+  characterWall: DCharacterShort;
+  @ApiModelPropertyOptional()
+  corporationWall: DCorporationShort;
+  @ApiModelPropertyOptional()
+  allianceWall: DAllianceShort;
 
   constructor(post: Post) {
     this.id = post.id;
@@ -41,6 +47,9 @@ export class DPost {
     this.createdAt = post.createdAt;
     if (post.location) this.location = new DUniverseLocation(post.location);
     if (post.killmail) this.killmail = new DKillmailShort(post.killmail);
+    if (post.characterWall) this.characterWall = new DCharacterShort(post.characterWall);
+    if (post.corporationWall) this.corporationWall = new DCorporationShort(post.corporationWall);
+    if (post.allianceWall) this.allianceWall = new DAllianceShort(post.allianceWall);
   }
 }
 

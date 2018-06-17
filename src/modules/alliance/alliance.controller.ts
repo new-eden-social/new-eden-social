@@ -17,11 +17,9 @@ export class AllianceController {
   })
   @Get('/:allianceId')
   public async search(
-    @Response() res,
     @Param('allianceId') allianceId: number,
   ): Promise<DAlliance> {
     const alliance = await this.allianceService.get(allianceId);
-
     return new DAlliance(alliance);
   }
 

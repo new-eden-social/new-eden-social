@@ -9,6 +9,7 @@ import { Character } from '../../../character/character.entity';
 import { Notification } from '../../../notification/notification.entity';
 import * as uuidv4 from 'uuid/v4';
 import { CreateNotificationCommand } from '../../../notification/commands/create.command';
+import { CharacterService } from '../../../character/character.service';
 
 @EventsHandler(
   CharacterPostedOnCharacterWallEvent,
@@ -20,6 +21,7 @@ export class CharacterPostedOnWallEventHandler
 
   constructor(
     private commandBus: CommandBus,
+    private characterService: CharacterService,
   ) {
   }
 
@@ -62,9 +64,9 @@ export class CharacterPostedOnWallEventHandler
       case NOTIFICATION_TYPE.NEW_POST_ON_YOUR_WALL:
         return [event.post.characterWall];
       case NOTIFICATION_TYPE.NEW_POST_ON_YOUR_CORPORATION_WALL:
-        return []; // TODO: All characters that in this corporation
+        return await this.characterService.findInCorporation(event.post.corporationWall);
       case NOTIFICATION_TYPE.NEW_POST_ON_YOUR_ALLIANCE_WALL:
-        return []; // TODO: All characters that in this alliance?
+        return await this.characterService.findInAlliance(event.post.allianceWall);
     }
   }
 }

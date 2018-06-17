@@ -1,11 +1,12 @@
-import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { Controller, Get, HttpStatus, Param, Post } from '@nestjs/common';
+import { ApiBearerAuth, ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { Controller, Get, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { Pagination } from '../core/pagination/pagination.decorator';
 import { VPagination } from '../core/pagination/pagination.validation';
 import { DNotification, DNotificationList } from './notification.dto';
 import { NotificationService } from './notification.service';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { Character } from '../character/character.entity';
+import { AuthenticationGuard } from '../authentication/authentication.guard';
 
 @ApiUseTags('notifications')
 @Controller('notifications')
@@ -21,6 +22,8 @@ export class NotificationController {
     type: DNotificationList,
     description: 'Get latest notifications',
   })
+  @ApiBearerAuth()
+  @UseGuards(AuthenticationGuard)
   @Get('/latest')
   public async latest(
     @Pagination() pagination: VPagination,
@@ -38,6 +41,8 @@ export class NotificationController {
     status: HttpStatus.OK,
     description: 'Mark notification seen',
   })
+  @ApiBearerAuth()
+  @UseGuards(AuthenticationGuard)
   @Post('/:notificationId/seen')
   public async markSeen(
     @Param('notificationId') notificationId: string,

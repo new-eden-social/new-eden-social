@@ -19,7 +19,11 @@ export class AuthMiddleware implements NestMiddleware {
         req.token = token;
         req.character = await this.authenticationService.verifyAuthentication(token);
       } catch (error) {
-        if (error instanceof TokenExpiredException) throw new HttpInvalidTokenException();
+        if (error instanceof TokenExpiredException) {
+          // we continue with execution
+          req.character = null;
+          return next();
+        }
         // If some other error, re-throw
         throw error;
       }

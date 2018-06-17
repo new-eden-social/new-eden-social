@@ -10,6 +10,8 @@ import { LoggerService } from '../core/logger/logger.service';
 import { UtilsService } from '../core/utils/utils.service';
 import { CharacterRepository } from './character.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Corporation } from '../corporation/corporation.entity';
+import { Alliance } from '../alliance/alliance.entity';
 
 @Injectable()
 export class CharacterService implements IService<Character> {
@@ -101,6 +103,18 @@ export class CharacterService implements IService<Character> {
    */
   public async getRoles(id: number): Promise<IGetCharacterRoles> {
     return this.esiService.getCharacterRoles(id);
+  }
+
+  public async findInCorporation(
+    corporation: Corporation,
+  ): Promise<Character[]> {
+    return this.characterRepository.findForCorporation(corporation);
+  }
+
+  public async findInAlliance(
+    alliance: Alliance,
+  ): Promise<Character[]> {
+    return this.characterRepository.findForAlliance(alliance);
   }
 
   /**

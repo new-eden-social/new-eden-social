@@ -223,6 +223,11 @@ export class PostService {
     return post.create();
   }
 
+  public async getParticipants(
+    post: Post,
+  ): Promise<{ characters: Character[], corporations: Corporation[], alliances: Alliance[] }> {
+    return this.postRepository.getParticipants(post);
+  }
 
   /**
    * Create post

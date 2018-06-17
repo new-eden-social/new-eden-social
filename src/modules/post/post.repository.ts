@@ -81,6 +81,40 @@ export class PostRepository extends Repository<Post> {
     .getManyAndCount();
   }
 
+  public async getParticipants(
+    post: Post,
+  ): Promise<{ characters: Character[], corporations: Corporation[], alliances: Alliance[] }> {
+    const postWithComments = await this.createQueryBuilder('post')
+    .leftJoinAndSelect('post.comments', 'comment')
+    .leftJoinAndSelect('comment.character', 'character')
+    .leftJoinAndSelect('comment.corporation', 'corporation')
+    .leftJoinAndSelect('comment.alliance', 'alliance')
+    .where('post.id = :postId', { postId: post.id })
+    .getOne();
+
+    const characters = postWithComments.comments
+    .map(comment => comment.character)
+    .filter(character => character)
+    .filter((v, i, a) => a.indexOf(v) === i); // unique
+
+    const corporations = postWithComments.comments
+    .map(comment => comment.corporation)
+    .filter(corporation => corporation)
+    .filter((v, i, a) => a.indexOf(v) === i); // unique
+
+    const alliances = postWithComments.comments
+    .map(comment => comment.alliance)
+    .filter(alliance => alliance)
+    .filter((v, i, a) => a.indexOf(v) === i); // unique
+
+    console.log(characters, corporations, alliances);
+    return {
+      characters,
+      corporations: [],
+      alliances: [],
+    };
+  }
+
   /**
    * Wrapper for querying posts
    * @param {number} limit
@@ -95,6 +129,12 @@ export class PostRepository extends Repository<Post> {
     .leftJoinAndSelect('post.corporation', 'authorCorporation')
     .leftJoinAndSelect('authorCorporation.alliance', 'authorCorporationAlliance')
     .leftJoinAndSelect('post.alliance', 'authorAlliance')
+    .leftJoinAndSelect('post.characterWall', 'onCharacterWall')
+    .leftJoinAndSelect('onCharacterWall.corporation', 'onCharacterWallCorporation')
+    .leftJoinAndSelect('onCharacterWallCorporation.alliance', 'onCharacterWallAlliance')
+    .leftJoinAndSelect('post.corporationWall', 'onCorporationWall')
+    .leftJoinAndSelect('onCorporationWall.alliance', 'onCorporationWallAlliance')
+    .leftJoinAndSelect('post.allianceWall', 'onAllianceWall')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')

@@ -7,7 +7,7 @@ import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
 @Controller('corporations')
 export class CorporationController {
 
-  constructor(private characterService: CorporationService) {
+  constructor(private corporationService: CorporationService) {
   }
 
   @ApiResponse({
@@ -17,10 +17,9 @@ export class CorporationController {
   })
   @Get('/:corporationId')
   public async search(
-    @Response() res,
     @Param('corporationId') corporationId: number,
   ): Promise<DCorporation> {
-    const corporation = await this.characterService.get(corporationId);
+    const corporation = await this.corporationService.get(corporationId);
     return new DCorporation(corporation);
   }
 

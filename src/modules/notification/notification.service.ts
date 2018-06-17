@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { WebsocketGateway } from '../websocket/websocket.gateway';
-import { NOTIFICATION_TYPE } from './notification.constants';
 import { Character } from '../character/character.entity';
 import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
-import { DWsNotificationEvent } from './notification.dto';
 import { HttpNotificationAlreadySeenException } from './notificationAlreadySeen.exception';
-import { CharacterRepository } from '../character/character.repository';
 
 @Injectable()
 export class NotificationService {
