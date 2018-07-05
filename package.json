@@ -46,7 +46,7 @@
     "@nestjs/swagger": "^2.0.2",
     "@nestjs/testing": "^5.0.1",
     "@nestjs/typeorm": "^5.0.0",
-    "@nestjs/websockets": "^5.0.1",
+    "@nestjs/websockets": "^5.1.0",
     "@types/bluebird": "^3.5.14",
     "@types/hashids": "^1.0.30",
     "@types/ioredis": "0.0.25",
