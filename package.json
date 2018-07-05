@@ -42,7 +42,7 @@
   "dependencies": {
     "@nestjs/common": "^5.0.1",
     "@nestjs/core": "^5.0.1",
-    "@nestjs/microservices": "^5.0.1",
+    "@nestjs/microservices": "^5.1.0",
     "@nestjs/swagger": "^2.0.2",
     "@nestjs/testing": "^5.0.1",
     "@nestjs/typeorm": "^5.0.0",
