@@ -4,7 +4,7 @@ import { CreatePostCommand } from '../create.command';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @CommandHandler(CreatePostCommand)
-export class CreatePostHandler implements ICommandHandler<CreatePostCommand> {
+export class CreatePostCommandHandler implements ICommandHandler<CreatePostCommand> {
   constructor(
     @InjectRepository(PostRepository)
     private readonly repository: PostRepository,

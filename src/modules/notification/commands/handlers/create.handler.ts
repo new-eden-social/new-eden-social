@@ -4,7 +4,7 @@ import { NotificationRepository } from '../../notification.repository';
 import { CreateNotificationCommand } from '../create.command';
 
 @CommandHandler(CreateNotificationCommand)
-export class CreateNotificationHandler implements ICommandHandler<CreateNotificationCommand> {
+export class CreateNotificationCommandHandler implements ICommandHandler<CreateNotificationCommand> {
   constructor(
     @InjectRepository(NotificationRepository)
     private readonly repository: NotificationRepository,

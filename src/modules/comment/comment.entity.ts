@@ -8,9 +8,9 @@ import { v4 as uuid } from 'uuid';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { CreatedNotificationEvent } from '../notification/events/create.event';
+import { CreateNotificationEvent } from '../notification/events/create.event';
 import { Notification } from '../notification/notification.entity';
-import { CreatedCommentEvent } from './events/create.event';
+import { CreateCommentEvent } from './events/create.event';
 
 @Entity()
 export class Comment extends AggregateRoot {
@@ -38,7 +38,7 @@ export class Comment extends AggregateRoot {
    * @return {Promise<Comment>}
    */
   public async create(): Promise<Comment> {
-    await this.apply(new CreatedCommentEvent(this));
+    await this.apply(new CreateCommentEvent(this));
     return this;
   }
 }

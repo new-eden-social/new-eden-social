@@ -1,7 +1,7 @@
 import { IEvent } from '@nestjs/cqrs';
 import { Comment } from '../comment.entity';
 
-export class CreatedCommentEvent implements IEvent {
+export class CreateCommentEvent implements IEvent {
   constructor(public readonly comment: Comment) {
   }
 }

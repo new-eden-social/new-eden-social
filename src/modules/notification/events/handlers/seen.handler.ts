@@ -4,7 +4,7 @@ import { DWsNotificationSeenEvent } from '../../notification.dto';
 import { SeenNotificationEvent } from '../seen.event';
 
 @EventsHandler(SeenNotificationEvent)
-export class SeenNotificationHandler implements IEventHandler<SeenNotificationEvent> {
+export class SeenNotificationEventHandler implements IEventHandler<SeenNotificationEvent> {
 
   constructor(
     private websocketGateway: WebsocketGateway,
@@ -12,7 +12,6 @@ export class SeenNotificationHandler implements IEventHandler<SeenNotificationEv
   }
 
   async handle(event: SeenNotificationEvent) {
-    console.log('seen event handler');
     this.websocketGateway.sendEventToCharacter(
       event.notification.recipient,
       new DWsNotificationSeenEvent(event.notification),

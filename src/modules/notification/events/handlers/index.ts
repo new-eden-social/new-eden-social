@@ -1,7 +1,7 @@
-import { CreatedNotificationHandler } from './create.handler';
-import { SeenNotificationHandler } from './seen.handler';
+import { CreateNotificationEventHandler } from './create.handler';
+import { SeenNotificationEventHandler } from './seen.handler';
 
 export const eventHandlers = [
-  CreatedNotificationHandler,
-  SeenNotificationHandler,
+  CreateNotificationEventHandler,
+  SeenNotificationEventHandler,
 ];

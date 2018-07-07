@@ -1,5 +1,5 @@
-import { CreatedCommentHandler } from './create.handler';
+import { CreateCommentEventHandler } from './create.handler';
 
 export const eventHandlers = [
-  CreatedCommentHandler,
+  CreateCommentEventHandler,
 ];

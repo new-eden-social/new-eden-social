@@ -1,5 +1,5 @@
-import { CreatePostHandler } from './create.handler';
+import { CreatePostCommandHandler } from './create.handler';
 
 export const commandHandlers = [
-  CreatePostHandler,
+  CreatePostCommandHandler,
 ];

@@ -4,7 +4,7 @@ import { NotificationRepository } from '../../notification.repository';
 import { SeenNotificationCommand } from '../seen.command';
 
 @CommandHandler(SeenNotificationCommand)
-export class SeenNotificationHandler implements ICommandHandler<SeenNotificationCommand> {
+export class SeenNotificationCommandHandler implements ICommandHandler<SeenNotificationCommand> {
   constructor(
     @InjectRepository(NotificationRepository)
     private readonly repository: NotificationRepository,
@@ -14,8 +14,6 @@ export class SeenNotificationHandler implements ICommandHandler<SeenNotification
 
   async execute(command: SeenNotificationCommand, resolve: (value?) => void) {
     const { notification } = command;
-
-    console.log('seen command handler');
 
     const entity = this.publisher.mergeObjectContext(
       await this.repository.markAsSeen(notification),

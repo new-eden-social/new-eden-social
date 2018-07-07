@@ -4,7 +4,7 @@ import { CreateCommentCommand } from '../create.command';
 import { CommentRepository } from '../../comment.repository';
 
 @CommandHandler(CreateCommentCommand)
-export class CreateCommentHandler implements ICommandHandler<CreateCommentCommand> {
+export class CreateCommentCommandHandler implements ICommandHandler<CreateCommentCommand> {
   constructor(
     @InjectRepository(CommentRepository)
     private readonly repository: CommentRepository,

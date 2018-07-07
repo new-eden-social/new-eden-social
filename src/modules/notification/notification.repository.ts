@@ -12,6 +12,9 @@ export class NotificationRepository extends Repository<Notification> {
     character: Character,
   ): Promise<Notification | undefined> {
     return this.createQueryBuilder('notification')
+    .leftJoinAndSelect('notification.recipient', 'recipient')
+    .leftJoinAndSelect('recipient.corporation', 'recipientCorporation')
+    .leftJoinAndSelect('recipientCorporation.alliance', 'recipientAlliance')
     .leftJoinAndSelect('notification.senderCharacter', 'senderCharacter')
     .leftJoinAndSelect('senderCharacter.corporation', 'senderCharacterCorporation')
     .leftJoinAndSelect('senderCharacterCorporation.alliance', 'senderCharacterAlliance')
@@ -29,6 +32,9 @@ export class NotificationRepository extends Repository<Notification> {
     page: number,
   ): Promise<[Notification[], number]> {
     return this.createQueryBuilder('notification')
+    .leftJoinAndSelect('notification.recipient', 'recipient')
+    .leftJoinAndSelect('recipient.corporation', 'recipientCorporation')
+    .leftJoinAndSelect('recipientCorporation.alliance', 'recipientAlliance')
     .leftJoinAndSelect('notification.senderCharacter', 'senderCharacter')
     .leftJoinAndSelect('senderCharacter.corporation', 'senderCharacterCorporation')
     .leftJoinAndSelect('senderCharacterCorporation.alliance', 'senderCharacterAlliance')

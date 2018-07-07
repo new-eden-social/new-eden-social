@@ -3,13 +3,13 @@ import { Notification } from '../../../notification/notification.entity';
 import * as uuidv4 from 'uuid/v4';
 import { CreateNotificationCommand } from '../../../notification/commands/create.command';
 import { CharacterService } from '../../../character/character.service';
-import { CreatedCommentEvent } from '../create.event';
+import { CreateCommentEvent } from '../create.event';
 import { PostService } from '../../../post/post.service';
 import { Character } from '../../../character/character.entity';
 import { NOTIFICATION_TYPE } from '../../../notification/notification.constants';
 
-@EventsHandler(CreatedCommentEvent)
-export class CreatedCommentHandler implements IEventHandler<CreatedCommentEvent> {
+@EventsHandler(CreateCommentEvent)
+export class CreateCommentEventHandler implements IEventHandler<CreateCommentEvent> {
 
   constructor(
     private commandBus: CommandBus,
@@ -18,7 +18,7 @@ export class CreatedCommentHandler implements IEventHandler<CreatedCommentEvent>
   ) {
   }
 
-  async handle(event: CreatedCommentEvent) {
+  async handle(event: CreateCommentEvent) {
     const participants = await this.postService.getParticipants(event.comment.post);
     const eventUuid = uuidv4();
 
