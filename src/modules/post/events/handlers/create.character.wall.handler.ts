@@ -63,10 +63,10 @@ export class CharacterPostedOnWallEventHandler
     switch (notificationType) {
       case NOTIFICATION_TYPE.NEW_POST_ON_YOUR_WALL:
         return [event.post.characterWall];
-      case NOTIFICATION_TYPE.NEW_POST_ON_YOUR_CORPORATION_WALL:
-        return await this.characterService.findInCorporation(event.post.corporationWall);
-      case NOTIFICATION_TYPE.NEW_POST_ON_YOUR_ALLIANCE_WALL:
-        return await this.characterService.findInAlliance(event.post.allianceWall);
+      // case NOTIFICATION_TYPE.NEW_POST_ON_YOUR_CORPORATION_WALL:
+      //   return await this.characterService.findInCorporation(event.post.corporationWall);
+      // case NOTIFICATION_TYPE.NEW_POST_ON_YOUR_ALLIANCE_WALL:
+      //   return await this.characterService.findInAlliance(event.post.allianceWall);
     }
   }
 }

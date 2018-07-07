@@ -60,7 +60,6 @@
     "class-sanitizer": "^0.0.5",
     "class-transformer": "^0.1.9",
     "class-validator": "^0.8.5",
-    "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "hashids": "^1.1.4",
     "ioredis": "^3.2.2",
