@@ -1,5 +1,5 @@
 import {
-  NOTIFICATION_TYPE, WS_NOTIFICATION_EVENT,
+  NOTIFICATION_TYPE, WS_NOTIFICATION_EVENT, WS_NOTIFICATION_SEEN_EVENT,
 } from './notification.constants';
 import { Notification } from './notification.entity';
 import { WsResponse } from '@nestjs/websockets';
@@ -62,6 +62,15 @@ export class DNotificationList extends DPagination<DNotification> {
 
 export class DWsNotificationEvent implements WsResponse<DNotification> {
   event = WS_NOTIFICATION_EVENT;
+  data: DNotification;
+
+  constructor(notification: Notification) {
+    this.data = new DNotification(notification);
+  }
+}
+
+export class DWsNotificationSeenEvent implements WsResponse<DNotification> {
+  event = WS_NOTIFICATION_SEEN_EVENT;
   data: DNotification;
 
   constructor(notification: Notification) {

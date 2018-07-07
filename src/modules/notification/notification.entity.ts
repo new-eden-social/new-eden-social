@@ -7,6 +7,7 @@ import { NOTIFICATION_TYPE } from './notification.constants';
 import { Alliance } from '../alliance/alliance.entity';
 import { Corporation } from '../corporation/corporation.entity';
 import { CreatedNotificationEvent } from './events/create.event';
+import { SeenNotificationEvent } from './events/seen.event';
 
 @Entity()
 export class Notification extends AggregateRoot {
@@ -50,6 +51,15 @@ export class Notification extends AggregateRoot {
    */
   public async create(): Promise<Notification> {
     await this.apply(new CreatedNotificationEvent(this));
+    return this;
+  }
+
+  /**
+   * Sends proper event on notification seen
+   * @return {Promise<Notification>}
+   */
+  public async seen(): Promise<Notification> {
+    await this.apply(new SeenNotificationEvent(this));
     return this;
   }
 }

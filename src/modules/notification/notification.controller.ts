@@ -39,7 +39,6 @@ export class NotificationController {
 
   @ApiResponse({
     status: HttpStatus.OK,
-    type: DNotification,
     description: 'Mark notification seen',
   })
   @ApiBearerAuth()
@@ -48,9 +47,8 @@ export class NotificationController {
   public async markSeen(
     @Param('notificationId') notificationId: string,
     @AuthenticatedCharacter() character: Character,
-  ): Promise<DNotification> {
+  ): Promise<void> {
     const notification = await this.notificationService.get(notificationId, character);
     await this.notificationService.markAsSeen(notification);
-    return new DNotification(notification);
   }
 }

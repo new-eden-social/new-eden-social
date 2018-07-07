@@ -17,6 +17,7 @@ import { PostRepository } from './post.repository';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreatePostCommand } from './commands/create.command';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SeenNotificationCommand } from '../notification/commands/seen.command';
 
 @Injectable()
 export class PostService {

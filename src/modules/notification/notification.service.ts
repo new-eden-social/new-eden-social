@@ -4,6 +4,9 @@ import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
 import { HttpNotificationAlreadySeenException } from './notificationAlreadySeen.exception';
+import { CreatePostCommand } from '../post/commands/create.command';
+import { CommandBus } from '@nestjs/cqrs';
+import { SeenNotificationCommand } from './commands/seen.command';
 
 @Injectable()
 export class NotificationService {
@@ -11,6 +14,7 @@ export class NotificationService {
   constructor(
     @InjectRepository(NotificationRepository)
     private notificationRepository: NotificationRepository,
+    private commandBus: CommandBus,
   ) {
   }
 
@@ -33,7 +37,10 @@ export class NotificationService {
     if (notification.seenAt) {
       throw new HttpNotificationAlreadySeenException();
     }
-    await this.notificationRepository.markAsSeen(notification);
+
+    await this.commandBus.execute(
+      new SeenNotificationCommand(notification),
+    );
   }
 
   public async get(
