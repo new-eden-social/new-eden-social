@@ -11,6 +11,12 @@ export class NotificationRepository extends Repository<Notification> {
     character: Character,
   ): Promise<Notification | undefined> {
     return this.createQueryBuilder('notification')
+    .leftJoinAndSelect('notification.senderCharacter', 'senderCharacter')
+    .leftJoinAndSelect('senderCharacter.corporation', 'senderCharacterCorporation')
+    .leftJoinAndSelect('senderCharacterCorporation.alliance', 'senderCharacterAlliance')
+    .leftJoinAndSelect('notification.senderCorporation', 'senderCorporation')
+    .leftJoinAndSelect('senderCorporation.alliance', 'senderCorporationAlliance')
+    .leftJoinAndSelect('notification.senderAlliance', 'senderAlliance')
     .where('notification."id" = :notificationId', { notificationId })
     .andWhere('notification."recipientId" = :characterId', { characterId: character.id })
     .getOne();
