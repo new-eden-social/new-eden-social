@@ -1,7 +1,6 @@
 import { DCorporationShortWithoutAlliance } from '../corporation/corporation.dto';
 import { Alliance } from './alliance.entity';
 import { DPagination } from '../core/pagination/paggination.dto';
-import { IAllianceName } from '../core/external/esi/esi.interface';
 import { IAllianceIcon } from './alliance.interface';
 import { ApiModelProperty } from '@nestjs/swagger';
 
@@ -14,18 +13,6 @@ export class DAllianceIcon {
   constructor(icon: IAllianceIcon) {
     this.px64x64 = icon.px64x64;
     this.px128x128 = icon.px128x128;
-  }
-}
-
-export class DAllianceName {
-  @ApiModelProperty()
-  id: number;
-  @ApiModelProperty()
-  name: string;
-
-  constructor(alliance: IAllianceName) {
-    this.id = alliance.alliance_id;
-    this.name = alliance.alliance_name;
   }
 }
 

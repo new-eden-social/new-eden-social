@@ -2,7 +2,7 @@ import { POST_CREATABLE_TYPES, POST_TYPES } from './post.constants';
 import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
 
-export class VCreatePostRequest {
+export class VCreatePost {
 
   @IsString()
   @ApiModelProperty()

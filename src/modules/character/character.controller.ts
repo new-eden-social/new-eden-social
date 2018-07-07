@@ -20,7 +20,6 @@ export class CharactersController {
     @Param('characterId') characterId: number,
   ): Promise<DCharacter> {
     const character = await this.characterService.get(characterId);
-
     return new DCharacter(character);
   }
 

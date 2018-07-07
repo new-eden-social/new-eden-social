@@ -7,9 +7,13 @@ import { Character } from '../character/character.entity';
 import { v4 as uuid } from 'uuid';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
+import { AggregateRoot } from '@nestjs/cqrs';
+import { CreateNotificationEvent } from '../notification/events/create.event';
+import { Notification } from '../notification/notification.entity';
+import { CreateCommentEvent } from './events/create.event';
 
 @Entity()
-export class Comment {
+export class Comment extends AggregateRoot {
 
   @PrimaryGeneratedColumn('uuid')
   id: string;
@@ -29,7 +33,12 @@ export class Comment {
   @ManyToOne(type => Alliance, alliance => alliance.comments, { nullable: true, eager: true })
   alliance?: Alliance;
 
-  constructor() {
+  /**
+   * Sends proper event on comment creation
+   * @return {Promise<Comment>}
+   */
+  public async create(): Promise<Comment> {
+    await this.apply(new CreateCommentEvent(this));
+    return this;
   }
-
 }

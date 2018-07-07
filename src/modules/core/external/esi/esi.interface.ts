@@ -75,9 +75,6 @@ export interface IUniverseName {
   readonly category: Categories;
 }
 
-export interface IUniverseNames extends Array<IUniverseName> {
-}
-
 export interface IUniverseType {
   readonly type_id: number;
   readonly name: string;
@@ -99,19 +96,4 @@ export interface IUniverseCategory {
   readonly name: string;
   readonly published: boolean;
   readonly groups: number[];
-}
-
-export interface IAllianceName {
-  readonly alliance_id: number;
-  readonly alliance_name: string;
-}
-
-export interface ICharacterName {
-  readonly character_id: number;
-  readonly character_name: string;
-}
-
-export interface ICorporationName {
-  readonly corporation_id: number;
-  readonly corporation_name: string;
 }

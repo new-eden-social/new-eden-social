@@ -3,9 +3,6 @@ import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import { CacheService } from '../../cache/cache.service';
 import {
   Categories,
-  IAllianceName,
-  ICharacterName,
-  ICorporationName,
   IGetAlliance,
   IGetCharacter,
   IGetCharacterPortrait,
@@ -13,12 +10,9 @@ import {
   IGetCorporation,
   ISearch,
   IUniverseCategory,
-  IUniverseGroup,
-  IUniverseNames,
+  IUniverseGroup, IUniverseName,
   IUniverseType,
 } from './esi.interface';
-import { Corporation } from '../../../corporation/corporation.entity';
-import { Alliance } from '../../../alliance/alliance.entity';
 import { ESIEntetyNotFoundException } from './esi.exceptions';
 import { RequestContext } from '../../requestContext/requestContext';
 import { LoggerService } from '../../logger/logger.service';
@@ -69,8 +63,8 @@ export class ESIService {
    * @returns {Promise<IUniverseNames>}
    * @url https://esi.tech.ccp.is/ui/#/operations/Universe/post_universe_names
    */
-  public async universeNames(ids: number[]): Promise<IUniverseNames> {
-    return this.request<IUniverseNames>({
+  public async universeNames(ids: number[]): Promise<IUniverseName[]> {
+    return this.request<IUniverseName[]>({
       url: 'universe/names/',
       method: 'POST',
       data: ids,
@@ -78,7 +72,7 @@ export class ESIService {
   }
 
   /**
-   * Get universe type by id
+   * Get universe event by id
    * @param {number} id
    * @returns {Promise<IUniverseType>}
    */
@@ -110,54 +104,6 @@ export class ESIService {
     return this.request<IUniverseCategory>({
       url: `universe/categories/${id}`,
       method: 'GET',
-    });
-  }
-
-  /**
-   * Get character names for ids
-   * @param ids
-   * @return {Promise<ICharacterName>}
-   * @url https://esi.tech.ccp.is/ui/#/operations/Character/get_characters_names
-   */
-  public async characterNames(ids: number[]): Promise<ICharacterName[]> {
-    return await this.request<ICharacterName[]>({
-      url: 'characters/names/',
-      method: 'GET',
-      params: {
-        character_ids: ids.join(','),
-      },
-    });
-  }
-
-  /**
-   * Get corporation names for ids
-   * @param ids
-   * @return {Promise<Corporation[]>}
-   * @url https://esi.tech.ccp.is/ui/#/operations/Corporation/get_corporations_names
-   */
-  public async corporationNames(ids: number[]): Promise<ICorporationName[]> {
-    return await this.request<ICorporationName[]>({
-      url: 'corporations/names/',
-      method: 'GET',
-      params: {
-        corporation_ids: ids.join(','),
-      },
-    });
-  }
-
-  /**
-   * Get alliance names for ids
-   * @param ids
-   * @return {Promise<Alliance[]>}
-   * @url https://esi.tech.ccp.is/ui/#/operations/Alliance/get_alliances_names
-   */
-  public async allianceNames(ids: number[]): Promise<IAllianceName[]> {
-    return await this.request<IAllianceName[]>({
-      url: 'alliances/names/',
-      method: 'GET',
-      params: {
-        alliance_ids: ids.join(','),
-      },
     });
   }
 
@@ -262,6 +208,7 @@ export class ESIService {
       return response.data;
     } catch (err) {
       this.loggerService.warning('ESI Error', err);
+      console.log(err);
       /**
        * Transform underlying request exceptions to ESI Exceptions
        */

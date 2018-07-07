@@ -81,6 +81,42 @@ export class PostRepository extends Repository<Post> {
     .getManyAndCount();
   }
 
+  public async getParticipants(
+    post: Post,
+  ): Promise<{ characters: Character[], corporations: Corporation[], alliances: Alliance[] }> {
+    const postWithComments = await this.createQueryBuilder('post')
+    .leftJoinAndSelect('post.character', 'characterAuthor')
+    .leftJoinAndSelect('post.corporation', 'corporationAuthor')
+    .leftJoinAndSelect('post.alliance', 'allianceAuthor')
+    .leftJoinAndSelect('post.comments', 'comment')
+    .leftJoinAndSelect('comment.character', 'character')
+    .leftJoinAndSelect('comment.corporation', 'corporation')
+    .leftJoinAndSelect('comment.alliance', 'alliance')
+    .where('post.id = :postId', { postId: post.id })
+    .getOne();
+
+    const characters = postWithComments.comments
+    .map(comment => comment.character)
+    .filter(character => character);
+    if (postWithComments.character) characters.push(postWithComments.character);
+
+    const corporations = postWithComments.comments
+    .map(comment => comment.corporation)
+    .filter(corporation => corporation);
+    if (postWithComments.corporation) corporations.push(postWithComments.corporation);
+
+    const alliances = postWithComments.comments
+    .map(comment => comment.alliance)
+    .filter(alliance => alliance);
+    if (postWithComments.alliance) alliances.push(postWithComments.alliance);
+
+    return {
+      characters: characters.filter((v, i, a) => a.findIndex(v1 => v1.id === v.id) === i), // unique
+      corporations: corporations.filter((v, i, a) => a.findIndex(v1 => v1.id === v.id) === i), // unique
+      alliances: alliances.filter((v, i, a) => a.findIndex(v1 => v1.id === v.id) === i), // unique
+    };
+  }
+
   /**
    * Wrapper for querying posts
    * @param {number} limit
@@ -95,6 +131,12 @@ export class PostRepository extends Repository<Post> {
     .leftJoinAndSelect('post.corporation', 'authorCorporation')
     .leftJoinAndSelect('authorCorporation.alliance', 'authorCorporationAlliance')
     .leftJoinAndSelect('post.alliance', 'authorAlliance')
+    .leftJoinAndSelect('post.characterWall', 'onCharacterWall')
+    .leftJoinAndSelect('onCharacterWall.corporation', 'onCharacterWallCorporation')
+    .leftJoinAndSelect('onCharacterWallCorporation.alliance', 'onCharacterWallAlliance')
+    .leftJoinAndSelect('post.corporationWall', 'onCorporationWall')
+    .leftJoinAndSelect('onCorporationWall.alliance', 'onCorporationWallAlliance')
+    .leftJoinAndSelect('post.allianceWall', 'onAllianceWall')
     .leftJoinAndSelect('post.killmail', 'killmail')
     .leftJoinAndSelect('post.hashtags', 'hashtag')
     .leftJoinAndSelect('post.location', 'location')

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
-import { VCreatePostRequest } from './post.validate';
+import { VCreatePost } from './post.validate';
 import { Character } from '../character/character.entity';
 import { Killmail } from '../killmail/killmail.entity';
 import { POST_TYPES } from './post.constants';
@@ -14,7 +14,10 @@ import { ESIEntetyNotFoundException } from '../core/external/esi/esi.exceptions'
 import { UniverseLocationService } from '../universe/location/location.service';
 import { LoggerService } from '../core/logger/logger.service';
 import { PostRepository } from './post.repository';
+import { CommandBus } from '@nestjs/cqrs';
+import { CreatePostCommand } from './commands/create.command';
 import { InjectRepository } from '@nestjs/typeorm';
+import { SeenNotificationCommand } from '../notification/commands/seen.command';
 
 @Injectable()
 export class PostService {
@@ -26,6 +29,7 @@ export class PostService {
     private hashtagService: HashtagService,
     private universeLocationService: UniverseLocationService,
     private loggerService: LoggerService,
+    private commandBus: CommandBus,
     @InjectRepository(PostRepository)
     private postRepository: PostRepository,
   ) {
@@ -42,15 +46,17 @@ export class PostService {
 
   /**
    * Create Post as character
-   * @param {VCreatePostRequest} postData
+   * @param {VCreatePost} postData
    * @param {Character} character
    * @return {Promise<Post>}
    */
   public async createAsCharacter(
-    postData: VCreatePostRequest,
+    postData: VCreatePost,
     character: Character,
   ): Promise<Post> {
-    const post = new Post(postData);
+    const post = new Post();
+    post.content = postData.content;
+    post.type = postData.type;
     post.character = character;
 
     return this.create(post, postData);
@@ -58,15 +64,17 @@ export class PostService {
 
   /**
    * Create Post as corporation
-   * @param {VCreatePostRequest} postData
+   * @param {VCreatePost} postData
    * @param {Corporation} corporation
    * @return {Promise<Post>}
    */
   public async createAsCorporation(
-    postData: VCreatePostRequest,
+    postData: VCreatePost,
     corporation: Corporation,
   ): Promise<Post> {
-    const post = new Post(postData);
+    const post = new Post();
+    post.content = postData.content;
+    post.type = postData.type;
     post.corporation = corporation;
 
     return this.create(post, postData);
@@ -74,15 +82,17 @@ export class PostService {
 
   /**
    * Create Post as alliance
-   * @param {VCreatePostRequest} postData
+   * @param {VCreatePost} postData
    * @param {Alliance} alliance
    * @return {Promise<Post>}
    */
   public async createAsAlliance(
-    postData: VCreatePostRequest,
+    postData: VCreatePost,
     alliance: Alliance,
   ): Promise<Post> {
-    const post = new Post(postData);
+    const post = new Post();
+    post.content = postData.content;
+    post.type = postData.type;
     post.alliance = alliance;
 
     return this.create(post, postData);
@@ -211,17 +221,22 @@ export class PostService {
       }
     }
 
-    return this.postRepository.save(post);
+    return post.create();
   }
 
+  public async getParticipants(
+    post: Post,
+  ): Promise<{ characters: Character[], corporations: Corporation[], alliances: Alliance[] }> {
+    return this.postRepository.getParticipants(post);
+  }
 
   /**
    * Create post
    * @param {Post} post
-   * @param {VCreatePostRequest} postData
+   * @param {VCreatePost} postData
    * @returns {Promise<Post>}
    */
-  private async create(post: Post, postData: VCreatePostRequest): Promise<Post> {
+  private async create(post: Post, postData: VCreatePost): Promise<Post> {
     if (postData.allianceId)
       post.allianceWall = await this.allianceService.get(postData.allianceId);
 
@@ -236,6 +251,8 @@ export class PostService {
 
     post.hashtags = await this.hashtagService.parse(post.content);
 
-    return this.postRepository.save(post);
+    return this.commandBus.execute(
+      new CreatePostCommand(post),
+    );
   }
 }

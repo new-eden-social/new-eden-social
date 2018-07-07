@@ -8,9 +8,14 @@ services:
     redis:
         image: redis:latest
 
+    evebook-nest-common:
+        build: .
+        image: evebook/nest-common
+        entrypoint: echo "Image-only service is not intended to be run, exiting."
+
     api:
         command: yarn run start
-        build: .
+        image: evebook/nest-common
         env_file:
           - .env
         ports:
@@ -27,7 +32,7 @@ services:
 
     updater:
         command: yarn run start:updater
-        build: .
+        image: evebook/nest-common
         env_file:
           - .env
         ports:
@@ -44,7 +49,7 @@ services:
 
     killmails:
         command: yarn run start:killmails
-        build: .
+        image: evebook/nest-common
         env_file:
           - .env
         ports:

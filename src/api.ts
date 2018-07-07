@@ -1,6 +1,5 @@
 import * as bodyParser from 'body-parser';
 import * as express from 'express';
-import * as cors from 'cors';
 import { NestFactory } from '@nestjs/core';
 import { ApiModule } from './modules/api.module';
 import { ValidatorPipe } from './modules/core/validation/validator.pipe';
@@ -20,11 +19,13 @@ async function bootstrap() {
 
   const instance = express();
   instance.use(bodyParser.json());
-  instance.use(cors());
 
   const nestApp = await NestFactory.create(ApiModule, instance);
+  nestApp.enableCors();
   nestApp.useGlobalPipes(new ValidatorPipe());
-  nestApp.useGlobalInterceptors(new FormatterInterceptor());
+  nestApp.useGlobalInterceptors(
+    new FormatterInterceptor(),
+  );
 
   // Swagger
   const options = new DocumentBuilder()

@@ -8,7 +8,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { PostService } from './post.service';
-import { VCreatePostRequest } from './post.validate';
+import { VCreatePost } from './post.validate';
 import { CharacterService } from '../character/character.service';
 import { CorporationService } from '../corporation/corporation.service';
 import { CorporationRoles } from '../corporation/corporation.roles.decorator';
@@ -165,9 +165,9 @@ export class PostController {
   @UseGuards(AuthenticationGuard)
   @Post('/character')
   public async createAsCharacter(
-    @Body() postData: VCreatePostRequest,
+    @Body() postData: VCreatePost,
     @AuthenticatedCharacter() character: Character,
-  ): Promise<DPost> {
+  ): Promise<any> {
     const post = await this.postService.createAsCharacter(postData, character);
     return new DPost(post);
   }
@@ -185,7 +185,7 @@ export class PostController {
     CORPORATION_ROLES.DIPLOMAT,
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsCorporation(
-    @Body() postData: VCreatePostRequest,
+    @Body() postData: VCreatePost,
     @AuthenticatedCharacter() character: Character,
   ): Promise<DPost> {
     const post = await this.postService.createAsCorporation(postData, character.corporation);
@@ -205,7 +205,7 @@ export class PostController {
     CORPORATION_ROLES.DIPLOMAT,
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsAlliance(
-    @Body() postData: VCreatePostRequest,
+    @Body() postData: VCreatePost,
     @AuthenticatedCharacter() character: Character,
   ): Promise<DPost> {
     const post = await this.postService.createAsAlliance(

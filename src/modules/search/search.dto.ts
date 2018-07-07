@@ -1,29 +1,28 @@
-import { DCharacterName } from '../character/character.dto';
-import { DCorporationName } from '../corporation/corporation.dto';
-import { DAllianceName } from '../alliance/alliance.dto';
-
-import {
-  IAllianceName,
-  ICharacterName,
-  ICorporationName,
-} from '../core/external/esi/esi.interface';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { Categories, IUniverseName } from '../core/external/esi/esi.interface';
+
+export class DSearchName {
+  @ApiModelProperty()
+  id: number;
+
+  @ApiModelProperty()
+  name: string;
+
+  @ApiModelProperty()
+  category: Categories;
+
+  constructor(name: IUniverseName) {
+    this.id = name.id;
+    this.name = name.name;
+    this.category = name.category;
+  }
+}
 
 export class DSearch {
-  @ApiModelProperty({ type: DCharacterName, isArray: true })
-  characters: DCharacterName[];
-  @ApiModelProperty({ type: DCorporationName, isArray: true })
-  corporations: DCorporationName[];
-  @ApiModelProperty({ type: DAllianceName, isArray: true })
-  alliances: DAllianceName[];
+  @ApiModelProperty({ type: DSearchName, isArray: true })
+  names: DSearchName[];
 
-  constructor(data: {
-    characters: ICharacterName[],
-    corporations: ICorporationName[],
-    alliances: IAllianceName[],
-  }) {
-    this.characters = data.characters.map(character => new DCharacterName(character));
-    this.corporations = data.corporations.map(corporation => new DCorporationName(corporation));
-    this.alliances = data.alliances.map(alliance => new DAllianceName(alliance));
+  constructor(names: IUniverseName[]) {
+    this.names = names.map(name => new DSearchName(name));
   }
 }

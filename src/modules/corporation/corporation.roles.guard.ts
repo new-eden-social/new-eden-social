@@ -16,7 +16,8 @@ export class CorporationRolesGuard implements CanActivate {
     context: ExecutionContext,
   ): Promise<boolean> {
     const handler = context.getHandler();
-    const request = context.switchToHttp().getRequest();
+    const httpContext = context.switchToHttp();
+    const wsContext = context.switchToWs();
 
     const requiredRoles = this.reflector.get<string[]>('corporationRoles', handler);
 
@@ -24,7 +25,8 @@ export class CorporationRolesGuard implements CanActivate {
       return true;
     }
 
-    const character = request.character;
+    const character = httpContext ?
+      httpContext.getRequest().character : wsContext.getClient().character;
     const { roles } = await this.characterService.getRoles(character.id);
 
     this.loggerService.debug('[CorporationRolesGuard]', roles, requiredRoles);

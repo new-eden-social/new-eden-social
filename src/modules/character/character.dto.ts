@@ -2,7 +2,6 @@ import { DCorporationShort } from '../corporation/corporation.dto';
 import { Character } from './character.entity';
 import { ICharacterPortrait } from './character.interface';
 import { DPagination } from '../core/pagination/paggination.dto';
-import { ICharacterName } from '../core/external/esi/esi.interface';
 import { ApiModelProperty } from '@nestjs/swagger';
 
 export class DCharacterPortrait {
@@ -20,18 +19,6 @@ export class DCharacterPortrait {
     this.px128x128 = portrait.px128x128;
     this.px256x256 = portrait.px256x256;
     this.px512x512 = portrait.px512x512;
-  }
-}
-
-export class DCharacterName {
-  @ApiModelProperty()
-  id: number;
-  @ApiModelProperty()
-  name: string;
-
-  constructor(character: ICharacterName) {
-    this.id = character.character_id;
-    this.name = character.character_name;
   }
 }
 

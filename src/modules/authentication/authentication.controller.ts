@@ -66,7 +66,7 @@ export class AuthenticationController {
   // TODO: Add response DTO to ApiResponse
   @ApiResponse({
     status: HttpStatus.FOUND,
-    description: 'Callback from EVE SSO, redirects to EVE-Book APP with credentials',
+    description: 'Try to refresh token',
   })
   @ApiImplicitBody({ name: 'refresh_token', type: String })
   @Post('/sso/refresh')
