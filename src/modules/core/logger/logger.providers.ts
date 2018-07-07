@@ -1,6 +1,5 @@
 import { LOGGER_WINSTON_PROVIDER } from './logger.constants';
-import { Logger, transports } from 'winston';
-
+import { transports, createLogger } from 'winston';
 
 export const loggerProviders = [
   {
@@ -9,13 +8,10 @@ export const loggerProviders = [
       const LOG_LEVEL = process.env.LOG_LEVEL;
 
       const winstonTransports = [
-        new transports.Console({
-          colorize: true,
-          align: true,
-        }),
+        new transports.Console({}),
       ];
 
-      return new Logger({
+      return createLogger({
         level: LOG_LEVEL,
         transports: winstonTransports,
       });

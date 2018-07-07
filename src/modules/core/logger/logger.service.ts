@@ -1,11 +1,11 @@
-import { LoggerInstance } from 'winston';
 import { Injectable, Inject } from '@nestjs/common';
 import { LOGGER_LEVEL, LOGGER_WINSTON_PROVIDER } from './logger.constants';
+import { Logger } from 'winston';
 
 @Injectable()
 export class LoggerService {
 
-  constructor(@Inject(LOGGER_WINSTON_PROVIDER) private winston: LoggerInstance) {
+  constructor(@Inject(LOGGER_WINSTON_PROVIDER) private winston: Logger) {
   }
 
   public log(level: LOGGER_LEVEL, msg: string, ...meta): void {
