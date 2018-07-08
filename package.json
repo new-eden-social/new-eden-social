@@ -63,6 +63,7 @@
     "dotenv": "^6.0.0",
     "hashids": "^1.1.4",
     "ioredis": "^3.2.2",
+    "logform": "^1.9.1",
     "moment": "^2.22.2",
     "pg": "^7.4.3",
     "pg-query-stream": "^1.1.1",

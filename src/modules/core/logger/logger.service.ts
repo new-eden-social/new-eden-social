@@ -5,30 +5,30 @@ import { Logger } from 'winston';
 @Injectable()
 export class LoggerService {
 
-  constructor(@Inject(LOGGER_WINSTON_PROVIDER) private winston: Logger) {
+  constructor(@Inject(LOGGER_WINSTON_PROVIDER) private logger: Logger) {
   }
 
   public log(level: LOGGER_LEVEL, msg: string, ...meta): void {
-    this.winston.log(level, msg, ...meta);
+    this.logger.log(level, msg, ...meta);
   }
 
   public debug(msg: string, ...meta): void {
-    this.winston.debug(msg, ...meta);
+    this.logger.debug(msg, ...meta);
   }
 
   public error(msg: string, ...meta): void {
-    this.winston.error(msg, ...meta);
+    this.logger.error(msg, ...meta);
   }
 
   public warning(msg: string, ...meta): void {
-    this.winston.warn(msg, ...meta);
+    this.logger.warn(msg, ...meta);
   }
 
   public info(msg: string, ...meta): void {
-    this.winston.info(msg, ...meta);
+    this.logger.info(msg, ...meta);
   }
 
   public silly(msg: string, ...meta): void {
-    this.winston.silly(msg, ...meta);
+    this.logger.silly(msg, ...meta);
   }
 }
