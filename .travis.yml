@@ -1,32 +1,21 @@
 dist: trusty
 language: node_js
-node_js:
-  - 'stable'
-
-cache:
-  directories:
-    - node_modules
-
-env:
-  global:
-    - PORT=3000
-    - DB_DRIVER=postgres
-    - DB_USERNAME=postgres
-    - DB_PASSWORD=
-    - DB_HOST=127.0.0.1
-    - DB_PORT=5432
-    - DB_NAME=eve-book-api
-    - REDIS_HOST=localhost
-    - REDIS_PORT=6379
 
 services:
-  - postgresql
-  - redis-server
+  - docker
 
-addons:
-  postgresql: "9.6"
+before_install:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker-compose build
+  - docker push evebook/api:$TRAVIS_COMMIT
 
-before_script:
-  - psql -c 'create database "eve-book-api";' -U postgres
+script:
+  - docker-compose run api yarn run test
 
-after_success: npm run coverage
+after_success:
+  - docker-compose run api yarn run coverage
+  - if [ -n "$TRAVIS_TAG" ]; then
+      docker push evebook/api:$TRAVIS_TAG
+      docker push evebook/api:latest
+      esac
+    fi

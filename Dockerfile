@@ -1,5 +1,5 @@
 FROM node:carbon-alpine
-
+ 
 # For building native dependencies
 RUN apk add --no-cache make gcc g++ python
 
@@ -24,3 +24,9 @@ RUN yarn global add nodemon ts-node typescript
 # Create seperate folder for code source
 RUN mkdir /app/src
 WORKDIR /app/src
+
+# Copy app source
+COPY . .
+
+# Build app
+RUN yarn build && mv dist /app/dist
