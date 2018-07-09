@@ -30,3 +30,5 @@ COPY . .
 
 # Build app
 RUN yarn build && mv dist /app/dist
+
+CMD [ "/app/dist/api.js" ]
