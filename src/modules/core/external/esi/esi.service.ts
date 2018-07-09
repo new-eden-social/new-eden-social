@@ -1,6 +1,5 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { CacheService } from '../../cache/cache.service';
 import {
   Categories,
   IGetAlliance,
@@ -27,7 +26,6 @@ export class ESIService {
   private client: AxiosInstance;
 
   constructor(
-    private cacheService: CacheService,
     private loggerService: LoggerService,
     private utilsService: UtilsService,
   ) {
@@ -189,19 +187,10 @@ export class ESIService {
 
     this.loggerService.silly('ESI Request', config);
 
-    if (await this.cacheService.exists(hash)) {
-      const response = await this.cacheService.fetch<T>(hash);
-
-      this.loggerService.silly('ESI Response', response, { cache: true });
-
-      return response;
-    }
-
     try {
       const response = await this.client.request(config);
       const cacheTime = parseInt(response.headers['access-control-max-age'], 10);
 
-      await this.cacheService.store(hash, response.data, cacheTime);
 
       this.loggerService.silly('ESI Response', response.data, { cache: false });
 

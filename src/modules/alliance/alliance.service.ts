@@ -83,7 +83,6 @@ export class AllianceService implements IService<Alliance> {
     return alliances;
   }
 
-
   /**
    * Get alliance executor corporation
    * @param {number} id
