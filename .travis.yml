@@ -6,7 +6,9 @@ services:
 
 before_install:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - cp example.env .env
   - docker-compose build
+  - docker tag evebook/api evebook/api:$TRAVIS_COMMIT
   - docker push evebook/api:$TRAVIS_COMMIT
 
 script:
@@ -15,6 +17,8 @@ script:
 after_success:
   - docker-compose run api yarn run coverage
   - if [ -n "$TRAVIS_TAG" ]; then
+      docker tag evebook/api evebook/api:$TRAVIS_TAG
       docker push evebook/api:$TRAVIS_TAG
+      docker tag evebook/api evebook/api:latest
       docker push evebook/api:latest
     fi
