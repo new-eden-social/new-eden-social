@@ -1,6 +1,5 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
-import { CacheService } from '../../cache/cache.service';
 import {
   Categories,
   IGetAlliance,
@@ -16,7 +15,6 @@ import {
 import { ESIEntetyNotFoundException } from './esi.exceptions';
 import { RequestContext } from '../../requestContext/requestContext';
 import { LoggerService } from '../../logger/logger.service';
-import { UtilsService } from '../../utils/utils.service';
 
 @Injectable()
 export class ESIService {
@@ -27,9 +25,7 @@ export class ESIService {
   private client: AxiosInstance;
 
   constructor(
-    private cacheService: CacheService,
     private loggerService: LoggerService,
-    private utilsService: UtilsService,
   ) {
     this.client = axios.create({
       baseURL: ESIService.baseUrl,
@@ -179,7 +175,6 @@ export class ESIService {
    * @return {Promise<T>}
    */
   private async request<T>(config: AxiosRequestConfig): Promise<T> {
-    const hash = await this.utilsService.hash(config);
     const token = RequestContext.currentToken();
 
     if (!config.headers) config.headers = {};
@@ -189,21 +184,10 @@ export class ESIService {
 
     this.loggerService.silly('ESI Request', config);
 
-    if (await this.cacheService.exists(hash)) {
-      const response = await this.cacheService.fetch<T>(hash);
-
-      this.loggerService.silly('ESI Response', response, { cache: true });
-
-      return response;
-    }
-
     try {
       const response = await this.client.request(config);
-      const cacheTime = parseInt(response.headers['access-control-max-age'], 10);
 
-      await this.cacheService.store(hash, response.data, cacheTime);
-
-      this.loggerService.silly('ESI Response', response.data, { cache: false });
+      this.loggerService.silly('ESI Response', response.data);
 
       return response.data;
     } catch (err) {

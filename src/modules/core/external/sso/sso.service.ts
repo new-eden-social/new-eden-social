@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
 import { IAuthenticationResponse, IAuthenticationVerify } from './sso.interface';
-import { CacheService } from '../../cache/cache.service';
-import * as moment from 'moment';
 import { TokenExpiredException } from './sso.exceptions';
 
 @Injectable()
@@ -17,7 +15,7 @@ export class SSOService {
   private secretKey = <string>process.env.ESI_SECRET;
   private scope = <string>process.env.ESI_SCOPE;
 
-  constructor(private cacheService: CacheService) {
+  constructor() {
     this.client = axios.create({
       baseURL: this.baseUrl,
       headers: {
@@ -104,9 +102,6 @@ export class SSOService {
   public async verifyAuthentication(token: string): Promise<IAuthenticationVerify> {
 
     // Check in cache if we have response already
-    if (await this.cacheService.exists(token)) {
-      return this.cacheService.fetch<IAuthenticationVerify>(token);
-    }
 
     try {
       const response = await this.client.request({
@@ -114,12 +109,6 @@ export class SSOService {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      // Get expiration date
-      const expiresIn = moment.utc(response.data.ExpiresOn).diff(moment(), 'seconds');
-
-      // Store response data to cache
-      await this.cacheService.store(token, response.data, expiresIn);
 
       return response.data;
     } catch (err) {
