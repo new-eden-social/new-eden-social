@@ -15,7 +15,6 @@ import {
 import { ESIEntetyNotFoundException } from './esi.exceptions';
 import { RequestContext } from '../../requestContext/requestContext';
 import { LoggerService } from '../../logger/logger.service';
-import { UtilsService } from '../../utils/utils.service';
 
 @Injectable()
 export class ESIService {
@@ -27,7 +26,6 @@ export class ESIService {
 
   constructor(
     private loggerService: LoggerService,
-    private utilsService: UtilsService,
   ) {
     this.client = axios.create({
       baseURL: ESIService.baseUrl,
@@ -177,7 +175,6 @@ export class ESIService {
    * @return {Promise<T>}
    */
   private async request<T>(config: AxiosRequestConfig): Promise<T> {
-    const hash = await this.utilsService.hash(config);
     const token = RequestContext.currentToken();
 
     if (!config.headers) config.headers = {};
@@ -189,10 +186,8 @@ export class ESIService {
 
     try {
       const response = await this.client.request(config);
-      const cacheTime = parseInt(response.headers['access-control-max-age'], 10);
 
-
-      this.loggerService.silly('ESI Response', response.data, { cache: false });
+      this.loggerService.silly('ESI Response', response.data);
 
       return response.data;
     } catch (err) {

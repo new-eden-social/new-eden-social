@@ -5,7 +5,6 @@ import {
   ICharacterStatistics,
   ICorporationStatistics,
 } from './zkillboard.interface';
-import { UtilsService } from '../../utils/utils.service';
 
 @Injectable()
 export class ZKillboardService {
@@ -14,9 +13,7 @@ export class ZKillboardService {
   private userAgent = `eve-book/${process.env.npm_package_version} https://github.com/evebook/api`;
   private client: AxiosInstance;
 
-  constructor(
-    private utilsService: UtilsService,
-    ) {
+  constructor() {
     this.client = axios.create({
       baseURL: this.baseUrl,
       headers: { 'User-Agent': this.userAgent },
@@ -77,12 +74,7 @@ export class ZKillboardService {
    * @return {Promise<T>}
    */
   private async request<T>(config: AxiosRequestConfig): Promise<T> {
-    const hash = await this.utilsService.hash(config);
-
     const response = await this.client.request(config);
-    // const cacheTime = parseInt(response.headers['access-control-max-age']);
-    const cacheTime = 3600;
-
     return response.data;
   }
 }

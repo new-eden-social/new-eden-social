@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance } from 'axios';
 import { IAuthenticationResponse, IAuthenticationVerify } from './sso.interface';
-import * as moment from 'moment';
 import { TokenExpiredException } from './sso.exceptions';
 
 @Injectable()
@@ -110,9 +109,6 @@ export class SSOService {
         method: 'GET',
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      // Get expiration date
-      const expiresIn = moment.utc(response.data.ExpiresOn).diff(moment(), 'seconds');
 
       return response.data;
     } catch (err) {
