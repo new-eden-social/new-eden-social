@@ -14,6 +14,9 @@
   <a target="_blank" href="https://coveralls.io/github/evebook/api">
     <img src="https://coveralls.io/repos/github/evebook/api/badge.svg" alt="Coverage Status" />
   </a>
+  <a href="https://microbadger.com/images/evebook/api:latest" title="Docker Image Status">
+    <img src="https://images.microbadger.com/badges/image/evebook/api:latest.svg">
+    </a>
   <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
     <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
   </a>
@@ -34,30 +37,18 @@ Whole platform would heavily relay on EVE Online API, so that you could send in 
 Think of it as combination of r/eve and twitter. A hub of EVE Online community.
 
 ### Releases
-Branch `develop` is automatically deployed on each commit/merge, `master`
-is manually deployed and is latest released version.
+Branch `master` is automatically deployed on each commit/merge to development servers. Production servers are automaticly deployed
+on each release (tag).
 
-| Branch  | API                            | WEB                       |Documentation|
-| ------- | ------------------------------ | ------------------------- |-------------|
-| develop | api.development.evebook.online |development.evebook.online | [Develop](http://api.development.evebook.online/docs)
-| master  | api.evebook.online             |evebook.online             | [Master](http://api.evebook.online/docs)
+| Version        | API                            | WEB                       |Documentation|
+| -------------- | ------------------------------ | ------------------------- |-------------|
+| master branch  | api.development.evebook.online |development.evebook.online | [Development](http://api.development.evebook.online/docs)
+| latest release | api.evebook.online             |evebook.online             | [Release](http://api.evebook.online/docs)
 
-## Contribution
-We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/evebook/api/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/evebook/api/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/evebook/api/issues) or directly on [gitter](https://gitter.im/EVE-Book/Lobby).
-
-
-## What's it about
-Project was started with an idea of creating social platform for players of EVE Online. A place where players could connect and share their experiences, fan art, images, videos, thoughts, propaganda...
-
-Each "user" would be an actual EVE Online character and you could only login using game's credentials (SSO), this way characters could interact outside of eve online. Alliances and corporations could share propaganda videos/art and gather followers who could re-share and spread the word.
-
-Whole platform would heavily relay on EVE Online API, so that you could send in game emails, money, create events (calendar). It would feel as an extension of game itself.
-
-Think of it as combination of r/eve and twitter. A hub of EVE Online community.
+Changelog is located in [CHANGELOG.md](https://github.com/evebook/api/blob/master/CHANGELOG.md)
 
 ## Contribution
 We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/evebook/api/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/evebook/api/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/evebook/api/issues) or directly on [slack](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/) in `#evebook`.
-
 
 ## Installation
 
