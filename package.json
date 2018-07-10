@@ -16,7 +16,8 @@
     "prod:updater": "node dist/updater.js",
     "heroku-postbuild": "npm run build",
     "test": "nyc --require ts-node/register mocha src/**/*.spec.ts --reporter spec",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "release": "standard-version"
   },
   "nyc": {
     "include": [
@@ -71,6 +72,7 @@
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.2.1",
     "rxjs-compat": "^6.2.1",
+    "standard-version": "^4.4.0",
     "typeorm": "^0.2.7",
     "typescript": "^2.9.2",
     "uuid": "^3.3.2",
