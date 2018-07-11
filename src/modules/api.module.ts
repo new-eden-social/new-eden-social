@@ -15,6 +15,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { NotificationModule } from './notification/notification.module';
 import { AuthMiddleware } from './authentication/authentication.middleware';
 import { WebsocketModule } from './websocket/websocket.module';
+import { GooglePubSubModule } from './core/googlePubSub/googlePubSub.module';
 
 @Module({
   imports: [
@@ -33,6 +34,8 @@ import { WebsocketModule } from './websocket/websocket.module';
       entities: [__dirname + '/../**/*.entity{.ts,.js}'],
       synchronize: process.env.DB_SYNC === 'true',
     }),
+
+    GooglePubSubModule.forRoot(),
 
     AuthenticationModule,
     SearchModule,

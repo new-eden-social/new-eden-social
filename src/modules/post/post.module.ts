@@ -14,11 +14,15 @@ import { commandHandlers } from './commands/handlers';
 import { eventHandlers } from './events/handlers';
 import { ModuleRef } from '@nestjs/core';
 import { NotificationModule } from '../notification/notification.module';
+import { GooglePubSubModule } from '../core/googlePubSub/googlePubSub.module';
+import { GooglePubSub } from '../core/googlePubSub/googlePubSub';
 
 @Module({
   imports: [
     CQRSModule,
     TypeOrmModule.forFeature([PostRepository]),
+
+    GooglePubSubModule.forFeature('test-topic', 'test-subscription'),
 
     AuthenticationModule,
     CharacterModule,
@@ -45,6 +49,7 @@ export class PostModule implements OnModuleInit {
     private readonly moduleRef: ModuleRef,
     private readonly command$: CommandBus,
     private readonly event$: EventBus,
+    private readonly googlePubSub: GooglePubSub,
   ) {
     // FIXME: Nasty hack, for some reason onModuleInit isn't executed
     this.onModuleInit();
@@ -53,6 +58,10 @@ export class PostModule implements OnModuleInit {
   onModuleInit() {
     this.command$.setModuleRef(this.moduleRef);
     this.event$.setModuleRef(this.moduleRef);
+
+    // subject$ is protected and doesn't work :(
+    // this.googlePubSub.bridgeEventsTo(this.event$.subject$);
+    this.event$.publisher = this.googlePubSub;
 
     this.event$.register(eventHandlers);
     this.command$.register(commandHandlers);

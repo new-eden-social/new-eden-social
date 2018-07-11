@@ -28,7 +28,11 @@ WORKDIR /app/src
 # Copy app source
 COPY . .
 
-# Build app
-RUN yarn build && mv dist /app/dist
+# Delete dependencies possibly got from local dev env
+RUN rm -rf node_modules
 
-CMD [ "node", "/app/dist/api.js" ]
+# Build app
+RUN yarn build
+
+# Default run prodction
+CMD [ "yarn", "prod" ]

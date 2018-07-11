@@ -1,6 +1,4 @@
-import * as bodyParser from 'body-parser';
-import * as express from 'express';
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, FastifyAdapter } from '@nestjs/core';
 import { ApiModule } from './modules/api.module';
 import { ValidatorPipe } from './modules/core/validation/validator.pipe';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -17,10 +15,7 @@ import 'zone.js/dist/long-stack-trace-zone.js';
 async function bootstrap() {
   config();
 
-  const instance = express();
-  instance.use(bodyParser.json());
-
-  const nestApp = await NestFactory.create(ApiModule, instance);
+  const nestApp = await NestFactory.create(ApiModule, new FastifyAdapter());
   nestApp.enableCors();
   nestApp.useGlobalPipes(new ValidatorPipe());
   nestApp.useGlobalInterceptors(
