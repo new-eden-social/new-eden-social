@@ -15,7 +15,9 @@ import 'zone.js/dist/long-stack-trace-zone.js';
 async function bootstrap() {
   config();
 
-  const nestApp = await NestFactory.create(ApiModule, new FastifyAdapter());
+  // For some reason Fastify doesn't work
+  // const nestApp = await NestFactory.create(ApiModule, new FastifyAdapter());
+  const nestApp = await NestFactory.create(ApiModule);
   nestApp.enableCors();
   nestApp.useGlobalPipes(new ValidatorPipe());
   nestApp.useGlobalInterceptors(

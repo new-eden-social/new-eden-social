@@ -16,6 +16,7 @@ import { NotificationModule } from './notification/notification.module';
 import { AuthMiddleware } from './authentication/authentication.middleware';
 import { WebsocketModule } from './websocket/websocket.module';
 import { GooglePubSubModule } from './core/googlePubSub/googlePubSub.module';
+import { HealthModule } from './core/health/health.module';
 
 @Module({
   imports: [
@@ -37,6 +38,7 @@ import { GooglePubSubModule } from './core/googlePubSub/googlePubSub.module';
 
     GooglePubSubModule.forRoot(),
 
+    HealthModule,
     AuthenticationModule,
     SearchModule,
     AllianceModule,
