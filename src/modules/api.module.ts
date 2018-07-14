@@ -17,6 +17,9 @@ import { AuthMiddleware } from './authentication/authentication.middleware';
 import { WebsocketModule } from './websocket/websocket.module';
 import { GooglePubSubModule } from './core/googlePubSub/googlePubSub.module';
 import { HealthModule } from './core/health/health.module';
+import { MorganModule, MorganInterceptor } from 'nest-morgan';
+import { APP_INTERCEPTOR } from '@nestjs/core';
+import { LOGGER_LEVEL } from './core/logger/logger.constants';
 
 @Module({
   imports: [
@@ -37,6 +40,7 @@ import { HealthModule } from './core/health/health.module';
     }),
 
     GooglePubSubModule.forRoot(),
+    MorganModule.forRoot(),
 
     HealthModule,
     AuthenticationModule,
@@ -48,6 +52,14 @@ import { HealthModule } from './core/health/health.module';
     CommentModule,
     NotificationModule,
     WebsocketModule,
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: MorganInterceptor('combined', {
+        skip: (req, res) => process.env.LOG_LEVEL === LOGGER_LEVEL.INFO,
+      }),
+    },
   ],
 })
 export class ApiModule implements NestModule {
