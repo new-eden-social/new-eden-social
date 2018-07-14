@@ -16,10 +16,10 @@ import { NotificationModule } from './notification/notification.module';
 import { AuthMiddleware } from './authentication/authentication.middleware';
 import { WebsocketModule } from './websocket/websocket.module';
 import { GooglePubSubModule } from './core/googlePubSub/googlePubSub.module';
-import { HealthModule } from './core/health/health.module';
 import { MorganModule, MorganInterceptor } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LOGGER_LEVEL } from './core/logger/logger.constants';
+import { StatusModule } from './core/status/status.module';
 
 @Module({
   imports: [
@@ -42,7 +42,7 @@ import { LOGGER_LEVEL } from './core/logger/logger.constants';
     GooglePubSubModule.forRoot(),
     MorganModule.forRoot(),
 
-    HealthModule,
+    StatusModule,
     AuthenticationModule,
     SearchModule,
     AllianceModule,

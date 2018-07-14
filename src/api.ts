@@ -38,6 +38,7 @@ async function bootstrap() {
   .addTag('comments')
   .addTag('posts')
   .addTag('search')
+  .addTag('status')
   .addTag('authentication', 'Authentication proxy for EVE SSO service')
   .addBearerAuth('Authorization', 'header')
   .build();

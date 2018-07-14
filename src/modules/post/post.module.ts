@@ -22,7 +22,7 @@ import { GooglePubSub } from '../core/googlePubSub/googlePubSub';
     CQRSModule,
     TypeOrmModule.forFeature([PostRepository]),
 
-    GooglePubSubModule.forFeature('test-topic', 'test-subscription'),
+    // GooglePubSubModule.forFeature('test-topic', 'test-subscription'),
 
     AuthenticationModule,
     CharacterModule,
@@ -49,7 +49,7 @@ export class PostModule implements OnModuleInit {
     private readonly moduleRef: ModuleRef,
     private readonly command$: CommandBus,
     private readonly event$: EventBus,
-    private readonly googlePubSub: GooglePubSub,
+    // private readonly googlePubSub: GooglePubSub,
   ) {
     // FIXME: Nasty hack, for some reason onModuleInit isn't executed
     this.onModuleInit();
@@ -61,7 +61,7 @@ export class PostModule implements OnModuleInit {
 
     // subject$ is protected and doesn't work :(
     // this.googlePubSub.bridgeEventsTo(this.event$.subject$);
-    this.event$.publisher = this.googlePubSub;
+    // this.event$.publisher = this.googlePubSub;
 
     this.event$.register(eventHandlers);
     this.command$.register(commandHandlers);
