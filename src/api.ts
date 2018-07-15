@@ -32,6 +32,7 @@ async function bootstrap() {
     'Additional Resources can be found on Github Wiki',
     'https://github.com/evebook/api/wiki')
   .setVersion(process.env.npm_package_version)
+  .setSchemes(process.env.NODE_ENV === 'production' ? 'https' : 'http')
   .addTag('characters')
   .addTag('corporations')
   .addTag('alliances')
