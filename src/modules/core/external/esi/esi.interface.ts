@@ -8,6 +8,12 @@ export enum Categories {
   solar_system = 'solar_system',
 }
 
+export interface IGetStatus {
+  readonly players: number;
+  readonly server_version: string;
+  readonly start_time: Date;
+}
+
 export interface IGetAlliance {
   readonly id: number;
   readonly ticker: string;

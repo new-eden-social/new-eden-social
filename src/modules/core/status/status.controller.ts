@@ -4,21 +4,28 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { StatusService } from './status.service';
+import { IStatus } from './status.interface';
+import { DStatus } from './status.dto';
 
 @ApiUseTags('status')
 @Controller('status')
 export class StatusController {
 
+  constructor(
+    private statusService: StatusService,
+  ) {
+  }
+
   @ApiResponse({
     status: HttpStatus.OK,
-    type: { status: 'OK' },
+    type: DStatus,
     description: 'API Status check',
   })
   @Get()
-  public async status() {
-    return {
-      status: 'OK',
-    };
+  public async status(): Promise<DStatus> {
+    const status = await this.statusService.status();
+    return new DStatus(status);
   }
 
 }

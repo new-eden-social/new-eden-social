@@ -5,8 +5,21 @@ services:
     postgres:
         image: postgres:latest
 
-    redis:
-        image: redis:latest
+    esi-nginx:
+        image: nginx:alpine
+        volumes:
+          - ./infra/esi-cache/nginx-esi.conf:/etc/nginx/nginx.conf:ro
+
+    esi-varnish:
+        image: million12/varnish
+        environment:
+          - VCL_CONFIG=/varnish-esi.vcl
+        volumes:
+          - ./infra/esi-cache/varnish-esi.vcl:/varnish-esi.vcl:ro
+        links:
+          - esi-nginx
+        depends_on:
+          - esi-nginx
 
     api-image:
         build: .
@@ -25,10 +38,10 @@ services:
           - /app/src/node_modules
         links:
           - postgres
-          - redis
+          - esi-varnish
         depends_on:
           - postgres
-          - redis
+          - esi-varnish
 
     updater:
         command: yarn run start:updater
@@ -42,10 +55,10 @@ services:
           - /app/src/node_modules
         links:
           - postgres
-          - redis
+          - esi-varnish
         depends_on:
           - postgres
-          - redis
+          - esi-varnish
 
     killmails:
         command: yarn run start:killmails
@@ -59,8 +72,8 @@ services:
           - /app/src/node_modules
         links:
           - postgres
-          - redis
+          - esi-varnish
         depends_on:
           - postgres
-          - redis
+          - esi-varnish
   

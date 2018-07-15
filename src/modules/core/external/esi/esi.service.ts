@@ -11,6 +11,7 @@ import {
   IUniverseCategory,
   IUniverseGroup, IUniverseName,
   IUniverseType,
+  IGetStatus,
 } from './esi.interface';
 import { ESIEntetyNotFoundException } from './esi.exceptions';
 import { RequestContext } from '../../requestContext/requestContext';
@@ -19,7 +20,7 @@ import { LoggerService } from '../../logger/logger.service';
 @Injectable()
 export class ESIService {
 
-  private static baseUrl = 'https://esi.tech.ccp.is/latest/';
+  private static baseUrl = `${process.env.ESI_ENDPOINT}`;
   private static userAgent = `eve-book/${process.env.npm_package_version}`
     + ` https://github.com/evebook/api`;
   private client: AxiosInstance;
@@ -33,6 +34,19 @@ export class ESIService {
         'User-Agent': ESIService.userAgent,
         Accept: 'application/json',
       },
+    });
+  }
+
+  /**
+   * Get ESI Status
+   * @param query
+   * @return {Promise<ISearch>}
+   * @url https://esi.evetech.net/ui/#/Status
+   */
+  public async status(): Promise<IGetStatus> {
+    return this.request<IGetStatus>({
+      url: 'status/',
+      method: 'GET',
     });
   }
 
