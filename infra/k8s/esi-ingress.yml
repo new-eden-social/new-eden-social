@@ -1,0 +1,25 @@
+---
+apiVersion: voyager.appscode.com/v1beta1
+kind: Ingress
+metadata:
+  name: evebook-esi-cache-ingress
+  namespace: default
+  annotations:
+    ingress.appscode.com/type: LoadBalancer
+    ingress.appscode.com/limit-rpm: 420
+spec:
+  tls:
+  - hosts:
+    - esi.evebook.online
+    ref:
+      kind: Secret
+      name: tls-esi-evebook-online
+
+  rules:
+  - host: esi.evebook.online
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: evebook-esi-cache
+          servicePort: 80

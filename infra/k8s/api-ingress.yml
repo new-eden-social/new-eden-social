@@ -1,0 +1,24 @@
+---
+apiVersion: voyager.appscode.com/v1beta1
+kind: Ingress
+metadata:
+  name: evebook-api-ingress
+  namespace: default
+  annotations:
+    ingress.appscode.com/type: LoadBalancer
+    ingress.appscode.com/limit-rpm: 420
+spec:
+  tls:
+  - hosts:
+    - api.evebook.online
+    ref:
+      kind: Secret
+      name: tls-api-evebook-online
+  rules:
+  - host: api.evebook.online
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: evebook-api
+          servicePort: 80

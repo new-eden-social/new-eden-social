@@ -1,0 +1,168 @@
+---
+apiVersion: "v1"
+kind: "Secret"
+metadata:
+  name: "evebook-api-secrets"
+  namespace: "default"
+  labels:
+    app: "evebook-api"
+data:
+  ESI_CLIENT: "base64"
+  ESI_SECRET: "base64"
+
+---
+apiVersion: "v1"
+kind: "ConfigMap"
+metadata:
+  name: "evebook-api-config"
+  namespace: "default"
+  labels:
+    app: "evebook-api"
+data:
+  DB_HOST: "127.0.0.1"
+  DB_PORT: "5432"
+  DB_NAME: "postgres" 
+  DB_LOG: "debug"
+  DB_SYNC: "true"
+  LOG_LEVEL: "debug"
+  PORT: "8080"
+  APP_AUTHENTICATION: "http://evebook.online/authentication/callback"
+  ESI_REDIRECT: "https://api.evebook.online/authentication/sso/callback"
+  ESI_SCOPE: "publicData"
+  ESI_ENDPOINT: "https://esi.evebook.online"
+
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  name: "evebook-api"
+  namespace: "default"
+  labels:
+    app: "evebook-api"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: "evebook-api"
+  template:
+    metadata:
+      labels:
+        app: "evebook-api"
+    spec:
+      containers:
+      - name: "api"
+        image: "evebook/api:0cf12255adcb6f26f77286cefde23666fb02f0a2"
+        env:
+        - name: "DB_USERNAME"
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: cloudsql-db-credentials
+        - name: "DB_PASSWORD"
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: cloudsql-db-credentials
+        - name: "DB_HOST"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_HOST"
+              name: "evebook-api-config"
+        - name: "DB_PORT"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_PORT"
+              name: "evebook-api-config"
+        - name: "DB_NAME"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_NAME"
+              name: "evebook-api-config"
+        - name: "DB_LOG"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_LOG"
+              name: "evebook-api-config"
+        - name: "DB_SYNC"
+          valueFrom:
+            configMapKeyRef:
+              key: "DB_SYNC"
+              name: "evebook-api-config"
+        - name: "LOG_LEVEL"
+          valueFrom:
+            configMapKeyRef:
+              key: "LOG_LEVEL"
+              name: "evebook-api-config"
+        - name: "PORT"
+          valueFrom:
+            configMapKeyRef:
+              key: "PORT"
+              name: "evebook-api-config"
+        - name: "APP_AUTHENTICATION"
+          valueFrom:
+            configMapKeyRef:
+              key: "APP_AUTHENTICATION"
+              name: "evebook-api-config"
+        - name: "ESI_CLIENT"
+          valueFrom:
+            secretKeyRef:
+              key: "ESI_CLIENT"
+              name: "evebook-api-secrets"
+        - name: "ESI_SECRET"
+          valueFrom:
+            secretKeyRef:
+              key: "ESI_SECRET"
+              name: "evebook-api-secrets"
+        - name: "ESI_REDIRECT"
+          valueFrom:
+            configMapKeyRef:
+              key: "ESI_REDIRECT"
+              name: "evebook-api-config"
+        - name: "ESI_SCOPE"
+          valueFrom:
+            configMapKeyRef:
+              key: "ESI_SCOPE"
+              name: "evebook-api-config"
+        - name: "ESI_ENDPOINT"
+          valueFrom:
+            configMapKeyRef:
+              key: "ESI_ENDPOINT"
+              name: "evebook-api-config"
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: 8080
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+
+      - name: cloudsql-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.11
+        command: ["/cloud_sql_proxy",
+                  "-instances=eve-book:europe-west1:eve-book-main-db=tcp:5432",
+                  "-credential_file=/secrets/cloudsql/credentials.json"]
+        volumeMounts:
+          - name: cloudsql-instance-credentials
+            mountPath: /secrets/cloudsql
+            readOnly: true
+
+      volumes:
+        - name: cloudsql-instance-credentials
+          secret:
+            secretName: cloudsql-instance-credentials
+
+---
+apiVersion: "autoscaling/v1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "evebook-api-hpa"
+  namespace: "default"
+  labels:
+    app: "evebook-api"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "evebook-api"
+    apiVersion: "apps/v1beta1"
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80

@@ -1,0 +1,65 @@
+---
+apiVersion: "extensions/v1beta1"
+kind: "Deployment"
+metadata:
+  name: "evebook-esi-cache"
+  namespace: "default"
+  labels:
+    app: "evebook-esi-cache"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "evebook-esi-cache"
+  template:
+    metadata:
+      labels:
+        app: "evebook-esi-cache"
+    spec:
+      containers:
+      - name: "esi-varnish"
+        image: "million12/varnish"
+        env:
+        - name: "VCL_CONFIG"
+          value: "/varnish-esi.vcl"
+        volumeMounts:
+          - name: esi-varnish-configuration
+            mountPath: /varnish-esi.vcl
+            subPath: varnish-esi.vcl
+            readOnly: true
+    
+      - name: "esi-nginx"
+        image: "nginx:alpine"
+        ports:
+          - containerPort: 8080
+        volumeMounts:
+          - name: esi-nginx-configuration
+            mountPath: /etc/nginx/nginx.conf
+            subPath: nginx.conf
+            readOnly: true
+
+      volumes:
+        - name: esi-varnish-configuration
+          secret:
+            secretName: esi-varnish-configuration
+
+        - name: esi-nginx-configuration
+          secret:
+            secretName: esi-nginx-configuration
+
+---
+apiVersion: "autoscaling/v1"
+kind: "HorizontalPodAutoscaler"
+metadata:
+  name: "evebook-esi-cache-hpa"
+  namespace: "default"
+  labels:
+    app: "evebook-esi-cache"
+spec:
+  scaleTargetRef:
+    kind: "Deployment"
+    name: "evebook-esi-cache"
+    apiVersion: "apps/v1beta1"
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 80
