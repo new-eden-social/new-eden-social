@@ -31,7 +31,7 @@ async function bootstrap() {
   .setExternalDoc(
     'Additional Resources can be found on Github Wiki',
     'https://github.com/evebook/api/wiki')
-  .setVersion('development')
+  .setVersion(process.env.npm_package_version)
   .addTag('characters')
   .addTag('corporations')
   .addTag('alliances')
