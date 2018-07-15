@@ -20,7 +20,8 @@ import { LoggerService } from '../../logger/logger.service';
 @Injectable()
 export class ESIService {
 
-  private static baseUrl = `${process.env.ESI_ENDPOINT}`;
+  private static baseUrl = process.env.ESI_ENDPOINT;
+  private static version = 'latest';
   private static userAgent = `eve-book/${process.env.npm_package_version}`
     + ` https://github.com/evebook/api`;
   private client: AxiosInstance;
@@ -29,7 +30,7 @@ export class ESIService {
     private loggerService: LoggerService,
   ) {
     this.client = axios.create({
-      baseURL: ESIService.baseUrl,
+      baseURL: `${ESIService.baseUrl}/${ESIService.version}`,
       headers: {
         'User-Agent': ESIService.userAgent,
         Accept: 'application/json',
