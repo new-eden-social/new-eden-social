@@ -1,14 +1,14 @@
----
-apiVersion: "v1"
-kind: "Secret"
-metadata:
-  name: "evebook-api-secrets"
-  namespace: "default"
-  labels:
-    app: "evebook-api"
-data:
-  ESI_CLIENT: "base64"
-  ESI_SECRET: "base64"
+# ---
+# apiVersion: "v1"
+# kind: "Secret"
+# metadata:
+#   name: "evebook-api-secrets"
+#   namespace: "default"
+#   labels:
+#     app: "evebook-api"
+# data:
+#   ESI_CLIENT: "base64"
+#   ESI_SECRET: "base64"
 
 ---
 apiVersion: "v1"
@@ -19,6 +19,7 @@ metadata:
   labels:
     app: "evebook-api"
 data:
+  NODE_ENV: "production"
   DB_HOST: "127.0.0.1"
   DB_PORT: "5432"
   DB_NAME: "postgres" 
@@ -51,7 +52,7 @@ spec:
     spec:
       containers:
       - name: "api"
-        image: "evebook/api:0cf12255adcb6f26f77286cefde23666fb02f0a2"
+        image: "evebook/api:3035135d5f2f8a45d6053349fb9ef1761ac50d51"
         env:
         - name: "DB_USERNAME"
           valueFrom:
@@ -127,6 +128,11 @@ spec:
           valueFrom:
             configMapKeyRef:
               key: "ESI_ENDPOINT"
+              name: "evebook-api-config"
+        - name: "NODE_ENV"
+          valueFrom:
+            configMapKeyRef:
+              key: "NODE_ENV"
               name: "evebook-api-config"
         livenessProbe:
           httpGet:
