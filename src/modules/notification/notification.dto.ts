@@ -8,6 +8,7 @@ import { DCharacterShort } from '../character/character.dto';
 import { DCorporationShort } from '../corporation/corporation.dto';
 import { DAllianceShort } from '../alliance/alliance.dto';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
+import { DPost } from '../post/post.dto';
 
 export class DNotification {
   @ApiModelProperty()
@@ -21,7 +22,7 @@ export class DNotification {
   type: NOTIFICATION_TYPE;
 
   @ApiModelPropertyOptional()
-  postId?: string;
+  post?: DPost;
   @ApiModelPropertyOptional()
   commentId?: string;
 
@@ -48,7 +49,7 @@ export class DNotification {
       this.senderAlliance = new DAllianceShort(notification.senderAlliance);
     }
 
-    if (notification.post) this.postId = notification.post.id;
+    if (notification.post) this.post = new DPost(notification.post);
     if (notification.comment) this.commentId = notification.comment.id;
   }
 }

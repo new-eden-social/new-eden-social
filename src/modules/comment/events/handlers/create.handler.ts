@@ -35,6 +35,7 @@ export class CreateCommentEventHandler implements IEventHandler<CreateCommentEve
       notification.senderCharacter = event.comment.character;
       notification.recipient = participant;
       notification.comment = event.comment;
+      notification.post = event.comment.post;
       notification.type = NOTIFICATION_TYPE.NEW_COMMENT_ON_A_POST_YOU_PARTICIPATE;
       // Execute create notification command
       await this.commandBus.execute(new CreateNotificationCommand(notification));
