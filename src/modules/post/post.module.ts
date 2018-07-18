@@ -16,6 +16,7 @@ import { ModuleRef } from '@nestjs/core';
 import { NotificationModule } from '../notification/notification.module';
 import { GooglePubSubModule } from '../core/googlePubSub/googlePubSub.module';
 import { GooglePubSub } from '../core/googlePubSub/googlePubSub';
+import { WebsocketModule } from '../websocket/websocket.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { GooglePubSub } from '../core/googlePubSub/googlePubSub';
     HashtagModule,
     UniverseLocationModule,
     NotificationModule,
+    WebsocketModule,
   ],
   controllers: [
     PostController,

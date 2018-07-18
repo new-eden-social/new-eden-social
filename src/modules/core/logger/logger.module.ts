@@ -1,18 +1,23 @@
 import { Global, Module } from '@nestjs/common';
 import { LoggerService } from './logger.service';
 import { loggerProviders } from './logger.providers';
-import { LoggerExceptionInterceptor } from './loggerException.interceptor';
+import {
+  HttpLoggerExceptionInterceptor,
+  WsLoggerExceptionInterceptor,
+} from './loggerException.interceptor';
 
 @Global()
 @Module({
   providers: [
     ...loggerProviders,
     LoggerService,
-    LoggerExceptionInterceptor,
+    HttpLoggerExceptionInterceptor,
+    WsLoggerExceptionInterceptor,
   ],
   exports: [
     LoggerService,
-    LoggerExceptionInterceptor,
+    HttpLoggerExceptionInterceptor,
+    WsLoggerExceptionInterceptor,
   ],
 })
 export class LoggerModule {

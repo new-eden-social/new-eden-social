@@ -7,10 +7,9 @@ import {
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
 import { LoggerService } from './logger.service';
-import { Request } from 'express';
 
 @Injectable()
-export class LoggerExceptionInterceptor implements NestInterceptor {
+export class HttpLoggerExceptionInterceptor implements NestInterceptor {
 
   constructor(private loggerService: LoggerService) {
   }
@@ -42,6 +41,24 @@ export class LoggerExceptionInterceptor implements NestInterceptor {
       } else {
         this.loggerService.error('Unexpected error', request.path, exception);
       }
+    });
+  }
+}
+
+@Injectable()
+export class WsLoggerExceptionInterceptor implements NestInterceptor {
+
+
+  intercept(
+    context: ExecutionContext,
+    call$: Observable<any>,
+  ): Observable<any> {
+    const client = context.switchToWs().getClient();
+
+    // first param would be for events, second is for errors
+    return call$.do(null, (exception) => {
+      console.log(exception.message);
+      console.error(JSON.parse(JSON.stringify(exception)));
     });
   }
 }

@@ -6,6 +6,8 @@ import { CreateCommentEvent } from '../create.event';
 import { PostService } from '../../../post/post.service';
 import { Character } from '../../../character/character.entity';
 import { NOTIFICATION_TYPE } from '../../../notification/notification.constants';
+import { WebsocketGateway } from '../../../websocket/websocket.gateway';
+import { DComment } from '../../comment.dto';
 
 @EventsHandler(CreateCommentEvent)
 export class CreateCommentEventHandler implements IEventHandler<CreateCommentEvent> {
@@ -13,6 +15,7 @@ export class CreateCommentEventHandler implements IEventHandler<CreateCommentEve
   constructor(
     private commandBus: CommandBus,
     private postService: PostService,
+    private websocketGateway: WebsocketGateway,
   ) {
   }
 
@@ -41,5 +44,10 @@ export class CreateCommentEventHandler implements IEventHandler<CreateCommentEve
       await this.commandBus.execute(new CreateNotificationCommand(notification));
     }
 
+    // Send comment to subscribers
+    this.websocketGateway.sendEventToPostCommentSub<DComment>(
+      event.comment.post,
+      new DComment(event.comment),
+    );
   }
 }

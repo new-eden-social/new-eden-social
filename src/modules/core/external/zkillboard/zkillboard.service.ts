@@ -9,7 +9,7 @@ import {
 @Injectable()
 export class ZKillboardService {
 
-  private baseUrl = 'https://zkillboard.com/api/';
+  private baseUrl = `${process.env.ZKILLBOARD_ENDPOINT}/api/`;
   private userAgent = `eve-book/${process.env.npm_package_version} https://github.com/evebook/api`;
   private client: AxiosInstance;
 

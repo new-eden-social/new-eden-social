@@ -1,8 +1,8 @@
 vcl 4.0;
 
 # On Kuberentes is "localhost"
-# In Docker-Compose is "esi-nginx"
+# In Docker-Compose is "zkill-nginx"
 backend default {
-    .host = "esi-nginx";
+    .host = "zkill-nginx";
     .port = "8080";
 }

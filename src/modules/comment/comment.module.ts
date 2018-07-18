@@ -11,6 +11,7 @@ import { CommandBus, CQRSModule, EventBus } from '@nestjs/cqrs';
 import { ModuleRef } from '@nestjs/core';
 import { eventHandlers } from './events/handlers';
 import { commandHandlers } from './commands/handlers';
+import { WebsocketModule } from '../websocket/websocket.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { commandHandlers } from './commands/handlers';
     AllianceModule,
     CharacterModule,
     PostModule,
+    WebsocketModule,
   ],
   controllers: [
     CommentController,

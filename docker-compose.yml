@@ -21,6 +21,21 @@ services:
         depends_on:
           - esi-nginx
 
+    zkill-nginx:
+        image: nginx:alpine
+        volumes:
+          - ./infra/zkill-cache/nginx-zkill.conf:/etc/nginx/nginx.conf:ro
+    zkill-varnish:
+        image: million12/varnish
+        environment:
+          - VCL_CONFIG=/varnish-zkill.vcl
+        volumes:
+          - ./infra/zkill-cache/varnish-zkill.vcl:/varnish-zkill.vcl:ro
+        links:
+          - zkill-nginx
+        depends_on:
+          - zkill-nginx
+
     api-image:
         build: .
         image: evebook/api
@@ -39,9 +54,11 @@ services:
         links:
           - postgres
           - esi-varnish
+          - zkill-varnish
         depends_on:
           - postgres
           - esi-varnish
+          - zkill-varnish
 
     updater:
         command: yarn run start:updater

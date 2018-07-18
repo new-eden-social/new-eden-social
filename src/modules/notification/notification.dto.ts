@@ -1,5 +1,7 @@
 import {
-  NOTIFICATION_TYPE, WS_NOTIFICATION_EVENT, WS_NOTIFICATION_SEEN_EVENT,
+  NOTIFICATION_TYPE,
+  WS_NOTIFICATION_EVENT,
+  WS_NOTIFICATION_SEEN_EVENT,
 } from './notification.constants';
 import { Notification } from './notification.entity';
 import { WsResponse } from '@nestjs/websockets';
