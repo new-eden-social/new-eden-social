@@ -19,6 +19,7 @@ import {
   getRoomForAllianceWall,
   MAX_ROOMS_JOINED,
   WS_SUBSCRIPTIONS,
+  getRoomForPostComments,
 } from './websocket.constants';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Corporation } from '../corporation/corporation.entity';
@@ -54,12 +55,36 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
   }
 
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_LATEST_WALL)
+  async onSubscriptionToLatestWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscriptionEvent(client, data);
+  }
+
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_HASHTAG_WALL)
+  async onSubscriptionToHashtagWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscriptionEvent(client, data);
+  }
+
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_CHARACTER_WALL)
+  async onSubscriptionToCharacterWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscriptionEvent(client, data);
+  }
+
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_CORPORATION_WALL)
+  async onSubscriptionToCorporationWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscriptionEvent(client, data);
+  }
+
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_ALLIANCE_WALL)
+  async onSubscriptionToAllianceWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscriptionEvent(client, data);
+  }
+
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_POST_COMMENTS)
-  async onSubscriptionEvent(
+  async onSubscriptionToPostCommentsEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscriptionEvent(client, data);
+  }
+
+  private async onSubscriptionEvent(
     client: ISocket,
     data: any,
   ): Promise<DWsSubscription> {
@@ -83,6 +108,9 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
           break;
         case WS_SUBSCRIBE_EVENTS.TO_ALLIANCE_WALL:
           client.join(getRoomForAllianceWall(data.key));
+          break;
+        case WS_SUBSCRIBE_EVENTS.TO_POST_COMMENTS:
+          client.join(getRoomForPostComments(data.key));
           break;
         default:
           throw Error('Unknown Subscription Type!');

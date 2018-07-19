@@ -12,6 +12,7 @@ export class CommentRepository extends Repository<Comment> {
     page: number,
   ): Promise<[Comment[], number]> {
     return this.createQueryBuilder('comment')
+    .leftJoinAndSelect('comment.post', 'post')
     .leftJoinAndSelect('comment.character', 'authorCharacter')
     .leftJoinAndSelect('authorCharacter.corporation', 'authorCharacterCorporation')
     .leftJoinAndSelect('authorCharacterCorporation.alliance', 'authorCharacterAlliance')
