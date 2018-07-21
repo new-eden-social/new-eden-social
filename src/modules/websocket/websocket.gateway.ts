@@ -20,6 +20,7 @@ import {
   MAX_ROOMS_JOINED,
   WS_SUBSCRIPTIONS,
   getRoomForPostComments,
+  WS_UN_SUBSCRIBE_EVENTS,
 } from './websocket.constants';
 import { AuthenticationService } from '../authentication/authentication.service';
 import { Corporation } from '../corporation/corporation.entity';
@@ -55,36 +56,66 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
   }
 
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_LATEST_WALL)
-  async onSubscriptionToLatestWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
-    return this.onSubscriptionEvent(client, data);
+  async onSubscribeToLatestWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscribeEvent(client, data);
   }
 
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_HASHTAG_WALL)
-  async onSubscriptionToHashtagWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
-    return this.onSubscriptionEvent(client, data);
+  async onSubscribeToHashtagWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscribeEvent(client, data);
   }
 
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_CHARACTER_WALL)
-  async onSubscriptionToCharacterWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
-    return this.onSubscriptionEvent(client, data);
+  async onSubscribeToCharacterWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscribeEvent(client, data);
   }
 
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_CORPORATION_WALL)
-  async onSubscriptionToCorporationWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
-    return this.onSubscriptionEvent(client, data);
+  async onSubscribeToCorporationWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscribeEvent(client, data);
   }
 
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_ALLIANCE_WALL)
-  async onSubscriptionToAllianceWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
-    return this.onSubscriptionEvent(client, data);
+  async onSubscribeToAllianceWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscribeEvent(client, data);
   }
 
   @SubscribeMessage(WS_SUBSCRIBE_EVENTS.TO_POST_COMMENTS)
-  async onSubscriptionToPostCommentsEvent(client: ISocket, data: any): Promise<DWsSubscription> {
-    return this.onSubscriptionEvent(client, data);
+  async onSubscribeToPostCommentsEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onSubscribeEvent(client, data);
   }
 
-  private async onSubscriptionEvent(
+  @SubscribeMessage(WS_UN_SUBSCRIBE_EVENTS.FROM_LATEST_WALL)
+  async onUnSubscribeFromLatestWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onUnSubscribeEvent(client, data);
+  }
+
+  @SubscribeMessage(WS_UN_SUBSCRIBE_EVENTS.FROM_HASHTAG_WALL)
+  async onUnSubscribeFromHashtagWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onUnSubscribeEvent(client, data);
+  }
+
+  @SubscribeMessage(WS_UN_SUBSCRIBE_EVENTS.FROM_CHARACTER_WALL)
+  async onUnSubscribeFromCharacterWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onUnSubscribeEvent(client, data);
+  }
+
+  @SubscribeMessage(WS_UN_SUBSCRIBE_EVENTS.FROM_CORPORATION_WALL)
+  async onUnSubscribeFromCorporationWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onUnSubscribeEvent(client, data);
+  }
+
+  @SubscribeMessage(WS_UN_SUBSCRIBE_EVENTS.FROM_ALLIANCE_WALL)
+  async onUnSubscribeFromAllianceWallEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onUnSubscribeEvent(client, data);
+  }
+
+  @SubscribeMessage(WS_UN_SUBSCRIBE_EVENTS.FROM_POST_COMMENTS)
+  async onUnSubscribeFromPostCommentsEvent(client: ISocket, data: any): Promise<DWsSubscription> {
+    return this.onUnSubscribeEvent(client, data);
+  }
+
+  private async onSubscribeEvent(
     client: ISocket,
     data: any,
   ): Promise<DWsSubscription> {
@@ -111,6 +142,45 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
           break;
         case WS_SUBSCRIBE_EVENTS.TO_POST_COMMENTS:
           client.join(getRoomForPostComments(data.key));
+          break;
+        default:
+          throw Error('Unknown Subscription Type!');
+      }
+      this.logger.debug(
+        `[Websocket.Gateway] ${data.event} => ${client.id} = success`,
+      );
+      return new DWsSubscription(true);
+    } catch (e) {
+      this.logger.debug(
+        `[Websocket.Gateway] ${data.event} => ${client.id} = fail`,
+      );
+      return new DWsSubscription(false, e.message);
+    }
+  }
+
+  private async onUnSubscribeEvent(
+    client: ISocket,
+    data: any,
+  ): Promise<DWsSubscription> {
+    try {
+      switch (data.event) {
+        case WS_UN_SUBSCRIBE_EVENTS.FROM_LATEST_WALL:
+          client.leave(getRoomForLatestWall());
+          break;
+        case WS_UN_SUBSCRIBE_EVENTS.FROM_HASHTAG_WALL:
+          client.leave(getRoomForHashtagWall(data.key));
+          break;
+        case WS_UN_SUBSCRIBE_EVENTS.FROM_CHARACTER_WALL:
+          client.leave(getRoomForCharacterWall(data.key));
+          break;
+        case WS_UN_SUBSCRIBE_EVENTS.FROM_CORPORATION_WALL:
+          client.leave(getRoomForCorporationWall(data.key));
+          break;
+        case WS_UN_SUBSCRIBE_EVENTS.FROM_ALLIANCE_WALL:
+          client.leave(getRoomForAllianceWall(data.key));
+          break;
+        case WS_UN_SUBSCRIBE_EVENTS.FROM_POST_COMMENTS:
+          client.leave(getRoomForPostComments(data.key));
           break;
         default:
           throw Error('Unknown Subscription Type!');

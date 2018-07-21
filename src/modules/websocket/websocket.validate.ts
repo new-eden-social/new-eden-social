@@ -1,6 +1,6 @@
 import { IWsEvent } from './websocket.interface';
 import { Equals, IsNotEmpty, IsString, IsEnum, IsOptional } from 'class-validator';
-import { WS_EVENT_AUTHENTICATION, WS_SUBSCRIPTIONS_EVENTS } from './websocket.constants';
+import { WS_EVENT_AUTHENTICATION, WS_SUBSCRIBE_EVENTS } from './websocket.constants';
 
 export class VWebsocketAuthentication implements IWsEvent {
 
@@ -14,8 +14,8 @@ export class VWebsocketAuthentication implements IWsEvent {
 
 export class VWebsocketSubscription implements IWsEvent {
 
-  @IsEnum(WS_SUBSCRIPTIONS_EVENTS)
-  event: WS_SUBSCRIPTIONS_EVENTS;
+  @IsEnum(WS_SUBSCRIBE_EVENTS)
+  event: WS_SUBSCRIBE_EVENTS;
 
   @IsString()
   @IsOptional()
