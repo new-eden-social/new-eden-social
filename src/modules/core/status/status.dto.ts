@@ -1,5 +1,5 @@
 import { ApiModelProperty } from '@nestjs/swagger';
-import { IStatus } from './status.interface';
+import { IStatus, IESIStatus } from './status.interface';
 import { IGetStatus } from '../external/esi/esi.interface';
 
 export class DStatus {
@@ -10,7 +10,7 @@ export class DStatus {
   version: string;
 
   @ApiModelProperty()
-  esi: IGetStatus;
+  esi: IESIStatus;
 
   constructor(status: IStatus) {
     this.state = status.state;
