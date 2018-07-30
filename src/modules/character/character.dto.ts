@@ -3,6 +3,8 @@ import { Character } from './character.entity';
 import { ICharacterPortrait } from './character.interface';
 import { DPagination } from '../core/pagination/paggination.dto';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { DFollowAction, DFollow } from '../follow/follow.dto';
+import { Follow } from '../follow/follow.entity';
 
 export class DCharacterPortrait {
   @ApiModelProperty()
@@ -84,6 +86,10 @@ export class DCharacter {
   portrait: DCharacterPortrait;
   @ApiModelProperty()
   corporation: DCorporationShort;
+  @ApiModelProperty()
+  followers: DFollow[];
+  @ApiModelProperty()
+  following: DFollow[];
 
   /* LIVE Data*/
   @ApiModelProperty()
@@ -103,7 +109,7 @@ export class DCharacter {
   @ApiModelProperty()
   soloLosses: number;
 
-  constructor(character: Character) {
+  constructor(character: Character, followers: Follow[], following: Follow[]) {
     this.id = character.id;
     this.handle = character.handle;
     this.name = character.name;
@@ -115,6 +121,8 @@ export class DCharacter {
     this.securityStatus = character.securityStatus;
     this.portrait = new DCharacterPortrait(character.portrait);
     this.corporation = new DCorporationShort(character.corporation);
+    this.followers = followers.map(follow => new DFollow(follow))
+    this.following = following.map(follow => new DFollow(follow))
 
     this.iskDestroyed = character.iskDestroyed;
     this.iskLost = character.iskLost;

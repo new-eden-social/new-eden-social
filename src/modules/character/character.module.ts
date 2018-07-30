@@ -6,6 +6,7 @@ import { ESIModule } from '../core/external/esi/esi.module';
 import { CorporationModule } from '../corporation/corporation.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CharacterRepository } from './character.repository';
+import { FollowModule } from '../follow/follow.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { CharacterRepository } from './character.repository';
     ZKillboardModule,
     ESIModule,
     forwardRef(() => CorporationModule),
+    forwardRef(() => FollowModule),
   ],
   controllers: [
     CharactersController,

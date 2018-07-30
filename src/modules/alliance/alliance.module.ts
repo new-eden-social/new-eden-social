@@ -6,6 +6,7 @@ import { ZKillboardModule } from '../core/external/zkillboard/zkillboard.module'
 import { CorporationModule } from '../corporation/corporation.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AllianceRepository } from './alliance.repository';
+import { FollowModule } from '../follow/follow.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { AllianceRepository } from './alliance.repository';
     ZKillboardModule,
     ESIModule,
     forwardRef(() => CorporationModule),
+    forwardRef(() => FollowModule),
   ],
   controllers: [
     AllianceController,

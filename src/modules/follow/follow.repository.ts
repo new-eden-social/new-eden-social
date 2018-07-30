@@ -43,4 +43,44 @@ export class FollowRepository extends Repository<Follow> {
         });
     }
 
+    getCharacterFollowers(
+        character: Character,
+    ): Promise<Follow[]> {
+        return this.find({
+            where: {
+                followingCharacter: character,
+            }
+        })
+    }
+
+    getCorporationFollowers(
+        corporation: Corporation,
+    ): Promise<Follow[]> {
+        return this.find({
+            where: {
+                followingCorporation: corporation,
+            }
+        })
+    }
+
+    getAllianceFollowers(
+        alliance: Alliance,
+    ): Promise<Follow[]> {
+        return this.find({
+            where: {
+                followingAlliance: alliance,
+            }
+        })
+    }
+
+    getCharacterFollowing(
+        character: Character,
+    ): Promise<Follow[]> {
+        return this.find({
+            where: {
+                follower: character,
+            }
+        })
+    }
+
 }

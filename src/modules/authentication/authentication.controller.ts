@@ -3,15 +3,19 @@ import {
   Response,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { DCharacterShort } from '../character/character.dto';
+import { DCharacterShort, DCharacter } from '../character/character.dto';
 import { ApiBearerAuth, ApiImplicitBody, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { IAuthenticationResponse } from '../core/external/sso/sso.interface';
+import { FollowService } from '../follow/follow.service';
 
 @ApiUseTags('authentication')
 @Controller('authentication')
 export class AuthenticationController {
 
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(
+    private authenticationService: AuthenticationService,
+    private followService: FollowService,
+  ) {
   }
 
   @ApiResponse({
@@ -32,15 +36,17 @@ export class AuthenticationController {
   @Get('/sso/verify')
   public async verify(
     @Headers('authorization') token: string,
-  ): Promise<DCharacterShort> {
+  ): Promise<DCharacter> {
     if (!token) throw new HttpException(
       'Authorization header is required!',
       HttpStatus.BAD_REQUEST);
 
     const character = await this.authenticationService
     .verifyAuthentication(token.slice('Bearer '.length));
+    const following = await this.followService.getCharacterFollowing(character);
+    const followers = await this.followService.getCharacterFollowers(character);
 
-    return new DCharacterShort(character);
+    return new DCharacter(character, followers, following);
   }
 
   @ApiResponse({

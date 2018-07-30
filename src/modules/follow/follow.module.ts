@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module, OnModuleInit, forwardRef } from '@nestjs/common';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { CharacterModule } from '../character/character.module';
 import { CorporationModule } from '../corporation/corporation.module';
@@ -20,9 +20,9 @@ import { FollowRepository } from './follow.repository';
     TypeOrmModule.forFeature([FollowRepository]),
 
     AuthenticationModule,
-    CharacterModule,
-    CorporationModule,
-    AllianceModule,
+    forwardRef(() => CharacterModule),
+    forwardRef(() => CorporationModule),
+    forwardRef(() => AllianceModule),
     NotificationModule,
     WebsocketModule,
   ],

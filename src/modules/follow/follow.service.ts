@@ -85,4 +85,20 @@ export class FollowService {
         return this.followRepository.getFollowingAlliance(follower, following);
     }
 
+    getCharacterFollowers(character: Character): Promise<Follow[]> {
+        return this.followRepository.getCharacterFollowers(character);
+    }
+
+    getCorporationFollowers(corporation: Corporation): Promise<Follow[]> {
+        return this.followRepository.getCorporationFollowers(corporation);
+    }
+
+    getAllianceFollowers(alliance: Alliance): Promise<Follow[]> {
+        return this.followRepository.getAllianceFollowers(alliance);
+    }
+
+    getCharacterFollowing(character: Character): Promise<Follow[]> {
+        return this.followRepository.getCharacterFollowing(character);
+    }
+
 }

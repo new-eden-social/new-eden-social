@@ -7,6 +7,7 @@ import { CharacterModule } from '../character/character.module';
 import { AllianceModule } from '../alliance/alliance.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CorporationRepository } from './corporation.repository';
+import { FollowModule } from '../follow/follow.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { CorporationRepository } from './corporation.repository';
     ESIModule,
     forwardRef(() => CharacterModule),
     forwardRef(() => AllianceModule),
+    forwardRef(() => FollowModule),
   ],
   controllers: [
     CorporationController,

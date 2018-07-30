@@ -50,7 +50,7 @@ export class Alliance {
   comments: Comment[];
 
   @OneToMany(type => Follow, follow => follow.followingAlliance)
-  followers: Follow[];
+  followers: Promise<Follow[]>;
 
   @UpdateDateColumn()
   updatedAt: Date;

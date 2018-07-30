@@ -59,7 +59,7 @@ export class Corporation {
   executingAlliance: Alliance;
 
   @OneToMany(type => Follow, follow => follow.followingCorporation)
-  followers: Follow[];
+  followers: Promise<Follow[]>;
 
   @Column({ nullable: true })
   createdAt?: Date;

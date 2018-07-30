@@ -12,16 +12,16 @@ export class Follow extends AggregateRoot {
     @PrimaryGeneratedColumn('uuid')
     id: string;
  
-    @ManyToOne(type => Character, character => character.following)
+    @ManyToOne(type => Character, character => character.following, { eager: true })
     follower: Character;
 
-    @ManyToOne(type => Character, character => character.followers)
+    @ManyToOne(type => Character, character => character.followers, { eager: true })
     followingCharacter: Character;
 
-    @ManyToOne(type => Corporation, corporation => corporation.followers)
+    @ManyToOne(type => Corporation, corporation => corporation.followers, { eager: true })
     followingCorporation: Corporation;
 
-    @ManyToOne(type => Alliance, alliance => alliance.followers)
+    @ManyToOne(type => Alliance, alliance => alliance.followers, { eager: true })
     followingAlliance: Alliance;
 
     async unFollow(): Promise<void> {

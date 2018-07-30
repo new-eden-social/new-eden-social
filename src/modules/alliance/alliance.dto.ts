@@ -3,6 +3,8 @@ import { Alliance } from './alliance.entity';
 import { DPagination } from '../core/pagination/paggination.dto';
 import { IAllianceIcon } from './alliance.interface';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { Follow } from '../follow/follow.entity';
+import { DFollow } from '../follow/follow.dto';
 
 export class DAllianceIcon {
   @ApiModelProperty()
@@ -55,6 +57,8 @@ export class DAlliance {
   executorCorporation: DCorporationShortWithoutAlliance;
   @ApiModelProperty()
   icon: DAllianceIcon;
+  @ApiModelProperty()
+  followers: DFollow[];
 
   /* LIVE Data */
   @ApiModelProperty()
@@ -80,7 +84,7 @@ export class DAlliance {
   @ApiModelProperty()
   corpCount: number;
 
-  constructor(alliance: Alliance) {
+  constructor(alliance: Alliance, followers: Follow[]) {
     this.id = alliance.id;
     this.name = alliance.name;
     this.handle = alliance.handle;
@@ -88,6 +92,7 @@ export class DAlliance {
     this.dateFounded = alliance.dateFounded;
     this.executorCorporation = new DCorporationShortWithoutAlliance(alliance.executorCorporation);
     this.icon = new DAllianceIcon(alliance.icon);
+    this.followers = followers.map(follow => new DFollow(follow));
 
     this.hasSupers = alliance.hasSupers;
     this.iskDestroyed = alliance.iskDestroyed;

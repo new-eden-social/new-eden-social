@@ -2,12 +2,16 @@ import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { DCharacter } from './character.dto';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { FollowService } from '../follow/follow.service';
 
 @ApiUseTags('characters')
 @Controller('characters')
 export class CharactersController {
 
-  constructor(private characterService: CharacterService) {
+  constructor(
+    private characterService: CharacterService,
+    private followService: FollowService,
+  ) {
   }
 
   @ApiResponse({
@@ -20,7 +24,10 @@ export class CharactersController {
     @Param('characterId') characterId: number,
   ): Promise<DCharacter> {
     const character = await this.characterService.get(characterId);
-    return new DCharacter(character);
+    const followers = await this.followService.getCharacterFollowers(character);
+    const following = await this.followService.getCharacterFollowing(character);
+
+    return new DCharacter(character, followers, following);
   }
 
 }
