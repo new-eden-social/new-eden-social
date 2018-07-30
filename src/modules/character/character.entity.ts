@@ -15,6 +15,7 @@ import { ICharacterPortrait } from './character.interface';
 import { KillmailParticipant } from '../killmail/participant/participant.entity';
 import { Corporation } from '../corporation/corporation.entity';
 import { Notification } from '../notification/notification.entity';
+import { Follow } from '../follow/follow.entity';
 
 @Entity()
 export class Character {
@@ -48,6 +49,12 @@ export class Character {
 
   @OneToMany(type => Notification, notification => notification.recipient)
   notifications: Notification[];
+
+  @OneToMany(type => Follow, follow => follow.follower)
+  following: Follow[];
+
+  @OneToMany(type => Follow, follow => follow.followingCharacter)
+  followers: Follow[];
 
   @CreateDateColumn()
   createdAt: Date;

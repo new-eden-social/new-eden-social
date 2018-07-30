@@ -14,6 +14,7 @@ import { Alliance } from '../alliance/alliance.entity';
 import { Post } from '../post/post.entity';
 import { ICorporationIcon } from './corporation.interface';
 import { Comment } from '../comment/comment.entity';
+import { Follow } from '../follow/follow.entity';
 
 @Entity()
 export class Corporation {
@@ -56,6 +57,9 @@ export class Corporation {
 
   @OneToOne(type => Alliance, alliance => alliance.executorCorporation)
   executingAlliance: Alliance;
+
+  @OneToMany(type => Follow, follow => follow.followingCorporation)
+  followers: Follow[];
 
   @Column({ nullable: true })
   createdAt?: Date;

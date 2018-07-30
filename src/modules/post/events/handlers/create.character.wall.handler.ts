@@ -21,7 +21,6 @@ export class CharacterPostedOnWallEventHandler
 
   constructor(
     private commandBus: CommandBus,
-    private characterService: CharacterService,
   ) {
   }
 

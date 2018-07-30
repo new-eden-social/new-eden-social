@@ -13,6 +13,7 @@ import { Corporation } from '../corporation/corporation.entity';
 import { Post } from '../post/post.entity';
 import { IAllianceIcon } from './alliance.interface';
 import { Comment } from '../comment/comment.entity';
+import { Follow } from '../follow/follow.entity';
 
 @Entity()
 export class Alliance {
@@ -47,6 +48,9 @@ export class Alliance {
 
   @OneToMany(type => Comment, comment => comment.alliance)
   comments: Comment[];
+
+  @OneToMany(type => Follow, follow => follow.followingAlliance)
+  followers: Follow[];
 
   @UpdateDateColumn()
   updatedAt: Date;

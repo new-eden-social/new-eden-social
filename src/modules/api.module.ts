@@ -20,6 +20,7 @@ import { MorganModule, MorganInterceptor } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LOGGER_LEVEL } from './core/logger/logger.constants';
 import { StatusModule } from './core/status/status.module';
+import { FollowModule } from './follow/follow.module';
 
 @Module({
   imports: [
@@ -52,6 +53,7 @@ import { StatusModule } from './core/status/status.module';
     CommentModule,
     NotificationModule,
     WebsocketModule,
+    FollowModule,
   ],
   providers: [
     {
