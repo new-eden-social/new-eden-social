@@ -59,6 +59,8 @@ export class DAlliance {
   icon: DAllianceIcon;
   @ApiModelProperty()
   followers: DFollow[];
+  @ApiModelProperty()
+  numPosts: number;
 
   /* LIVE Data */
   @ApiModelProperty()
@@ -84,7 +86,7 @@ export class DAlliance {
   @ApiModelProperty()
   corpCount: number;
 
-  constructor(alliance: Alliance, followers: Follow[]) {
+  constructor(alliance: Alliance, followers: Follow[], numPosts: number) {
     this.id = alliance.id;
     this.name = alliance.name;
     this.handle = alliance.handle;
@@ -93,6 +95,7 @@ export class DAlliance {
     this.executorCorporation = new DCorporationShortWithoutAlliance(alliance.executorCorporation);
     this.icon = new DAllianceIcon(alliance.icon);
     this.followers = followers.map(follow => new DFollow(follow));
+    this.numPosts = numPosts;
 
     this.hasSupers = alliance.hasSupers;
     this.iskDestroyed = alliance.iskDestroyed;

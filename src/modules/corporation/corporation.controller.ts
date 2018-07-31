@@ -3,6 +3,7 @@ import { CorporationService } from './corporation.service';
 import { DCorporation } from './corporation.dto';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { FollowService } from '../follow/follow.service';
+import { PostService } from '../post/post.service';
 
 @ApiUseTags('corporations')
 @Controller('corporations')
@@ -11,6 +12,7 @@ export class CorporationController {
   constructor(
     private corporationService: CorporationService,
     private followService: FollowService,
+    private postService: PostService,
   ) {
   }
 
@@ -25,8 +27,9 @@ export class CorporationController {
   ): Promise<DCorporation> {
     const corporation = await this.corporationService.get(corporationId);
     const followers = await this.followService.getCorporationFollowers(corporation);
+    const numPosts = await this.postService.getNumOfPostsByCorporation(corporation);
 
-    return new DCorporation(corporation, followers);
+    return new DCorporation(corporation, followers, numPosts);
   }
 
 }

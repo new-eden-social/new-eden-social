@@ -1,4 +1,4 @@
-import { Module, OnModuleInit } from '@nestjs/common';
+import { Module, OnModuleInit, forwardRef } from '@nestjs/common';
 import { PostController } from './post.controller';
 import { PostService } from './post.service';
 import { AuthenticationModule } from '../authentication/authentication.module';
@@ -25,14 +25,15 @@ import { WebsocketModule } from '../websocket/websocket.module';
 
     // GooglePubSubModule.forFeature('test-topic', 'test-subscription'),
 
-    AuthenticationModule,
-    CharacterModule,
-    CorporationModule,
-    AllianceModule,
-    HashtagModule,
     UniverseLocationModule,
+    HashtagModule,
     NotificationModule,
     WebsocketModule,
+
+    forwardRef(() => AuthenticationModule),
+    forwardRef(() => CharacterModule),
+    forwardRef(() => CorporationModule),
+    forwardRef(() => AllianceModule),
   ],
   controllers: [
     PostController,

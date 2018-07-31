@@ -46,7 +46,7 @@ export class AuthenticationController {
     const following = await this.followService.getCharacterFollowing(character);
     const followers = await this.followService.getCharacterFollowers(character);
 
-    return new DCharacter(character, followers, following);
+    return new DCharacter(character, followers, following, 0);
   }
 
   @ApiResponse({

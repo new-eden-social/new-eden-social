@@ -90,6 +90,8 @@ export class DCharacter {
   followers: DFollow[];
   @ApiModelProperty()
   following: DFollow[];
+  @ApiModelProperty()
+  numPosts: number;
 
   /* LIVE Data*/
   @ApiModelProperty()
@@ -109,7 +111,7 @@ export class DCharacter {
   @ApiModelProperty()
   soloLosses: number;
 
-  constructor(character: Character, followers: Follow[], following: Follow[]) {
+  constructor(character: Character, followers: Follow[], following: Follow[], numPosts: number) {
     this.id = character.id;
     this.handle = character.handle;
     this.name = character.name;
@@ -123,6 +125,7 @@ export class DCharacter {
     this.corporation = new DCorporationShort(character.corporation);
     this.followers = followers.map(follow => new DFollow(follow))
     this.following = following.map(follow => new DFollow(follow))
+    this.numPosts = numPosts;
 
     this.iskDestroyed = character.iskDestroyed;
     this.iskLost = character.iskLost;

@@ -230,6 +230,24 @@ export class PostService {
     return this.postRepository.getParticipants(post);
   }
 
+  public async getNumOfPostsByCharacter(
+    character: Character,
+  ): Promise<number> {
+    return this.postRepository.getNumOfPostsByCharacter(character);
+  }
+
+  public async getNumOfPostsByCorporation(
+    corporation: Corporation,
+  ): Promise<number> {
+    return this.postRepository.getNumOfPostsByCorporation(corporation);
+  }
+
+  public async getNumOfPostsByAlliance(
+    alliance: Alliance,
+  ): Promise<number> {
+    return this.postRepository.getNumOfPostsByAlliance(alliance);
+  }
+
   /**
    * Create post
    * @param {Post} post

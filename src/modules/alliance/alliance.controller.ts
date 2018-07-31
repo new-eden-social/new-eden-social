@@ -3,6 +3,7 @@ import { AllianceService } from './alliance.service';
 import { DAlliance } from './alliance.dto';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { FollowService } from '../follow/follow.service';
+import { PostService } from '../post/post.service';
 
 @ApiUseTags('alliances')
 @Controller('alliances')
@@ -11,6 +12,7 @@ export class AllianceController {
   constructor(
     private allianceService: AllianceService,
     private followService: FollowService,
+    private postService: PostService,
   ) {
   }
 
@@ -25,7 +27,9 @@ export class AllianceController {
   ): Promise<DAlliance> {
     const alliance = await this.allianceService.get(allianceId);
     const followers = await this.followService.getAllianceFollowers(alliance);
-    return new DAlliance(alliance, followers);
+    const numPosts = await this.postService.getNumOfPostsByAlliance(alliance);
+
+    return new DAlliance(alliance, followers, numPosts);
   }
 
 }
