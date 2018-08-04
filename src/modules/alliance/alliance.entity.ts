@@ -55,21 +55,6 @@ export class Alliance {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  /**
-   * Provided by zKillboard
-   */
-  hasSupers: boolean;
-  iskDestroyed: number;
-  iskLost: number;
-  pointsDestroyed: number;
-  pointsLost: number;
-  shipsDestroyed: number;
-  shipsLost: number;
-  soloKills: number;
-  soloLosses: number;
-  memberCount: number;
-  corpCount: number;
-
   get icon(): IAllianceIcon {
     return {
       px64x64: `http://image.eveonline.com/Alliance/${this.id}_64.png`,
@@ -82,19 +67,4 @@ export class Alliance {
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.date_founded;
   }
-
-  public populateZKillboard(alliance: IAllianceStatistics) {
-    this.iskDestroyed = alliance.iskDestroyed;
-    this.iskLost = alliance.iskLost;
-    this.pointsDestroyed = alliance.pointsDestroyed;
-    this.pointsLost = alliance.pointsLost;
-    this.shipsDestroyed = alliance.shipsDestroyed;
-    this.shipsLost = alliance.shipsLost;
-    this.soloKills = alliance.soloKills;
-    this.soloLosses = alliance.soloLosses;
-    this.hasSupers = alliance.hasSupers;
-    this.memberCount = alliance.info.memberCount;
-    this.corpCount = alliance.info.corpCount;
-  }
-
 }

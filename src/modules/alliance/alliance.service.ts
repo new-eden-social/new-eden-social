@@ -49,16 +49,7 @@ export class AllianceService implements IService<Alliance> {
    * @returns {Promise<Alliance>}
    */
   public async get(id: number): Promise<Alliance> {
-    this.loggerService.debug('get alliance', id);
-    // Find alliance in database
-    const alliance = await this.findAllianceById(id);
-
-    this.loggerService.debug('get alliance populating', id);
-    const zkillAlliance = await this.zkillboardService.allianceStatistics(id);
-    alliance.populateZKillboard(zkillAlliance);
-    this.loggerService.debug('get alliance done populating', id);
-
-    return alliance;
+    return this.findAllianceById(id);
   }
 
   /**
@@ -73,11 +64,6 @@ export class AllianceService implements IService<Alliance> {
       const alliance = alliances.find(a => a.id === id);
       // If we didn't found in database, try to populate it
       if (!alliance) alliances.push(await this.findAllianceById(id));
-    }
-
-    for (const key in alliances) {
-      const zkillAlliance = await this.zkillboardService.allianceStatistics(alliances[key].id);
-      alliances[key].populateZKillboard(zkillAlliance);
     }
 
     return alliances;
@@ -116,6 +102,7 @@ export class AllianceService implements IService<Alliance> {
    * @returns {Promise<Alliance>}
    */
   private async findAllianceById(id: number) {
+    this.loggerService.debug('get alliance ' + id);
     const foundAlliance = await this.allianceRepository.findOne(
       id,
       { relations: ['executorCorporation'] },

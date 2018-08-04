@@ -34,16 +34,7 @@ export class CharacterService implements IService<Character> {
    * @return {Promise<Character>}
    */
   public async get(id: number): Promise<Character> {
-    this.loggerService.debug('get character', id);
-    // Find character in database
-    const character = await this.findCharacterById(id);
-
-    this.loggerService.debug('get character populating', id);
-    const zkillChar = await this.zkillboardService.characterStatistics(id);
-    character.populateZKillboard(zkillChar);
-    this.loggerService.debug('get character done populating', id);
-
-    return character;
+    return this.findCharacterById(id);
   }
 
   /**
@@ -101,6 +92,7 @@ export class CharacterService implements IService<Character> {
    * @return {Promise<Character>}
    */
   private async findCharacterById(id: number) {
+    this.loggerService.debug('get character' + id);
     const foundCharacter = await this.characterRepository.findOne(id);
 
     if (foundCharacter) return foundCharacter;

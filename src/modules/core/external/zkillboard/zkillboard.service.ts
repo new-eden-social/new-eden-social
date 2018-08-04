@@ -1,10 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import {
+  IKillmailRaw,
+  IKillmail,
+  IKillmailVictim,
+  IKillmailAttacker,
+  IKillmailRawWithoutZKB,
   IAllianceStatistics,
-  ICharacterStatistics,
   ICorporationStatistics,
+  ICharacterStatistics,
 } from './zkillboard.interface';
+import {fromPromise} from 'rxjs/internal-compatibility';
+import { retry, map } from 'rxjs/internal/operators';
 
 @Injectable()
 export class ZKillboardService {
@@ -16,7 +23,7 @@ export class ZKillboardService {
   constructor() {
     this.client = axios.create({
       baseURL: this.baseUrl,
-      headers: { 'User-Agent': this.userAgent },
+      headers: { 'User-Agent': this.userAgent, 'Accept-Encoding': 'gzip' },
     });
   }
 
@@ -28,6 +35,41 @@ export class ZKillboardService {
   public static createKillUrl(killId: number): string {
     return `https://zkillboard.com/kill/${killId}`;
   }
+
+  public formatKillmail(raw: IKillmailRaw|IKillmailRawWithoutZKB, zkb: IKillmailRaw['zkb']): IKillmail {
+    return <IKillmail>{
+      id: raw.killmail_id,
+      date: new Date(raw.killmail_time),
+      warId: raw.war ? raw.war.id : null,
+      locationId: zkb.locationID,
+      totalValue: zkb.totalValue,
+      points: zkb.points,
+      npc: !!zkb.npc,
+      attackers: <IKillmailAttacker[]>raw.attackers.map(attackerRaw => ({
+        id: attackerRaw.character_id,
+        shipId: attackerRaw.ship_type_id,
+        weaponId: attackerRaw.weapon_type_id,
+        damageDone: attackerRaw.damage_done,
+        finalBlow: !!attackerRaw.final_blow,
+      })),
+      victim: <IKillmailVictim>{
+        id: raw.victim.character_id,
+        shipId: raw.victim.ship_type_id,
+        // damageTaken: raw.victim.damageTaken,
+        position: raw.victim.position,
+      },
+    };
+  }
+
+  public async getKillmail(id: number) {
+    const killmails = await this.request<IKillmailRaw[]>({
+      url: `killID/${id}/`,
+      method: 'GET',
+    })
+    const killmail = killmails[0];
+    return this.formatKillmail(killmail, killmail.zkb);
+  }
+
 
   /**
    * Get alliance statistics from zKillboard
@@ -69,12 +111,15 @@ export class ZKillboardService {
   }
 
   /**
-   * Request wrapper, it stores response to cache and use it if it's not expired
+   * Request wrapper
    * @param config
    * @return {Promise<T>}
    */
-  private async request<T>(config: AxiosRequestConfig): Promise<T> {
-    const response = await this.client.request(config);
-    return response.data;
+  private request<T>(config: AxiosRequestConfig): Promise<T> {
+    return fromPromise(this.client.request(config))
+    .pipe(
+      retry(3),
+      map(response => response.data),
+    ).toPromise();
   }
 }

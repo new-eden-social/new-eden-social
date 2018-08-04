@@ -14,7 +14,7 @@ export class KillmailParticipant {
   killmail: Killmail;
 
   @JoinTable()
-  @ManyToOne(type => Character, character => character.killmails)
+  @ManyToOne(type => Character, character => character.killmails, { eager: true })
   character: Character;
 
   @Column()

@@ -62,30 +62,6 @@ export class DAlliance {
   @ApiModelProperty()
   numPosts: number;
 
-  /* LIVE Data */
-  @ApiModelProperty()
-  hasSupers: boolean;
-  @ApiModelProperty()
-  iskDestroyed: number;
-  @ApiModelProperty()
-  iskLost: number;
-  @ApiModelProperty()
-  pointsDestroyed: number;
-  @ApiModelProperty()
-  pointsLost: number;
-  @ApiModelProperty()
-  shipsDestroyed: number;
-  @ApiModelProperty()
-  shipsLost: number;
-  @ApiModelProperty()
-  soloKills: number;
-  @ApiModelProperty()
-  soloLosses: number;
-  @ApiModelProperty()
-  memberCount: number;
-  @ApiModelProperty()
-  corpCount: number;
-
   constructor(alliance: Alliance, followers: Follow[], numPosts: number) {
     this.id = alliance.id;
     this.name = alliance.name;
@@ -96,18 +72,6 @@ export class DAlliance {
     this.icon = new DAllianceIcon(alliance.icon);
     this.followers = followers.map(follow => new DFollow(follow));
     this.numPosts = numPosts;
-
-    this.hasSupers = alliance.hasSupers;
-    this.iskDestroyed = alliance.iskDestroyed;
-    this.iskLost = alliance.iskLost;
-    this.pointsDestroyed = alliance.pointsDestroyed;
-    this.pointsLost = alliance.pointsLost;
-    this.shipsDestroyed = alliance.shipsDestroyed;
-    this.shipsLost = alliance.shipsLost;
-    this.soloKills = alliance.soloKills;
-    this.soloLosses = alliance.soloLosses;
-    this.memberCount = alliance.memberCount;
-    this.corpCount = alliance.corpCount;
   }
 }
 

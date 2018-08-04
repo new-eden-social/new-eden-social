@@ -82,17 +82,6 @@ export class Character {
 
   @Column('real')
   securityStatus: number;
-  /**
-   * Provided by zKillboard (Live, updated on the go)
-   */
-  iskDestroyed: number;
-  iskLost: number;
-  pointsDestroyed: number;
-  pointsLost: number;
-  shipsDestroyed: number;
-  shipsLost: number;
-  soloKills: number;
-  soloLosses: number;
 
   get portrait(): ICharacterPortrait {
     return {
@@ -111,16 +100,5 @@ export class Character {
     this.bloodlineId = char.bloodline_id;
     this.ancestryId = char.ancestry_id;
     this.securityStatus = char.security_status;
-  }
-
-  public populateZKillboard(char: ICharacterStatistics) {
-    this.iskDestroyed = char.iskDestroyed;
-    this.iskLost = char.iskLost;
-    this.pointsDestroyed = char.pointsDestroyed;
-    this.pointsLost = char.pointsLost;
-    this.shipsDestroyed = char.shipsDestroyed;
-    this.shipsLost = char.shipsLost;
-    this.soloKills = char.soloKills;
-    this.soloLosses = char.soloLosses;
   }
 }

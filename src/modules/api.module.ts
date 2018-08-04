@@ -21,6 +21,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LOGGER_LEVEL } from './core/logger/logger.constants';
 import { StatusModule } from './core/status/status.module';
 import { FollowModule } from './follow/follow.module';
+import { MetascraperModule } from './metascraper/metascraper.module';
 
 @Module({
   imports: [
@@ -54,6 +55,7 @@ import { FollowModule } from './follow/follow.module';
     NotificationModule,
     WebsocketModule,
     FollowModule,
+    MetascraperModule,
   ],
   providers: [
     {

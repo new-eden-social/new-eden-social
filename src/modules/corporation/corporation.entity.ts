@@ -70,18 +70,6 @@ export class Corporation {
   @Column('real')
   taxRate: number;
 
-  /**
-   * Provided by zKillboard
-   */
-  hasSupers: boolean;
-  iskDestroyed: number;
-  iskLost: number;
-  pointsDestroyed: number;
-  pointsLost: number;
-  shipsDestroyed: number;
-  shipsLost: number;
-  soloKills: number;
-  soloLosses: number;
 
   get icon(): ICorporationIcon {
     return {
@@ -98,17 +86,4 @@ export class Corporation {
     this.createdAt = corp.creation_date;
     this.taxRate = corp.tax_rate;
   }
-
-  public populateZKillboard(corp: ICorporationStatistics) {
-    this.iskDestroyed = corp.iskDestroyed;
-    this.iskLost = corp.iskLost;
-    this.pointsDestroyed = corp.pointsDestroyed;
-    this.pointsLost = corp.pointsLost;
-    this.shipsDestroyed = corp.shipsDestroyed;
-    this.shipsLost = corp.shipsLost;
-    this.soloKills = corp.soloKills;
-    this.soloLosses = corp.soloLosses;
-    this.hasSupers = corp.hasSupers;
-  }
-
 }

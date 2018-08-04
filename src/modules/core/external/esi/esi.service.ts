@@ -16,6 +16,8 @@ import {
 import { ESIEntetyNotFoundException } from './esi.exceptions';
 import { RequestContext } from '../../requestContext/requestContext';
 import { LoggerService } from '../../logger/logger.service';
+import {fromPromise} from 'rxjs/internal-compatibility';
+import { retry } from 'rxjs/internal/operators';
 
 @Injectable()
 export class ESIService {
@@ -185,7 +187,7 @@ export class ESIService {
   }
 
   /**
-   * Request wrapper, it stores response to cache and use it if it's not expired
+   * Request wrapper
    * @param config
    * @return {Promise<T>}
    */
@@ -200,14 +202,16 @@ export class ESIService {
     this.loggerService.silly('ESI Request', config);
 
     try {
-      const response = await this.client.request(config);
+      const response = await fromPromise(this.client.request(config))
+      .pipe(
+        retry(3),
+      ).toPromise();
 
       this.loggerService.silly('ESI Response', response.data);
 
       return response.data;
     } catch (err) {
       this.loggerService.warning('ESI Error', err);
-      console.log(err);
       /**
        * Transform underlying request exceptions to ESI Exceptions
        */

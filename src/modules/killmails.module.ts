@@ -4,6 +4,9 @@ import { UtilsModule } from './core/utils/utils.module';
 import { KillmailModule } from './killmail/killmail.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
+import { KillmailsStreamService } from './core/external/killmailsStream/killmailsStream.service';
+import { KillmailService } from './killmail/killmail.service';
+import { KillmailsStreamModule } from './core/external/killmailsStream/killmailsStream.module';
 
 @Module({
   imports: [
@@ -24,7 +27,14 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
     }),
 
     KillmailModule,
+    KillmailsStreamModule,
   ],
 })
 export class KillmailsModule {
+  constructor(
+    private killmailsStreamService: KillmailsStreamService,
+    private killmailService: KillmailService,
+  ){
+    this.killmailsStreamService.subscribe(killmailService.createFromStream);
+  }
 }

@@ -3,12 +3,13 @@ import { UniverseCategory } from './category.entity';
 import { ESIService } from '../../core/external/esi/esi.service';
 import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';
 import { UniverseCategoryRepository } from './category.repository';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UniverseCategoryService {
 
   constructor(
-    @Inject(UniverseCategoryRepository)
+    @InjectRepository(UniverseCategoryRepository)
     private categoryRepository: UniverseCategoryRepository,
     private esiService: ESIService,
   ) {

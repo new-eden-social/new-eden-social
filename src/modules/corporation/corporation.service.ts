@@ -34,20 +34,7 @@ export class CorporationService implements IService<Corporation> {
    * @return {Promise<Corporation>}
    */
   public async get(id: number): Promise<Corporation> {
-    this.loggerService.debug('get corporation', id);
-
-    // Find corporation in database
-    const corporation = await this.findCorporationById(id);
-
-    // If exists, populate
-    if (corporation) {
-      this.loggerService.debug('get corporation populating', id);
-      const zkillCorporation = await this.zkillboardService.corporationStatistics(id);
-      corporation.populateZKillboard(zkillCorporation);
-    }
-    this.loggerService.debug('get corporation populating done', id);
-
-    return corporation;
+    return this.findCorporationById(id);
   }
 
   /**
@@ -62,13 +49,6 @@ export class CorporationService implements IService<Corporation> {
       const corporation = corporations.find(c => c.id === id);
       // If we didn't found in database, try to populate it
       if (!corporation) corporations.push(await this.findCorporationById(id));
-    }
-
-    for (const key in corporations) {
-      const zkillCorporation = await this.zkillboardService
-      .corporationStatistics(corporations[key].id);
-
-      corporations[key].populateZKillboard(zkillCorporation);
     }
 
     return corporations;
@@ -115,6 +95,7 @@ export class CorporationService implements IService<Corporation> {
    * @return {Promise<Corporation>}
    */
   private async findCorporationById(id: number) {
+    this.loggerService.debug('get corporation ' + id);
     const foundCorporation = await this.corporationRepository.findOne(id);
 
     if (foundCorporation) return foundCorporation;

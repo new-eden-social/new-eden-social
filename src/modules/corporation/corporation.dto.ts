@@ -92,24 +92,6 @@ export class DCorporation {
   @ApiModelProperty()
   numPosts: number;
 
-  /* LIVE Data*/
-  @ApiModelProperty()
-  iskDestroyed: number;
-  @ApiModelProperty()
-  iskLost: number;
-  @ApiModelProperty()
-  pointsDestroyed: number;
-  @ApiModelProperty()
-  pointsLost: number;
-  @ApiModelProperty()
-  shipsDestroyed: number;
-  @ApiModelProperty()
-  shipsLost: number;
-  @ApiModelProperty()
-  soloKills: number;
-  @ApiModelProperty()
-  soloLosses: number;
-
   constructor(corporation: Corporation, followers: Follow[], numPosts: number) {
     this.id = corporation.id;
     this.handle = corporation.handle;
@@ -120,15 +102,6 @@ export class DCorporation {
     this.icon = new DCorporationIcon(corporation.icon);
     this.followers = followers.map(follow => new DFollow(follow));
     this.numPosts = numPosts;
-
-    this.iskDestroyed = corporation.iskDestroyed;
-    this.iskLost = corporation.iskLost;
-    this.pointsDestroyed = corporation.pointsDestroyed;
-    this.pointsLost = corporation.pointsLost;
-    this.shipsLost = corporation.shipsLost;
-    this.shipsDestroyed = corporation.shipsDestroyed;
-    this.soloKills = corporation.soloKills;
-    this.soloLosses = corporation.soloLosses;
   }
 }
 

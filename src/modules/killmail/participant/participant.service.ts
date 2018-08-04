@@ -1,14 +1,10 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { KillmailParticipant } from './participant.entity';
-import {
-  IKillmailStreamAttacker,
-  IKillmailStreamVictim,
-  TKillmailStreamParticipant,
-} from '../../core/external/killmailsStream/killmailsStream.interface';
 import { CharacterService } from '../../character/character.service';
 import { UniverseTypeService } from '../../universe/type/type.service';
 import { KillmailParticipantRepository } from './participant.repository';
 import { InjectRepository } from '@nestjs/typeorm';
+import { IKillmailAttacker, TKillmailParticipant, IKillmailVictim } from '../../core/external/zkillboard/zkillboard.interface';
 
 @Injectable()
 export class KillmailParticipantService {
@@ -28,18 +24,18 @@ export class KillmailParticipantService {
    * @return {Promise<KillmailParticipant>}
    */
   public async create(
-    data: TKillmailStreamParticipant,
+    data: TKillmailParticipant,
     type: 'attacker' | 'victim',
   ): Promise<KillmailParticipant> {
     const participant = new KillmailParticipant();
 
     if (type === 'attacker') {
-      participant.damageDone = (<IKillmailStreamAttacker>data).damageDone;
+      participant.damageDone = (<IKillmailAttacker>data).damageDone;
       participant.weapon = await this.universeTypeService.get(
-        (<IKillmailStreamAttacker>data).weaponId);
-      participant.finalBlow = (<IKillmailStreamAttacker>data).finalBlow;
+        (<IKillmailAttacker>data).weaponId);
+      participant.finalBlow = (<IKillmailAttacker>data).finalBlow;
     } else if (type === 'victim') {
-      participant.damageTaken = (<IKillmailStreamVictim>data).damageTaken;
+      participant.damageTaken = (<IKillmailVictim>data).damageTaken;
     }
 
     participant.type = type;

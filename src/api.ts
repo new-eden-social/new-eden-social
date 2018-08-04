@@ -43,6 +43,7 @@ async function bootstrap() {
   .addTag('search', 'Search for everything in EVE Online')
   .addTag('status', 'EVE Book API and ESI status')
   .addTag('authentication', 'Authentication proxy for EVE SSO service')
+  .addTag('metascraper', 'URL Metadata parser')
   .addBearerAuth('Authorization', 'header')
   .build();
   const document = SwaggerModule.createDocument(nestApp, options);
