@@ -10,7 +10,6 @@ import { FollowModule } from '../follow/follow.module';
   imports: [
     SSOModule,
     forwardRef(() => CharacterModule),
-    forwardRef(() => FollowModule),
   ],
   controllers: [
     AuthenticationController,

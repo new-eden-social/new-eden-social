@@ -39,11 +39,11 @@ export class FollowController {
     
     if (follow) {
       await this.followService.unfollow(follow);
-      return new DFollowAction(FOLLOW_ACTION_TYPE.UN_FOLLOW);
+      return new DFollowAction(FOLLOW_ACTION_TYPE.UN_FOLLOW, follow);
     }
 
     const newFollow = await this.followService.followCharacter(follower, character);
-    return new DFollowAction(FOLLOW_ACTION_TYPE.FOLLOW);
+    return new DFollowAction(FOLLOW_ACTION_TYPE.FOLLOW, newFollow);
   }
 
   @ApiResponse({
@@ -63,11 +63,11 @@ export class FollowController {
     
     if (follow) {
       await this.followService.unfollow(follow);
-      return new DFollowAction(FOLLOW_ACTION_TYPE.UN_FOLLOW);
+      return new DFollowAction(FOLLOW_ACTION_TYPE.UN_FOLLOW, follow);
     }
 
     const newFollow = await this.followService.followCorporation(follower, corporation);
-    return new DFollowAction(FOLLOW_ACTION_TYPE.FOLLOW);
+    return new DFollowAction(FOLLOW_ACTION_TYPE.FOLLOW, newFollow);
   }
 
   @ApiResponse({
@@ -87,11 +87,11 @@ export class FollowController {
     
     if (follow) {
       await this.followService.unfollow(follow);
-      return new DFollowAction(FOLLOW_ACTION_TYPE.UN_FOLLOW);
+      return new DFollowAction(FOLLOW_ACTION_TYPE.UN_FOLLOW, follow);
     }
 
     const newFollow = await this.followService.followAlliance(follower, alliance);
-    return new DFollowAction(FOLLOW_ACTION_TYPE.FOLLOW);
+    return new DFollowAction(FOLLOW_ACTION_TYPE.FOLLOW, newFollow);
   }
 
 }

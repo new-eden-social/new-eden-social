@@ -14,7 +14,6 @@ export class AuthenticationController {
 
   constructor(
     private authenticationService: AuthenticationService,
-    private followService: FollowService,
   ) {
   }
 
@@ -36,17 +35,15 @@ export class AuthenticationController {
   @Get('/sso/verify')
   public async verify(
     @Headers('authorization') token: string,
-  ): Promise<DCharacter> {
+  ): Promise<DCharacterShort> {
     if (!token) throw new HttpException(
       'Authorization header is required!',
       HttpStatus.BAD_REQUEST);
 
     const character = await this.authenticationService
     .verifyAuthentication(token.slice('Bearer '.length));
-    const following = await this.followService.getCharacterFollowing(character);
-    const followers = await this.followService.getCharacterFollowers(character);
 
-    return new DCharacter(character, followers, following, 0);
+    return new DCharacterShort(character);
   }
 
   @ApiResponse({

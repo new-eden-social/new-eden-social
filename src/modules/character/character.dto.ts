@@ -3,8 +3,8 @@ import { Character } from './character.entity';
 import { ICharacterPortrait } from './character.interface';
 import { DPagination } from '../core/pagination/paggination.dto';
 import { ApiModelProperty } from '@nestjs/swagger';
-import { DFollowAction, DFollow } from '../follow/follow.dto';
 import { Follow } from '../follow/follow.entity';
+import { DFollow } from '../follow/follow.dto';
 
 export class DCharacterPortrait {
   @ApiModelProperty()
