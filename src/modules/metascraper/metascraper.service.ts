@@ -42,6 +42,10 @@ export class MetascraperService {
     return <IURLMetadata>(await this.metascraper({ html: response.data, url }));
   }
 
+  isUrlmetaForKillmail(metadata: IURLMetadata): boolean {
+    return metadata.publisher === 'zkillboard.com' && metadata.url.includes('/kill/')
+  }
+
   processKillmail(url: string): Promise<Killmail> {
     const id = +url.match(/kill\/\d+\//)[0].replace('kill', '').replace(/\//g, '');
     return this.killmailService.getById(id);

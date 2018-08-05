@@ -33,6 +33,7 @@ import {
   CorporationPostedOnCharacterWallEvent,
   CorporationPostedOnCorporationWallEvent,
 } from './events/create.corporation.event';
+import { IURLMetadata } from '../metascraper/metascraper.interface';
 
 @Entity()
 export class Post extends AggregateRoot {
@@ -48,6 +49,9 @@ export class Post extends AggregateRoot {
 
   @ManyToOne(type => Killmail, killmail => killmail.posts, { nullable: true, eager: true })
   killmail: Killmail;
+
+  @Column('jsonb', { nullable: true })
+  url: IURLMetadata;
 
   @CreateDateColumn()
   createdAt: Date;

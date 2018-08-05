@@ -28,14 +28,9 @@ export class MetascraperController {
 
   private async getProperUrlMeta(metadata: IURLMetadata) {
 
-    // Some secifics for certain publishers
-    switch(metadata.publisher) {
-      case 'zkillboard.com':
-        // Zkill link that is killmail, we transform to killmail url
-        if (metadata.title.endsWith('Killmail')) {
-          const killmail = await this.metascraperService.processKillmail(metadata.url);
-          return new DUrlMetaKillmail(metadata, killmail);
-        }
+    if (this.metascraperService.isUrlmetaForKillmail(metadata)) {
+      const killmail = await this.metascraperService.processKillmail(metadata.url);
+      return new DUrlMetaKillmail(metadata, killmail);
     }
 
     return new DUrlMetaWebsite(metadata);

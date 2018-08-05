@@ -17,6 +17,8 @@ import { NotificationModule } from '../notification/notification.module';
 import { GooglePubSubModule } from '../core/googlePubSub/googlePubSub.module';
 import { GooglePubSub } from '../core/googlePubSub/googlePubSub';
 import { WebsocketModule } from '../websocket/websocket.module';
+import { MetascraperModule } from '../metascraper/metascraper.module';
+import { KillmailModule } from '../killmail/killmail.module';
 
 @Module({
   imports: [
@@ -30,6 +32,7 @@ import { WebsocketModule } from '../websocket/websocket.module';
     NotificationModule,
     WebsocketModule,
 
+    forwardRef(() => MetascraperModule),
     forwardRef(() => AuthenticationModule),
     forwardRef(() => CharacterModule),
     forwardRef(() => CorporationModule),

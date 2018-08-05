@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
 import { VCreatePost } from './post.validate';
 import { Character } from '../character/character.entity';
@@ -17,7 +17,7 @@ import { PostRepository } from './post.repository';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreatePostCommand } from './commands/create.command';
 import { InjectRepository } from '@nestjs/typeorm';
-import { SeenNotificationCommand } from '../notification/commands/seen.command';
+import { MetascraperService } from '../metascraper/metascraper.service';
 
 @Injectable()
 export class PostService {
@@ -29,6 +29,7 @@ export class PostService {
     private hashtagService: HashtagService,
     private universeLocationService: UniverseLocationService,
     private loggerService: LoggerService,
+    private metascraperService: MetascraperService,
     private commandBus: CommandBus,
     @InjectRepository(PostRepository)
     private postRepository: PostRepository,
@@ -266,6 +267,16 @@ export class PostService {
 
     if (postData.locationId)
       post.location = await this.universeLocationService.get(postData.locationId);
+
+    if (postData.url) {
+      const urlMetadata = await this.metascraperService.processUrl(postData.url);
+      post.url = urlMetadata;
+
+      if (this.metascraperService.isUrlmetaForKillmail(urlMetadata)) {
+        const killmail = await this.metascraperService.processKillmail(urlMetadata.url);
+        post.killmail = killmail;
+      }
+    }
 
     post.hashtags = await this.hashtagService.parse(post.content);
 

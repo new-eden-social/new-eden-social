@@ -1,4 +1,4 @@
-import { IKillmailRawWithoutZKB, IKillmailRaw } from "../zkillboard/zkillboard.interface";
+import { IKillmailRawWithoutZKB, IKillmailRaw } from "../zkillboard.interface";
 
 export interface IKillmailStreamRaw {
   readonly killID: number;

@@ -7,6 +7,7 @@ import { DUniverseLocation } from '../universe/location/location.dto';
 import { DCorporationShort } from '../corporation/corporation.dto';
 import { DAllianceShort } from '../alliance/alliance.dto';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
+import { DUrlMeta, DUrlMetaKillmail, DUrlMetaWebsite } from '../metascraper/metascraper.dto';
 
 export class DPost {
   @ApiModelProperty()
@@ -23,6 +24,8 @@ export class DPost {
   alliance?: DAllianceShort;
   @ApiModelPropertyOptional()
   killmail?: DKillmailShort;
+  @ApiModelPropertyOptional()
+  url: DUrlMeta;
   @ApiModelProperty({ type: String, isArray: true })
   hashtags: string[];
   @ApiModelPropertyOptional()
@@ -46,10 +49,23 @@ export class DPost {
     this.hashtags = post.hashtags.map(h => h.name);
     this.createdAt = post.createdAt;
     if (post.location) this.location = new DUniverseLocation(post.location);
-    if (post.killmail) this.killmail = new DKillmailShort(post.killmail);
     if (post.characterWall) this.characterWall = new DCharacterShort(post.characterWall);
     if (post.corporationWall) this.corporationWall = new DCorporationShort(post.corporationWall);
     if (post.allianceWall) this.allianceWall = new DAllianceShort(post.allianceWall);
+
+    // Depending on post type, killmail is used in different ways
+    // for KILLMAIL type, it's killmail that triggered post creation
+    // for TEXT type it's killmail from url inside post
+    switch(post.type) {
+      case POST_TYPES.KILLMAIL:
+        if (post.killmail) this.killmail = new DKillmailShort(post.killmail);
+        break;
+      case POST_TYPES.TEXT:
+        if (post.url) {
+          if (post.killmail) this.url = new DUrlMetaKillmail(post.url, post.killmail);
+          else this.url = new DUrlMetaWebsite(post.url);
+        }
+    }
   }
 }
 

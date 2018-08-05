@@ -4,9 +4,9 @@ import { UtilsModule } from './core/utils/utils.module';
 import { KillmailModule } from './killmail/killmail.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
-import { KillmailsStreamService } from './core/external/killmailsStream/killmailsStream.service';
+import { KillmailsStreamService } from './core/external/zkillboard/killmailsStream/killmailsStream.service';
 import { KillmailService } from './killmail/killmail.service';
-import { KillmailsStreamModule } from './core/external/killmailsStream/killmailsStream.module';
+import { KillmailsStreamModule } from './core/external/zkillboard/killmailsStream/killmailsStream.module';
 
 @Module({
   imports: [

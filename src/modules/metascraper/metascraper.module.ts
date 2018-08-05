@@ -1,13 +1,17 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { MetascraperService } from './metascraper.service';
 import { MetascraperController } from './metascraper.controller';
 import { KillmailModule } from '../killmail/killmail.module';
+import { PostModule } from '../post/post.module';
 
 @Module({
   imports: [
-    KillmailModule,
+    forwardRef(() => KillmailModule),
   ],
   providers: [
+    MetascraperService,
+  ],
+  exports: [
     MetascraperService,
   ],
   controllers: [

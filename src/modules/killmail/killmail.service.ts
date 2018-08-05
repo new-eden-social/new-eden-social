@@ -1,6 +1,5 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Killmail } from './killmail.entity';
-import { KillmailsStreamService } from '../core/external/killmailsStream/killmailsStream.service';
 import { KillmailParticipantService } from './participant/participant.service';
 import { PostService } from '../post/post.service';
 import { LoggerService } from '../core/logger/logger.service';

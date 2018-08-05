@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import * as WebSocket from 'ws';
-import { IKillmail } from '../zkillboard/zkillboard.interface';
+import { IKillmail } from '../zkillboard.interface';
 import { IKillmailStreamRaw } from './killmailsStream.interface';
-import { ZKillboardService } from '../zkillboard/zkillboard.service';
+import { ZKillboardService } from '../zkillboard.service';
 
 @Injectable()
 export class KillmailsStreamService {

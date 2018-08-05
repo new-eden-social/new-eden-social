@@ -1,6 +1,6 @@
 import { POST_CREATABLE_TYPES, POST_TYPES } from './post.constants';
-import { IsIn, IsNumber, IsOptional, IsString } from 'class-validator';
-import { ApiModelProperty } from '@nestjs/swagger';
+import { IsIn, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
+import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 
 export class VCreatePost {
 
@@ -14,21 +14,26 @@ export class VCreatePost {
 
   @IsOptional()
   @IsNumber()
-  @ApiModelProperty()
+  @ApiModelPropertyOptional()
   locationId: number;
 
   @IsOptional()
   @IsNumber()
-  @ApiModelProperty()
+  @ApiModelPropertyOptional()
   corporationId: number;
 
   @IsOptional()
   @IsNumber()
-  @ApiModelProperty()
+  @ApiModelPropertyOptional()
   characterId: number;
 
   @IsOptional()
   @IsNumber()
-  @ApiModelProperty()
+  @ApiModelPropertyOptional()
   allianceId: number;
+
+  @IsOptional()
+  @IsUrl()
+  @ApiModelPropertyOptional()
+  url: string;
 }

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { KillmailsStreamService } from './killmailsStream.service';
-import { ZKillboardModule } from '../zkillboard/zkillboard.module';
+import { ZKillboardModule } from '../zkillboard.module';
 
 @Module({
   imports: [
