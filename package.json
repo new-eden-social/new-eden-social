@@ -91,7 +91,7 @@
     "@types/chai": "^4.1.4",
     "@types/faker": "^4.1.2",
     "@types/mocha": "^5.2.4",
-    "@types/socket.io": "^1.4.36",
+    "@types/socket.io": "^2.1.0",
     "chai": "^4.1.2",
     "coveralls": "^3.0.2",
     "cz-conventional-changelog": "^2.1.0",
