@@ -60,7 +60,7 @@
     "axios": "^0.18.0",
     "bluebird": "^3.5.1",
     "class-sanitizer": "^0.0.5",
-    "class-transformer": "^0.1.9",
+    "class-transformer": "^0.2.0",
     "class-validator": "^0.8.5",
     "dotenv": "^6.0.0",
     "fastify": "^1.8.0",
