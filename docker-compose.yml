@@ -1,4 +1,4 @@
-version: '3'
+version: '3.4'
 
 services:
 
@@ -37,7 +37,9 @@ services:
           - zkill-nginx
 
     api-image:
-        build: .
+        build:
+          context: .
+          target: build-env
         image: evebook/api
         entrypoint: echo "Image-only service is not intended to be run, exiting."
 
@@ -49,7 +51,7 @@ services:
         ports:
           - "3000:3000"
         volumes:
-          - .:/app/src
+          - ./src:/app/src
           - /app/src/node_modules
         links:
           - postgres
@@ -68,7 +70,7 @@ services:
         ports:
           - "3001:3001"
         volumes:
-          - .:/app/src
+          - ./src:/app/src
           - /app/src/node_modules
         links:
           - postgres
@@ -85,7 +87,7 @@ services:
         ports:
           - "3002:3002"
         volumes:
-          - .:/app/src
+          - ./src:/app/src
           - /app/src/node_modules
         links:
           - postgres

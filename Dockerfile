@@ -1,4 +1,4 @@
-FROM node:carbon-alpine
+FROM node:carbon-alpine as build-env
  
 # For building native dependencies
 RUN apk add --no-cache make gcc g++ python
@@ -20,20 +20,16 @@ ENV PATH /app/node_modules/.bin:$PATH
 # Dependencies
 RUN yarn install --frozen-lockfile
 # Global Dependencies
-RUN yarn global add nodemon ts-node typescript
-
-# Create seperate folder for code source
-RUN mkdir /app/src
-WORKDIR /app/src
+RUN yarn global add typescript nodemon ts-node
 
 # Copy app source
 COPY . .
 
-# Delete dependencies possibly got from local dev env
-RUN rm -rf node_modules
-
 # Build app
 RUN yarn build
 
-# Default run prodction
-CMD [ "yarn", "prod" ]
+# Production image
+FROM gcr.io/distroless/nodejs as prod
+COPY --from=build-env /app/dist /app
+WORKDIR /app
+CMD ["api.js"]
