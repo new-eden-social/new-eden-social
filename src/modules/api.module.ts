@@ -1,9 +1,8 @@
-import { Module, NestModule } from '@nestjs/common';
+import { Module, NestModule, MiddlewareConsumer } from '@nestjs/common';
 import { SearchModule } from './search/search.module';
 import { CharacterModule } from './character/character.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { PostModule } from './post/post.module';
-import { MiddlewaresConsumer } from '@nestjs/common/interfaces/middlewares';
 import { RequestContextMiddleware } from './core/requestContext/requestContext.middleware';
 import { AllianceModule } from './alliance/alliance.module';
 import { CorporationModule } from './corporation/corporation.module';
@@ -15,7 +14,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { NotificationModule } from './notification/notification.module';
 import { AuthMiddleware } from './authentication/authentication.middleware';
 import { WebsocketModule } from './websocket/websocket.module';
-import { GooglePubSubModule } from './core/googlePubSub/googlePubSub.module';
 import { MorganModule, MorganInterceptor } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LOGGER_LEVEL } from './core/logger/logger.constants';
@@ -37,11 +35,10 @@ import { MetascraperModule } from './metascraper/metascraper.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       logging: <LoggerOptions>process.env.DB_LOG,
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
       synchronize: process.env.DB_SYNC === 'true',
     }),
 
-    GooglePubSubModule.forRoot(),
     MorganModule.forRoot(),
 
     StatusModule,
@@ -67,9 +64,9 @@ import { MetascraperModule } from './metascraper/metascraper.module';
   ],
 })
 export class ApiModule implements NestModule {
-  configure(consumer: MiddlewaresConsumer) {
+  configure(consumer: MiddlewareConsumer) {
     consumer
-    .apply([RequestContextMiddleware, AuthMiddleware])
+    .apply(RequestContextMiddleware, AuthMiddleware)
     .forRoutes('*');
   }
 }

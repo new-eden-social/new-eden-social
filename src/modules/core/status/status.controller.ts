@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { StatusService } from './status.service';
-import { IStatus } from './status.interface';
 import { DStatus } from './status.dto';
 
 @ApiUseTags('status')

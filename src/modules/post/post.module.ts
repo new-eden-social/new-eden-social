@@ -9,23 +9,18 @@ import { HashtagModule } from '../hashtag/hashtag.module';
 import { UniverseLocationModule } from '../universe/location/location.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostRepository } from './post.repository';
-import { CommandBus, CQRSModule, EventBus } from '@nestjs/cqrs';
+import { CommandBus, EventBus, CqrsModule } from '@nestjs/cqrs';
 import { commandHandlers } from './commands/handlers';
 import { eventHandlers } from './events/handlers';
 import { ModuleRef } from '@nestjs/core';
 import { NotificationModule } from '../notification/notification.module';
-import { GooglePubSubModule } from '../core/googlePubSub/googlePubSub.module';
-import { GooglePubSub } from '../core/googlePubSub/googlePubSub';
 import { WebsocketModule } from '../websocket/websocket.module';
 import { MetascraperModule } from '../metascraper/metascraper.module';
-import { KillmailModule } from '../killmail/killmail.module';
 
 @Module({
   imports: [
-    CQRSModule,
+    CqrsModule,
     TypeOrmModule.forFeature([PostRepository]),
-
-    // GooglePubSubModule.forFeature('test-topic', 'test-subscription'),
 
     UniverseLocationModule,
     HashtagModule,
@@ -55,21 +50,18 @@ export class PostModule implements OnModuleInit {
     private readonly moduleRef: ModuleRef,
     private readonly command$: CommandBus,
     private readonly event$: EventBus,
-    // private readonly googlePubSub: GooglePubSub,
   ) {
-    // FIXME: Nasty hack, for some reason onModuleInit isn't executed
-    this.onModuleInit();
   }
 
   onModuleInit() {
-    this.command$.setModuleRef(this.moduleRef);
-    this.event$.setModuleRef(this.moduleRef);
+    // this.command$.setModuleRef(this.moduleRef);
+    // this.event$.setModuleRef(this.moduleRef);
 
-    // subject$ is protected and doesn't work :(
-    // this.googlePubSub.bridgeEventsTo(this.event$.subject$);
-    // this.event$.publisher = this.googlePubSub;
+    // // subject$ is protected and doesn't work :(
+    // // this.googlePubSub.bridgeEventsTo(this.event$.subject$);
+    // // this.event$.publisher = this.googlePubSub;
 
-    this.event$.register(eventHandlers);
-    this.command$.register(commandHandlers);
+    // this.event$.register(eventHandlers);
+    // this.command$.register(commandHandlers);
   }
 }

@@ -12,12 +12,13 @@ WORKDIR /app
 
 # Needed to install dependencies
 COPY package.json /app
+COPY yarn.lock /app
 
 # Set dependencies path
 ENV PATH /app/node_modules/.bin:$PATH
 
 # Dependencies
-RUN yarn install
+RUN yarn install --frozen-lockfile
 # Global Dependencies
 RUN yarn global add nodemon ts-node typescript
 

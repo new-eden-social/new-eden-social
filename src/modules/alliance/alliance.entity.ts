@@ -7,7 +7,6 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IAllianceStatistics } from '../core/external/zkillboard/zkillboard.interface';
 import { IGetAlliance } from '../core/external/esi/esi.interface';
 import { Corporation } from '../corporation/corporation.entity';
 import { Post } from '../post/post.entity';

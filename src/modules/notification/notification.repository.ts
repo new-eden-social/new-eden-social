@@ -2,7 +2,6 @@ import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 import { Notification } from './notification.entity';
 import { Character } from '../character/character.entity';
-import { AggregateRoot } from '@nestjs/cqrs';
 
 @EntityRepository(Notification)
 export class NotificationRepository extends Repository<Notification> {

@@ -1,9 +1,9 @@
-import { Injectable } from "@nestjs/common";
+import { Injectable } from '@nestjs/common';
 import * as metascraper from 'metascraper';
-import axios, { AxiosInstance, AxiosPromise } from "axios";
-import { IURLMetadata } from "./metascraper.interface";
-import { Killmail } from "../killmail/killmail.entity";
-import { KillmailService } from "../killmail/killmail.service";
+import axios, { AxiosInstance, AxiosPromise } from 'axios';
+import { IURLMetadata } from './metascraper.interface';
+import { Killmail } from '../killmail/killmail.entity';
+import { KillmailService } from '../killmail/killmail.service';
 
 @Injectable()
 export class MetascraperService {
@@ -12,12 +12,12 @@ export class MetascraperService {
   private client: AxiosInstance;
 
   private static userAgent = `eve-book/${process.env.npm_package_version}`
-  + ` https://github.com/evebook/api`;
+  + ' https://github.com/evebook/api';
 
   constructor(
     private killmailService: KillmailService,
   ) {
-    this.metascraper = metascraper.load([
+    this.metascraper = metascraper([
       require('metascraper-author')(),
       require('metascraper-date')(),
       require('metascraper-description')(),
@@ -28,7 +28,7 @@ export class MetascraperService {
       require('metascraper-title')(),
       require('metascraper-url')(),
       require('metascraper-video-provider')(),
-    ])
+    ]);
 
     this.client = axios.create({
       headers: {
@@ -43,7 +43,7 @@ export class MetascraperService {
   }
 
   isUrlmetaForKillmail(metadata: IURLMetadata): boolean {
-    return metadata.publisher === 'zkillboard.com' && metadata.url.includes('/kill/')
+    return metadata.publisher === 'zkillboard.com' && metadata.url.includes('/kill/');
   }
 
   processKillmail(url: string): Promise<Killmail> {

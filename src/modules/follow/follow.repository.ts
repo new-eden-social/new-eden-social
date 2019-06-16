@@ -1,86 +1,86 @@
-import { EntityRepository, Repository } from "typeorm";
-import { Follow } from "./follow.entity";
-import { Character } from "../character/character.entity";
-import { Corporation } from "../corporation/corporation.entity";
-import { Alliance } from "../alliance/alliance.entity";
+import { EntityRepository, Repository } from 'typeorm';
+import { Follow } from './follow.entity';
+import { Character } from '../character/character.entity';
+import { Corporation } from '../corporation/corporation.entity';
+import { Alliance } from '../alliance/alliance.entity';
 
 @EntityRepository(Follow)
 export class FollowRepository extends Repository<Follow> {
 
-    getFollowingCharacter(
+  getFollowingCharacter(
         follower: Character,
         followingCharacter: Character,
     ): Promise<Follow> {
-        return this.findOne({
-            where: {
-                follower,
-                followingCharacter,
-            }
-        });
-    }
+    return this.findOne({
+      where: {
+        follower,
+        followingCharacter,
+      },
+    });
+  }
 
-    getFollowingCorporation(
+  getFollowingCorporation(
         follower: Character,
         followingCorporation: Corporation,
     ): Promise<Follow> {
-        return this.findOne({
-            where: {
-                follower,
-                followingCorporation,
-            }
-        });
-    }
+    return this.findOne({
+      where: {
+        follower,
+        followingCorporation,
+      },
+    });
+  }
 
-    getFollowingAlliance(
+  getFollowingAlliance(
         follower: Character,
         followingAlliance: Alliance,
     ): Promise<Follow> {
-        return this.findOne({
-            where: {
-                follower,
-                followingAlliance,
-            }
-        });
-    }
+    return this.findOne({
+      where: {
+        follower,
+        followingAlliance,
+      },
+    });
+  }
 
-    getCharacterFollowers(
+  getCharacterFollowers(
         character: Character,
     ): Promise<Follow[]> {
-        return this.find({
-            where: {
-                followingCharacter: character,
-            }
-        })
-    }
+    return this.find({
+      where: {
+        followingCharacter: character,
+      },
+    });
+  }
 
-    getCorporationFollowers(
+  getCorporationFollowers(
         corporation: Corporation,
     ): Promise<Follow[]> {
-        return this.find({
-            where: {
-                followingCorporation: corporation,
-            }
-        })
-    }
+    return this.find({
+      where: {
+        followingCorporation: corporation,
+      },
+    });
+  }
 
-    getAllianceFollowers(
+  getAllianceFollowers(
         alliance: Alliance,
     ): Promise<Follow[]> {
-        return this.find({
-            where: {
-                followingAlliance: alliance,
-            }
-        })
-    }
+    return this.find({
+      where: {
+        followingAlliance: alliance,
+      },
+    });
+  }
 
-    getCharacterFollowing(
+  getCharacterFollowing(
         character: Character,
     ): Promise<Follow[]> {
-        return this.find({
-            where: {
-                follower: character,
-            }
-        })
-    }
+    return this.find({
+      where: {
+        follower: character,
+      },
+    });
+  }
 
 }

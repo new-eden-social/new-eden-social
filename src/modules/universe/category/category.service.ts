@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { UniverseCategory } from './category.entity';
 import { ESIService } from '../../core/external/esi/esi.service';
 import { ESIEntetyNotFoundException } from '../../core/external/esi/esi.exceptions';

@@ -7,7 +7,7 @@ import 'zone.js/dist/long-stack-trace-zone.js';
 
 @Injectable()
 export class RequestContextMiddleware implements NestMiddleware {
-  resolve() {
+  use() {
     return (req, res, next) => {
       const requestContext = new RequestContext(req, res);
       Zone.current

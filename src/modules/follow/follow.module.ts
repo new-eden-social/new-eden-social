@@ -4,7 +4,7 @@ import { CharacterModule } from '../character/character.module';
 import { CorporationModule } from '../corporation/corporation.module';
 import { AllianceModule } from '../alliance/alliance.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CommandBus, CQRSModule, EventBus } from '@nestjs/cqrs';
+import { CommandBus, EventBus, CqrsModule } from '@nestjs/cqrs';
 import { ModuleRef } from '@nestjs/core';
 import { NotificationModule } from '../notification/notification.module';
 import { WebsocketModule } from '../websocket/websocket.module';
@@ -16,7 +16,7 @@ import { FollowRepository } from './follow.repository';
 
 @Module({
   imports: [
-    CQRSModule,
+    CqrsModule,
     TypeOrmModule.forFeature([FollowRepository]),
 
     AuthenticationModule,
@@ -44,15 +44,13 @@ export class FollowModule implements OnModuleInit {
     private readonly command$: CommandBus,
     private readonly event$: EventBus,
   ) {
-    // FIXME: Nasty hack, for some reason onModuleInit isn't executed
-    this.onModuleInit();
   }
 
   onModuleInit() {
-    this.command$.setModuleRef(this.moduleRef);
-    this.event$.setModuleRef(this.moduleRef);
+    // this.command$.setModuleRef(this.moduleRef);
+    // this.event$.setModuleRef(this.moduleRef);
 
-    this.event$.register(eventHandlers);
-    this.command$.register(commandHandlers);
+    // this.event$.register(eventHandlers);
+    // this.command$.register(commandHandlers);
   }
 }

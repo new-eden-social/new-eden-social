@@ -12,7 +12,7 @@ export class CreatePostCommandHandler implements ICommandHandler<CreatePostComma
   ) {
   }
 
-  async execute(command: CreatePostCommand, resolve: (value?) => void) {
+  async execute(command: CreatePostCommand) {
     const { post } = command;
     const entity = this.publisher.mergeObjectContext(
       await this.repository.save(post),
@@ -22,6 +22,5 @@ export class CreatePostCommandHandler implements ICommandHandler<CreatePostComma
     await entity.create();
 
     entity.commit();
-    resolve(entity);
   }
 }

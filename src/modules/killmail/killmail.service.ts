@@ -13,8 +13,8 @@ export class KillmailService {
 
   constructor(
     private killmailParticipantService: KillmailParticipantService,
-    private zkillmailService: ZKillboardService,
-    private postService: PostService,
+    private zkillboardService: ZKillboardService,
+    // private postService: PostService,
     private loggerService: LoggerService,
     @InjectRepository(KillmailRepository)
     private killmailRepository: KillmailRepository,
@@ -43,7 +43,7 @@ export class KillmailService {
       return;
     }
 
-    await this.postService.createKillmailPost(killmail, finalBlow.character);
+    // await this.postService.createKillmailPost(killmail, finalBlow.character);
   }
 
   /**
@@ -58,7 +58,7 @@ export class KillmailService {
       return found;
     }
 
-    const zkillmail = await this.zkillmailService.getKillmail(id);
+    const zkillmail = await this.zkillboardService.getKillmail(id);
     return this.create(zkillmail);
   }
 

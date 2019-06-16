@@ -4,12 +4,9 @@ import {
 } from 'typeorm';
 import { Post } from '../post/post.entity';
 import { Character } from '../character/character.entity';
-import { v4 as uuid } from 'uuid';
 import { Corporation } from '../corporation/corporation.entity';
 import { Alliance } from '../alliance/alliance.entity';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { CreateNotificationEvent } from '../notification/events/create.event';
-import { Notification } from '../notification/notification.entity';
 import { CreateCommentEvent } from './events/create.event';
 
 @Entity()

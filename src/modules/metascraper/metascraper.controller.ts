@@ -1,8 +1,8 @@
-import { ApiUseTags, ApiResponse } from "@nestjs/swagger";
-import { Controller, HttpStatus, Param, Get } from "@nestjs/common";
-import { DUrlMeta, DUrlMetaKillmail, DUrlMetaWebsite } from "./metascraper.dto";
-import { MetascraperService } from "./metascraper.service";
-import { IURLMetadata } from "./metascraper.interface";
+import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
+import { Controller, HttpStatus, Param, Get } from '@nestjs/common';
+import { DUrlMeta, DUrlMetaKillmail, DUrlMetaWebsite } from './metascraper.dto';
+import { MetascraperService } from './metascraper.service';
+import { IURLMetadata } from './metascraper.interface';
 
 @ApiUseTags('metascraper')
 @Controller('metascraper')

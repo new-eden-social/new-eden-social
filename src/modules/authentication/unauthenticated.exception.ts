@@ -21,4 +21,3 @@ export class WsUnauthenticatedException extends WsException {
     );
   }
 }
-

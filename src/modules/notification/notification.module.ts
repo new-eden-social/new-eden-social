@@ -1,4 +1,4 @@
-import { CommandBus, CQRSModule, EventBus } from '@nestjs/cqrs';
+import { CommandBus, EventBus, CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthenticationModule } from '../authentication/authentication.module';
 import { Module, OnModuleInit } from '@nestjs/common';
@@ -12,7 +12,7 @@ import { WebsocketModule } from '../websocket/websocket.module';
 
 @Module({
   imports: [
-    CQRSModule,
+    CqrsModule,
     TypeOrmModule.forFeature([NotificationRepository]),
 
     AuthenticationModule,
@@ -36,15 +36,13 @@ export class NotificationModule implements OnModuleInit {
     private readonly command$: CommandBus,
     private readonly event$: EventBus,
   ) {
-    // FIXME: Nasty hack, for some reason onModuleInit isn't executed
-    this.onModuleInit();
   }
 
   onModuleInit() {
-    this.command$.setModuleRef(this.moduleRef);
-    this.event$.setModuleRef(this.moduleRef);
+    // this.command$.setModuleRef(this.moduleRef);
+    // this.event$.setModuleRef(this.moduleRef);
 
-    this.event$.register(eventHandlers);
-    this.command$.register(commandHandlers);
+    // this.event$.register(eventHandlers);
+    // this.command$.register(commandHandlers);
   }
 }

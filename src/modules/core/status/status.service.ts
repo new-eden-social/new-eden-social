@@ -1,7 +1,6 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ESIService } from '../external/esi/esi.service';
 import { IStatus, IESIStatus } from './status.interface';
-import { IGetStatus } from '../external/esi/esi.interface';
 
 @Injectable()
 export class StatusService {
@@ -21,7 +20,7 @@ export class StatusService {
     };
   }
 
-async esiStatus(): Promise<IESIStatus> {
+  async esiStatus(): Promise<IESIStatus> {
     try {
       const esiStatus = await this.esiService.status();
       return {
@@ -29,12 +28,12 @@ async esiStatus(): Promise<IESIStatus> {
         serverVersion: esiStatus.server_version,
         startTime: esiStatus.start_time,
         state: 'OK',
-      }
-    } catch(exception) {
+      };
+    } catch (exception) {
       return {
         exception: exception.message,
         state: 'NOK',
-      }
+      };
     }
   }
 }

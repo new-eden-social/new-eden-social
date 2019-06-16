@@ -2,7 +2,6 @@ import { Module, forwardRef } from '@nestjs/common';
 import { MetascraperService } from './metascraper.service';
 import { MetascraperController } from './metascraper.controller';
 import { KillmailModule } from '../killmail/killmail.module';
-import { PostModule } from '../post/post.module';
 
 @Module({
   imports: [
@@ -16,7 +15,7 @@ import { PostModule } from '../post/post.module';
   ],
   controllers: [
     MetascraperController,
-  ]
+  ],
 })
 export class MetascraperModule {
 }

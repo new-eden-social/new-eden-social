@@ -12,7 +12,7 @@ export class SeenNotificationCommandHandler implements ICommandHandler<SeenNotif
   ) {
   }
 
-  async execute(command: SeenNotificationCommand, resolve: (value?) => void) {
+  async execute(command: SeenNotificationCommand) {
     const { notification } = command;
 
     const entity = this.publisher.mergeObjectContext(
@@ -23,6 +23,5 @@ export class SeenNotificationCommandHandler implements ICommandHandler<SeenNotif
     await entity.seen();
 
     entity.commit();
-    resolve(entity);
   }
 }

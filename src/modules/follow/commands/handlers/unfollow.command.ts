@@ -12,7 +12,7 @@ export class UnFollowCommandHandler implements ICommandHandler<UnFollowCommand> 
   ) {
   }
 
-  async execute(command: UnFollowCommand, resolve: (value?) => void) {
+  async execute(command: UnFollowCommand) {
     const { follow } = command;
 
     // Sends actual event
@@ -21,7 +21,5 @@ export class UnFollowCommandHandler implements ICommandHandler<UnFollowCommand> 
     follow.commit();
 
     await this.repository.delete(follow.id);
-
-    resolve(follow);
   }
 }

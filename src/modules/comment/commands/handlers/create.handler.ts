@@ -12,7 +12,7 @@ export class CreateCommentCommandHandler implements ICommandHandler<CreateCommen
   ) {
   }
 
-  async execute(command: CreateCommentCommand, resolve: (value?) => void) {
+  async execute(command: CreateCommentCommand) {
     const { comment } = command;
     const entity = this.publisher.mergeObjectContext(
       await this.repository.save(comment),
@@ -22,6 +22,5 @@ export class CreateCommentCommandHandler implements ICommandHandler<CreateCommen
     await entity.create();
 
     entity.commit();
-    resolve(entity);
   }
 }

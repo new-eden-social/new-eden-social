@@ -3,6 +3,7 @@ import {
   NestInterceptor,
   ExecutionContext,
   HttpException,
+  CallHandler,
 } from '@nestjs/common';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
@@ -16,12 +17,12 @@ export class HttpLoggerExceptionInterceptor implements NestInterceptor {
 
   intercept(
     context: ExecutionContext,
-    call$: Observable<any>,
+    next: CallHandler,
   ): Observable<any> {
     const request = context.switchToHttp().getRequest();
 
     // first param would be for events, second is for errors
-    return call$.do(null, (exception) => {
+    return next.handle().do(null, (exception) => {
       if (exception instanceof HttpException) {
         // If 500, log as error
         if (500 <= exception.getStatus()) {
@@ -51,12 +52,12 @@ export class WsLoggerExceptionInterceptor implements NestInterceptor {
 
   intercept(
     context: ExecutionContext,
-    call$: Observable<any>,
+    next: CallHandler,
   ): Observable<any> {
     const client = context.switchToWs().getClient();
 
     // first param would be for events, second is for errors
-    return call$.do(null, (exception) => {
+    return next.handle().do(null, (exception) => {
       console.log(exception.message);
       console.error(JSON.parse(JSON.stringify(exception)));
     });

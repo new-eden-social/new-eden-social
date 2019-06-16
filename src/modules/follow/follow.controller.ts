@@ -1,14 +1,14 @@
-import { ApiUseTags, ApiResponse, ApiBearerAuth } from "@nestjs/swagger";
-import { Controller, HttpStatus, Param, UseGuards, Post } from "@nestjs/common";
-import { Character } from "../character/character.entity";
-import { AuthenticatedCharacter } from "../authentication/authentication.decorators";
-import { AuthenticationGuard } from "../authentication/authentication.guard";
-import { DFollowAction } from "./follow.dto";
-import { FollowService } from "./follow.service";
-import { CharacterService } from "../character/character.service";
-import { CorporationService } from "../corporation/corporation.service";
-import { AllianceService } from "../alliance/alliance.service";
-import { FOLLOW_ACTION_TYPE } from "./follow.constants";
+import { ApiUseTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import { Controller, HttpStatus, Param, UseGuards, Post } from '@nestjs/common';
+import { Character } from '../character/character.entity';
+import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
+import { AuthenticationGuard } from '../authentication/authentication.guard';
+import { DFollowAction } from './follow.dto';
+import { FollowService } from './follow.service';
+import { CharacterService } from '../character/character.service';
+import { CorporationService } from '../corporation/corporation.service';
+import { AllianceService } from '../alliance/alliance.service';
+import { FOLLOW_ACTION_TYPE } from './follow.constants';
 
 @ApiUseTags('follow')
 @Controller('follow')
@@ -19,7 +19,7 @@ export class FollowController {
     private characterService: CharacterService,
     private corporationService: CorporationService,
     private allianceService: AllianceService,
-  ){
+  ) {
   }
 
   @ApiResponse({
@@ -36,7 +36,7 @@ export class FollowController {
   ): Promise<DFollowAction> {
     const character = await this.characterService.get(characterId);
     const follow = await this.followService.checkIfFolowingCharacter(follower, character);
-    
+
     if (follow) {
       await this.followService.unfollow(follow);
       return new DFollowAction(FOLLOW_ACTION_TYPE.UN_FOLLOW, follow);
@@ -60,7 +60,7 @@ export class FollowController {
   ): Promise<DFollowAction> {
     const corporation = await this.corporationService.get(corporationId);
     const follow = await this.followService.checkIfFolowingCorporation(follower, corporation);
-    
+
     if (follow) {
       await this.followService.unfollow(follow);
       return new DFollowAction(FOLLOW_ACTION_TYPE.UN_FOLLOW, follow);
@@ -84,7 +84,7 @@ export class FollowController {
   ): Promise<DFollowAction> {
     const alliance = await this.allianceService.get(allianceId);
     const follow = await this.followService.checkIfFolowingAlliance(follower, alliance);
-    
+
     if (follow) {
       await this.followService.unfollow(follow);
       return new DFollowAction(FOLLOW_ACTION_TYPE.UN_FOLLOW, follow);

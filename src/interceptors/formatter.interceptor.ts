@@ -1,4 +1,4 @@
-import { ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common';
+import { ExecutionContext, Injectable, NestInterceptor, CallHandler } from '@nestjs/common';
 import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/internal/operators';
 
@@ -6,10 +6,10 @@ import { map } from 'rxjs/internal/operators';
 export class FormatterInterceptor implements NestInterceptor {
   intercept(
     context: ExecutionContext,
-    stream$: Observable<any>,
+    next: CallHandler,
   ): Observable<any> {
-    return stream$.pipe(
-      map(data => data),
-    );
+    return next
+    .handle()
+    .pipe(map(data => data));
   }
 }

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { CharacterModule } from '../../character/character.module';
 import { KillmailParticipantService } from './participant.service';
 import { UniverseTypeModule } from '../../universe/type/type.module';
@@ -9,7 +9,7 @@ import { KillmailParticipantRepository } from './participant.repository';
   imports: [
     TypeOrmModule.forFeature([KillmailParticipantRepository]),
 
-    CharacterModule,
+    forwardRef(() => CharacterModule),
     UniverseTypeModule,
   ],
   controllers: [],

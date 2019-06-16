@@ -5,7 +5,6 @@ import { PostModule } from '../post/post.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { KillmailRepository } from './killmail.repository';
 import { ZKillboardModule } from '../core/external/zkillboard/zkillboard.module';
-import { PostService } from '../post/post.service';
 
 @Module({
   imports: [
@@ -15,7 +14,6 @@ import { PostService } from '../post/post.service';
     KillmailParticipantModule,
     ZKillboardModule,
   ],
-  controllers: [],
   providers: [
     KillmailService,
   ],

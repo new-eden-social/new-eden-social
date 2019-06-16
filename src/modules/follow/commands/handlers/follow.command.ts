@@ -12,7 +12,7 @@ export class FollowCommandHandler implements ICommandHandler<FollowCommand> {
   ) {
   }
 
-  async execute(command: FollowCommand, resolve: (value?) => void) {
+  async execute(command: FollowCommand) {
     const { follow } = command;
     const entity = this.publisher.mergeObjectContext(
       await this.repository.save(follow),
@@ -22,6 +22,5 @@ export class FollowCommandHandler implements ICommandHandler<FollowCommand> {
     await entity.follow();
 
     entity.commit();
-    resolve(entity);
   }
 }

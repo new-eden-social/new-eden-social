@@ -4,7 +4,6 @@ import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
 import { HttpNotificationAlreadySeenException } from './notificationAlreadySeen.exception';
-import { CreatePostCommand } from '../post/commands/create.command';
 import { CommandBus } from '@nestjs/cqrs';
 import { SeenNotificationCommand } from './commands/seen.command';
 

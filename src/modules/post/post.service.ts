@@ -216,8 +216,9 @@ export class PostService {
       try {
         post.location = await this.universeLocationService.get(killmail.locationId);
       } catch (e) {
-        if (e instanceof ESIEntetyNotFoundException)
+        if (e instanceof ESIEntetyNotFoundException) {
           this.loggerService.warning('locationId was not found!');
+        }
         else throw e;
       }
     }
@@ -256,17 +257,21 @@ export class PostService {
    * @returns {Promise<Post>}
    */
   private async create(post: Post, postData: VCreatePost): Promise<Post> {
-    if (postData.allianceId)
+    if (postData.allianceId) {
       post.allianceWall = await this.allianceService.get(postData.allianceId);
+    }
 
-    if (postData.corporationId)
+    if (postData.corporationId) {
       post.corporationWall = await this.corporationService.get(postData.corporationId);
+    }
 
-    if (postData.characterId)
+    if (postData.characterId) {
       post.characterWall = await this.characterService.get(postData.characterId);
+    }
 
-    if (postData.locationId)
+    if (postData.locationId) {
       post.location = await this.universeLocationService.get(postData.locationId);
+    }
 
     if (postData.url) {
       const urlMetadata = await this.metascraperService.processUrl(postData.url);

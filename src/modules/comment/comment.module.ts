@@ -7,15 +7,15 @@ import { CharacterModule } from '../character/character.module';
 import { CommentController } from './comment.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentRepository } from './comment.repository';
-import { CommandBus, CQRSModule, EventBus } from '@nestjs/cqrs';
 import { ModuleRef } from '@nestjs/core';
 import { eventHandlers } from './events/handlers';
 import { commandHandlers } from './commands/handlers';
 import { WebsocketModule } from '../websocket/websocket.module';
+import { CqrsModule, CommandBus, EventBus } from '@nestjs/cqrs';
 
 @Module({
   imports: [
-    CQRSModule,
+    CqrsModule,
     TypeOrmModule.forFeature([CommentRepository]),
 
     CorporationModule,
@@ -42,15 +42,13 @@ export class CommentModule implements OnModuleInit {
     private readonly command$: CommandBus,
     private readonly event$: EventBus,
   ) {
-    // FIXME: Nasty hack, for some reason onModuleInit isn't executed
-    this.onModuleInit();
   }
 
   onModuleInit() {
-    this.command$.setModuleRef(this.moduleRef);
-    this.event$.setModuleRef(this.moduleRef);
+    // this.command$.setModuleRef(this.moduleRef);
+    // this.event$.setModuleRef(this.moduleRef);
 
-    this.event$.register(eventHandlers);
-    this.command$.register(commandHandlers);
+    // this.event$.register(eventHandlers);
+    // this.command$.register(commandHandlers);
   }
 }

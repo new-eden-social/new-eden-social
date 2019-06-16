@@ -8,7 +8,7 @@ export class AuthMiddleware implements NestMiddleware {
   constructor(private authenticationService: AuthenticationService) {
   }
 
-  resolve(): (req, res, next) => void {
+  use(): (req, res, next) => void {
     return async (req, res, next) => {
       // If no headers continue
       if (!req.headers['authorization']) return next();

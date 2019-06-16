@@ -1,4 +1,4 @@
-import { ReflectMetadata } from '@nestjs/common';
+import { SetMetadata } from '@nestjs/common';
 
 // tslint:disable-next-line:variable-name
-export const CorporationRoles = (...roles: string[]) => ReflectMetadata('corporationRoles', roles);
+export const CorporationRoles = (...roles: string[]) => SetMetadata('corporationRoles', roles);

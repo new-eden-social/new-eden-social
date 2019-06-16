@@ -12,7 +12,7 @@ export class CreateNotificationCommandHandler implements ICommandHandler<CreateN
   ) {
   }
 
-  async execute(command: CreateNotificationCommand, resolve: (value?) => void) {
+  async execute(command: CreateNotificationCommand) {
     const { notification } = command;
     const entity = this.publisher.mergeObjectContext(
       await this.repository.save(notification),
@@ -22,6 +22,5 @@ export class CreateNotificationCommandHandler implements ICommandHandler<CreateN
     await entity.create();
 
     entity.commit();
-    resolve(entity);
   }
 }

@@ -9,7 +9,6 @@ import { Character } from '../../../character/character.entity';
 import { Notification } from '../../../notification/notification.entity';
 import * as uuidv4 from 'uuid/v4';
 import { CreateNotificationCommand } from '../../../notification/commands/create.command';
-import { CharacterService } from '../../../character/character.service';
 
 @EventsHandler(
   CharacterPostedOnCharacterWallEvent,

@@ -2,7 +2,7 @@ import { ApiBearerAuth, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { Controller, Get, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { Pagination } from '../core/pagination/pagination.decorator';
 import { VPagination } from '../core/pagination/pagination.validation';
-import { DNotification, DNotificationList } from './notification.dto';
+import { DNotificationList } from './notification.dto';
 import { NotificationService } from './notification.service';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { Character } from '../character/character.entity';

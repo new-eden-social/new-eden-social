@@ -1,4 +1,4 @@
-import { NestFactory, FastifyAdapter } from '@nestjs/core';
+import { NestFactory } from '@nestjs/core';
 import { ApiModule } from './modules/api.module';
 import { ValidatorPipe } from './modules/core/validation/validator.pipe';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -15,8 +15,6 @@ import 'zone.js/dist/long-stack-trace-zone.js';
 async function bootstrap() {
   config();
 
-  // For some reason Fastify doesn't work
-  // const nestApp = await NestFactory.create(ApiModule, new FastifyAdapter());
   const nestApp = await NestFactory.create(ApiModule);
   nestApp.enableCors();
   nestApp.useGlobalPipes(new ValidatorPipe());
