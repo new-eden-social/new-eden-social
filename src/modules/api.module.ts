@@ -17,9 +17,9 @@ import { WebsocketModule } from './websocket/websocket.module';
 import { MorganModule, MorganInterceptor } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LOGGER_LEVEL } from './core/logger/logger.constants';
-import { StatusModule } from './core/status/status.module';
 import { FollowModule } from './follow/follow.module';
 import { MetascraperModule } from './metascraper/metascraper.module';
+import { HealthModule } from './core/health/health.module';
 
 @Module({
   imports: [
@@ -41,7 +41,7 @@ import { MetascraperModule } from './metascraper/metascraper.module';
 
     MorganModule.forRoot(),
 
-    StatusModule,
+    HealthModule,
     AuthenticationModule,
     SearchModule,
     AllianceModule,

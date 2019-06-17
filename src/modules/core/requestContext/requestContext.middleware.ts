@@ -7,18 +7,16 @@ import 'zone.js/dist/long-stack-trace-zone.js';
 
 @Injectable()
 export class RequestContextMiddleware implements NestMiddleware {
-  use() {
-    return (req, res, next) => {
-      const requestContext = new RequestContext(req, res);
-      Zone.current
-      .fork({
-        name: RequestContext.name,
-        properties: {
-          [RequestContext.name]: requestContext,
-        },
-      })
-      .fork(Zone['longStackTraceZoneSpec'])
-      .run(async () => await next());
-    };
+  use(req, res, next) {
+    const requestContext = new RequestContext(req, res);
+    Zone.current
+    .fork({
+      name: RequestContext.name,
+      properties: {
+        [RequestContext.name]: requestContext,
+      },
+    })
+    .fork(Zone['longStackTraceZoneSpec'])
+    .run(async () => await next());
   }
 }
