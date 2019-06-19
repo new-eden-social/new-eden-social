@@ -20,6 +20,10 @@
   <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
     <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
   </a>
+  <a target="_blank" href="https://liberapay.com/New-Eden-Social">
+    <img alt="Liberapay receiving" src="https://img.shields.io/liberapay/receives/new-eden-social.svg"
+    alt="Librepay Donations">
+  </a>
 </div>
 
 ## What's it about
