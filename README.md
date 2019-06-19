@@ -5,9 +5,9 @@
 <h3 align="center">Hub for EVE Online community.</h3>
 
 <div align="center">
-  <!-- <a target="_blank" href="https://travis-ci.org/evebook/api/">
-    <img src="https://travis-ci.org/evebook/api.svg?branch=master" alt="Travis Master branch" />
-  </a> -->
+  <a target="_blank" href="https://circleci.com/gh/new-eden-social/hub">
+    <img src="https://circleci.com/gh/new-eden-social/hub.svg?style=svg" alt="CircleCI" />
+  </a>
   <a target="_blank" href="https://greenkeeper.io/">
     <img src="https://badges.greenkeeper.io/evebook/evebook.svg" alt="Greenkeeper" />
   </a>
