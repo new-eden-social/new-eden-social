@@ -35,7 +35,7 @@ jobs:
 
   test-lint-api:
     docker:
-      image: circleci/node:lts
+      - image: circleci/node:lts
     steps:
       - checkout
       - run:
@@ -58,7 +58,7 @@ jobs:
 
   test-lint-web:
     docker:
-      image: circleci/node:lts
+      - image: circleci/node:lts
     steps:
       - checkout
       - run:
@@ -81,7 +81,7 @@ jobs:
 
   test-api:
     docker:
-      image: circleci/node:lts
+      - image: circleci/node:lts
     steps:
       - checkout
       - run:
@@ -104,7 +104,7 @@ jobs:
 
   test-web:
     docker:
-      image: circleci/node:lts
+      - image: circleci/node:lts
     steps:
       - checkout
       - run:
