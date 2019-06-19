@@ -1,5 +1,5 @@
 <h1 align="center">
-  EVE Book
+  New Eden Social
 </h1>
 
 <h3 align="center">Hub for EVE Online community.</h3>
@@ -11,19 +11,14 @@
   <a target="_blank" href="https://greenkeeper.io/">
     <img src="https://badges.greenkeeper.io/evebook/evebook.svg" alt="Greenkeeper" />
   </a>
-  <a target="_blank" href="https://coveralls.io/github/evebook/evebook">
-    <img src="https://coveralls.io/repos/github/evebook/evebook/badge.svg" alt="Coverage Status" />
+  <a target="_blank" href="https://coveralls.io/github/new-eden-social/evebook">
+    <img src="https://coveralls.io/repos/github/evebook/new-eden-social/badge.svg" alt="Coverage Status" />
   </a>
   <a href="https://microbadger.com/images/evebook/api:latest" title="Docker Image Status">
-    <img src="https://images.microbadger.com/badges/image/evebook/api:latest.svg">
+    <img src="https://images.microbadger.com/badges/image/new-eden-social/api:latest.svg">
     </a>
   <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
     <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
-  </a>
-</div>
-<div align="center">
-    <a target="_blank" href="https://waffle.io/evebook/api">
-    <img src="https://badge.waffle.io/evebook/api.svg?columns=all" alt="Waffle.io - Columns and their card count" />
   </a>
 </div>
 
@@ -42,10 +37,10 @@ on each release (tag).
 
 | Version        | API                            | WEB                       |Documentation|
 | -------------- | ------------------------------ | ------------------------- |-------------|
-| master branch  | api.development.evebook.online |development.evebook.online | [Development](http://api.development.evebook.online/docs)
-| latest release | api.evebook.online             |evebook.online             | [Release](http://api.evebook.online/docs)
+| master branch  | api.development.newdeden.social |development.evebook.online | [Development](http://api.development.newdeden.social/docs)
+| latest release | api.newdeden.social            |newdeden.social            | [Release](http://api.newdeden.social/docs)
 
-Changelog is located in [CHANGELOG.md](https://github.com/evebook/evebook/blob/master/CHANGELOG.md)
+Changelog is located in [CHANGELOG.md](https://github.com/new-eden-social/hub/blob/master/CHANGELOG.md)
 
 ## Contribution
-We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/evebook/evebook/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/evebook/evebook/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/evebook/evebook/issues) or directly on [slack](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/) in `#evebook`.
+We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/new-eden-social/hub/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/new-eden-social/hub/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/new-eden-social/hub/issues) or directly on [slack](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/) in `#new-eden-social`.
