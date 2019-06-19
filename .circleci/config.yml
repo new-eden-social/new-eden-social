@@ -15,7 +15,8 @@ jobs:
      - authenticate_docker_hub
      - run:
         name: Building image
-        command: cd api && docker build . -t newedensocial/api:$CIRCLE_SHA1
+        working_directory: api
+        command: docker build . -t newedensocial/api:$CIRCLE_SHA1
      - run:
         name: Push Image
         command: docker push newedensocial/api:$CIRCLE_SHA1
@@ -28,7 +29,8 @@ jobs:
      - authenticate_docker_hub
      - run:
         name: Building image
-        command: cd web && docker build . -t newedensocial/web:$CIRCLE_SHA1
+        working_directory: web
+        command: docker build . -t newedensocial/web:$CIRCLE_SHA1
      - run:
         name: Push Image
         command: docker push newedensocial/web:$CIRCLE_SHA1
@@ -38,15 +40,13 @@ jobs:
       - image: circleci/node:lts
     steps:
       - checkout
-      - run:
-          name: Change directory to API
-          command: cd api
       - restore_cache:
           keys:
             - v1-api-node-modules-{{ .Branch }}-
             - v1-api-node-modules-master-
       - run:
           name: Install Dependencies
+          working_directory: api
           command: yarn
       - save_cache:
           key: v1-api-node-modules-{{ .Branch }}-{{ epoch }}
@@ -54,6 +54,7 @@ jobs:
             - /app/api/node_modules
       - run:
           name: Run Linter
+          working_directory: api
           command: yarn lint
 
   test-lint-web:
@@ -61,15 +62,13 @@ jobs:
       - image: circleci/node:lts
     steps:
       - checkout
-      - run:
-          name: Change directory to WEB
-          command: cd web
       - restore_cache:
           keys:
             - v1-web-node-modules-{{ .Branch }}-
             - v1-web-node-modules-master-
       - run:
           name: Install Dependencies
+          working_directory: web
           command: yarn
       - save_cache:
           key: v1-web-node-modules-{{ .Branch }}-{{ epoch }}
@@ -77,6 +76,7 @@ jobs:
             - /app/web/node_modules
       - run:
           name: Run Linter
+          working_directory: web
           command: yarn lint
 
   test-api:
@@ -84,15 +84,13 @@ jobs:
       - image: circleci/node:lts
     steps:
       - checkout
-      - run:
-          name: Change directory to API
-          command: cd api
       - restore_cache:
           keys:
             - v1-api-node-modules-{{ .Branch }}-
             - v1-api-node-modules-master-
       - run:
           name: Install Dependencies
+          working_directory: api
           command: yarn
       - save_cache:
           key: v1-api-node-modules-{{ .Branch }}-{{ epoch }}
@@ -100,6 +98,7 @@ jobs:
             - /app/api/node_modules
       - run:
           name: Run Tests
+          working_directory: api
           command: yarn test
 
   test-web:
@@ -107,15 +106,13 @@ jobs:
       - image: circleci/node:lts
     steps:
       - checkout
-      - run:
-          name: Change directory to WEB
-          command: cd web
       - restore_cache:
           keys:
             - v1-web-node-modules-{{ .Branch }}-
             - v1-web-node-modules-master-
       - run:
           name: Install Dependencies
+          working_directory: web
           command: yarn
       - save_cache:
           key: v1-web-node-modules-{{ .Branch }}-{{ epoch }}
@@ -123,6 +120,7 @@ jobs:
             - /app/web/node_modules
       - run:
           name: Run Tests
+          working_directory: web
           command: yarn test
 
 
