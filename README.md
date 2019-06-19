@@ -6,7 +6,7 @@
 
 <div align="center">
   <a target="_blank" href="https://circleci.com/gh/new-eden-social/hub">
-    <img src="https://circleci.com/gh/new-eden-social/hub.svg/style=shield" alt="CircleCI" />
+    <img src="https://circleci.com/gh/new-eden-social/hub.svg?style=shield" alt="CircleCI" />
   </a>
   <a target="_blank" href="https://greenkeeper.io/">
     <img src="https://badges.greenkeeper.io/evebook/evebook.svg" alt="Greenkeeper" />
