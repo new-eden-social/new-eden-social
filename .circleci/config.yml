@@ -1,0 +1,138 @@
+version: 2.1
+
+_common:
+  _authenticate_docker_hub: &_authenticate_docker_hub
+      name: Authenticate with Docker Hub
+      command: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
+jobs:
+
+  build-api:
+    machine:
+      image: circleci/classic:201808-01
+    steps:
+     - checkout
+     - *_authenticate_docker_hub
+     - run:
+        name: Building image
+        command: cd api && docker build . -t newedensocial/api:$CIRCLE_SHA1
+     - run:
+        name: Push Image
+        command: docker push newedensocial/api:$CIRCLE_SHA1
+
+  build-web:
+    machine:
+      image: circleci/classic:201808-01
+    steps:
+     - checkout
+     - *_authenticate_docker_hub
+     - run:
+        name: Building image
+        command: cd web && docker build . -t newedensocial/web:$CIRCLE_SHA1
+     - run:
+        name: Push Image
+        command: docker push newedensocial/web:$CIRCLE_SHA1
+
+  test-lint-api:
+    docker:
+      image: circleci/node:lts
+    steps:
+      - checkout
+      - run:
+          name: Change directory to API
+          command: cd api
+      - restore_cache:
+          keys:
+            - v1-api-node-modules-{{ .Branch }}-
+            - v1-api-node-modules-master-
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: v1-api-node-modules-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /app/api/node_modules
+      - run:
+          name: Run Linter
+          command: yarn lint
+
+  test-lint-web:
+    docker:
+      image: circleci/node:lts
+    steps:
+      - checkout
+      - run:
+          name: Change directory to WEB
+          command: cd web
+      - restore_cache:
+          keys:
+            - v1-web-node-modules-{{ .Branch }}-
+            - v1-web-node-modules-master-
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: v1-web-node-modules-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /app/web/node_modules
+      - run:
+          name: Run Linter
+          command: yarn lint
+
+  test-api:
+    docker:
+      image: circleci/node:lts
+    steps:
+      - checkout
+      - run:
+          name: Change directory to API
+          command: cd api
+      - restore_cache:
+          keys:
+            - v1-api-node-modules-{{ .Branch }}-
+            - v1-api-node-modules-master-
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: v1-api-node-modules-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /app/api/node_modules
+      - run:
+          name: Run Tests
+          command: yarn test
+
+  test-web:
+    docker:
+      image: circleci/node:lts
+    steps:
+      - checkout
+      - run:
+          name: Change directory to WEB
+          command: cd web
+      - restore_cache:
+          keys:
+            - v1-web-node-modules-{{ .Branch }}-
+            - v1-web-node-modules-master-
+      - run:
+          name: Install Dependencies
+          command: yarn
+      - save_cache:
+          key: v1-web-node-modules-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /app/web/node_modules
+      - run:
+          name: Run Tests
+          command: yarn test
+
+
+workflows:
+  version: 2
+  test-and-build:
+    jobs:
+      - test-lint-api
+      - test-lint-web
+      - test-api
+      - test-web
+      - build-api
+      - build-web
