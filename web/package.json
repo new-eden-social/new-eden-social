@@ -1,9 +1,10 @@
 {
-  "name": "eve-book-web",
-  "version": "0.0.0",
+  "name": "new-eden-social-web",
+  "version": "0.1.0",
+  "private": true,
   "license": "GPL-3.0",
   "engines": {
-    "node": "^8.9.4"
+    "node": "^10.16.0"
   },
   "scripts": {
     "ng": "ng",
@@ -14,12 +15,11 @@
     "e2e": "ng e2e",
     "localization": "ng xi18n --output-path locale",
     "prebuild": "eval \"echo \"$(cat src/environments/environment.ts.template)\"\" > src/environments/environment.ts",
-    "build:client-and-server-bundles": "npm run prebuild:production && ng build --prod && ng run eve-book-web:server:production",
+    "build:client-and-server-bundles": "ng build --prod && ng run new-eden-social-web:server:production",
     "build:ssr": "npm run build:client-and-server-bundles && npm run webpack:server",
     "webpack:server": "webpack --config webpack.server.config.js --progress",
     "serve:ssr": "node dist/server"
   },
-  "private": true,
   "dependencies": {
     "@ctrl/ngx-emoji-mart": "^0.4.0",
     "@angular/animations": "^6.0.9",

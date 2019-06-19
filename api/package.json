@@ -1,9 +1,11 @@
 {
-  "name": "eve-book-api",
+  "name": "new-eden-social-api",
   "version": "0.1.0",
-  "description": "EVE Book API",
   "private": true,
   "license": "GPL-3.0",
+  "engines": {
+    "node": "^10.16.0"
+  },
   "scripts": {
     "start:killmails": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/killmails.ts",
     "start:updater": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/updater.ts",
