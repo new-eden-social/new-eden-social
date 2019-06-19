@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "eve-book-web": {
+    "new-eden-social-web": {
       "root": "",
       "projectType": "application",
       "architect": {
@@ -55,18 +55,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "eve-book-web:build"
+            "browserTarget": "new-eden-social-web:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "eve-book-web:build:production"
+              "browserTarget": "new-eden-social-web:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "eve-book-web:build"
+            "browserTarget": "new-eden-social-web:build"
           }
         },
         "test": {
@@ -125,7 +125,7 @@
         }
       }
     },
-    "eve-book-web-e2e": {
+    "new-eden-social-web-e2e": {
       "root": "",
       "projectType": "application",
       "cli": {},
@@ -135,7 +135,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "eve-book-web:serve"
+            "devServerTarget": "new-eden-social-web:serve"
           }
         },
         "lint": {
