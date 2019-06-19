@@ -1,4 +1,4 @@
-FROM node:carbon-alpine as build-env
+FROM node:lts-alpine as build-env
  
 # For building native dependencies
 RUN apk add --no-cache make gcc g++ python
