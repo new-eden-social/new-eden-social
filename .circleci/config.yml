@@ -1,18 +1,18 @@
 version: 2.1
 
-_common:
-  _authenticate_docker_hub: &_authenticate_docker_hub
-      name: Authenticate with Docker Hub
-      command: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+commands:
+  authenticateDockerHub:
+    description: "Authenticate with Docker Hub"
+    steps:
+      - run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 jobs:
-
   build-api:
     machine:
       image: circleci/classic:201808-01
     steps:
      - checkout
-     - *_authenticate_docker_hub
+     - authenticateDockerHub
      - run:
         name: Building image
         command: cd api && docker build . -t newedensocial/api:$CIRCLE_SHA1
@@ -25,7 +25,7 @@ jobs:
       image: circleci/classic:201808-01
     steps:
      - checkout
-     - *_authenticate_docker_hub
+     - authenticateDockerHub
      - run:
         name: Building image
         command: cd web && docker build . -t newedensocial/web:$CIRCLE_SHA1
