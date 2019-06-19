@@ -1,0 +1,8 @@
+
+<div
+  [class.flex-center]="!(post$ | async)"
+  (click)="closeSpecificPost($event)"
+  id="specific-post-wrap">
+  <app-loading *ngIf="!(post$ | async)"></app-loading>
+  <app-post *ngIf="post$ | async" [post]="post$ | async"></app-post>
+</div>

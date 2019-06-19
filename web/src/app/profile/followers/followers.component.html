@@ -1,0 +1,15 @@
+<h3>Followers</h3>
+
+<div *ngIf="followers.length" class="followers-list">
+
+  <app-character-card
+    [character]="follow.follower"
+    *ngFor="let follow of followers">
+  </app-character-card>
+
+
+</div>
+
+<div *ngIf="!followers.length" class="no-followers">
+  <h5>No followers yet</h5>
+</div>

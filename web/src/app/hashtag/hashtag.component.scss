@@ -1,0 +1,46 @@
+@import "../../variables";
+@import "../../common";
+@import '~@angular/material/theming';
+
+.hashtags {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4em;
+
+  .header {
+    @include header
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    margin-top: $app-content-top-margin;
+    width: 100%;
+    max-width: $app-content-max-width;
+
+    .narrow {
+      display: flex;
+      flex-direction: column;
+      margin-right: 2em;
+      min-width: $app-narrow-column-min-width;
+      flex: $app-narrow-column-flex;
+
+      > mat-card {
+        padding: 0;
+      }
+
+      > * {
+        &:not(:first-child) {
+          margin-top: 1em;
+        }
+      }
+    }
+
+    .wide {
+      display: flex;
+      flex-direction: column;
+      flex: $app-wide-column-flex;
+    }
+  }
+}

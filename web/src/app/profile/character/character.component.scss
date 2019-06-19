@@ -1,0 +1,76 @@
+@import "../../../variables";
+@import "../../../common";
+
+app-loading {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+.profile {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 4em;
+
+  app-profile-header {
+    width: 100%;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: row;
+    width: 80%; // TODO: Responsive
+    margin-top: 2em;
+    max-width: $app-content-max-width;
+
+    .narrow {
+      display: flex;
+      flex-direction: column;
+      margin-right: 2em;
+      min-width: $app-narrow-column-min-width;
+      flex: $app-narrow-column-flex;
+
+      > mat-card {
+        padding: 0;
+      }
+
+      > * {
+        &:not(:first-child) {
+          margin-top: 1em;
+        }
+      }
+
+      .stats {
+        @include profile-stats
+      }
+
+      .about {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.75em;
+
+        .about-item-content {
+          text-transform: uppercase;
+          margin-top: 1em;
+
+          p {
+            margin: 0;
+          }
+
+          .about-data {
+            font-weight: 700;
+            text-decoration: none;
+            color: #f3f3f3;
+
+            & a:hover {
+              color: map-get($app-primary, 500);
+              transition: color 100ms ease;
+            }
+          }
+        }
+      }
+    }
+  }
+}

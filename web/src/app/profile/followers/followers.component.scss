@@ -1,0 +1,37 @@
+@import "../../../variables";
+@import "../../../common";
+@import '~@angular/material/theming';
+
+:host {
+  flex: 1 1 auto;
+
+  h3 {
+    font-weight: 300;
+    text-transform: uppercase;
+    font-size: 1.5em;
+    margin-top: 0;
+  }
+
+  .followers-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    > * {
+      margin: .5em;
+    }
+  }
+
+  .no-followers {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+
+    h5 {
+      margin: 15vh 0;
+      font-weight: 300;
+      font-size: 1.5em;
+    }
+  }
+}

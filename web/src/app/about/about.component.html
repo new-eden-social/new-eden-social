@@ -1,0 +1,14 @@
+<div class="header">
+  <h2>About / <strong>{{ currentPage | async }}</strong></h2>
+  <div class="navigation">
+    <a routerLink="/about/evebook" mat-button>EVE BOOK</a>
+    <a routerLink="/about/donations" mat-button>DONATIONS</a>
+    <a routerLink="/about/api" mat-button>API</a>
+    <a routerLink="/about/legal" mat-button>LEGAL</a>
+    <a routerLink="/about/3th-parties" mat-button>3TH PARTIES</a>
+  </div>
+</div>
+
+<div class="content">
+  <router-outlet></router-outlet>
+</div>

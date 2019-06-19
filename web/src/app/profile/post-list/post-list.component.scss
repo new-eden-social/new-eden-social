@@ -1,0 +1,27 @@
+@import "../../../variables";
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: $app-wide-column-flex;
+
+  > * {
+    &:not(:first-child) {
+      margin-top: 1em;
+    }
+    &:last-child {
+      margin-bottom: 1em;
+    }
+  }
+
+  .start,
+  .empty {
+    align-self: center;
+    padding: 0.8em;
+    margin-top: 2em;
+    p {
+      text-align: center;
+      text-transform: lowercase;
+    }
+  }
+}

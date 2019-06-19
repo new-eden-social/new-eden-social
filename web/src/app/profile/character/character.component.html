@@ -1,0 +1,67 @@
+<app-loading *ngIf="!character"></app-loading>
+
+<div class="profile" *ngIf="character">
+
+  <app-profile-header [image]="character.portrait.px256x256"
+                      [title]="character.name"
+                      [subheader]="{ text: character.corporation.name, link: ['/corporation', character.corporation.id]  }"
+                      [handle]="character.handle"
+                      [type]="'character'">
+      <button *ngIf="character.id !== authenticatedCharacterId"
+              (click)="follow()"
+              [color]="follower() ? 'accent' : 'primary'"
+              mat-raised-button>
+        {{ follower() ? 'Un Follow' : 'Follow' }}
+      </button>
+  </app-profile-header>
+
+  <div class="content">
+    <div class="narrow">
+
+      <div class="stats">
+        <div class="stats-item">
+          <span>Posts</span>
+          <span class="number">{{character.numPosts}}</span>
+        </div>
+        <a routerLink="./following" class="stats-item">
+          <span>Following</span>
+          <span class="number">{{character.following.length}}</span>
+        </a>
+        <a routerLink="./followers" class="stats-item">
+          <span>Followers</span>
+          <span class="number">{{character.followers.length}}</span>
+        </a>
+      </div>
+
+      <div class="about">
+        <div class="about-item-content" *ngIf="character.corporation.alliance">
+          <p>Alliance</p>
+          <a class="about-data" [routerLink]="['/alliance', character.corporation.alliance.id]">
+            {{ character.corporation.alliance.name }}
+          </a>
+        </div>
+
+        <div class="about-item-content">
+          <p>Corporation</p>
+          <a class="about-data" [routerLink]="['/corporation', character.corporation.id]">
+            {{ character.corporation.name }}
+          </a>
+        </div>
+
+        <div class="about-item-content">
+          <p>Race</p>
+          <a class="about-data" href="">Ammar</a>
+        </div>
+
+        <div class="about-item-content">
+          <p>Bloodline</p>
+          <a class="about-data" href="">Civire</a>
+        </div>
+      </div>
+
+      <app-footer></app-footer>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>

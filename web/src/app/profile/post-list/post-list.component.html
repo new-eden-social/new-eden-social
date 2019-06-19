@@ -1,0 +1,9 @@
+<app-loading *ngIf="!(wall$ | async)"></app-loading>
+
+<div *ngIf="wall$ | async" infiniteScroll (scrolled)="onScroll()">
+  <app-post-list
+    [characterWall]="entityType === 'character' ? (entity$ | async) : null"
+    [corporationWall]="entityType === 'corporation' ? (entity$ | async) : null"
+    [allianceWall]="entityType === 'alliance' ? (entity$ | async) : null"
+    [postList]="wall$ | async"></app-post-list>
+</div>

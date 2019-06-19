@@ -1,0 +1,53 @@
+<app-loading *ngIf="!corporation"></app-loading>
+
+<div class="profile" *ngIf="corporation">
+
+  <app-profile-header [image]="corporation.icon.px256x256"
+                      [title]="corporation.name"
+                      [subheader]="{ text: allianceName, link: ['/alliance', allianceId]  }"
+                      [handle]="corporation.handle"
+                      [type]="'corporation'">
+    <button mat-raised-button
+            (click)="follow()"
+            [color]="follower() ? 'accent' : 'primary'"
+            mat-raised-button>
+      {{ follower() ? 'Un Follow' : 'Follow' }}
+    </button>
+  </app-profile-header>
+
+  <div class="content">
+    <div class="narrow">
+
+      <div class="stats">
+        <div class="stats-item">
+          <span>Posts</span>
+          <span class="number">{{corporation.numPosts}}</span>
+        </div>
+        <a routerLink="./followers" class="stats-item">
+          <span>Followers</span>
+          <span class="number">{{corporation.followers.length}}</span>
+        </a>
+      </div>
+
+      <div class="about">
+        <div *ngIf="corporation.alliance" class="about-item-content">
+          <p>Alliance</p>
+          <a class="about-data" [routerLink]="['/alliance', corporation.alliance.id]">
+            {{ corporation.alliance.name}}
+          </a>
+        </div>
+
+        <div class="about-item-content">
+          <p>Ticker</p>
+          <p class="about-data">
+            {{ corporation.ticker }}
+          </p>
+        </div>
+      </div>
+
+      <app-footer></app-footer>
+    </div>
+
+    <router-outlet></router-outlet>
+  </div>
+</div>

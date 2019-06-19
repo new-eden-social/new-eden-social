@@ -1,0 +1,54 @@
+<div class="notifications">
+  <div class="notifications-wrapper">
+
+    <a matBadge="{{ (newNotifications$ | async).length }}"
+       matBadgeHidden="{{ (newNotifications$ | async).length === 0 }}"
+       matBadgeColor="primary"
+       (focus)="toggleFocus()"
+       (blur)="toggleBlur()"
+       mat-button>NOTIFICATIONS</a>
+
+    <ul class="notifications-results"
+        *ngIf="notificationsToggle || notificationsHover"
+        (mouseleave)="leftNotifications()"
+        (mouseenter)="enterNotifications()">
+
+      <h3 *ngIf="(newNotifications$ | async).length > 0">New notifications</h3>
+      <li *ngFor="let notification of newNotifications$ | async"
+          [ngClass]="{'not-seen': !notification.seenAt}">
+        <button mat-icon-button>
+          <img aria-label="Profile"
+               src="{{ notificationService.getSenderImage(notification) }}"/>
+        </button>
+        <div class="notification-content" (click)="openNotification(notification)">
+          <p [innerHtml]="notificationService.getHTML(notification)"></p>
+          <small class="mat-caption">
+            {{ notification.createdAt | amTimeAgo }} {{ notification.seenAt ? '' : ' - Not seen'}}
+          </small>
+        </div>
+      </li>
+
+      <h3>Notifications</h3>
+      <p class="no-notifications" *ngIf="(otherNotifications$ | async).length === 0">
+        No notifications yet
+      </p>
+      <li *ngFor="let notification of otherNotifications$ | async"
+          [ngClass]="{'not-seen': !notification.seenAt}">
+        <button mat-icon-button>
+          <img aria-label="Profile"
+               src="{{ notificationService.getSenderImage(notification) }}"/>
+        </button>
+        <div class="notification-content" (click)="openNotification(notification)">
+          <p [innerHtml]="notificationService.getHTML(notification)"></p>
+          <small class="mat-caption">
+            {{ notification.createdAt | amTimeAgo }} {{ notification.seenAt ? '' : ' - Not seen'}}
+          </small>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</div>
+
+
+

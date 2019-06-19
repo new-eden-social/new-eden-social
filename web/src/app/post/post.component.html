@@ -1,0 +1,29 @@
+<mat-card class="post-item">
+
+  <div class="card-content">
+    <button mat-icon-button>
+      <img aria-label="Profile" [src]="author.image" [routerLink]="author.link"/>
+    </button>
+
+    <div class="card-main">
+      <div class="card-header">
+        <a [routerLink]="author.link">{{ author.name }}</a>
+        <mat-icon *ngIf="wall">arrow_right</mat-icon>
+        <a *ngIf="wall" [routerLink]="wall.link">{{ wall.name }}</a>
+        <a class="post-link" [routerLink]="postService.getPostLink(post)">
+          <small class="mat-caption"> {{ post.createdAt | amTimeAgo }}</small>
+        </a>
+      </div>
+      <app-rich-content class="card-text" [content]="post.content"></app-rich-content>
+    </div>
+
+  </div>
+
+  <div class="card-footer">
+    <div *ngIf="moreComments" class="load-comments-wrap">
+      <button mat-button (click)="loadMoreComments()">Load older comments</button>
+    </div>
+    <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
+    <app-comment-form *ngIf="showCommentForm" [postId]="post.id"></app-comment-form>
+  </div>
+</mat-card>

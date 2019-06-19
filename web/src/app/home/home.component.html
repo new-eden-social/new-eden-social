@@ -1,0 +1,27 @@
+<!-- Authenticated -->
+<div class="home-wrap" *ngIf="authenticated$ | async">
+  <div class="narrow">
+    <app-home-profile></app-home-profile>
+
+    <mat-card class="trending">
+      <mat-card-title>Trending</mat-card-title>
+      <mat-card-content class="hashtags">
+        <div class="hashtag-item" *ngFor="let hashtag of hashtags">
+          <a href="">#{{hashtag.name}}</a>
+          <small>{{hashtag.posts}} posts</small>
+        </div>
+      </mat-card-content>
+    </mat-card>
+
+    <app-footer></app-footer>
+  </div>
+
+  <app-loading class="wide" *ngIf="!(postList$ | async)"></app-loading>
+
+  <div class="wide" *ngIf="postList$ | async" infiniteScroll (scrolled)="onScroll()">
+    <app-post-list [postList]="postList$ | async"></app-post-list>
+  </div>
+</div>
+
+<!--Not Authenticated -->
+<app-home-welcome *ngIf="!(authenticated$ | async)"></app-home-welcome>

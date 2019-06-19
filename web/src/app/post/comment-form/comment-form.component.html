@@ -1,0 +1,43 @@
+<section class="comment-form" *ngIf="authenticated$ | async">
+  <mat-menu #selectPostMethod="matMenu" class="select-post-method-menu">
+    <button mat-menu-item class="select-post-method-menu-item" (click)="setCharacter()">
+      <img src="{{ character.portrait.px64x64}}">
+      <span>{{ character.name }}</span>
+    </button>
+    <button *ngIf="character.corporation"
+            mat-menu-item
+            class="select-post-method-menu-item"
+            (click)="setCorporation()">
+      <img src="{{ character.corporation.icon.px64x64}}">
+      <span>{{ character.corporation.name }}</span>
+    </button>
+    <button *ngIf="character.corporation && character.corporation.alliance"
+            mat-menu-item
+            class="select-post-method-menu-item"
+            (click)="setAlliance()">
+      <img src="{{ character.corporation.alliance.icon.px64x64}}">
+      <span>{{ character.corporation.alliance.name }}</span>
+    </button>
+  </mat-menu>
+
+  <button mat-icon-button [matMenuTriggerFor]="selectPostMethod" class="select-post-method">
+    <img src="{{ postAsImage }}">
+  </button>
+
+  <div class="comment-input-wrap">
+    <app-rich-content-editable
+        #commentForm
+        class="comment-input-field"
+        (submit)="submit()"
+        (update)="writing($event)">
+    </app-rich-content-editable>
+  </div>
+
+  <div class="button-wrap">
+    <button mat-button (click)="submit()">Comment</button>
+  </div>
+</section>
+
+<section class="comment-form" *ngIf="(authenticated$ | async) == false">
+  <p class="unauthenticated">You have to be logged in to post content</p>
+</section>

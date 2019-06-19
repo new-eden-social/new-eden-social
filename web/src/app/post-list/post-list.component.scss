@@ -1,0 +1,24 @@
+@import "../../variables";
+@import '~@angular/material/theming';
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+
+  app-post {
+    @include mat-elevation(1);
+    border-top: 1px solid map-get($app-primary, 500);
+    margin-top: 0.5em;
+  }
+}
+
+.start,
+.empty {
+  align-self: center;
+  padding: 0.8em;
+  margin-top: 2em;
+  p {
+    text-align: center;
+    text-transform: lowercase;
+  }
+}

@@ -1,0 +1,6 @@
+@import "../../../common";
+@import '~@angular/material/theming';
+
+.text-content {
+  @include text-content
+}

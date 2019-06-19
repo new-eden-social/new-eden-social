@@ -1,0 +1,89 @@
+@import "../../../variables";
+@import '~@angular/material/theming';
+
+:host {
+  display: flex;
+  align-items: center;
+  position: relative;
+  margin: 0 0.5em;
+  flex: 1 1 auto;
+  max-width: 40%; // TODO: RESPONSIVE
+
+  .search-wrapper {
+    padding: 0.5em;
+    min-width: 250px;
+    font-size: 0.8em;
+    line-height: 24px;
+    font-weight: 400;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: row;
+    background-color: lighten($app-background-color, 4);
+    border-radius: 2px;
+    color: #f3f3f3;
+
+    transition: background-color 100ms ease-out;
+
+    .search-icon {
+      font-size: 1em;
+      height: 1em;
+      width: 1em;
+      line-height: 1em;
+      align-self: center;
+    }
+
+    &.active {
+      @include mat-elevation(1);
+      color: #333;
+      background-color: #fafafa;
+
+      input::placeholder {
+        color: #333;
+      }
+    }
+
+    input {
+      margin-left: .5em;
+      color: #333;
+      width: 100%;
+      border: none;
+      background: none;
+
+      &::placeholder {
+        color: #f3f3f3;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .search-results {
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 1px 5px 0 rgba(0, 0, 0, 0.12);
+      background-color: #fafafa;
+      position: absolute;
+      list-style: none;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      margin-top: 1.7em;
+      margin-left: -0.5em; // Fix for padding on .search-wrapper
+
+      h3 {
+        font-size: 0.9em;
+        line-height: 2em;
+        padding-left: 1em;
+        background: darken(#fafafa, 10);
+        text-transform: uppercase;
+      }
+
+      a {
+        width: 100%;
+        text-align: start;
+      }
+    }
+  }
+}
+

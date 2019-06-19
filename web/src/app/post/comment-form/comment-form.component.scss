@@ -1,0 +1,82 @@
+@import "../../../variables";
+@import "../../../common";
+
+$image-size: 32px;
+
+.comment-form {
+  display: flex;
+  flex-direction: row;
+  margin: 6px 12px;
+
+  > mat-form-field {
+    flex: 1 1 auto;
+  }
+
+  > .button-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .select-post-method {
+    height: $image-size;
+    width: $image-size;
+    margin: 0 16px 0 10px;
+
+    img {
+      height: $image-size;
+      width: $image-size;
+      border-radius: 50%;
+      vertical-align: baseline;
+    }
+  }
+
+  .unauthenticated {
+    flex: 1 1;
+    text-align: center;
+  }
+}
+
+.select-post-method-menu {
+
+  .select-post-method-menu-item {
+    display: flex;
+
+    img {
+      height: $image-size;
+      width: $image-size;
+      border-radius: 50%;
+      padding: 0;
+      margin: 0 16px 0 0;
+    }
+  }
+
+}
+
+.comment-input-wrap {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1;
+  align-items: flex-start;
+  margin: 0 1em 0 0;
+
+  .comment-input-field {
+    display: flex;
+    flex: 1 1;
+
+    dynamic-html {
+      @include post-content(0.8em);
+
+      border-bottom: 1px solid #f3f3f3;
+      display: flex;
+      flex: 1 1;
+      outline: none;
+      // transition: border-bottom 280ms cubic-bezier(.4, 0, .2, 1);
+      min-height: 21px; // Firefox fix
+
+      &:focus {
+        border-bottom: 1px solid map-get($app-primary, 500);
+      }
+    }
+  }
+}

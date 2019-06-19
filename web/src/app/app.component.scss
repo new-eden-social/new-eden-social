@@ -1,0 +1,24 @@
+@import '~@angular/material/theming';
+@import '../variables';
+
+#header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+#content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1 1 auto;
+  margin-top: 64px; // Header Margin
+
+  > *:not(router-outlet) {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+  }
+}

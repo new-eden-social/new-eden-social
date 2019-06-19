@@ -1,0 +1,96 @@
+@import "../../../variables";
+
+.notifications {
+
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  margin: 0 0.5em;
+
+  .notifications-wrapper {
+    display: flex;
+    flex-direction: column;
+
+    input {
+      width: 100%;
+      border: none;
+    }
+
+    .notifications-results {
+      color: #333;
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2),
+      0 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 1px 5px 0 rgba(0, 0, 0, 0.12);
+      background-color: #f3f3f3;
+      position: absolute;
+      width: 350px;
+      max-height: 70vh;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      margin-top: 36px;
+      overflow: auto;
+
+      h3 {
+        font-size: 0.6em;
+        line-height: 2em;
+        padding-left: 1em;
+        background: darken(#fafafa, 10);
+        text-transform: uppercase;
+      }
+
+      .no-notifications {
+        font-size: 1em;
+        font-weight: 300;
+        height: 4em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      li {
+        display: flex;
+        flex-direction: row;
+        padding: .5em;
+
+        &.not-seen {
+          background: #ffff;
+        }
+
+        &:hover {
+          cursor: pointer;
+          background: rgba(0, 0, 0, 0.12);
+        }
+
+        .mat-icon-button {
+          width: 48px;
+          height: 48px;
+          margin-right: 12px;
+
+          img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+          }
+        }
+
+        .notification-content {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-around;
+
+          p {
+            padding: 0;
+            margin: 0;
+            white-space: pre-line; // Fixes line going out of parent
+            font-size: 0.7em;
+            line-height: 1.2em;
+          }
+        }
+      }
+    }
+  }
+}
+

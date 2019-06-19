@@ -1,0 +1,7 @@
+<section>
+  <h4>Description</h4>
+  <div class="description-html" [innerHtml]="descriptionHtml"></div>
+  <div *ngIf="!descriptionHtml" class="no-description">
+    <h5>No description provided :/</h5>
+  </div>
+</section>

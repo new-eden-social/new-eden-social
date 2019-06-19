@@ -1,0 +1,14 @@
+<a [routerLink]="['/corporation', corporation.id]">
+  <img class="image" [src]="corporation.icon.px256x256"/>
+</a>
+<div class="info">
+  <a class="name"
+     [routerLink]="['/corporation', corporation.id]">
+    {{ corporation.name }}
+  </a>
+  <a *ngIf="corporation.alliance"
+     class="alliance"
+     [routerLink]="['/alliance', corporation.alliance.id]">
+    {{ corporation.alliance.name }}
+  </a>
+</div>

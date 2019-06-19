@@ -1,0 +1,116 @@
+@import "variables";
+@import '~@angular/material/theming';
+
+////
+// Default Header
+@mixin header {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  background: $app-background-color;
+  padding: 1em 0;
+
+  h2 {
+    display: flex;
+    font-weight: 400;
+    letter-spacing: 0.075em;
+    padding: 1em 0;
+    margin: 0;
+    text-transform: uppercase;
+
+    strong {
+      margin-left: 0.25em;
+    }
+  }
+}
+
+////
+// Common text-link
+@mixin text-link {
+  a {
+    color: map-get($app-primary, 500);
+    text-decoration: none;
+    &:hover {
+      color: map-get($app-primary, 400);
+    }
+  }
+}
+
+////
+// Common text-content with title
+@mixin text-content {
+  section {
+    @include mat-elevation(2);
+    background: $app-background-color;
+    padding: 1em;
+    border-top: 1px solid map-get($app-primary, 500);
+
+    h2,
+    h3,
+    h4,
+    h5 {
+      text-transform: uppercase;
+      margin-top: 0;
+    }
+
+    @include text-link
+  }
+}
+
+/////
+// Common post-content
+@mixin post-content($emoji-size: 1.15em) {
+  margin: 0;
+  margin-top: 0.25em;
+  white-space: pre-wrap;
+
+  .hashtag {
+    color: map-get($app-primary, 500);
+  }
+
+  a {
+    color: map-get($app-primary, 500);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .emoji-mart-emoji {
+    font-size: $emoji-size;
+    display: inline-flex;
+    > span {
+      width: $emoji-size !important;
+      height: $emoji-size !important;
+      font-size: $emoji-size;
+      color: transparent;
+      overflow: hidden;
+    }
+  }
+}
+
+/////
+// Common profile stats info (posts/followers/following)
+@mixin profile-stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 1em;
+
+  .stats-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #f3f3f3;
+
+    .number {
+      font-weight: 500;
+      font-size: 1.2em;
+      color: map-get($app-primary, 500);
+    }
+  }
+}

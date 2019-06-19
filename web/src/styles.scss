@@ -1,0 +1,62 @@
+// Import normalize css
+@import "~normalize.css";
+// Import material design theme
+@import '~@angular/material/theming';
+// Import font
+@import "font";
+// Import emojies
+@import "~@ctrl/ngx-emoji-mart/picker";
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+
+// Import variables
+@import "variables";
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include angular-material-theme($app-theme);
+@include angular-material-typography($app-typography);
+
+html {
+  height: 100%;
+}
+
+body {
+  background-image: url($app-background-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #101010;
+  font-size: 16px;
+  min-height: 100%;
+  color: #f3f3f3;
+  letter-spacing: .05em;
+  display: flex;
+  flex-direction: column;
+}
+
+button, input, optgroup, select, textarea, body {
+  font-family: Shentox, Roboto, Helvetica Neue, sans-serif;
+}
+
+// Remove border radius from material design elements
+.mat-button,
+.mat-raised-button,
+mat-card {
+  border-radius: 0 !important;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+}
+
+* {
+  box-sizing: border-box;
+}

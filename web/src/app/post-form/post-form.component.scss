@@ -1,0 +1,96 @@
+@import "../../variables";
+@import "../../common";
+
+.emoji-wrapper {
+  position: relative;
+
+  > emoji-mart {
+    position: absolute;
+    z-index: 5;
+  }
+}
+
+.post-form-panel {
+  .mat-expansion-panel-body {
+    padding: 0 12px 16px;
+  }
+
+  .panel-content {
+    display: flex;
+    flex-direction: row;
+
+    > mat-form-field {
+      flex: 1 1 auto;
+    }
+
+    > .button-wrap {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+
+      > * {
+        margin: 0 .2em;
+      }
+    }
+
+    .select-post-method {
+      height: 48px;
+      width: 48px;
+
+      img {
+        height: 48px;
+        width: 48px;
+        border-radius: 50%;
+      }
+    }
+
+    .unauthenticated {
+      flex: 1 1;
+      text-align: center;
+    }
+  }
+}
+
+.select-post-method-menu {
+
+  .select-post-method-menu-item {
+    display: flex;
+
+    img {
+      height: 48px;
+      width: 48px;
+      border-radius: 50%;
+      padding: 0;
+      margin: 0 16px 0 0;
+    }
+  }
+}
+
+.post-input-wrap {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1;
+  margin: 1.25em 1em 0;
+  align-items: flex-start;
+
+  .post-input-field {
+    display: flex;
+    flex: 1 1;
+
+    dynamic-html {
+      @include post-content();
+
+      border-bottom: 1px solid #f3f3f3;
+      display: flex;
+      flex: 1 1;
+      outline: none;
+      // transition: border-bottom 280ms cubic-bezier(.4, 0, .2, 1);
+      min-height: 21px; // Firefox fix
+
+      &:focus {
+        border-bottom: 1px solid map-get($app-primary, 500);
+      }
+    }
+  }
+}

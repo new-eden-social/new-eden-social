@@ -1,0 +1,53 @@
+@import "../../../variables";
+@import "../../../common";
+@import '../../../../node_modules/@angular/material/theming';
+
+$height: 5em;
+
+:host {
+  @include mat-elevation(2);
+
+  display: flex;
+  flex-direction: row;
+  background: $app-background-color;
+  height: $height;
+  min-width: 20em;
+
+  .image {
+    height: $height;
+    width: $height;
+  }
+
+  .info {
+    margin: 0 .5em;
+    display: flex;
+    flex-direction: column;
+
+    @include text-link;
+
+    .name {
+      font-weight: 300;
+      line-height: 1em;
+      margin-top: .5em;
+      color: #f3f3f3;
+    }
+
+    .corporation {
+      margin-top: 1em;
+
+      &:last-child {
+        margin-bottom: 1.5em;
+      }
+    }
+
+    .alliance,
+    .corporation {
+      font-weight: 300;
+      line-height: 1em;
+    }
+
+    .alliance {
+      margin-bottom: .5em;
+    }
+  }
+}

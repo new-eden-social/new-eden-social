@@ -1,0 +1,17 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex: 1 1 auto;
+
+  h1 {
+    font-weight: 300;
+  }
+
+  .page-path {
+    background: #3f3f3f;
+    border: 0.2em solid #3f3f3f;
+    font-size: 0.8em;
+  }
+}

@@ -1,0 +1,9 @@
+<a [routerLink]="['/alliance', alliance.id]">
+  <img class="image" [src]="alliance.icon.px128x128"/>
+</a>
+<div class="info">
+  <a class="name"
+     [routerLink]="['/alliance', alliance.id]">
+    {{ alliance.name }}
+  </a>
+</div>

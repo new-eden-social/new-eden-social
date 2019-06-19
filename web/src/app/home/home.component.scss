@@ -1,0 +1,79 @@
+@import "../../variables";
+
+.home-wrap {
+  width: 80%;
+  max-width: $app-content-max-width;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  margin-top: $app-content-top-margin;
+
+  .narrow {
+    margin-right: 0.5em;
+    min-width: $app-narrow-column-min-width;
+    flex: $app-narrow-column-flex;
+
+    > :not(:first-child) {
+      margin-top: 1em;
+    }
+
+    .trending {
+      padding: 0;
+
+      mat-card-title {
+        text-transform: uppercase;
+        font-weight: 300;
+        border-bottom: 2px solid map-get($app-primary, 500);
+        padding: 12px 24px 0;
+      }
+
+      .hashtags {
+        display: flex;
+        flex-direction: column;
+        font-size: 1.2em;
+        padding: 0 24px 24px;
+
+        .hashtag-item {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+
+          &:not(:first-child) {
+            margin-top: 0.5em;
+          }
+
+          small {
+            font-weight: 300;
+            font-size: 0.7em;
+            align-self: flex-end;
+          }
+
+          a {
+            color: #f3f3f3;
+            text-decoration: none;
+            &:hover {
+              color: map-get($app-primary, 500);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .wide {
+    margin-left: 0.5em;
+    display: flex;
+    flex-direction: column;
+    margin-top: 25px; // to be inline with profile-card
+    flex: $app-wide-column-flex;
+
+    > * {
+      &:not(:first-child) {
+        margin-top: 1em;
+      }
+      &:last-child {
+        margin-bottom: 1em;
+      }
+    }
+  }
+}

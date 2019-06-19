@@ -1,0 +1,32 @@
+@import "../../../variables";
+@import "../../../common";
+
+:host {
+  @include text-content;
+  flex: 1 1 auto;
+
+  .description-html {
+    font-family: EveSansNeue, monospace;
+    white-space: pre-wrap;
+    letter-spacing: 0;
+
+    @for $i from 10 through 20 {
+      .font-size-#{$i} {
+        font-size: #{$i / 16 + 0.25}em;
+      }
+    }
+  }
+
+  .no-description {
+    display: flex;
+    flex: 1 1 auto;
+    justify-content: center;
+    align-items: center;
+
+    h5 {
+      margin: 15vh 0;
+      font-weight: 300;
+      font-size: 1.25em;
+    }
+  }
+}

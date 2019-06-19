@@ -1,0 +1,18 @@
+<a [routerLink]="['/character', character.id]">
+  <img class="image" [src]="character.portrait.px256x256"/>
+</a>
+<div class="info">
+  <a class="name"
+     [routerLink]="['/character', character.id]">
+    {{ character.name }}
+  </a>
+  <a class="corporation"
+     [routerLink]="['/corporation', character.corporation.id]">
+    {{ character.corporation.name }}
+  </a>
+  <a *ngIf="character.corporation.alliance"
+     class="alliance"
+     [routerLink]="['/alliance', character.corporation.alliance.id]">
+    {{ character.corporation.alliance.name }}
+  </a>
+</div>

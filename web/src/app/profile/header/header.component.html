@@ -1,0 +1,29 @@
+<div class="header mat-elevation-z2">
+  <div class="header-wrap">
+    <div class="content">
+      <img src="{{image}}">
+      <div class="info">
+        <h2>
+          {{ title }}
+          <a [routerLink]="subheader.link" *ngIf="subheader">
+            {{ subheader.text }}
+          </a>
+        </h2>
+        <p>@{{ handle }}</p>
+      </div>
+      <div class="right-wrap">
+        <small>{{ type }}</small>
+        <div class="actions">
+          <ng-content></ng-content>
+        </div>
+      </div>
+    </div>
+    <div class="navigation">
+      <button mat-button routerLink=".">Wall</button>
+      <button mat-button routerLink="./description">Description</button>
+      <a [href]="zkillboardUrl" mat-button color="accent" class="zkill-link">
+        zKillboard <mat-icon>link</mat-icon>
+      </a>
+    </div>
+  </div>
+</div>

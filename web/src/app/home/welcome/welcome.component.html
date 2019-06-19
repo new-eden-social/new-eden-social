@@ -1,0 +1,39 @@
+<div class="home-welcome">
+
+  <div class="jumbotron">
+    <h5>EVE Book</h5>
+    <h1>Hub for EVE Online community</h1>
+    <div class="seperator"></div>
+    <h4>Join in on the conversations of the <strong>New Eden</strong></h4>
+    <div class="button-wrap">
+      <a href="{{authenticationUrl}}authentication/sso" mat-raised-button color="primary">Log in</a>
+    </div>
+  </div>
+
+  <div class="jumbotron take-a-look-inside" infiniteScroll (scrolled)="onScroll()">
+    <h3>Take a look inside...</h3>
+    <app-post-list [showForm]="false"
+                   [showCommentForm]="false"
+                   [showEnding]="false"
+                   [postList]="postList$ | async"></app-post-list>
+  </div>
+
+  <div class="jumbotron built-by-community">
+    <h3>Built by the community for the community</h3>
+    <div class="project-list">
+      <a href="">evebook/api</a>
+      <a href="">evebook/web</a>
+    </div>
+    <h4>Contributors</h4>
+    <div class="contributors-list">
+      <a href="">mentos1386</a>
+      <a href="">foo</a>
+      <a href="">bar</a>
+    </div>
+  </div>
+
+  <div class="jumbotron footer">
+    <app-footer></app-footer>
+  </div>
+</div>
+

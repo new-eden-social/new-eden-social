@@ -1,0 +1,15 @@
+<section class="comment">
+
+  <button mat-icon-button>
+    <img aria-label="Profile" [src]="image" (click)="openItem()"/>
+  </button>
+
+  <div class="comment-content">
+    <div class="comment-header">
+      <a [routerLink]="link">{{ name }}</a>
+      <small class="mat-caption">{{ comment.createdAt | amTimeAgo }}</small>
+    </div>
+    <app-rich-content class="comment-text" [content]="comment.content"></app-rich-content>
+  </div>
+
+</section>

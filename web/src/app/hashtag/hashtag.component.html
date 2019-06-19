@@ -1,0 +1,22 @@
+<div class="hashtags">
+
+  <div class="header">
+    <h2>Posts for <strong>#{{ hashtag }}</strong></h2>
+    <div class="navigation">
+      <a routerLink="" mat-button>TOP</a>
+      <a routerLink="" mat-button>LATEST</a>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="narrow">
+      <app-footer></app-footer>
+    </div>
+
+    <app-loading class="wide" *ngIf="!(wall$ | async)"></app-loading>
+
+    <div *ngIf="wall$ | async" class="wide" infiniteScroll (scrolled)="onScroll()">
+      <app-post-list [showForm]="false" [postList]="wall$ | async"></app-post-list>
+    </div>
+  </div>
+</div>

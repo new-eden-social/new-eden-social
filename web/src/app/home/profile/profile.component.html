@@ -1,0 +1,33 @@
+<mat-card class="profile-card" *ngIf="character$ | async">
+
+  <div class="profile-info">
+    <img src="{{ (character$ | async).portrait.px128x128 }}" class="profile-image">
+    <div class="profile-name">
+      <a [routerLink]="['/character', (character$ | async).id]" class="name">
+        {{ (character$ | async).name }}
+      </a>
+      <p class="tag mat-caption">
+        @{{ (character$ | async).handle }}
+      </p>
+    </div>
+  </div>
+
+  <div class="profile-stats">
+    <span class="stats-item">
+      <span>Posts</span>
+      <span class="number">{{ (character$ | async).numPosts }}</span>
+    </span>
+    <a [routerLink]="['/character', (character$ | async).id, 'following']" class="stats-item">
+      <span>Following</span>
+      <span class="number">{{ (character$ | async).following.length }}</span>
+    </a>
+    <a [routerLink]="['/character', (character$ | async).id, 'followers']" class="stats-item">
+      <span>Followers</span>
+      <span class="number">{{ (character$ | async).followers.length }}</span>
+    </a>
+  </div>
+</mat-card>
+
+<mat-card class="profile-card" *ngIf="!(character$ | async)">
+  <app-loading></app-loading>
+</mat-card>

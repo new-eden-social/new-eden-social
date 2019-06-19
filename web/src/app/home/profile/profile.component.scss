@@ -1,0 +1,53 @@
+@import "../../../variables";
+@import "../../../common";
+
+.profile-card {
+  margin-top: 25px;
+
+  .profile-info {
+    display: flex;
+    flex-direction: row;
+    margin-top: -50px;
+    margin-left: -4px; // Border fix
+
+    .profile-image {
+      left: 0;
+      height: 80px;
+      width: 80px;
+      border-radius: 2px;
+      border: 4px solid $app-background-color;
+      // border-radius: 50%;
+    }
+
+    .profile-name {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin-top: 35px;
+      margin-left: .5em;
+
+      .name {
+        margin: 0;
+        font-size: 1.2em;
+        text-decoration: none;
+        color: #f3f3f3;
+        font-weight: 500;
+
+        &:hover {
+          color: map-get($app-primary, 500);
+        }
+      }
+
+      .tag {
+        margin: 0;
+      }
+    }
+
+  }
+
+  .profile-stats {
+    @include profile-stats;
+
+    margin-top: 1em;
+  }
+}

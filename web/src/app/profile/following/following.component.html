@@ -1,0 +1,23 @@
+<h3>Following</h3>
+
+<div *ngIf="following.length" class="following-list">
+  <div *ngFor="let following of following">
+
+    <app-character-card *ngIf="following.followingCharacter"
+                        [character]="following.followingCharacter">
+    </app-character-card>
+
+    <app-corporation-card *ngIf="following.followingCorporation"
+                        [corporation]="following.followingCorporation">
+    </app-corporation-card>
+
+    <app-alliance-card *ngIf="following.followingAlliance"
+                        [alliance]="following.followingAlliance">
+    </app-alliance-card>
+
+  </div>
+</div>
+
+<div *ngIf="!following.length" class="not-following">
+  <h5>Not following anyone</h5>
+</div>

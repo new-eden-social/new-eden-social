@@ -1,0 +1,85 @@
+@import '~@angular/material/theming';
+
+
+
+$app-typography: mat-typography-config(
+  $font-family: 'Shentox, Roboto, "Helvetica Neue", sans-serif'
+);
+
+$app-narrow-column-min-width: 320px;
+$app-narrow-column-flex: 0 1 auto;
+$app-wide-column-flex: 1 1 auto;
+
+$app-navbar-height: 64px;
+$app-content-top-margin: 20px;
+
+$app-content-max-width: 1200px;
+
+$app-foreground: (
+  base:              white,
+  divider:           $light-dividers,
+  dividers:          $light-dividers,
+  disabled:          $light-disabled-text,
+  disabled-button:   rgba(white, 0.3),
+  disabled-text:     $light-disabled-text,
+  hint-text:         $light-disabled-text,
+  secondary-text:    $light-secondary-text,
+  icon:              white,
+  icons:             white,
+  text:              white,
+  slider-min:        white,
+  slider-off:        rgba(white, 0.3),
+  slider-off-active: rgba(white, 0.3),
+);
+$app-background-color: #1e2c37;
+$app-background-color-darker: #05131E;
+$app-background: (
+  status-bar: black,
+  app-bar:    $app-background-color, // 900
+  background: $app-background-color,
+  hover:      rgba(white, 0.04),
+  card:       $app-background-color, // 800
+  dialog:     $app-background-color, // 800
+  disabled-button: rgba(white, 0.12),
+  raised-button: $app-background-color, // 800
+  focused-button: $light-focused,
+  selected-button: $app-background-color-darker, // 900
+  selected-disabled-button: $app-background-color, // 800
+  disabled-button-toggle: black,
+  unselected-chip: $app-background-color, // 700
+  disabled-list-option: black,
+);
+
+// BLUE
+$app-blue-primary: $mat-light-blue;
+$app-blue-accent: $mat-light-blue;
+$app-blue-warn: $mat-red;
+$app-blue-background-image: "https://i.imgur.com/nBfXBm5.png";
+
+// RED
+$app-red-primary: $mat-red;
+$app-red-accent: $mat-red;
+$app-red-warn: $mat-red;
+$app-red-background-image: "https://i.imgur.com/P86BTzF.png";
+
+// TEAL
+$app-teal-primary: $mat-teal;
+$app-teal-accent: $mat-blue-gray;
+$app-teal-warn: $mat-red;
+$app-teal-background-image: "https://i.imgur.com/VGWbfMo.png";
+
+// TODO: Implement theme chooser
+$app-primary: $app-teal-primary;
+$app-accent: $app-teal-accent;
+$app-warn: $app-teal-warn;
+$app-background-image: $app-teal-background-image;
+
+// Create the theme object (a Sass map containing all of the palettes).
+$app-theme: (
+  primary: mat-palette($app-primary),
+  accent: mat-palette($app-accent, A200, A100, A400),
+  warn: mat-palette($mat-red),
+  is-dark: true,
+  foreground: $app-foreground,
+  background: $app-background,
+);
