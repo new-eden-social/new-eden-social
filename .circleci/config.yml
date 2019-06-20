@@ -145,10 +145,10 @@ jobs:
     steps:
       - authenticate_docker_hub
       - pull_tag_push:
-          image: new-eden-social/api
+          image: newedensocial/api
           tag: latest
       - pull_tag_push:
-          image: new-eden-social/web
+          image: newedensocial/web
           tag: latest
 
   push_release:
@@ -156,10 +156,10 @@ jobs:
     steps:
       - authenticate_docker_hub
       - pull_tag_push:
-          image: new-eden-social/api
+          image: newedensocial/api
           tag: $CIRCLE_TAG
       - pull_tag_push:
-          image: new-eden-social/web
+          image: newedensocial/web
           tag: $CIRCLE_TAG
 
   deploy_latest:
