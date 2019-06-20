@@ -38,6 +38,6 @@
   </div>
 </section>
 
-<section class="comment-form" *ngIf="(authenticated$ | async) == false">
+<section class="comment-form" *ngIf="(authenticated$ | async) === false">
   <p class="unauthenticated">You have to be logged in to post content</p>
 </section>

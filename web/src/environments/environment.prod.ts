@@ -1,1 +1,1 @@
-export const environment = { production: false, apiEndpoint: "https://api.evebook.online/" }
+export const environment = { production: false, apiEndpoint: 'https://api.evebook.online/' };

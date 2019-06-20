@@ -114,7 +114,7 @@ export class SubscribeToPostComments implements Action {
 export class SubscribeSuccess implements Action {
   readonly type = WebsocketActionTypes.SUBSCRIBE_SUCCESS;
 
-  constructor(public payload: { key: string }){
+  constructor(public payload: { key: string }) {
   }
 }
 
@@ -164,7 +164,7 @@ export class UnSubscribeFromPostComments implements Action {
 export class UnSubscribeSuccess implements Action {
   readonly type = WebsocketActionTypes.UN_SUBSCRIBE_SUCCESS;
 
-  constructor(public payload: { key: string }){
+  constructor(public payload: { key: string }) {
   }
 }
 

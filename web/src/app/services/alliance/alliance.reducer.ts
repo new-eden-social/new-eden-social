@@ -19,7 +19,7 @@ export function allianceReducer(
           ...state.single,
           [action.payload.id]: action.payload,
         },
-      }
+      };
     }
 
     case FollowActionTypes.FOLLOW_SUCCESS: {

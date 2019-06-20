@@ -52,6 +52,6 @@ export class CharacterComponent implements OnInit {
 
   follower(): boolean {
     return !!this.character.followers
-      .filter(follow => follow.follower.id === this.authenticatedCharacterId).length
+      .filter(follow => follow.follower.id === this.authenticatedCharacterId).length;
   }
 }

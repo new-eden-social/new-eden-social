@@ -15,7 +15,7 @@ export interface IRefreshResponse {
 }
 
 export interface IAuthenticationState {
-  character?: DCharacterShort,
-  authenticated: boolean,
-  data?: IAuthenticationData,
+  character?: DCharacterShort;
+  authenticated: boolean;
+  data?: IAuthenticationData;
 }

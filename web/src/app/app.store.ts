@@ -34,17 +34,17 @@ import { ApiEffects } from './services/api.effects';
 import {FollowEffects} from './services/follow/follow.effects';
 
 export interface IAppState {
-  authentication?: IAuthenticationState,
-  search?: ISearchState,
-  character?: ICharacterState,
-  corporation?: ICorporationState,
-  alliance?: IAllianceState,
-  comment?: ICommentState,
-  post?: IPostState,
-  router?: RouterReducerState,
-  websocket?: IWebsocketState,
-  notification?: INotificationState,
-  api?: IApiState,
+  authentication?: IAuthenticationState;
+  search?: ISearchState;
+  character?: ICharacterState;
+  corporation?: ICorporationState;
+  alliance?: IAllianceState;
+  comment?: ICommentState;
+  post?: IPostState;
+  router?: RouterReducerState;
+  websocket?: IWebsocketState;
+  notification?: INotificationState;
+  api?: IApiState;
 }
 
 export function localStorage(reducer: ActionReducer<any>): ActionReducer<any> {

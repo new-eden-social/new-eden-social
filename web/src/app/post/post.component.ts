@@ -2,7 +2,7 @@ import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { DPost } from '../services/post/post.dto';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { DComment, DCommentList } from '../services/comment/comment.dto';
 import { select, Store } from '@ngrx/store';
 import { IAppState } from '../app.store';
@@ -68,7 +68,7 @@ export class PostComponent implements OnInit {
 
     // subscribe on comments
     this.comments$.subscribe((comments) => {
-      if (!comments) return;
+      if (!comments) { return; }
 
       this.comments = comments.data;
       this.moreComments = comments.page < (comments.pages - 1);

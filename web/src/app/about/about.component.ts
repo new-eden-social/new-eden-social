@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { IAppState } from '../app.store';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/internal/operators';
 
 @Component({

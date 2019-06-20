@@ -45,7 +45,7 @@ export class PostSingleComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe(() => {
       this.entityId = this.route.parent.snapshot.paramMap.get('id');
-      this.entityType = <'character' | 'corporation' | 'alliance'>this.route.snapshot.data.entity;
+      this.entityType = this.route.snapshot.data.entity as 'character' | 'corporation' | 'alliance';
 
       this.postId = this.route.snapshot.paramMap.get('postId');
       this.post$ = this.store.pipe(select('post', 'single', this.postId));

@@ -13,7 +13,7 @@
       <app-footer></app-footer>
     </div>
 
-    <app-loading class="wide" *ngIf="!(wall$ | async)"></app-loading>
+    <app-loading class="wide" *ngIf="(wall$ | async) === null"></app-loading>
 
     <div *ngIf="wall$ | async" class="wide" infiniteScroll (scrolled)="onScroll()">
       <app-post-list [showForm]="false" [postList]="wall$ | async"></app-post-list>

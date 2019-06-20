@@ -17,8 +17,11 @@ export function postReducer(
 
       const oldPosts = oldKeyData ? oldKeyData.data : [];
       let posts = [];
-      if (!oldKeyData || oldKeyData.page >= action.payload.posts.page) posts = action.payload.posts.data;
-      else posts = [...oldPosts, ...action.payload.posts.data];
+      if (!oldKeyData || oldKeyData.page >= action.payload.posts.page) {
+        posts = action.payload.posts.data;
+      } else {
+        posts = [...oldPosts, ...action.payload.posts.data];
+      }
 
       return {
         ...state,

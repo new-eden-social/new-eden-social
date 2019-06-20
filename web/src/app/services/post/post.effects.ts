@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+
+
 
 import { ApiService } from '../api.service';
 import { DPost, DPostList } from './post.dto';
 import { Effect, ofType } from '@ngrx/effects';
 import { catchError, concatMap, map, mergeMap, switchMap } from 'rxjs/internal/operators';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import {
   GetAllianceWall,
   GetCharacterWall, GetCorporationWall, GetHashtag, GetLatest, GetSuccess, LoadPost, LoadSuccess,
@@ -122,7 +122,7 @@ export class PostEffects extends ApiService {
       PostActionTypes.POST_AS_CORPORATION,
       PostActionTypes.POST_AS_ALLIANCE),
     concatMap(({ payload, type }) => {
-        if (!payload.options) payload.options = {};
+        if (!payload.options) { payload.options = {}; }
 
         let path;
         switch (type) {

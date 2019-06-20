@@ -3,7 +3,7 @@ import { DCharacter } from '../services/character/character.dto';
 import { DCorporation } from '../services/corporation/corporation.dto';
 import { DAlliance } from '../services/alliance/alliance.dto';
 import { DPostList } from '../services/post/post.dto';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { select, Store } from '@ngrx/store';
 import { IAppState } from '../app.store';
 

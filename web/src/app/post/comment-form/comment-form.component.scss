@@ -64,7 +64,7 @@ $image-size: 32px;
     display: flex;
     flex: 1 1;
 
-    dynamic-html {
+    app-dynamic-html {
       @include post-content(0.8em);
 
       border-bottom: 1px solid #f3f3f3;

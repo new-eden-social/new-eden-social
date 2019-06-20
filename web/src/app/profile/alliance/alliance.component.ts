@@ -51,6 +51,6 @@ export class AllianceComponent implements OnInit {
 
   follower(): boolean {
     return !!this.alliance.followers
-      .filter(follow => follow.follower.id === this.authenticatedCharacterId).length
+      .filter(follow => follow.follower.id === this.authenticatedCharacterId).length;
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { DCharacterShort } from '../../services/character/character.dto';
 import { select, Store } from '@ngrx/store';
 import { IAppState } from '../../app.store';
@@ -18,10 +18,10 @@ import { RichContentEditableComponent } from '../../rich-content/rich-content-ed
 })
 export class CommentFormComponent implements OnInit {
 
-  @Input('postId')
+  @Input()
   postId: string;
 
-  @ViewChild(RichContentEditableComponent)
+  @ViewChild(RichContentEditableComponent, {static: false})
   private commentForm: RichContentEditableComponent;
 
   authenticated$: Observable<boolean>;
@@ -33,7 +33,7 @@ export class CommentFormComponent implements OnInit {
 
   postAs: 'character' | 'corporation' | 'alliance';
   postAsImage: string;
-  postValue: string = '';
+  postValue = '';
 
   constructor(
     private store: Store<IAppState>,
@@ -45,7 +45,7 @@ export class CommentFormComponent implements OnInit {
   ngOnInit() {
     this.character$.subscribe(character => {
       this.character = character;
-      if (this.character) this.setCharacter();
+      if (this.character) { this.setCharacter(); }
     });
   }
 

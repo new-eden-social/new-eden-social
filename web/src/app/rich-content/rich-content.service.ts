@@ -8,11 +8,11 @@ export class RichContentService {
       /#(\w*[0-9a-zA-Z]+\w*[0-9a-zA-Z])/g,
       hashtag => {
         if (editing) {
-          return `<span class="hashtag">${hashtag}</span>`
+          return `<span class="hashtag">${hashtag}</span>`;
         }
         return `<a
             [routerLink]="['/hashtag', '${hashtag.replace('#', '')}']"
-            >${hashtag}</a>`
+            >${hashtag}</a>`;
       });
 
   }
@@ -32,6 +32,6 @@ export class RichContentService {
   public parseText(content: string): string {
     // Replacing spaces with encoded value, this fixes weird issue
     // with cursor restoration
-    return content.replace(' ', '&nbsp;')
+    return content.replace(' ', '&nbsp;');
   }
 }

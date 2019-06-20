@@ -16,7 +16,7 @@
     <app-footer></app-footer>
   </div>
 
-  <app-loading class="wide" *ngIf="!(postList$ | async)"></app-loading>
+  <app-loading class="wide" *ngIf="(postList$ | async) === null"></app-loading>
 
   <div class="wide" *ngIf="postList$ | async" infiniteScroll (scrolled)="onScroll()">
     <app-post-list [postList]="postList$ | async"></app-post-list>
@@ -24,4 +24,4 @@
 </div>
 
 <!--Not Authenticated -->
-<app-home-welcome *ngIf="!(authenticated$ | async)"></app-home-welcome>
+<app-home-welcome *ngIf="(authenticated$ | async) === null"></app-home-welcome>

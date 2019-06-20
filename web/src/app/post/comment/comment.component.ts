@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CommentComponent implements OnInit {
 
-  @Input('comment')
+  @Input()
   comment: DComment;
 
   name: string;

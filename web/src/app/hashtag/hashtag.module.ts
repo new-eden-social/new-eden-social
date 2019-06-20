@@ -4,7 +4,7 @@ import { HashtagComponent } from './hashtag.component';
 import { LoadingModule } from '../loading/loading.module';
 import { PostListModule } from '../post-list/post-list.module';
 import { FooterModule } from '../footer/footer.module';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [

@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+
+
 import { ApiService } from '../api.service';
 import { Search, SearchActionTypes, SearchSuccess } from './search.actions';
 import { DSearch } from './search.dto';
 import { Effect, ofType } from '@ngrx/effects';
 import { catchError, map, switchMap } from 'rxjs/internal/operators';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { Exception } from '../api.actions';
 import { of } from 'rxjs/index';
 

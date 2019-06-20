@@ -8,15 +8,15 @@ import { DNotification } from './notification.dto';
 export class NotificationService {
 
   getSenderName(notification: DNotification): string {
-    if (notification.senderCharacter) return notification.senderCharacter.name;
-    if (notification.senderCorporation) return notification.senderCorporation.name;
-    if (notification.senderAlliance) return notification.senderAlliance.name;
+    if (notification.senderCharacter) { return notification.senderCharacter.name; }
+    if (notification.senderCorporation) { return notification.senderCorporation.name; }
+    if (notification.senderAlliance) { return notification.senderAlliance.name; }
   }
 
   getSenderImage(notification: DNotification): string {
-    if (notification.senderCharacter) return notification.senderCharacter.portrait.px256x256;
-    if (notification.senderCorporation) return notification.senderCorporation.icon.px256x256;
-    if (notification.senderAlliance) return notification.senderAlliance.icon.px128x128;
+    if (notification.senderCharacter) { return notification.senderCharacter.portrait.px256x256; }
+    if (notification.senderCorporation) { return notification.senderCorporation.icon.px256x256; }
+    if (notification.senderAlliance) { return notification.senderAlliance.icon.px128x128; }
   }
 
   getHTML(notification: DNotification): string {

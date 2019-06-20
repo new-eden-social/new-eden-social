@@ -47,7 +47,7 @@ export class PostListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe(() => {
       this.entityId = this.route.parent.snapshot.paramMap.get('id');
-      this.entityType = <'character' | 'corporation' | 'alliance'>this.route.snapshot.data.entity;
+      this.entityType = this.route.snapshot.data.entity as 'character' | 'corporation' | 'alliance';
 
       const wallKey = this.getWallKeyForType(this.entityType, this.entityId);
       this.wall$ = this.store.pipe(select('post', 'list', wallKey));

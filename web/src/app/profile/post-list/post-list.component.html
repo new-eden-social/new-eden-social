@@ -1,4 +1,4 @@
-<app-loading *ngIf="!(wall$ | async)"></app-loading>
+<app-loading *ngIf="(wall$ | async) === null"></app-loading>
 
 <div *ngIf="wall$ | async" infiniteScroll (scrolled)="onScroll()">
   <app-post-list

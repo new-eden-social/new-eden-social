@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 
-import 'rxjs/add/operator/startWith';
-import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/debounceTime';
+
+
+
 import { Observable } from 'rxjs';
 import { DPostList } from '../services/post/post.dto';
 import { select, Store } from '@ngrx/store';
@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ) {
     this.postList$ = this.store.pipe(select('post', 'list', 'latest'));
     this.authenticated$ = this.store.pipe(select('authentication', 'authenticated'));
-    this.websocketConnected$ = this.store.pipe(select('websocket', 'connected'))
+    this.websocketConnected$ = this.store.pipe(select('websocket', 'connected'));
   }
 
   ngOnDestroy() {

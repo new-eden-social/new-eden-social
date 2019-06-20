@@ -21,8 +21,11 @@ export function commentReducer(
       let comments = [];
       // We reverse comments, so that newest are on the bottom
       commentsResponse.data.reverse();
-      if (!postComments || postComments.page >= commentsResponse.page) comments = commentsResponse.data;
-      else comments = [...commentsResponse.data, ...oldComments];
+      if (!postComments || postComments.page >= commentsResponse.page) {
+        comments = commentsResponse.data;
+      } else {
+        comments = [...commentsResponse.data, ...oldComments];
+      }
 
       return {
         ...state,

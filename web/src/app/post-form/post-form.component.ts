@@ -47,10 +47,10 @@ export class PostFormComponent implements OnInit {
 
   showEmojiMart = false;
 
-  @ViewChild(RichContentEditableComponent)
+  @ViewChild(RichContentEditableComponent, {static: false})
   private postForm: RichContentEditableComponent;
 
-  @ViewChild('openEmojiMartButton')
+  @ViewChild('openEmojiMartButton', {static: false})
   private openEmojiMartButton: ElementRef;
 
   constructor(
@@ -64,7 +64,7 @@ export class PostFormComponent implements OnInit {
   ngOnInit() {
     this.character$.subscribe(character => {
       this.character = character;
-      if (this.character) this.setCharacter();
+      if (this.character) { this.setCharacter(); }
     });
   }
 
@@ -124,8 +124,9 @@ export class PostFormComponent implements OnInit {
       wallKey = `character:${this.characterWall.id}`;
     } else {
       this.options.characterId = null;
-      if (this.postAs === 'character')
+      if (this.postAs === 'character') {
         wallKey = `character:${this.character.id}`;
+      }
     }
 
     // If we try to post as corporation to own corporation wall, we shouldn't post on a wall
@@ -134,8 +135,9 @@ export class PostFormComponent implements OnInit {
       wallKey = `corporation:${this.corporationWall.id}`;
     } else {
       this.options.corporationId = null;
-      if (this.postAs === 'corporation')
+      if (this.postAs === 'corporation') {
         wallKey = `corporation:${this.character.corporation.id}`;
+      }
     }
 
     // If we try to post as alliance and we are in alliance, on the alliance wall that is our
@@ -147,8 +149,9 @@ export class PostFormComponent implements OnInit {
       wallKey = `alliance:${this.allianceWall.id}`;
     } else {
       this.options.allianceId = null;
-      if (this.postAs === 'alliance')
+      if (this.postAs === 'alliance') {
         wallKey = `alliance:${this.character.corporation.alliance.id}`;
+      }
     }
 
     switch (this.postAs) {

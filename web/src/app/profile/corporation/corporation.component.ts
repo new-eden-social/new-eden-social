@@ -58,6 +58,6 @@ export class CorporationComponent implements OnInit {
 
   follower(): boolean {
     return !!this.corporation.followers
-      .filter(follow => follow.follower.id === this.authenticatedCharacterId).length
+      .filter(follow => follow.follower.id === this.authenticatedCharacterId).length;
   }
 }

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AboutComponent } from './about.component';
-import { MatButtonModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import { EvebookComponent } from './evebook/evebook.component';
 import { LegalComponent } from './legal/legal.component';
 import { ApiComponent } from './api/api.component';
 import { OtherPartiesComponent } from './other-parties/other-parties.component';
 import { DonationsComponent } from './donations/donations.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [

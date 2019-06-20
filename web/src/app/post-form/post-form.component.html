@@ -60,7 +60,7 @@
     </div>
   </div>
 
-  <div class="panel-content" *ngIf="(authenticated$ | async) == false">
+  <div class="panel-content" *ngIf="(authenticated$ | async) === false">
     <p class="unauthenticated">You have to be logged in to post content</p>
   </div>
 

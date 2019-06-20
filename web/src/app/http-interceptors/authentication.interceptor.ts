@@ -22,7 +22,7 @@ export class AuthenticationInterceptor implements HttpInterceptor {
       headers: req.headers.set('Authorization', 'Bearer ' + this.accessToken),
     });
 
-    return next.handle(authReq)
+    return next.handle(authReq);
   }
 
 }

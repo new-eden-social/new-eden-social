@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { DPostList } from '../services/post/post.dto';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostEffects } from '../services/post/post.effects';
@@ -23,7 +23,7 @@ export class HashtagComponent implements OnInit, OnDestroy {
 
   wall$: Observable<DPostList>;
 
-  page: number = 0;
+  page = 0;
   hashtag: string;
 
   constructor(
@@ -47,7 +47,7 @@ export class HashtagComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.params.subscribe(() => {
       this.page = 0;
-      this.hashtag = this.route.snapshot.params['hashtag'];
+      this.hashtag = this.route.snapshot.params.hashtag;
       this.wall$ = this.store.pipe(select('post', 'list', `hashtag:${this.hashtag}`));
       this.store.dispatch(new GetHashtag({
         hashtag: this.hashtag,

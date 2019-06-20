@@ -22,8 +22,8 @@ export class NavbarNotificationsComponent implements OnInit {
   newNotifications$: Observable<DNotification[]> = of([]);
   otherNotifications$: Observable<DNotification[]> = of([]);
 
-  notificationsHover: boolean = false;
-  notificationsToggle: boolean = false;
+  notificationsHover = false;
+  notificationsToggle = false;
 
   constructor(
     private store: Store<IAppState>,
@@ -56,8 +56,11 @@ export class NavbarNotificationsComponent implements OnInit {
       map(notifications => notifications.length),
     ).subscribe(notifications => {
       const title = this.title.getTitle().replace(/^\(\d+\)/g, '');
-      if (notifications > 0) this.title.setTitle(`(${notifications}) ${title}`);
-      else this.title.setTitle(title);
+      if (notifications > 0) {
+        this.title.setTitle(`(${notifications}) ${title}`);
+      } else {
+        this.title.setTitle(title);
+      }
     });
   }
 
@@ -71,9 +74,9 @@ export class NavbarNotificationsComponent implements OnInit {
     } else if (notification.senderCharacter) {
       this.router.navigate(['character', notification.senderCharacter.id]);
     } else if (notification.senderCorporation) {
-      this.router.navigate(['corporation', notification.senderCorporation.id])
+      this.router.navigate(['corporation', notification.senderCorporation.id]);
     } else if (notification.senderAlliance) {
-      this.router.navigate(['alliance', notification.senderAlliance.id])
+      this.router.navigate(['alliance', notification.senderAlliance.id]);
     }
   }
 

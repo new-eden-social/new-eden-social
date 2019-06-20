@@ -9,16 +9,16 @@ export class LoadingComponent implements OnInit {
 
   showMessage = false;
 
-  message = "";
+  message = '';
 
   messages = [
-    "If this takes too long, try refreshing the page",
-    "We are running on donations, this servers are all we can afford :/",
-    "Hmm, still here?",
-    "You should probably refresh the page",
-    "Something is broken, i don't think this will ever load",
-    "...",
-    "..."
+    'If this takes too long, try refreshing the page',
+    'We are running on donations, this servers are all we can afford :/',
+    'Hmm, still here?',
+    'You should probably refresh the page',
+    'Something is broken, i don\'t think this will ever load',
+    '...',
+    '...'
   ];
 
   ngOnInit(): void {
@@ -34,7 +34,7 @@ export class LoadingComponent implements OnInit {
   nextMessage(): void {
     let newIndex = this.messages.indexOf(this.message) + 1;
     // If we reached the end, start from begging
-    if (newIndex === this.messages.length) newIndex = 0;
+    if (newIndex === this.messages.length) { newIndex = 0; }
 
     this.message = this.messages[newIndex];
   }

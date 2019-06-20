@@ -78,7 +78,7 @@
     display: flex;
     flex: 1 1;
 
-    dynamic-html {
+    app-dynamic-html {
       @include post-content();
 
       border-bottom: 1px solid #f3f3f3;

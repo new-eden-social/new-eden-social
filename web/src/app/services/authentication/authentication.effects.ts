@@ -9,7 +9,7 @@ import { catchError, map, mergeMap, tap } from 'rxjs/internal/operators';
 import {DCharacter, DCharacterShort} from '../character/character.dto';
 import { of } from 'rxjs/index';
 import { Effect, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { IAuthenticationData, IRefreshResponse } from './authentication.interface';
 
 @Injectable()

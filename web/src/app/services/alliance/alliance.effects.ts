@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+
+
 
 import { ApiService } from '../api.service';
 import { DAlliance } from './alliance.dto';
 import { Effect, ofType } from '@ngrx/effects';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { AllianceActionTypes, LoadAlliance, LoadSuccess } from './alliance.actions';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/internal/operators';
 import { Exception } from '../api.actions';

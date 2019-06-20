@@ -16,6 +16,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 
+// tslint:disable-next-line: directive-selector
 @Directive({ selector: 'html-outlet' })
 export class HtmlOutletDirective implements OnChanges, OnDestroy, OnInit {
 
@@ -64,7 +65,7 @@ export class HtmlOutletDirective implements OnChanges, OnDestroy, OnInit {
     // Create dynamic component with template
     const template = `${this.html}`;
     @Component({
-      selector: 'dynamic-html',
+      selector: 'app-dynamic-html',
       template,
     })
     class DynamicComponent {
@@ -85,6 +86,8 @@ export class HtmlOutletDirective implements OnChanges, OnDestroy, OnInit {
         x => x.componentType === DynamicComponent);
     })
     .then(factory => {
+      // TODO: Fix this deprecation!
+      // tslint:disable-next-line: deprecation
       const injector = Injector.create({ providers: [], parent: this.vcRef.parentInjector });
       this.cmpRef = this.vcRef.createComponent(factory, 0, injector, []);
 
@@ -104,7 +107,7 @@ export class HtmlOutletDirective implements OnChanges, OnDestroy, OnInit {
       return 0;
     }
 
-    const mainElement = <Element>this.vcRef.element.nativeElement.parentElement.children[1];
+    const mainElement = this.vcRef.element.nativeElement.parentElement.children[1] as Element;
 
     const selection = window.getSelection();
     const range = selection.getRangeAt(0);
@@ -115,7 +118,7 @@ export class HtmlOutletDirective implements OnChanges, OnDestroy, OnInit {
   }
 
   private restoreSelection() {
-    const mainElement = <Element>this.vcRef.element.nativeElement.parentElement.children[1];
+    const mainElement = this.vcRef.element.nativeElement.parentElement.children[1] as Element;
     const selection = window.getSelection();
     const pos = this.getTextNodeAtPosition(mainElement, this.selectionLength);
     selection.removeAllRanges();

@@ -20,7 +20,7 @@ export class HomeWelcomeComponent implements OnInit, OnDestroy {
 
   postList$: Observable<DPostList>;
 
-  authenticationUrl = (<any>environment).apiEndpoint;
+  authenticationUrl = (environment as any).apiEndpoint;
   websocketConnected$: Observable<boolean>;
 
   page = 0;

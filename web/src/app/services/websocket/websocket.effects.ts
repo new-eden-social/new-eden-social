@@ -1,6 +1,6 @@
 import {Injectable, OnInit} from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { Observable, Subscription } from 'rxjs/Rx';
+import { Observable, Subscription } from 'rxjs';
 import {
   AuthenticateFailed, AuthenticateSuccess,
   Connect, ConnectError, ConnectSuccess, ConnectTimeout, Disconnected, SocketError, SubscribeFail,
@@ -37,7 +37,6 @@ import {
   IAuthenticationResponse, ISubscriptionResponse,
   IWebsocketException,
 } from './websocket.interface';
-import { MatSnackBar } from '@angular/material';
 import { DPost } from '../post/post.dto';
 import { NewPost } from '../post/post.actions';
 import {
@@ -48,6 +47,7 @@ import {
 import { getCommentListKey } from '../comment/comment.constants';
 import { DComment } from '../comment/comment.dto';
 import { NewComment } from '../comment/comment.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class WebsocketEffects implements OnInit {
@@ -63,7 +63,7 @@ export class WebsocketEffects implements OnInit {
       }
       // If socket doesn't exist yet, create new one
       // and add some utility listeners
-      this.socket = io((<any>environment).apiEndpoint);
+      this.socket = io((environment as any).apiEndpoint);
 
       // Listen for status events
       fromEvent(this.socket, 'disconnect')
@@ -85,7 +85,7 @@ export class WebsocketEffects implements OnInit {
           this.subscriptions = {};
           return new ConnectSuccess();
         }
-        if (event === 'timeout') return new ConnectTimeout();
+        if (event === 'timeout') { return new ConnectTimeout(); }
         return new ConnectError();
       }));
     }),
@@ -122,8 +122,8 @@ export class WebsocketEffects implements OnInit {
       // Wait for response
       return fromEvent<ISubscriptionResponse>(this.socket, WS_EVENT_SUBSCRIPTION).pipe(
         take(1),
-        map(event => {
-          if (event.success) {
+        map(response => {
+          if (response.success) {
             const key = getPostListKeyForHashtagWall(action.payload.hashtag);
             this.subscriptions[key] =  fromEvent<DWsNewSubscriptionEvent<DPost>>(
               this.socket,
@@ -154,8 +154,8 @@ export class WebsocketEffects implements OnInit {
       // Wait for response
       return fromEvent<ISubscriptionResponse>(this.socket, WS_EVENT_SUBSCRIPTION).pipe(
         take(1),
-        map(event => {
-          if (event.success) {
+        map(response => {
+          if (response.success) {
             const key = getPostListKeyForCharacterWall(action.payload.characterId);
             this.subscriptions[key] = fromEvent<DWsNewSubscriptionEvent<DPost>>(
               this.socket,
@@ -164,8 +164,8 @@ export class WebsocketEffects implements OnInit {
               filter(event => event.subscription === WS_SUBSCRIPTIONS.TO_CHARACTER_WALL),
               // We use == for a reason. As action.payload.characterId can be number
               filter(event =>
-                event.payload.characterWall && event.payload.characterWall.id == action.payload.characterId
-                || event.payload.character && event.payload.character.id == action.payload.characterId,
+                event.payload.characterWall && event.payload.characterWall.id === action.payload.characterId
+                || event.payload.character && event.payload.character.id === action.payload.characterId,
               ),
             ).subscribe(event => {
               this.store.dispatch(new NewPost({ post: event.payload, key }));
@@ -187,8 +187,8 @@ export class WebsocketEffects implements OnInit {
       // Wait for response
       return fromEvent<ISubscriptionResponse>(this.socket, WS_EVENT_SUBSCRIPTION).pipe(
         take(1),
-        map(event => {
-          if (event.success) {
+        map(response => {
+          if (response.success) {
             const key = getPostListKeyForLatestWall();
             this.subscriptions[key] = fromEvent<DWsNewSubscriptionEvent<DPost>>(
               this.socket,
@@ -218,8 +218,8 @@ export class WebsocketEffects implements OnInit {
       // Wait for response
       return fromEvent<ISubscriptionResponse>(this.socket, WS_EVENT_SUBSCRIPTION).pipe(
         take(1),
-        map(event => {
-          if (event.success) {
+        map(response => {
+          if (response.success) {
             const key = getPostListKeyForCorporationWall(action.payload.corporationId);
             this.subscriptions[key] = fromEvent<DWsNewSubscriptionEvent<DPost>>(
               this.socket,
@@ -228,8 +228,8 @@ export class WebsocketEffects implements OnInit {
               filter(event => event.subscription === WS_SUBSCRIPTIONS.TO_CORPORATION_WALL),
               // We use == for a reason. As action.payload.corporationId can be number
               filter(event =>
-                event.payload.corporationWall && event.payload.corporationWall.id == action.payload.corporationId
-                || event.payload.corporation && event.payload.corporation.id == action.payload.corporationId,
+                event.payload.corporationWall && event.payload.corporationWall.id === action.payload.corporationId
+                || event.payload.corporation && event.payload.corporation.id === action.payload.corporationId,
               ),
             ).subscribe(event => {
               this.store.dispatch(new NewPost({ post: event.payload, key }));
@@ -251,8 +251,8 @@ export class WebsocketEffects implements OnInit {
       // Wait for response
       return fromEvent<ISubscriptionResponse>(this.socket, WS_EVENT_SUBSCRIPTION).pipe(
         take(1),
-        map(event => {
-          if (event.success) {
+        map(response => {
+          if (response.success) {
             const key = getPostListKeyForAllianceWall(action.payload.allianceId);
             this.subscriptions[key] = fromEvent<DWsNewSubscriptionEvent<DPost>>(
               this.socket,
@@ -261,8 +261,8 @@ export class WebsocketEffects implements OnInit {
               filter(event => event.subscription === WS_SUBSCRIPTIONS.TO_ALLIANCE_WALL),
               // We use == for a reason. As action.payload.allianceId can be number
               filter(event =>
-                event.payload.allianceWall && event.payload.allianceWall.id == action.payload.allianceId
-                || event.payload.alliance && event.payload.alliance.id == action.payload.allianceId,
+                event.payload.allianceWall && event.payload.allianceWall.id === action.payload.allianceId
+                || event.payload.alliance && event.payload.alliance.id === action.payload.allianceId,
               ),
             ).subscribe(event => {
               this.store.dispatch(new NewPost({ post: event.payload, key }));
@@ -284,8 +284,8 @@ export class WebsocketEffects implements OnInit {
       // Wait for response
       return fromEvent<ISubscriptionResponse>(this.socket, WS_EVENT_SUBSCRIPTION).pipe(
         take(1),
-        map(event => {
-          if (event.success) {
+        map(response => {
+          if (response.success) {
             const key = getCommentListKey(action.payload.postId);
             this.subscriptions[key] = fromEvent<DWsNewSubscriptionEvent<DComment>>(
               this.socket,
@@ -444,6 +444,7 @@ export class WebsocketEffects implements OnInit {
   ) {
   }
 
+  // tslint:disable-next-line: contextual-lifecycle
   ngOnInit() {
     this.store.pipe(
       select('websocket', 'connected'),
