@@ -14,7 +14,7 @@ commands:
         type: string
     steps:
       - run: docker pull << parameters.image >>:$CIRCLE_SHA1
-      - run: docker tag << parameters.image >>:<< parameters.tag >>
+      - run: docker tag << parameters.image >>:$CIRCLE_SHA1 << parameters.image >>:<< parameters.tag >>
       - run: docker push << parameters.image >>:<< parameters.tag >>
   demo_deploy:
     description: "Placeholder for real deploy logic"
