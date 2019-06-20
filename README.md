@@ -9,14 +9,17 @@
     <img src="https://circleci.com/gh/new-eden-social/hub.svg?style=shield" alt="CircleCI" />
   </a>
   <a target="_blank" href="https://greenkeeper.io/">
-    <img src="https://badges.greenkeeper.io/evebook/evebook.svg" alt="Greenkeeper" />
+    <img src="https://badges.greenkeeper.io/new-eden-social/hub.svg" alt="Greenkeeper" />
   </a>
-  <a target="_blank" href="https://coveralls.io/github/new-eden-social/evebook">
-    <img src="https://coveralls.io/repos/github/evebook/new-eden-social/badge.svg" alt="Coverage Status" />
+  <a target="_blank" href="https://coveralls.io/github/new-eden-social/hub">
+    <img src="https://coveralls.io/repos/github/new-eden-social/hub/badge.svg" alt="Coverage Status" />
   </a>
-  <a href="https://microbadger.com/images/evebook/api:latest" title="Docker Image Status">
-    <img src="https://images.microbadger.com/badges/image/new-eden-social/api:latest.svg">
-    </a>
+  <a href="https://microbadger.com/images/newedensocial/api:latest" title="Docker Image Status">
+    <img src="https://images.microbadger.com/badges/image/newedensocial/api:latest.svg">
+  </a>
+  <a href="https://microbadger.com/images/newedensocial/web:latest" title="Docker Image Status">
+    <img src="https://images.microbadger.com/badges/image/newedensocial/web:latest.svg">
+  </a>
   <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
     <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
   </a>
