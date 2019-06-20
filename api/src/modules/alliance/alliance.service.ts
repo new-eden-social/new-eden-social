@@ -102,7 +102,7 @@ export class AllianceService implements IService<Alliance> {
    * @returns {Promise<Alliance>}
    */
   private async findAllianceById(id: number) {
-    this.loggerService.debug('get alliance ' + id);
+    this.loggerService.debug(`get alliance ${id}`);
     const foundAlliance = await this.allianceRepository.findOne(
       id,
       { relations: ['executorCorporation'] },

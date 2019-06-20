@@ -56,7 +56,7 @@ export class DPost {
     // Depending on post type, killmail is used in different ways
     // for KILLMAIL type, it's killmail that triggered post creation
     // for TEXT type it's killmail from url inside post
-    switch(post.type) {
+    switch (post.type) {
       case POST_TYPES.KILLMAIL:
         if (post.killmail) this.killmail = new DKillmailShort(post.killmail);
         break;

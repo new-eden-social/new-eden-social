@@ -239,7 +239,7 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
     this.logger.debug(
       `[Websocket.Gateway] sendEventToLatestSub => latest = ${event.event}`,
     );
-    this.server.to(`wall:latest`).emit(event.event, event.data);
+    this.server.to('wall:latest').emit(event.event, event.data);
   }
 
   /**

@@ -41,7 +41,7 @@ export interface IKillmailRawWithoutZKB {
   readonly war?: {
     readonly id: number;
     readonly href: string;
-  }
+  };
 }
 
 export interface IKillmailRaw extends IKillmailRawWithoutZKB {

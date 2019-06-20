@@ -10,7 +10,7 @@ import {
   ICorporationStatistics,
   ICharacterStatistics,
 } from './zkillboard.interface';
-import {fromPromise} from 'rxjs/internal-compatibility';
+import { fromPromise } from 'rxjs/internal-compatibility';
 import { retry, map } from 'rxjs/internal/operators';
 
 @Injectable()
@@ -65,11 +65,10 @@ export class ZKillboardService {
     const killmails = await this.request<IKillmailRaw[]>({
       url: `killID/${id}/`,
       method: 'GET',
-    })
+    });
     const killmail = killmails[0];
     return this.formatKillmail(killmail, killmail.zkb);
   }
-
 
   /**
    * Get alliance statistics from zKillboard

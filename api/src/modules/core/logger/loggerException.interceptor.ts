@@ -27,14 +27,14 @@ export class HttpLoggerExceptionInterceptor implements NestInterceptor {
         // If 500, log as error
         if (500 <= exception.getStatus()) {
           this.loggerService.error(
-            'HttpException ' + exception.getStatus(),
+            `HttpException ${exception.getStatus()}`,
             request.path,
             exception.getResponse(),
           );
         } else {
           // Else log as debug (we don't want 4xx errors in production)
           this.loggerService.error(
-            'HttpException ' + exception.getStatus(),
+            `HttpException ${exception.getStatus()}`,
             request.path,
             exception.getResponse(),
           );
@@ -48,7 +48,6 @@ export class HttpLoggerExceptionInterceptor implements NestInterceptor {
 
 @Injectable()
 export class WsLoggerExceptionInterceptor implements NestInterceptor {
-
 
   intercept(
     context: ExecutionContext,

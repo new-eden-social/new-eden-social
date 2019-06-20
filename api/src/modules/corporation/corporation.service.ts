@@ -95,7 +95,7 @@ export class CorporationService implements IService<Corporation> {
    * @return {Promise<Corporation>}
    */
   private async findCorporationById(id: number) {
-    this.loggerService.debug('get corporation ' + id);
+    this.loggerService.debug(`get corporation ${id}`);
     const foundCorporation = await this.corporationRepository.findOne(id);
 
     if (foundCorporation) return foundCorporation;

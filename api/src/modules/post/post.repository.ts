@@ -120,19 +120,19 @@ export class PostRepository extends Repository<Post> {
   public getNumOfPostsByCharacter(
     character: Character,
   ): Promise<number> {
-    return this.count({ where: { character } })
+    return this.count({ where: { character } });
   }
 
   public getNumOfPostsByCorporation(
     corporation: Corporation,
   ): Promise<number> {
-    return this.count({ where: { corporation } })
+    return this.count({ where: { corporation } });
   }
 
   public getNumOfPostsByAlliance(
     alliance: Alliance,
   ): Promise<number> {
-    return this.count({ where: { alliance } })
+    return this.count({ where: { alliance } });
   }
 
   /**

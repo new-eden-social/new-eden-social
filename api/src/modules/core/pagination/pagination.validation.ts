@@ -7,4 +7,3 @@ export class VPagination {
   @IsNumber() @Min(1) @Type(() => Number)
   limit: number = 10;
 }
-

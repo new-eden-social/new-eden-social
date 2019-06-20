@@ -69,7 +69,6 @@ export class Corporation {
   @Column('real')
   taxRate: number;
 
-
   get icon(): ICorporationIcon {
     return {
       px64x64: `http://image.eveonline.com/Corporation/${this.id}_64.png`,

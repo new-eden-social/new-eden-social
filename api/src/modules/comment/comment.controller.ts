@@ -8,7 +8,6 @@ import { VCreateComment } from './comment.validate';
 import { PostService } from '../post/post.service';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
 import { VPagination } from '../core/pagination/pagination.validation';
-import { DPostList } from '../post/post.dto';
 import { Pagination } from '../core/pagination/pagination.decorator';
 import { CORPORATION_ROLES } from '../corporation/corporation.constants';
 import { CorporationRoles } from '../corporation/corporation.roles.decorator';

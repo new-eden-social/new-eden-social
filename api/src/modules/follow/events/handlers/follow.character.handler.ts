@@ -22,6 +22,6 @@ export class FollowCharacterEventHandler implements IEventHandler<FollowCharacte
     notification.senderCharacter = event.follow.follower;
     notification.eventUuid = eventUuid;
 
-    this.commandBus.execute(new CreateNotificationCommand(notification))
+    this.commandBus.execute(new CreateNotificationCommand(notification));
   }
 }

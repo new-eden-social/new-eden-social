@@ -5,5 +5,4 @@ import { Killmail } from './killmail.entity';
 @EntityRepository(Killmail)
 export class KillmailRepository extends Repository<Killmail> {
 
-
 }
