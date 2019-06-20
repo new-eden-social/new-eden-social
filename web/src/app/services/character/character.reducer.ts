@@ -2,7 +2,6 @@ import {ICharacterState} from './character.interface';
 import {CharacterActionsUnion, CharacterActionTypes} from './character.actions';
 import {FollowActionTypes, FollowSuccess} from '../follow/follow.actions';
 import {FOLLOW_ACTION_TYPE} from '../follow/follow.constants';
-import {st} from '@angular/core/src/render3';
 
 const INITIAL_STATE: ICharacterState = {
   single: {}
