@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { PostListComponent } from './post-list.component';
 import { PostFormModule } from '../post-form/post-form.module';
 import { PostModule } from '../post/post.module';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   imports: [

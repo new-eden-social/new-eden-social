@@ -12,6 +12,7 @@ export class RichContentEditableComponent {
   @Output()
   update = new EventEmitter<string>();
 
+  // tslint:disable-next-line: no-output-native
   @Output()
   submit = new EventEmitter();
 

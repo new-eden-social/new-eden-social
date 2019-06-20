@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PostFormComponent } from './post-form.component';
-import {
-  MatButtonModule, MatExpansionModule, MatIconModule,
-  MatMenuModule,
-} from '@angular/material';
 import { FormsModule } from '@angular/forms';
 import { RichContentModule } from '../rich-content/rich-content.module';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   imports: [
@@ -21,7 +21,6 @@ import { EmojiModule } from '@ctrl/ngx-emoji-mart/ngx-emoji';
     RichContentModule,
     PickerModule,
     EmojiModule,
-    MatIconModule,
   ],
   exports: [PostFormComponent],
   declarations: [PostFormComponent],

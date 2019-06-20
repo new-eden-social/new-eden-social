@@ -5,7 +5,7 @@ export interface IWebsocketState {
   authenticated: boolean;
   subscriptions: {
     [key: string]: boolean
-  }
+  };
 }
 
 export interface IAuthenticationResponse {
@@ -18,8 +18,8 @@ export interface ISubscriptionResponse {
 }
 
 export interface IWebsocketException {
-  status: string,
-  message: string,
+  status: string;
+  message: string;
 }
 
 export interface DWsNewSubscriptionEvent<T> {

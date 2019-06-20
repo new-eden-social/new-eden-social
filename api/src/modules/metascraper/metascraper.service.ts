@@ -39,7 +39,7 @@ export class MetascraperService {
 
   async processUrl(url: string): Promise<IURLMetadata> {
     const response = await this.request(url);
-    return <IURLMetadata>(await this.metascraper({ html: response.data, url }));
+    return <IURLMetadata>(await this.metascraper({ url, html: response.data }));
   }
 
   isUrlmetaForKillmail(metadata: IURLMetadata): boolean {

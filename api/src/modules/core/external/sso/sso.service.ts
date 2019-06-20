@@ -30,12 +30,13 @@ export class SSOService {
    * @return {string}
    */
   public get authenticationUrl() {
-    return this.baseUrl + 'authorize/'
-      + '?response_type=code'
-      + `&redirect_uri=${this.authenticationRedirect}`
-      + `&client_id=${this.clientId}`
-      + `&scope=${this.scope}`;
+    let url = `${this.baseUrl}authorize`;
+    url = `${url}?response_type=code`;
+    url = `${url}&redirect_uri=${this.authenticationRedirect}`;
+    url = `${url}&client_id=${this.clientId}`;
+    url = `${url}&scope=${this.scope}`;
     // TODO + `&state=someRandomThingThatWeCanVerify
+    return url;
   }
 
   /**
@@ -43,7 +44,8 @@ export class SSOService {
    * @return {string}
    */
   private get authorizationHeader() {
-    return 'Basic ' + new Buffer(this.clientId + ':' + this.secretKey).toString('base64');
+    const token = new Buffer(`${this.clientId}:${this.secretKey}`).toString('base64');
+    return `Basic ${token}`;
   }
 
   /**

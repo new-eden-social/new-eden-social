@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { MatSnackBar } from '@angular/material';
 import { Actions, Effect, ofType, } from '@ngrx/effects';
 import { IAppState } from '../../app.store';
 import { EMPTY, fromEvent, of } from 'rxjs/index';
@@ -11,11 +10,12 @@ import {
 } from './notification.actions';
 import { catchError, filter, map, mergeMap, switchMap } from 'rxjs/internal/operators';
 import { WebsocketEffects } from '../websocket/websocket.effects';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { DNotification, DNotificationList } from './notification.dto';
 import { ApiService } from '../api.service';
 import { Exception } from '../api.actions';
 import { NotificationService } from './notification.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class NotificationEffects {

@@ -25,7 +25,7 @@ export class FollowingComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(() => {
       this.entityId = this.route.parent.snapshot.paramMap.get('id');
-      this.entityType = <'character'>this.route.snapshot.data.entity;
+      this.entityType = this.route.snapshot.data.entity as 'character';
 
       this.store.pipe(select(this.entityType, 'single', this.entityId))
         .subscribe(entity => this.following = entity.following);

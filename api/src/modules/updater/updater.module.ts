@@ -22,7 +22,7 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       logging: <LoggerOptions>process.env.DB_LOG,
-      entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
       synchronize: process.env.DB_SYNC === 'true',
     }),
 

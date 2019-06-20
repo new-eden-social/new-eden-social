@@ -9,19 +9,19 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  @Input('image')
+  @Input()
   image?: string;
 
-  @Input('title')
+  @Input()
   title?: string;
 
-  @Input('handle')
+  @Input()
   handle?: string;
 
-  @Input('type')
+  @Input()
   type?: string;
 
-  @Input('subheader')
+  @Input()
   subheader?: {
     link: string,
     text: string,

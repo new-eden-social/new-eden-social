@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeProfileComponent } from './profile.component';
-import { MatButtonModule, MatCardModule } from '@angular/material';
 import { RouterModule } from '@angular/router';
 import {LoadingModule} from '../../loading/loading.module';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
   imports: [

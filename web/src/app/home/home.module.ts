@@ -2,10 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  MatButtonModule, MatCardModule, MatIconModule, MatInputModule,
-  MatListModule,
-} from '@angular/material';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeProfileModule } from './profile/profile.module';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
@@ -16,6 +12,11 @@ import { RouterModule } from '@angular/router';
 import { FooterModule } from '../footer/footer.module';
 import { PostListModule } from '../post-list/post-list.module';
 import { LoadingModule } from '../loading/loading.module';
+import { MatCardModule } from '@angular/material/card';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   imports: [

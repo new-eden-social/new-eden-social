@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
+
+
 import { ApiService } from '../api.service';
 import { DCharacter } from './character.dto';
 import { Effect, ofType } from '@ngrx/effects';
 import { catchError, map, mergeMap, switchMap } from 'rxjs/internal/operators';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { CharacterActionTypes, LoadCharacter, LoadSuccess } from './character.actions';
 import { Exception } from '../api.actions';
 import { of } from 'rxjs/index';

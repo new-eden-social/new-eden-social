@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatProgressSpinnerModule, MatSnackBarModule } from '@angular/material';
 import { appRoutes } from './app.routes';
 import { AppComponent } from './app.component';
 import { NavbarModule } from './navbar/navbar.module';
@@ -21,6 +20,8 @@ import { PageNotFoundModule } from './page-not-found/page-not-found.module';
 import {TransferHttpCacheModule} from '@nguniversal/common';
 import { ProfileModule } from './profile/profile.module';
 import { AboutModule } from './about/about.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [

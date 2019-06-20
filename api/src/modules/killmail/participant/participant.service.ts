@@ -4,7 +4,11 @@ import { CharacterService } from '../../character/character.service';
 import { UniverseTypeService } from '../../universe/type/type.service';
 import { KillmailParticipantRepository } from './participant.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IKillmailAttacker, TKillmailParticipant, IKillmailVictim } from '../../core/external/zkillboard/zkillboard.interface';
+import {
+  IKillmailAttacker,
+  TKillmailParticipant,
+  IKillmailVictim,
+} from '../../core/external/zkillboard/zkillboard.interface';
 
 @Injectable()
 export class KillmailParticipantService {

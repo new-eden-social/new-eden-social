@@ -30,7 +30,7 @@ export class DescriptionComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe(() => {
       this.entityId = this.route.parent.snapshot.paramMap.get('id');
-      this.entityType = <'character' | 'corporation'>this.route.snapshot.data.entity;
+      this.entityType = this.route.snapshot.data.entity as 'character' | 'corporation';
 
       this.entity$ = this.store.pipe(select(this.entityType, 'single', this.entityId));
     });
@@ -40,19 +40,19 @@ export class DescriptionComponent implements OnInit {
 
       html = html.replace(/size="\d+"/g, (substring) => {
         const size = substring.replace('size="', '').replace('"', '');
-        return `class="font-size-${size}"`
+        return `class="font-size-${size}"`;
       });
       // html = html.replace(//g, '&nbsp;');
       html = html.replace(/color="#([A-Fa-f0-9]){8,9}"/g, (substring) => {
         const argb = substring.replace('color="#', '').replace('"', '');
         const rgb = argb.slice(2); // Take away the A
-        return `color="#${rgb}"`
+        return `color="#${rgb}"`;
       });
 
       html = html.replace(/<a/g, '<span').replace(/\/a>/g, '/span>');
 
       this.descriptionHtml = html;
-    })
+    });
   }
 
 }

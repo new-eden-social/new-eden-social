@@ -92,7 +92,7 @@ export class CharacterService implements IService<Character> {
    * @return {Promise<Character>}
    */
   private async findCharacterById(id: number) {
-    this.loggerService.debug('get character' + id);
+    this.loggerService.debug(`get character ${id}`);
     const foundCharacter = await this.characterRepository.findOne(id);
 
     if (foundCharacter) return foundCharacter;

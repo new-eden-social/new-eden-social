@@ -5,7 +5,7 @@ import { FooterModule } from '../../footer/footer.module';
 import { LoadingModule } from '../../loading/loading.module';
 import { ProfileHeaderModule } from '../header/header.module';
 import { RouterModule } from '@angular/router';
-import { MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   imports: [

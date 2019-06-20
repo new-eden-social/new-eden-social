@@ -2,12 +2,12 @@
   <div class="button-row">
     <div class="nav-container">
       <a routerLink="" mat-button>HOME</a>
-      <a routerLink="/about" mat-button *ngIf="!(authenticated$ | async)">ABOUT</a>
+      <a routerLink="/about" mat-button *ngIf="(authenticated$ | async) === false">ABOUT</a>
       <app-navbar-notifications *ngIf="authenticated$ | async"></app-navbar-notifications>
     </div>
     <app-navbar-search></app-navbar-search>
     <div class="nav-container">
-      <a *ngIf="!(authenticated$ | async)"
+      <a *ngIf="(authenticated$ | async) === false"
          href="{{authenticationUrl}}authentication/sso"
          mat-raised-button color="accent">LOG IN</a>
       <a *ngIf="authenticated$ | async"

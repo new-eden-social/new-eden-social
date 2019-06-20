@@ -34,8 +34,9 @@ export function notificationReducer(
         list: {
           ...state.list,
           data: state.list.data.map<DNotification>(notification => {
-            if (notification.id === action.payload.id)
+            if (notification.id === action.payload.id) {
               return action.payload;
+            }
             return notification;
           }),
         },

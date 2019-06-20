@@ -5,11 +5,33 @@ commands:
     description: "Authenticate with Docker Hub"
     steps:
       - run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  pull_tag_push:
+    description: "Pull, Tag and Push image"
+    parameters:
+      image:
+        type: string
+      tag:
+        type: string
+    steps:
+      - run: docker pull << parameters.image >>:$CIRCLE_SHA1
+      - run: docker tag << parameters.image >>:<< parameters.tag >>
+      - run: docker push << parameters.image >>:<< parameters.tag >>
+  demo_deploy:
+    description: "Placeholder for real deploy logic"
+    steps:
+      - run: echo "Hello world, this should be deployed!"
+
+executors:
+  node-test:
+    docker:
+      - image: circleci/node:lts
+  docker-build:
+    machine:
+      image: circleci/classic:201808-01
 
 jobs:
   build-api:
-    machine:
-      image: circleci/classic:201808-01
+    executor: docker-build
     steps:
      - checkout
      - authenticate_docker_hub
@@ -22,8 +44,7 @@ jobs:
         command: docker push newedensocial/api:$CIRCLE_SHA1
 
   build-web:
-    machine:
-      image: circleci/classic:201808-01
+    executor: docker-build
     steps:
      - checkout
      - authenticate_docker_hub
@@ -36,8 +57,7 @@ jobs:
         command: docker push newedensocial/web:$CIRCLE_SHA1
 
   test-lint-api:
-    docker:
-      - image: circleci/node:lts
+    executor: node-test
     steps:
       - checkout
       - restore_cache:
@@ -58,8 +78,7 @@ jobs:
           command: yarn lint
 
   test-lint-web:
-    docker:
-      - image: circleci/node:lts
+    executor: node-test
     steps:
       - checkout
       - restore_cache:
@@ -80,8 +99,7 @@ jobs:
           command: yarn lint
 
   test-api:
-    docker:
-      - image: circleci/node:lts
+    executor: node-test
     steps:
       - checkout
       - restore_cache:
@@ -102,8 +120,7 @@ jobs:
           command: yarn test
 
   test-web:
-    docker:
-      - image: circleci/node:lts
+    executor: node-test
     steps:
       - checkout
       - restore_cache:
@@ -123,10 +140,41 @@ jobs:
           working_directory: web
           command: yarn test
 
+  push_latest:
+    executor: docker-build
+    steps:
+      - authenticate_docker_hub
+      - pull_tag_push:
+          image: new-eden-social/api
+          tag: latest
+      - pull_tag_push:
+          image: new-eden-social/web
+          tag: latest
+
+  push_release:
+    executor: docker-build
+    steps:
+      - authenticate_docker_hub
+      - pull_tag_push:
+          image: new-eden-social/api
+          tag: $CIRCLE_TAG
+      - pull_tag_push:
+          image: new-eden-social/web
+          tag: $CIRCLE_TAG
+
+  deploy_latest:
+    executor: docker-build
+    steps:
+      - demo_deploy
+
+  deploy_release:
+    executor: docker-build
+    steps:
+      - demo_deploy
 
 workflows:
   version: 2
-  test-and-build:
+  feature-branch-workflow:
     jobs:
       - test-lint-api
       - test-lint-web
@@ -134,3 +182,45 @@ workflows:
       - test-web
       - build-api
       - build-web
+      # Release latest version
+      - push_latest:
+          requires:
+            - test-lint-api
+            - test-lint-web
+            - test-api
+            - test-web
+            - build-api
+            - build-web
+          filters:
+            branches:
+              only: master
+      - deploy_latest:
+          requires:
+            - push_latest
+          filters:
+            branches:
+              only: master
+      # Release new version
+      - push_release:
+          requires:
+            - test-lint-api
+            - test-lint-web
+            - test-api
+            - test-web
+            - build-api
+            - build-web
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v.*/
+      - deploy_release:
+          requires:
+            - push_release
+          filters:
+            branches:
+              ignore:
+                - /.*/
+            tags:
+              only: /^v.*/

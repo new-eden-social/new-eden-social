@@ -16,7 +16,7 @@ import {
 import { ESIEntetyNotFoundException } from './esi.exceptions';
 import { RequestContext } from '../../requestContext/requestContext';
 import { LoggerService } from '../../logger/logger.service';
-import {fromPromise} from 'rxjs/internal-compatibility';
+import { fromPromise } from 'rxjs/internal-compatibility';
 import { retry } from 'rxjs/internal/operators';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class ESIService {
   private static baseUrl = process.env.ESI_ENDPOINT;
   private static version = 'latest';
   private static userAgent = `eve-book/${process.env.npm_package_version}`
-    + ` https://github.com/evebook/api`;
+    + ' https://github.com/evebook/api';
   private client: AxiosInstance;
 
   constructor(

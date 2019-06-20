@@ -51,10 +51,10 @@ export class AuthenticationComponent implements OnInit {
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params: Params) => {
-      const accessToken = params['access_token'];
-      const refreshToken = params['refresh_token'];
-      const expiresIn = params['expires_in'];
-      const tokenType = params['token_type'];
+      const accessToken = params.access_token;
+      const refreshToken = params.refresh_token;
+      const expiresIn = params.expires_in;
+      const tokenType = params.token_type;
 
       this.store.dispatch(new AuthenticateCallback({
         accessToken,

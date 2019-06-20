@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import {DCharacter, DCharacterShort} from '../../services/character/character.dto';
 import { select, Store } from '@ngrx/store';
 import { IAppState } from '../../app.store';
@@ -20,7 +20,7 @@ export class HomeProfileComponent implements OnInit {
     this.authenticatedCharacter$ = this.store.pipe(select('authentication', 'character'));
     this.authenticatedCharacter$.subscribe(authenticatedCharacter => {
       this.character$ = this.store.pipe(select('character', 'single', `${authenticatedCharacter.id}`));
-    })
+    });
   }
 
   ngOnInit() {

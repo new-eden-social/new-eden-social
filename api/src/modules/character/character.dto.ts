@@ -105,8 +105,8 @@ export class DCharacter {
     this.securityStatus = character.securityStatus;
     this.portrait = new DCharacterPortrait(character.portrait);
     this.corporation = new DCorporationShort(character.corporation);
-    this.followers = followers.map(follow => new DFollow(follow))
-    this.following = following.map(follow => new DFollow(follow))
+    this.followers = followers.map(follow => new DFollow(follow));
+    this.following = following.map(follow => new DFollow(follow));
     this.numPosts = numPosts;
   }
 }

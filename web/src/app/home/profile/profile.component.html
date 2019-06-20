@@ -28,6 +28,6 @@
   </div>
 </mat-card>
 
-<mat-card class="profile-card" *ngIf="!(character$ | async)">
+<mat-card class="profile-card" *ngIf="(character$ | async) === null">
   <app-loading></app-loading>
 </mat-card>

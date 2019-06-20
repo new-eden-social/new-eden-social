@@ -3,11 +3,11 @@ import { IAppState } from '../app.store';
 import { select, Store } from '@ngrx/store';
 import { HttpErrorResponse, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { filter, map, mergeMap, retryWhen } from 'rxjs/internal/operators';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { RefreshToken } from '../services/authentication/authentication.actions';
 import { ApiExceptionResponse } from '../services/api.interface';
 import { API_EXCEPTIONS } from '../services/exceptions.constants';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -25,17 +25,17 @@ export class ErrorInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
-      retryWhen((error: Observable<HttpErrorResponse>) => {
-        return error.pipe(
+      retryWhen((observableError: Observable<HttpErrorResponse>) => {
+        return observableError.pipe(
           mergeMap((error: HttpErrorResponse) => {
-            const body = <ApiExceptionResponse>error.error;
+            const body = error.error as ApiExceptionResponse;
             if (this.refreshToken
               && error.status === 401
               && body.error === API_EXCEPTIONS.CHARACTER_NOT_AUTHENTICATED) {
               this.store.dispatch(new RefreshToken(this.refreshToken));
               return this.store.pipe(
                 select('authentication', 'data', 'refreshToken'),
-                filter(token => token != this.refreshToken),
+                filter(token => token !== this.refreshToken),
               );
             }
             throw error;

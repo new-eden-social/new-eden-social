@@ -57,12 +57,14 @@ export class AuthenticationController {
   ) {
     const response = await this.authenticationService.authenticationToken(state, code);
 
+    let redirectUrl = process.env.APP_AUTHENTICATION;
+    redirectUrl = `${redirectUrl}?access_token=${response.access_token}`;
+    redirectUrl = `${redirectUrl}&refresh_token=${response.refresh_token}`;
+    redirectUrl = `${redirectUrl}&expires_in=${response.expires_in}`;
+    redirectUrl = `${redirectUrl}&token_type=${response.token_type}`;
+
     // Redirect back to application
-    res.redirect(process.env.APP_AUTHENTICATION
-      + `?access_token=${response.access_token}`
-      + `&refresh_token=${response.refresh_token}`
-      + `&expires_in=${response.expires_in}`
-      + `&token_type=${response.token_type}`);
+    res.redirect(redirectUrl);
   }
 
   // TODO: Add response DTO to ApiResponse

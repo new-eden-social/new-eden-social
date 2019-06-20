@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { MatSnackBar } from '@angular/material';
 import { map } from 'rxjs/internal/operators';
-import { Observable } from 'rxjs/Rx';
+import { Observable } from 'rxjs';
 import { ApiActionTypes, Exception, ExceptionProcessed } from './api.actions';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable()
 export class ApiEffects {
