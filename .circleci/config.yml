@@ -210,11 +210,17 @@ workflows:
             - build-api
             - build-web
           filters:
+            branches:
+              ignore:
+                - /.*/
             tags:
               only: /^v.*/
       - deploy_release:
           requires:
-            - push_latest
+            - push_release
           filters:
+            branches:
+              ignore:
+                - /.*/
             tags:
               only: /^v.*/
