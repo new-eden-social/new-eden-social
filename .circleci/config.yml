@@ -197,7 +197,7 @@ workflows:
       - deploy_latest:
           requires:
             - push_latest
-          filter:
+          filters:
             branches:
               only: master
       # Release new version
