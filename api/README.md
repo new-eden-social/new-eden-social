@@ -1,6 +1,11 @@
 <h1 align="center">
-  EVE Book API
+  New Eden Social API
 </h1>
+<div align="center">
+  <a href="https://microbadger.com/images/newedensocial/api:latest" title="Docker Image Status">
+    <img src="https://images.microbadger.com/badges/image/newedensocial/api:latest.svg">
+  </a>
+</div>
 
 ## Installation
 

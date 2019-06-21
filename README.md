@@ -17,9 +17,6 @@
   <a href="https://microbadger.com/images/newedensocial/api:latest" title="Docker Image Status">
     <img src="https://images.microbadger.com/badges/image/newedensocial/api:latest.svg">
   </a>
-  <a href="https://microbadger.com/images/newedensocial/web:latest" title="Docker Image Status">
-    <img src="https://images.microbadger.com/badges/image/newedensocial/web:latest.svg">
-  </a>
   <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
     <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
   </a>
@@ -38,13 +35,15 @@ Whole platform would heavily relay on EVE Online API, so that you could send in 
 
 Think of it as combination of r/eve and twitter. A hub of EVE Online community.
 
+![Preview of New Eden Social](https://i.imgur.com/IqB7JK9.png)
+
 ### Releases
 Branch `master` is automatically deployed on each commit/merge to development servers. Production servers are automaticly deployed
 on each release (tag).
 
 | Version        | API                            | WEB                       |Documentation|
 | -------------- | ------------------------------ | ------------------------- |-------------|
-| master branch  | api.development.newdeden.social |development.evebook.online | [Development](http://api.development.newdeden.social/docs)
+| master branch  | api.development.newdeden.social |development.neweden.social | [Development](http://api.development.newdeden.social/docs)
 | latest release | api.newdeden.social            |newdeden.social            | [Release](http://api.newdeden.social/docs)
 
 Changelog is located in [CHANGELOG.md](https://github.com/new-eden-social/hub/blob/master/CHANGELOG.md)

@@ -1,6 +1,12 @@
 <h1 align="center">
-  EVE Book WEB
+  New Eden Social WEB
 </h1>
+<div align="center">
+  <a href="https://microbadger.com/images/newedensocial/web:latest" title="Docker Image Status">
+    <img src="https://images.microbadger.com/badges/image/newedensocial/web:latest.svg">
+  </a>
+</div>
+
 
 ### Development server
 
