@@ -3,7 +3,7 @@ module "gke-cluster" {
   version = "1.15.0"
 
   general = {
-    name = "evebook-main"
+    name = "new-eden-social-prod"
     env  = "prod"
     zone = "europe-west3-b"
   }
@@ -24,7 +24,7 @@ module "gke-cluster" {
 }
 
 resource "google-sql-database-instance" "master" {
-  name             = "evebook-main"
+  name             = "new-eden-social-main"
   database_version = "POSTGRES_9_6"
   region           = "europe-west3"
 

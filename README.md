@@ -14,9 +14,6 @@
   <a target="_blank" href="https://coveralls.io/github/new-eden-social/hub">
     <img src="https://coveralls.io/repos/github/new-eden-social/hub/badge.svg" alt="Coverage Status" />
   </a>
-  <a href="https://microbadger.com/images/newedensocial/api:latest" title="Docker Image Status">
-    <img src="https://images.microbadger.com/badges/image/newedensocial/api:latest.svg">
-  </a>
   <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
     <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
   </a>

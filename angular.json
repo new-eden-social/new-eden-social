@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
     "new-eden-social-web": {
-      "root": "",
+      "root": "web",
       "projectType": "application",
       "architect": {
         "build": {
@@ -77,7 +77,7 @@
       }
     },
     "new-eden-social-web-e2e": {
-      "root": "",
+      "root": "web",
       "projectType": "application",
       "cli": {},
       "schematics": {},
