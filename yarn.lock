@@ -111,7 +111,7 @@
   dependencies:
     tslib "^1.9.0"
 
-"@angular/bazel@^8.0.2":
+"@angular/bazel@~8.0.1":
   version "8.0.2"
   resolved "https://registry.yarnpkg.com/@angular/bazel/-/bazel-8.0.2.tgz#f4c278cbfc789673d8894194f6a2b61c6629dd58"
   integrity sha512-8rw/QbdpjBzVYHl/wTn+XRaq4PQiAOvcdoPpxFDVz2pgnJHh80K5aIyqWyBpuSr4D8id+0KRCSzXVftgLMG5rQ==

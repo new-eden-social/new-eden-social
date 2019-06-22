@@ -9,7 +9,7 @@
 # The name of the workspace should match the npm package where we publish, so that these
 # imports also make sense when referencing the published package.
 workspace(
-    name = "newedensocial",
+    name = "project",
     managed_directories = {"@npm": ["node_modules"]},
 )
 
@@ -35,8 +35,6 @@ http_archive(
     strip_prefix = "rules_sass-9862dfc96a4a1f66fe171ef5e043b29853e8445b",
     url = "https://github.com/manekinekko/rules_sass/archive/9862dfc96a4a1f66fe171ef5e043b29853e8445b.zip",
 )
-
-
 
 ####################################
 # Load and install our dependencies downloaded above.
@@ -68,7 +66,7 @@ node_repositories(
 
 yarn_install(
     name = "npm",
-    data = ["//web:angular-metadata.tsconfig.json"],
+    data = ["//:angular-metadata.tsconfig.json"],
     package_json = "//:package.json",
     # Temporarily disable node_modules symlinking until the fix for
     # https://github.com/bazelbuild/bazel/issues/8487 makes it into a

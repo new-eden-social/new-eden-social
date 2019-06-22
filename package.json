@@ -5,10 +5,9 @@
   },
   "scripts": {
     "bazel:build": "bazel build",
-    "postinstall": "exit 0 || ngc -p ./angular-metadata.tsconfig.json"
-},
+    "postinstall": "ngc -p ./angular-metadata.tsconfig.json"
+  },
   "dependencies": {
-    "@ctrl/ngx-emoji-mart": "^0.17.0",
     "@angular/animations": "^8.0.2",
     "@angular/cdk": "^8.0.1",
     "@angular/common": "^8.0.2",
@@ -20,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^8.0.2",
     "@angular/platform-server": "^8.0.2",
     "@angular/router": "^8.0.2",
+    "@ctrl/ngx-emoji-mart": "^0.17.0",
     "@ngrx/effects": "^8.0.1",
     "@ngrx/router-store": "^8.0.1",
     "@ngrx/store": "^8.0.1",
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.800.3",
-    "@angular/bazel": "^8.0.2",
+    "@angular/bazel": "~8.0.1",
     "@angular/cli": "^8.0.3",
     "@angular/compiler": "^8.0.2",
     "@angular/compiler-cli": "^8.0.2",
@@ -58,6 +58,7 @@
     "@types/jasmine": "^3.3.13",
     "@types/node": "^12.0.8",
     "codelyzer": "^5.1.0",
+    "cz-conventional-changelog": "^2.1.0",
     "jasmine-core": "^3.4.0",
     "jasmine-spec-reporter": "^4.2.1",
     "karma": "^4.1.0",
@@ -70,9 +71,8 @@
     "protractor": "^5.4.2",
     "ts-node": "^8.3.0",
     "tslint": "^5.17.0",
-    "webpack-command": "^0.4.2",
     "typescript": "~3.4.0",
-    "cz-conventional-changelog": "^2.1.0"
+    "webpack-command": "^0.4.2"
   },
   "config": {
     "commitizen": {

@@ -5,12 +5,19 @@ load("@npm_bazel_karma//:index.bzl", "ts_web_test_suite")
 load("@build_bazel_rules_nodejs//:defs.bzl", "rollup_bundle", "history_server")
 load("@build_bazel_rules_nodejs//internal/web_package:web_package.bzl", "web_package")
 load("@npm_bazel_typescript//:index.bzl", "ts_devserver", "ts_library")
-load("@io_bazel_rules_sass//:defs.bzl", "multi_sass_binary", "sass_binary")
+load("@io_bazel_rules_sass//:defs.bzl", "multi_sass_binary", "sass_binary", "sass_library")
+
+sass_library(
+    name = "material",
+    srcs = [
+        "@npm//node_modules/@angular/material:_theming.scss",
+    ],
+)
 
 sass_binary(
-  name = "global_stylesheet",
-  src = glob(["styles.css", "styles.scss"])[0],
-  output_name = "global_stylesheet.css",
+    name = "global_stylesheet",
+    src = "styles.scss",
+    output_name = "global_stylesheet.css",
 )
 
 multi_sass_binary(
@@ -19,11 +26,13 @@ multi_sass_binary(
       include = ["**/*.scss"],
       exclude = ["styles.scss"],
     ),
+    deps = [
+        ":material"
+    ],
 )
 
 ng_module(
     name = "src",
-    tsconfig = "//web:tsconfig.json",
     srcs = glob(
         include = ["**/*.ts"],
         exclude = [
