@@ -1,0 +1,14 @@
+{
+  "name": "@new-eden-social/logger",
+  "version": "0.0.0",
+  "description": "Logger component of new-eden-social",
+  "repository": "https://github.com/new-eden-social/new-eden-social",
+  "author": "new-eden-social contributers",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@nestjs/common": "^6.3.2",
+    "@reactivex/rxjs": "^6.5.2",
+    "logform": "^2.1.2",
+    "winston": "^3.2.1"
+  }
+}

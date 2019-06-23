@@ -1,0 +1,12 @@
+{
+  "name": "@new-eden-social/request-context",
+  "version": "0.0.0",
+  "description": "Request Context component of new-eden-social",
+  "repository": "https://github.com/new-eden-social/new-eden-social",
+  "author": "new-eden-social contributers",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "@nestjs/common": "^6.3.2",
+    "zone.js": "^0.9.1"
+  }
+}
