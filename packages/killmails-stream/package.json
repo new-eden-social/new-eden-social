@@ -1,13 +1,13 @@
 {
-  "name": "@new-eden-social/logger",
+  "name": "@new-eden-social/killmails-stream",
   "version": "0.0.0",
-  "description": "Logger component of new-eden-social",
+  "description": "Killmails Stream component of new-eden-social",
   "repository": "https://github.com/new-eden-social/new-eden-social",
   "author": "new-eden-social contributers",
   "license": "GPL-3.0",
   "dependencies": {
     "@nestjs/common": "^6.3.2",
-    "logform": "^2.1.2",
-    "winston": "^3.2.1"
+    "ws": "7.0.1",
+    "@new-eden-social/zkillboard": "^0.0.0"
   }
 }

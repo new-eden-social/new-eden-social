@@ -12,9 +12,7 @@
     "allowJs": true,
     "outDir": "dist"
   },
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["*.ts", "**/*.ts"],
   "exclude": [
     "node_modules",
     "**/*.spec.ts"

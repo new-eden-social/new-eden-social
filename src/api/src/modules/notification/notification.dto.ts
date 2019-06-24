@@ -5,7 +5,7 @@ import {
 } from './notification.constants';
 import { Notification } from './notification.entity';
 import { WsResponse } from '@nestjs/websockets';
-import { DPagination } from '../core/pagination/paggination.dto';
+import { DPagination } from '@new-eden-social/pagination';
 import { DCharacterShort } from '../character/character.dto';
 import { DCorporationShort } from '../corporation/corporation.dto';
 import { DAllianceShort } from '../alliance/alliance.dto';

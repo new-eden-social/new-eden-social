@@ -3,8 +3,8 @@ import { UpdaterService } from './updater.service';
 import { CharacterModule } from '../character/character.module';
 import { CorporationModule } from '../corporation/corporation.module';
 import { AllianceModule } from '../alliance/alliance.module';
-import { UtilsModule } from '../core/utils/utils.module';
-import { LoggerModule } from '../core/logger/logger.module';
+import { UtilsModule } from '@new-eden-social/utils';
+import { LoggerModule } from '@new-eden-social/logger';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 

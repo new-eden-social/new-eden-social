@@ -1,9 +1,11 @@
 {
-  "name": "root",
+  "name": "new-eden-social",
   "private": true,
   "devDependencies": {
     "@types/node": "^12.0.10",
-    "lerna": "^3.15.0"
+    "lerna": "^3.15.0",
+    "nodemon": "^1.19.1",
+    "tslint": "^5.18.0"
   },
   "dependencies": {
     "@new-eden-social/esi": "file:packages/esi",
@@ -14,5 +16,9 @@
     "@new-eden-social/utils": "file:packages/utils",
     "@new-eden-social/validation": "file:packages/validation",
     "@new-eden-social/zkillboard": "file:packages/zkillboard"
-  }
+  },
+  "workspaces": [
+    "packages/*",
+    "src/*"
+  ]
 }

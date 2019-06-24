@@ -3,7 +3,7 @@ import { UniverseType } from './type.entity';
 import { UniverseGroupService } from '../group/group.service';
 import { UniverseTypeRepository } from './type.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ESIService } from '@new-eden-social/esi';
+import { ESIService, ESIEntetyNotFoundException } from '@new-eden-social/esi';
 
 @Injectable()
 export class UniverseTypeService {

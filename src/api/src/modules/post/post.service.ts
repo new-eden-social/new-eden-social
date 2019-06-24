@@ -16,8 +16,8 @@ import { CommandBus } from '@nestjs/cqrs';
 import { CreatePostCommand } from './commands/create.command';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MetascraperService } from '../metascraper/metascraper.service';
-import { LoggerService } from '@nestjs/common';
 import { ESIEntetyNotFoundException } from '@new-eden-social/esi';
+import { LoggerService } from '@new-eden-social/logger';
 
 @Injectable()
 export class PostService {

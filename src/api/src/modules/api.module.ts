@@ -3,11 +3,11 @@ import { SearchModule } from './search/search.module';
 import { CharacterModule } from './character/character.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { PostModule } from './post/post.module';
-import { RequestContextMiddleware } from './core/requestContext/requestContext.middleware';
+import { RequestContextMiddleware } from '@new-eden-social/request-context';
 import { AllianceModule } from './alliance/alliance.module';
 import { CorporationModule } from './corporation/corporation.module';
-import { LoggerModule } from './core/logger/logger.module';
-import { UtilsModule } from './core/utils/utils.module';
+import { LoggerModule, LOGGER_LEVEL } from '@new-eden-social/logger';
+import { UtilsModule } from '@new-eden-social/utils';
 import { CommentModule } from './comment/comment.module';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -16,10 +16,9 @@ import { AuthMiddleware } from './authentication/authentication.middleware';
 import { WebsocketModule } from './websocket/websocket.module';
 import { MorganModule, MorganInterceptor } from 'nest-morgan';
 import { APP_INTERCEPTOR } from '@nestjs/core';
-import { LOGGER_LEVEL } from './core/logger/logger.constants';
 import { FollowModule } from './follow/follow.module';
 import { MetascraperModule } from './metascraper/metascraper.module';
-import { HealthModule } from './core/health/health.module';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
