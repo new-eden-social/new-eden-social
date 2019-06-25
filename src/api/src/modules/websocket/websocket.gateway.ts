@@ -5,7 +5,7 @@ import {
 } from '@nestjs/websockets';
 import { Character } from '../character/character.entity';
 import { ISocket } from '../../interfaces/socket.interface';
-import { UsePipes, ValidationPipe, UseGuards, UseInterceptors } from '@nestjs/common';
+import { UsePipes, ValidationPipe, UseInterceptors } from '@nestjs/common';
 import { VWebsocketAuthentication } from './websocket.validate';
 import { DWsAuthentication, DWsSubscription, DWsNewSubscriptionEvent } from './websocket.dto';
 import {

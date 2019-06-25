@@ -15,7 +15,7 @@
   "scripts": {
     "publish": "yarn run build && lerna publish",
     "lint": "lerna exec --no-bail -- tslint -p tsconfig.json --fix",
-    "build": "lerna run build"
+    "build": "lerna run --no-bail build"
   },
   "workspaces": [
     "packages/*",

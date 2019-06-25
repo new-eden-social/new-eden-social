@@ -51,8 +51,8 @@ export class HttpLoggerExceptionInterceptor implements NestInterceptor {
 @Injectable()
 export class WsLoggerExceptionInterceptor implements NestInterceptor {
 
-  constructor(private readonly loggerService: LoggerService) {
-  }
+  // constructor(private readonly loggerService: LoggerService) {
+  // }
 
   intercept(
     context: ExecutionContext,
@@ -63,7 +63,8 @@ export class WsLoggerExceptionInterceptor implements NestInterceptor {
     // first param would be for events, second is for errors
     return next.handle().pipe(
       tap(null, (exception) => {
-        this.loggerService.error('Unexpected error', exception);
+        // fixme: how to handle dependency injection?
+        // this.loggerService.error('Unexpected error', exception);
       })
     );
   }

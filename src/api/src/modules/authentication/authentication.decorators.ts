@@ -11,7 +11,7 @@ export const AuthenticatedCharacter = createParamDecorator(
 
 // tslint:disable-next-line:variable-name
 export const AuthorizationToken = createParamDecorator(
-  (data: any, req: IAuthenticatedRequest): string => {
+  (data: any, req: any): string => {
     return req.headers.authorization;
   },
 );
