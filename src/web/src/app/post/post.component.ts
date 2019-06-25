@@ -14,6 +14,7 @@ import { getCommentListKey } from '../services/comment/comment.constants';
   selector: 'app-post',
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
+// tslint:disable-next-line: use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
 })
 export class PostComponent implements OnInit {

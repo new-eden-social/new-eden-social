@@ -13,9 +13,9 @@ export class DFollow {
 
   constructor(follow: Follow) {
     this.follower = new DCharacterShort(follow.follower);
-    if (follow.followingCharacter) this.followingCharacter = new DCharacterShort(follow.followingCharacter);
-    if (follow.followingCorporation) this.followingCorporation = new DCorporationShort(follow.followingCorporation);
-    if (follow.followingAlliance) this.followingAlliance = new DAllianceShort(follow.followingAlliance);
+    if (follow.followingCharacter) { this.followingCharacter = new DCharacterShort(follow.followingCharacter); }
+    if (follow.followingCorporation) { this.followingCorporation = new DCorporationShort(follow.followingCorporation); }
+    if (follow.followingAlliance) { this.followingAlliance = new DAllianceShort(follow.followingAlliance); }
   }
 }
 

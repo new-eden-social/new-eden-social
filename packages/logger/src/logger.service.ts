@@ -5,7 +5,7 @@ import { Logger } from 'winston';
 @Injectable()
 export class LoggerService {
 
-  constructor(@Inject(LOGGER_WINSTON_PROVIDER) private logger: Logger) {
+  constructor(@Inject(LOGGER_WINSTON_PROVIDER) private readonly logger: Logger) {
   }
 
   public log(level: LOGGER_LEVEL, msg: string, ...meta): void {

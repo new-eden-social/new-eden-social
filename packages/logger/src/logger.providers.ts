@@ -13,11 +13,11 @@ export const loggerProviders = [
         output = format.combine(
           format.colorize(),
           format.printf((nfo: TransformableInfo) => {
-            let output = `${nfo.timestamp} ${nfo.level}: ${nfo.message}`;
+            let formattedOutput = `${nfo.timestamp} ${nfo.level}: ${nfo.message}`;
             if (nfo.metadata && Object.keys(nfo.metadata).length !== 0) {
-              output += `\n${JSON.stringify(nfo.metadata, null, 4)}`;
+              formattedOutput += `\n${JSON.stringify(nfo.metadata, null, 4)}`;
             }
-            return output;
+            return formattedOutput;
           }),
         );
       }

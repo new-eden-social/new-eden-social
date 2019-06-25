@@ -15,10 +15,10 @@ export class AuthenticationGuard implements CanActivate {
     // Depending on context, check if authenticated
     if (httpContext) {
       const request = httpContext.getRequest();
-      if (!request.character) throw new HttpUnauthenticatedException();
+      if (!request.character) { throw new HttpUnauthenticatedException(); }
     } else if (wsContext) {
       const client = wsContext.getClient();
-      if (!client.character) throw new WsUnauthenticatedException();
+      if (!client.character) { throw new WsUnauthenticatedException(); }
     }
 
     return true;

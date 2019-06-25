@@ -7,7 +7,7 @@ import { DWsNotificationEvent } from '../../notification.dto';
 export class CreateNotificationEventHandler implements IEventHandler<CreateNotificationEvent> {
 
   constructor(
-    private websocketGateway: WebsocketGateway,
+    private readonly websocketGateway: WebsocketGateway,
   ) {
   }
 

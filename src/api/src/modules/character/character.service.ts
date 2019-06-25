@@ -15,14 +15,14 @@ import { Alliance } from '../alliance/alliance.entity';
 export class CharacterService implements IService<Character> {
 
   constructor(
-    private esiService: ESIService,
-    private loggerService: LoggerService,
-    private utilsService: UtilsService,
-    private zkillboardService: ZKillboardService,
+    private readonly esiService: ESIService,
+    private readonly loggerService: LoggerService,
+    private readonly utilsService: UtilsService,
+    private readonly zkillboardService: ZKillboardService,
     @InjectRepository(CharacterRepository)
-    private characterRepository: CharacterRepository,
+    private readonly characterRepository: CharacterRepository,
     @Inject(forwardRef(() => CorporationService))
-    private corporationService: CorporationService,
+    private readonly corporationService: CorporationService,
   ) {
   }
 
@@ -57,7 +57,7 @@ export class CharacterService implements IService<Character> {
     try {
       await this.esiService.getCharacter(id);
     } catch (err) {
-      if (err instanceof ESIEntetyNotFoundException) return false;
+      if (err instanceof ESIEntetyNotFoundException) { return false; }
       throw err;
     }
     return true;
@@ -93,7 +93,7 @@ export class CharacterService implements IService<Character> {
     this.loggerService.debug(`get character ${id}`);
     const foundCharacter = await this.characterRepository.findOne(id);
 
-    if (foundCharacter) return foundCharacter;
+    if (foundCharacter) { return foundCharacter; }
 
     // If character not in DB, load it from ESI
     const character = new Character();

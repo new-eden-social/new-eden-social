@@ -5,8 +5,8 @@ import { LoggerService } from '@new-eden-social/logger';
 @Injectable()
 export class CorporationAllianceExecutorGuard implements CanActivate {
   constructor(
-    private allianceService: AllianceService,
-    private loggerService: LoggerService,
+    private readonly allianceService: AllianceService,
+    private readonly loggerService: LoggerService,
   ) {
   }
 

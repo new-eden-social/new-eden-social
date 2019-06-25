@@ -14,16 +14,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class CorporationService implements IService<Corporation> {
 
   constructor(
-    private utilsService: UtilsService,
-    private loggerService: LoggerService,
-    private esiService: ESIService,
-    private zkillboardService: ZKillboardService,
+    private readonly utilsService: UtilsService,
+    private readonly loggerService: LoggerService,
+    private readonly esiService: ESIService,
+    private readonly zkillboardService: ZKillboardService,
     @InjectRepository(CorporationRepository)
-    private corporationRepository: CorporationRepository,
+    private readonly corporationRepository: CorporationRepository,
     @Inject(forwardRef(() => CharacterService))
-    private characterService: CharacterService,
+    private readonly characterService: CharacterService,
     @Inject(forwardRef(() => AllianceService))
-    private allianceService: AllianceService,
+    private readonly allianceService: AllianceService,
   ) {
   }
 
@@ -47,7 +47,7 @@ export class CorporationService implements IService<Corporation> {
     for (const id of ids) {
       const corporation = corporations.find(c => c.id === id);
       // If we didn't found in database, try to populate it
-      if (!corporation) corporations.push(await this.findCorporationById(id));
+      if (!corporation) { corporations.push(await this.findCorporationById(id)); }
     }
 
     return corporations;
@@ -82,7 +82,7 @@ export class CorporationService implements IService<Corporation> {
     try {
       await this.esiService.getCorporation(id);
     } catch (err) {
-      if (err instanceof ESIEntetyNotFoundException) return false;
+      if (err instanceof ESIEntetyNotFoundException) { return false; }
       throw err;
     }
     return true;
@@ -97,7 +97,7 @@ export class CorporationService implements IService<Corporation> {
     this.loggerService.debug(`get corporation ${id}`);
     const foundCorporation = await this.corporationRepository.findOne(id);
 
-    if (foundCorporation) return foundCorporation;
+    if (foundCorporation) { return foundCorporation; }
 
     // If corporation not in DB, load it from ESI
     const corporation = new Corporation();

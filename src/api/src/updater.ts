@@ -17,6 +17,4 @@ NestFactory.createMicroservice(UpdaterModule, {
   options: {
     port: parseInt(process.env.UPDATER_PORT, 10),
   },
-})
-.then(() => console.info(`Updater started on port ${process.env.UPDATER_PORT}`))
-.catch(err => console.error(err));
+});

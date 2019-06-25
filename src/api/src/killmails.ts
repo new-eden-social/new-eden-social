@@ -16,6 +16,4 @@ NestFactory.createMicroservice(KillmailsModule, {
   options: {
     port: parseInt(process.env.KILLMAILS_PORT, 10),
   },
-})
-.then(() => console.info(`Killmail started on port ${process.env.KILLMAILS_PORT}`))
-.catch(err => console.error(err));
+});

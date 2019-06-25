@@ -18,8 +18,8 @@ import { CorporationAllianceExecutorGuard } from '../corporation/corporation.all
 export class CommentController {
 
   constructor(
-    private commentService: CommentService,
-    private postService: PostService,
+    private readonly commentService: CommentService,
+    private readonly postService: PostService,
   ) {
   }
 

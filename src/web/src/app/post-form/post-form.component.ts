@@ -16,6 +16,7 @@ import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji/emoji.component';
   selector: 'app-post-form',
   templateUrl: './post-form.component.html',
   styleUrls: ['./post-form.component.scss'],
+// tslint:disable-next-line: use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
 })
 export class PostFormComponent implements OnInit {

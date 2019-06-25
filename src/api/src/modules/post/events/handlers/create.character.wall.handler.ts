@@ -19,7 +19,7 @@ export class CharacterPostedOnWallEventHandler
   implements IEventHandler<CharacterPostedOnWallEvent> {
 
   constructor(
-    private commandBus: CommandBus,
+    private readonly commandBus: CommandBus,
   ) {
   }
 

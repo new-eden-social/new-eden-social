@@ -41,7 +41,7 @@ export class RequestContext {
     const requestContext = RequestContext.currentRequestContext();
 
     if (requestContext) {
-      return requestContext.request['token'];
+      return requestContext.request.token;
     }
 
     return null;

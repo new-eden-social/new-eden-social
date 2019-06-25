@@ -9,10 +9,10 @@ import { ESIService, ESIEntetyNotFoundException } from '@new-eden-social/esi';
 export class UniverseGroupService {
 
   constructor(
-    private esiService: ESIService,
-    private universeCategoryService: UniverseCategoryService,
+    private readonly esiService: ESIService,
+    private readonly universeCategoryService: UniverseCategoryService,
     @InjectRepository(UniverseGroupRepository)
-    private groupRepository: UniverseGroupRepository,
+    private readonly groupRepository: UniverseGroupRepository,
   ) {
   }
 
@@ -34,7 +34,7 @@ export class UniverseGroupService {
     try {
       await this.get(id);
     } catch (err) {
-      if (err instanceof ESIEntetyNotFoundException) return false;
+      if (err instanceof ESIEntetyNotFoundException) { return false; }
       throw err;
     }
     return true;
@@ -48,7 +48,7 @@ export class UniverseGroupService {
   private async findTypeById(id: number): Promise<UniverseGroup> {
     const foundGroup = await this.groupRepository.findOne(id);
 
-    if (foundGroup) return foundGroup;
+    if (foundGroup) { return foundGroup; }
 
     // If group not in DB, load it from ESI
     const group = new UniverseGroup();

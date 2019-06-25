@@ -12,7 +12,7 @@ import { AuthenticationGuard } from '../authentication/authentication.guard';
 export class NotificationController {
 
   constructor(
-    private notificationService: NotificationService,
+    private readonly notificationService: NotificationService,
   ) {
   }
 

@@ -1,5 +1,5 @@
 import { Injectable, HttpStatus } from '@nestjs/common';
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import {
   Categories,
   IGetAlliance,
@@ -22,20 +22,20 @@ import { retry } from 'rxjs/operators';
 @Injectable()
 export class ESIService {
 
-  private static baseUrl = process.env.ESI_ENDPOINT;
-  private static version = 'latest';
-  private static userAgent = `@new-eden-social/esi:${process.env.npm_package_version}`
+  private static readonly baseUrl = process.env.ESI_ENDPOINT;
+  private static readonly version = 'latest';
+  private static readonly userAgent = `@new-eden-social/esi:${process.env.npm_package_version}`
     + ' https://github.com/new-eden-social/new-eden-social';
-  private client: AxiosInstance;
+  private readonly client: AxiosInstance;
 
   constructor(
-    private loggerService: LoggerService,
+    private readonly loggerService: LoggerService,
   ) {
-    this.client = axios.create({
+    this.client = Axios.create({
       baseURL: `${ESIService.baseUrl}/${ESIService.version}`,
       headers: {
         'User-Agent': ESIService.userAgent,
-        Accept: 'application/json',
+        'Accept': 'application/json',
       },
     });
   }
@@ -194,10 +194,10 @@ export class ESIService {
   private async request<T>(config: AxiosRequestConfig): Promise<T> {
     const token = RequestContext.currentToken();
 
-    if (!config.headers) config.headers = {};
+    if (!config.headers) { config.headers = {}; }
 
     // If token is provided, send request with token.
-    if (token) config.headers = Object.assign(config.headers, { Authorization: `Bearer ${token}` });
+    if (token) { config.headers = Object.assign(config.headers, { Authorization: `Bearer ${token}` }); }
 
     this.loggerService.silly('ESI Request', config);
 
@@ -217,8 +217,7 @@ export class ESIService {
        */
       if (err.response && err.response.status === HttpStatus.NOT_FOUND) {
         throw new ESIEntetyNotFoundException();
-      }
-      else throw err;
+      } else { throw err; }
     }
 
   }

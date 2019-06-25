@@ -51,8 +51,8 @@ export class DNotification {
       this.senderAlliance = new DAllianceShort(notification.senderAlliance);
     }
 
-    if (notification.post) this.post = new DPost(notification.post);
-    if (notification.comment) this.commentId = notification.comment.id;
+    if (notification.post) { this.post = new DPost(notification.post); }
+    if (notification.comment) { this.commentId = notification.comment.id; }
   }
 }
 

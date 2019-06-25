@@ -12,7 +12,7 @@ import { tap } from 'rxjs/operators';
 @Injectable()
 export class HttpLoggerExceptionInterceptor implements NestInterceptor {
 
-  constructor(private loggerService: LoggerService) {
+  constructor(private readonly loggerService: LoggerService) {
   }
 
   intercept(
@@ -51,6 +51,9 @@ export class HttpLoggerExceptionInterceptor implements NestInterceptor {
 @Injectable()
 export class WsLoggerExceptionInterceptor implements NestInterceptor {
 
+  constructor(private readonly loggerService: LoggerService) {
+  }
+
   intercept(
     context: ExecutionContext,
     next: CallHandler,
@@ -60,8 +63,7 @@ export class WsLoggerExceptionInterceptor implements NestInterceptor {
     // first param would be for events, second is for errors
     return next.handle().pipe(
       tap(null, (exception) => {
-        console.log(exception.message);
-        console.error(JSON.parse(JSON.stringify(exception)));
+        this.loggerService.error('Unexpected error', exception);
       })
     );
   }

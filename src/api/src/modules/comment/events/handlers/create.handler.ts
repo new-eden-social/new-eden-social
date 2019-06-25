@@ -13,9 +13,9 @@ import { DComment } from '../../comment.dto';
 export class CreateCommentEventHandler implements IEventHandler<CreateCommentEvent> {
 
   constructor(
-    private commandBus: CommandBus,
-    private postService: PostService,
-    private websocketGateway: WebsocketGateway,
+    private readonly commandBus: CommandBus,
+    private readonly postService: PostService,
+    private readonly websocketGateway: WebsocketGateway,
   ) {
   }
 

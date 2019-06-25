@@ -16,16 +16,16 @@ export class UpdaterService {
   private readonly UPDATE_LIMIT = 100;
 
   constructor(
-    private characterService: CharacterService,
-    private corporationService: CorporationService,
-    private allianceService: AllianceService,
-    private loggerService: LoggerService,
+    private readonly characterService: CharacterService,
+    private readonly corporationService: CorporationService,
+    private readonly allianceService: AllianceService,
+    private readonly loggerService: LoggerService,
     @InjectRepository(CharacterRepository)
-    private characterRepository: CharacterRepository,
+    private readonly characterRepository: CharacterRepository,
     @InjectRepository(CorporationRepository)
-    private corporationRepository: CorporationRepository,
+    private readonly corporationRepository: CorporationRepository,
     @InjectRepository(AllianceRepository)
-    private allianceRepository: AllianceRepository,
+    private readonly allianceRepository: AllianceRepository,
   ) {
     this.loop();
     setInterval(this.loop.bind(this), this.LOOP_INTERVAL);

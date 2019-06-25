@@ -9,7 +9,7 @@ import * as uuidv4 from 'uuid/v4';
 export class FollowCharacterEventHandler implements IEventHandler<FollowCharacterEvent> {
 
   constructor(
-    private commandBus: CommandBus,
+    private readonly commandBus: CommandBus,
   ) {
   }
 

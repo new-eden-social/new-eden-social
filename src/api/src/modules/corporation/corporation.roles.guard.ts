@@ -7,8 +7,8 @@ import { LoggerService } from '@new-eden-social/logger';
 export class CorporationRolesGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
-    private characterService: CharacterService,
-    private loggerService: LoggerService,
+    private readonly characterService: CharacterService,
+    private readonly loggerService: LoggerService,
   ) {
   }
 

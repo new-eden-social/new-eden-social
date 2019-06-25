@@ -9,8 +9,8 @@ export class UniverseCategoryService {
 
   constructor(
     @InjectRepository(UniverseCategoryRepository)
-    private categoryRepository: UniverseCategoryRepository,
-    private esiService: ESIService,
+    private readonly categoryRepository: UniverseCategoryRepository,
+    private readonly esiService: ESIService,
   ) {
   }
 
@@ -32,7 +32,7 @@ export class UniverseCategoryService {
     try {
       await this.get(id);
     } catch (err) {
-      if (err instanceof ESIEntetyNotFoundException) return false;
+      if (err instanceof ESIEntetyNotFoundException) { return false; }
       throw err;
     }
     return true;
@@ -46,7 +46,7 @@ export class UniverseCategoryService {
   private async findTypeById(id: number): Promise<UniverseCategory> {
     const foundCategory = await this.categoryRepository.findOne(id);
 
-    if (foundCategory) return foundCategory;
+    if (foundCategory) { return foundCategory; }
 
     // If category not in DB, load it from ESI
     const category = new UniverseCategory();

@@ -1,26 +1,26 @@
 import { Injectable } from '@nestjs/common';
-import axios, { AxiosInstance } from 'axios';
+import Axios, { AxiosInstance } from 'axios';
 import { IAuthenticationResponse, IAuthenticationVerify } from './evesso.interface';
-import { TokenExpiredException } from './evesso.exceptions';
+import { TokenExpiredException } from './tokenExpired.exception';
 
 @Injectable()
 export class EVESSOService {
 
-  private baseUrl = 'https://login.eveonline.com/oauth/';
-  private userAgent = `@new-eden-social/eve-sso:${process.env.npm_package_version} https://github.com/new-eden-social/new-eden-social`;
-  private client: AxiosInstance;
+  private readonly baseUrl = 'https://login.eveonline.com/oauth/';
+  private readonly userAgent = `@new-eden-social/eve-sso:${process.env.npm_package_version} https://github.com/new-eden-social/new-eden-social`;
+  private readonly client: AxiosInstance;
 
-  private authenticationRedirect = <string>process.env.ESI_REDIRECT;
-  private clientId = <string>process.env.ESI_CLIENT;
-  private secretKey = <string>process.env.ESI_SECRET;
-  private scope = <string>process.env.ESI_SCOPE;
+  private readonly authenticationRedirect = process.env.ESI_REDIRECT as string;
+  private readonly clientId = process.env.ESI_CLIENT as string;
+  private readonly secretKey = process.env.ESI_SECRET as string;
+  private readonly scope = process.env.ESI_SCOPE as string;
 
   constructor() {
-    this.client = axios.create({
+    this.client = Axios.create({
       baseURL: this.baseUrl,
       headers: {
         'User-Agent': this.userAgent,
-        Accept: 'application/json',
+        'Accept': 'application/json',
       },
     });
   }
@@ -44,7 +44,7 @@ export class EVESSOService {
    * @return {string}
    */
   private get authorizationHeader() {
-    const token = new Buffer(`${this.clientId}:${this.secretKey}`).toString('base64');
+    const token = Buffer.from(`${this.clientId}:${this.secretKey}`).toString('base64');
     return `Basic ${token}`;
   }
 
@@ -67,7 +67,7 @@ export class EVESSOService {
       },
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: this.authorizationHeader,
+        'Authorization': this.authorizationHeader,
       },
     });
 
@@ -89,7 +89,7 @@ export class EVESSOService {
       },
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: this.authorizationHeader,
+        'Authorization': this.authorizationHeader,
       },
     });
 
@@ -116,8 +116,7 @@ export class EVESSOService {
       if (err.response && err.response.status === 400) {
         // TODO: Should we rather throw TokenInvalidException() ?
         throw new TokenExpiredException();
-      }
-      else throw err;
+      } else { throw err; }
     }
   }
 

@@ -12,8 +12,8 @@ export class NotificationService {
 
   constructor(
     @InjectRepository(NotificationRepository)
-    private notificationRepository: NotificationRepository,
-    private commandBus: CommandBus,
+    private readonly notificationRepository: NotificationRepository,
+    private readonly commandBus: CommandBus,
   ) {
   }
 

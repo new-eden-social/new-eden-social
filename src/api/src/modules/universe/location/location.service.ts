@@ -8,9 +8,9 @@ import { ESIService, ESIEntetyNotFoundException, Categories } from '@new-eden-so
 export class UniverseLocationService {
 
   constructor(
-    private esiService: ESIService,
+    private readonly esiService: ESIService,
     @InjectRepository(UniverseLocationRepository)
-    private locationRepository: UniverseLocationRepository,
+    private readonly locationRepository: UniverseLocationRepository,
   ) {
   }
 
@@ -32,7 +32,7 @@ export class UniverseLocationService {
     try {
       await this.get(id);
     } catch (err) {
-      if (err instanceof ESIEntetyNotFoundException) return false;
+      if (err instanceof ESIEntetyNotFoundException) { return false; }
       throw err;
     }
     return true;
@@ -46,7 +46,7 @@ export class UniverseLocationService {
   private async findLocationById(id: number): Promise<UniverseLocation> {
     const foundLocation = await this.locationRepository.findOne(id);
 
-    if (foundLocation) return foundLocation;
+    if (foundLocation) { return foundLocation; }
 
     // If location not in DB, load it from ESI
     const location = new UniverseLocation();
@@ -61,7 +61,7 @@ export class UniverseLocationService {
       category === Categories.constellation);
     // If location not found, throw error
     // TODO: Replace with proper LocationNotFoundException #74
-    if (!esiLocation) throw new ESIEntetyNotFoundException();
+    if (!esiLocation) { throw new ESIEntetyNotFoundException(); }
 
     location.populateESI(esiLocation);
     await this.locationRepository.save(location);

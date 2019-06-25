@@ -14,6 +14,7 @@ import { RichContentEditableComponent } from '../../rich-content/rich-content-ed
   selector: 'app-comment-form',
   templateUrl: './comment-form.component.html',
   styleUrls: ['./comment-form.component.scss'],
+// tslint:disable-next-line: use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
 })
 export class CommentFormComponent implements OnInit {

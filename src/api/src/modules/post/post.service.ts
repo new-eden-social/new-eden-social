@@ -23,16 +23,16 @@ import { LoggerService } from '@new-eden-social/logger';
 export class PostService {
 
   constructor(
-    private corporationService: CorporationService,
-    private characterService: CharacterService,
-    private allianceService: AllianceService,
-    private hashtagService: HashtagService,
-    private universeLocationService: UniverseLocationService,
-    private loggerService: LoggerService,
-    private metascraperService: MetascraperService,
-    private commandBus: CommandBus,
+    private readonly corporationService: CorporationService,
+    private readonly characterService: CharacterService,
+    private readonly allianceService: AllianceService,
+    private readonly hashtagService: HashtagService,
+    private readonly universeLocationService: UniverseLocationService,
+    private readonly loggerService: LoggerService,
+    private readonly metascraperService: MetascraperService,
+    private readonly commandBus: CommandBus,
     @InjectRepository(PostRepository)
-    private postRepository: PostRepository,
+    private readonly postRepository: PostRepository,
   ) {
   }
 
@@ -218,8 +218,7 @@ export class PostService {
       } catch (e) {
         if (e instanceof ESIEntetyNotFoundException) {
           this.loggerService.warning('locationId was not found!');
-        }
-        else throw e;
+        } else { throw e; }
       }
     }
 

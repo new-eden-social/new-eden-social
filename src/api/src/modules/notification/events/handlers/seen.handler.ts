@@ -7,7 +7,7 @@ import { SeenNotificationEvent } from '../seen.event';
 export class SeenNotificationEventHandler implements IEventHandler<SeenNotificationEvent> {
 
   constructor(
-    private websocketGateway: WebsocketGateway,
+    private readonly websocketGateway: WebsocketGateway,
   ) {
   }
 

@@ -7,7 +7,7 @@ import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
 @Controller('search')
 export class SearchController {
 
-  constructor(private searchService: SearchService) {
+  constructor(private readonly searchService: SearchService) {
   }
 
   @ApiResponse({

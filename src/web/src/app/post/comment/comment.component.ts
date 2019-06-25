@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
   selector: 'app-comment',
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss'],
+// tslint:disable-next-line: use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
 })
 export class CommentComponent implements OnInit {

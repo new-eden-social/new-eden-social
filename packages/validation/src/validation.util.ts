@@ -24,7 +24,7 @@ export const lynxValidate = async <T>(validation: ClassType<T>, value: object): 
   // Validate
   const errors = await classValidate(
     entity,
-    <ValidatorOptions>{ skipMissingProperties: true, whitelist: true });
+    { skipMissingProperties: true, whitelist: true } as ValidatorOptions);
 
   if (errors.length > 0) {
     throw new ValidationException(errors);
@@ -51,9 +51,9 @@ export const lynxValidateSync = <T>(validation: ClassType<T>, value: object): T 
   // Validate
   const errors = classValidateSync(
     entity,
-    <ValidatorOptions>{ skipMissingProperties: true, whitelist: true });
+    { skipMissingProperties: true, whitelist: true } as ValidatorOptions);
 
-  if (errors.length > 0) throw new ValidationException(errors);
+  if (errors.length > 0) { throw new ValidationException(errors); }
 
   return entity;
 };

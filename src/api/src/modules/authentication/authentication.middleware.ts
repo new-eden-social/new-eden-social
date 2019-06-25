@@ -4,16 +4,16 @@ import { TokenExpiredException } from '@new-eden-social/eve-sso';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-  constructor(private authenticationService: AuthenticationService) {
+  constructor(private readonly authenticationService: AuthenticationService) {
   }
 
   async use(req, res, next): Promise<void> {
     // If no headers continue
-    if (!req.headers['authorization']) return next();
+    if (!req.headers.authorization) { return next(); }
 
     // Else, we validate provided token
     try {
-      const token = req.headers['authorization'].slice('Bearer '.length);
+      const token = req.headers.authorization.slice('Bearer '.length);
       req.token = token;
       req.character = await this.authenticationService.verifyAuthentication(token);
     } catch (error) {

@@ -20,7 +20,7 @@ import { KillmailService } from './killmail/killmail.service';
       username: process.env.DB_USERNAME,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      logging: <LoggerOptions>process.env.DB_LOG,
+      logging: process.env.DB_LOG as LoggerOptions,
       entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
       synchronize: process.env.DB_SYNC === 'true',
     }),
@@ -31,8 +31,8 @@ import { KillmailService } from './killmail/killmail.service';
 })
 export class KillmailsModule {
   constructor(
-    private killmailsStreamService: KillmailsStreamService,
-    private killmailService: KillmailService,
+    private readonly killmailsStreamService: KillmailsStreamService,
+    private readonly killmailService: KillmailService,
   ) {
     this.killmailsStreamService.subscribe(killmailService.createFromStream);
   }

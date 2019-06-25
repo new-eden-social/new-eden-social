@@ -12,7 +12,7 @@ import { IAuthenticationResponse } from '@new-eden-social/eve-sso';
 export class AuthenticationController {
 
   constructor(
-    private authenticationService: AuthenticationService,
+    private readonly authenticationService: AuthenticationService,
   ) {
   }
 
@@ -77,7 +77,7 @@ export class AuthenticationController {
   public async refresh(
     @Body('refresh_token') refreshToken: string,
   ): Promise<IAuthenticationResponse> {
-    return await this.authenticationService.refreshToken(refreshToken);
+    return this.authenticationService.refreshToken(refreshToken);
   }
 
 }

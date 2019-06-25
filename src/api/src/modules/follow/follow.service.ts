@@ -13,9 +13,9 @@ import { UnFollowCommand } from './commands/unfollow.command';
 export class FollowService {
 
   constructor(
-        private commandBus: CommandBus,
+        private readonly commandBus: CommandBus,
         @InjectRepository(FollowRepository)
-        private followRepository: FollowRepository,
+        private readonly followRepository: FollowRepository,
     ) {
   }
 

@@ -10,9 +10,9 @@ import { PostService } from '../post/post.service';
 export class AllianceController {
 
   constructor(
-    private allianceService: AllianceService,
-    private followService: FollowService,
-    private postService: PostService,
+    private readonly allianceService: AllianceService,
+    private readonly followService: FollowService,
+    private readonly postService: PostService,
   ) {
   }
 

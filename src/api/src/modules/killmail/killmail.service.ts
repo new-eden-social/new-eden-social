@@ -10,12 +10,12 @@ import { IKillmail, ZKillboardService } from '@new-eden-social/zkillboard';
 export class KillmailService {
 
   constructor(
-    private killmailParticipantService: KillmailParticipantService,
-    private zkillboardService: ZKillboardService,
+    private readonly killmailParticipantService: KillmailParticipantService,
+    private readonly zkillboardService: ZKillboardService,
     // private postService: PostService,
-    private loggerService: LoggerService,
+    private readonly loggerService: LoggerService,
     @InjectRepository(KillmailRepository)
-    private killmailRepository: KillmailRepository,
+    private readonly killmailRepository: KillmailRepository,
   ) {
   }
 
@@ -75,12 +75,10 @@ export class KillmailService {
 
     // Create attackers
     for (const attackerId in zkillmail.attackers) {
-      const attacker = zkillmail.attackers[attackerId];
-
       // If NPC, ignore
-      if (attacker.id)  {
+      if (zkillmail.attackers[attackerId].id)  {
         killmail.participants.push(await this.killmailParticipantService.create(
-          attacker,
+          zkillmail.attackers[attackerId],
           'attacker'));
       }
     }

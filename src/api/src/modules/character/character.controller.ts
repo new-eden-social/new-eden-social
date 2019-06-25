@@ -10,9 +10,9 @@ import { PostService } from '../post/post.service';
 export class CharactersController {
 
   constructor(
-    private characterService: CharacterService,
-    private followService: FollowService,
-    private postService: PostService,
+    private readonly characterService: CharacterService,
+    private readonly followService: FollowService,
+    private readonly postService: PostService,
   ) {
   }
 

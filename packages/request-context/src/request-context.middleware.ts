@@ -16,7 +16,7 @@ export class RequestContextMiddleware implements NestMiddleware {
         [RequestContext.name]: requestContext,
       },
     })
-    .fork(Zone['longStackTraceZoneSpec'])
-    .run(async () => await next());
+    .fork(Zone.longStackTraceZoneSpec)
+    .run(async () => next());
   }
 }

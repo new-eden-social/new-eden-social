@@ -18,7 +18,7 @@ export class Killmail {
   totalValue: number;
 
   @Column()
-  npc: boolean = false;
+  npc = false;
 
   @Column('timestamp')
   createdAt: Date;

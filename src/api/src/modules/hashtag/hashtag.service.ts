@@ -8,7 +8,7 @@ export class HashtagService {
 
   constructor(
     @InjectRepository(HashtagRepository)
-    private hashtagRepository: HashtagRepository,
+    private readonly hashtagRepository: HashtagRepository,
   ) {
   }
 
@@ -20,10 +20,10 @@ export class HashtagService {
   public async parse(text: string): Promise<Hashtag[]> {
     const hashtags = text.match(/(#\w+)/g) || [];
     const unique = hashtags.reduce(
-      (unique, name) => {
+      (_unique, name) => {
         const trimName = name.replace('#', '');
-        if (unique.indexOf(trimName) !== -1) return unique;
-        return [...unique, trimName];
+        if (_unique.indexOf(trimName) !== -1) { return _unique; }
+        return [..._unique, trimName];
       },
       []);
 

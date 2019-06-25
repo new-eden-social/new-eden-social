@@ -98,17 +98,17 @@ export class PostRepository extends Repository<Post> {
     const characters = postWithComments.comments
     .map(comment => comment.character)
     .filter(character => character);
-    if (postWithComments.character) characters.push(postWithComments.character);
+    if (postWithComments.character) { characters.push(postWithComments.character); }
 
     const corporations = postWithComments.comments
     .map(comment => comment.corporation)
     .filter(corporation => corporation);
-    if (postWithComments.corporation) corporations.push(postWithComments.corporation);
+    if (postWithComments.corporation) { corporations.push(postWithComments.corporation); }
 
     const alliances = postWithComments.comments
     .map(comment => comment.alliance)
     .filter(alliance => alliance);
-    if (postWithComments.alliance) alliances.push(postWithComments.alliance);
+    if (postWithComments.alliance) { alliances.push(postWithComments.alliance); }
 
     return {
       characters: characters.filter((v, i, a) => a.findIndex(v1 => v1.id === v.id) === i), // unique

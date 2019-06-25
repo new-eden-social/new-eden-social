@@ -3,9 +3,3 @@ export class UnauthenticatedException extends Error {
     super('Unauthenticated');
   }
 }
-
-export class TokenExpiredException extends Error {
-  constructor() {
-    super('Token Expired');
-  }
-}

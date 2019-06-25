@@ -15,8 +15,8 @@ export class CommentService {
 
   constructor(
     @InjectRepository(CommentRepository)
-    private commentRepository: CommentRepository,
-    private commandBus: CommandBus,
+    private readonly commentRepository: CommentRepository,
+    private readonly commandBus: CommandBus,
   ) {
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import * as metascraper from 'metascraper';
-import axios, { AxiosInstance, AxiosPromise } from 'axios';
+import Axios, { AxiosInstance, AxiosPromise } from 'axios';
 import { IURLMetadata } from './metascraper.interface';
 import { Killmail } from '../killmail/killmail.entity';
 import { KillmailService } from '../killmail/killmail.service';
@@ -8,14 +8,8 @@ import { KillmailService } from '../killmail/killmail.service';
 @Injectable()
 export class MetascraperService {
 
-  private metascraper;
-  private client: AxiosInstance;
-
-  private static userAgent = `eve-book/${process.env.npm_package_version}`
-  + ' https://github.com/evebook/api';
-
   constructor(
-    private killmailService: KillmailService,
+    private readonly killmailService: KillmailService,
   ) {
     this.metascraper = metascraper([
       require('metascraper-author')(),
@@ -30,16 +24,22 @@ export class MetascraperService {
       require('metascraper-video-provider')(),
     ]);
 
-    this.client = axios.create({
+    this.client = Axios.create({
       headers: {
         'User-Agent': MetascraperService.userAgent,
       },
     });
   }
 
+  private static readonly userAgent = `eve-book/${process.env.npm_package_version}`
+  + ' https://github.com/evebook/api';
+
+  private readonly metascraper;
+  private readonly client: AxiosInstance;
+
   async processUrl(url: string): Promise<IURLMetadata> {
     const response = await this.request(url);
-    return <IURLMetadata>(await this.metascraper({ url, html: response.data }));
+    return (await this.metascraper({ url, html: response.data })) as IURLMetadata;
   }
 
   isUrlmetaForKillmail(metadata: IURLMetadata): boolean {

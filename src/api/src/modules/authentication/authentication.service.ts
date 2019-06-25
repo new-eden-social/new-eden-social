@@ -7,8 +7,8 @@ import { Character } from '../character/character.entity';
 export class AuthenticationService {
 
   constructor(
-    private ssoService: EVESSOService,
-    private charactersService: CharacterService,
+    private readonly ssoService: EVESSOService,
+    private readonly charactersService: CharacterService,
   ) {
   }
 

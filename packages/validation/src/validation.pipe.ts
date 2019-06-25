@@ -10,7 +10,7 @@ export class ValidatorPipe implements PipeTransform<any> {
       return value;
     }
 
-    return await lynxValidate(metatype, value);
+    return lynxValidate(metatype, value);
   }
 
   private toValidate(metadata: ArgumentMetadata): boolean {
@@ -19,6 +19,6 @@ export class ValidatorPipe implements PipeTransform<any> {
       return false;
     }
     const types = [String, Boolean, Number, Array, Object];
-    return !types.find(type => metatype === type) && !isNil(metatype);
+    return !types.find(valid_type => metatype === valid_type) && !isNil(metatype);
   }
 }

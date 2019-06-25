@@ -38,8 +38,8 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
   clients: ISocket[] = [];
 
   constructor(
-    private logger: LoggerService,
-    private authenticationService: AuthenticationService,
+    private readonly logger: LoggerService,
+    private readonly authenticationService: AuthenticationService,
   ) {
   }
 

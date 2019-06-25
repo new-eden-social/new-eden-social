@@ -28,10 +28,10 @@ import { AuthenticationGuard } from '../authentication/authentication.guard';
 export class PostController {
 
   constructor(
-    private postService: PostService,
-    private characterService: CharacterService,
-    private corporationService: CorporationService,
-    private allianceService: AllianceService,
+    private readonly postService: PostService,
+    private readonly characterService: CharacterService,
+    private readonly corporationService: CorporationService,
+    private readonly allianceService: AllianceService,
   ) {
   }
 

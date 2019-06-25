@@ -14,10 +14,10 @@ import {
 export class KillmailParticipantService {
 
   constructor(
-    private charactersService: CharacterService,
-    private universeTypeService: UniverseTypeService,
+    private readonly charactersService: CharacterService,
+    private readonly universeTypeService: UniverseTypeService,
     @InjectRepository(KillmailParticipantRepository)
-    private killmailParticipantRepository: KillmailParticipantRepository,
+    private readonly killmailParticipantRepository: KillmailParticipantRepository,
   ) {
   }
 
@@ -34,12 +34,12 @@ export class KillmailParticipantService {
     const participant = new KillmailParticipant();
 
     if (type === 'attacker') {
-      participant.damageDone = (<IKillmailAttacker>data).damageDone;
+      participant.damageDone = (data as IKillmailAttacker).damageDone;
       participant.weapon = await this.universeTypeService.get(
-        (<IKillmailAttacker>data).weaponId);
-      participant.finalBlow = (<IKillmailAttacker>data).finalBlow;
+        (data as IKillmailAttacker).weaponId);
+      participant.finalBlow = (data as IKillmailAttacker).finalBlow;
     } else if (type === 'victim') {
-      participant.damageTaken = (<IKillmailVictim>data).damageTaken;
+      participant.damageTaken = (data as IKillmailVictim).damageTaken;
     }
 
     participant.type = type;

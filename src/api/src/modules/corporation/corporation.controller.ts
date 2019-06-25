@@ -10,9 +10,9 @@ import { PostService } from '../post/post.service';
 export class CorporationController {
 
   constructor(
-    private corporationService: CorporationService,
-    private followService: FollowService,
-    private postService: PostService,
+    private readonly corporationService: CorporationService,
+    private readonly followService: FollowService,
+    private readonly postService: PostService,
   ) {
   }
 

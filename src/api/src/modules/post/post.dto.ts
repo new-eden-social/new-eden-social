@@ -43,27 +43,27 @@ export class DPost {
     this.id = post.id;
     this.content = post.content;
     this.type = post.type;
-    if (post.character) this.character = new DCharacterShort(post.character);
-    if (post.corporation) this.corporation = new DCorporationShort(post.corporation);
-    if (post.alliance) this.alliance = new DAllianceShort(post.alliance);
+    if (post.character) { this.character = new DCharacterShort(post.character); }
+    if (post.corporation) { this.corporation = new DCorporationShort(post.corporation); }
+    if (post.alliance) { this.alliance = new DAllianceShort(post.alliance); }
     this.hashtags = post.hashtags.map(h => h.name);
     this.createdAt = post.createdAt;
-    if (post.location) this.location = new DUniverseLocation(post.location);
-    if (post.characterWall) this.characterWall = new DCharacterShort(post.characterWall);
-    if (post.corporationWall) this.corporationWall = new DCorporationShort(post.corporationWall);
-    if (post.allianceWall) this.allianceWall = new DAllianceShort(post.allianceWall);
+    if (post.location) { this.location = new DUniverseLocation(post.location); }
+    if (post.characterWall) { this.characterWall = new DCharacterShort(post.characterWall); }
+    if (post.corporationWall) { this.corporationWall = new DCorporationShort(post.corporationWall); }
+    if (post.allianceWall) { this.allianceWall = new DAllianceShort(post.allianceWall); }
 
     // Depending on post type, killmail is used in different ways
     // for KILLMAIL type, it's killmail that triggered post creation
     // for TEXT type it's killmail from url inside post
     switch (post.type) {
       case POST_TYPES.KILLMAIL:
-        if (post.killmail) this.killmail = new DKillmailShort(post.killmail);
+        if (post.killmail) { this.killmail = new DKillmailShort(post.killmail); }
         break;
       case POST_TYPES.TEXT:
         if (post.url) {
-          if (post.killmail) this.url = new DUrlMetaKillmail(post.url, post.killmail);
-          else this.url = new DUrlMetaWebsite(post.url);
+          if (post.killmail) { this.url = new DUrlMetaKillmail(post.url, post.killmail); }
+          else { this.url = new DUrlMetaWebsite(post.url); }
         }
     }
   }

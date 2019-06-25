@@ -17,6 +17,7 @@ import {LoadCharacter} from './services/character/character.actions';
     </div>
   `,
   styleUrls: ['app.component.scss'],
+// tslint:disable-next-line: use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent implements OnInit {

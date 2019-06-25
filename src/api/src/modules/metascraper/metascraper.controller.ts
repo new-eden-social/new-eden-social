@@ -9,7 +9,7 @@ import { IURLMetadata } from './metascraper.interface';
 export class MetascraperController {
 
   constructor(
-    private metascraperService: MetascraperService,
+    private readonly metascraperService: MetascraperService,
   ) {
   }
 

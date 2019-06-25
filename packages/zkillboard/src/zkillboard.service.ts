@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import Axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
 import {
   IKillmailRaw,
   IKillmail,
@@ -16,12 +16,12 @@ import { retry, map } from 'rxjs/internal/operators';
 @Injectable()
 export class ZKillboardService {
 
-  private baseUrl = `${process.env.ZKILLBOARD_ENDPOINT}/api/`;
-  private userAgent = `@new-eden-social/zkillboard:${process.env.npm_package_version} https://github.com/new-eden-social/new-eden-social`;
-  private client: AxiosInstance;
+  private readonly baseUrl = `${process.env.ZKILLBOARD_ENDPOINT}/api/`;
+  private readonly userAgent = `@new-eden-social/zkillboard:${process.env.npm_package_version} https://github.com/new-eden-social/new-eden-social`;
+  private readonly client: AxiosInstance;
 
   constructor() {
-    this.client = axios.create({
+    this.client = Axios.create({
       baseURL: this.baseUrl,
       headers: { 'User-Agent': this.userAgent, 'Accept-Encoding': 'gzip' },
     });
@@ -37,7 +37,7 @@ export class ZKillboardService {
   }
 
   public formatKillmail(raw: IKillmailRaw|IKillmailRawWithoutZKB, zkb: IKillmailRaw['zkb']): IKillmail {
-    return <IKillmail>{
+    return {
       id: raw.killmail_id,
       date: new Date(raw.killmail_time),
       warId: raw.war ? raw.war.id : null,
@@ -45,20 +45,20 @@ export class ZKillboardService {
       totalValue: zkb.totalValue,
       points: zkb.points,
       npc: !!zkb.npc,
-      attackers: <IKillmailAttacker[]>raw.attackers.map(attackerRaw => ({
+      attackers: raw.attackers.map(attackerRaw => ({
         id: attackerRaw.character_id,
         shipId: attackerRaw.ship_type_id,
         weaponId: attackerRaw.weapon_type_id,
         damageDone: attackerRaw.damage_done,
         finalBlow: !!attackerRaw.final_blow,
-      })),
-      victim: <IKillmailVictim>{
+      })) as IKillmailAttacker[],
+      victim: {
         id: raw.victim.character_id,
         shipId: raw.victim.ship_type_id,
         // damageTaken: raw.victim.damageTaken,
         position: raw.victim.position,
-      },
-    };
+      } as IKillmailVictim,
+    } as IKillmail;
   }
 
   public async getKillmail(id: number) {

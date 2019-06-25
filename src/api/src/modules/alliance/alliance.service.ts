@@ -14,16 +14,16 @@ import { InjectRepository } from '@nestjs/typeorm';
 export class AllianceService implements IService<Alliance> {
 
   constructor(
-    private loggerService: LoggerService,
-    private utilsService: UtilsService,
+    private readonly loggerService: LoggerService,
+    private readonly utilsService: UtilsService,
     @InjectRepository(AllianceRepository)
-    private allianceRepository: AllianceRepository,
+    private readonly allianceRepository: AllianceRepository,
     @Inject(forwardRef(() => CorporationService))
-    private corporationService: CorporationService,
+    private readonly corporationService: CorporationService,
     @Inject(forwardRef(() => ZKillboardService)) // FIXME: This forwardRef probably isn't needed
-    private zkillboardService: ZKillboardService,
+    private readonly zkillboardService: ZKillboardService,
     @Inject(forwardRef(() => ESIService)) // FIXME: This forwardRef probably isn't needed
-    private esiService: ESIService,
+    private readonly esiService: ESIService,
   ) {
   }
 
@@ -36,7 +36,7 @@ export class AllianceService implements IService<Alliance> {
     try {
       await this.esiService.getAlliance(id);
     } catch (err) {
-      if (err instanceof ESIEntetyNotFoundException) return false;
+      if (err instanceof ESIEntetyNotFoundException) { return false; }
       throw err;
     }
     return true;
@@ -62,7 +62,7 @@ export class AllianceService implements IService<Alliance> {
     for (const id of ids) {
       const alliance = alliances.find(a => a.id === id);
       // If we didn't found in database, try to populate it
-      if (!alliance) alliances.push(await this.findAllianceById(id));
+      if (!alliance) { alliances.push(await this.findAllianceById(id)); }
     }
 
     return alliances;
@@ -107,7 +107,7 @@ export class AllianceService implements IService<Alliance> {
       { relations: ['executorCorporation'] },
     );
 
-    if (foundAlliance) return foundAlliance;
+    if (foundAlliance) { return foundAlliance; }
 
     // If alliance not in DB, load it from ESI
     const alliance = new Alliance();

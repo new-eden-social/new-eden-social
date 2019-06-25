@@ -39,7 +39,7 @@ import { DPost } from '../../post.dto';
 export class AnyonePostedEventHandler implements IEventHandler<PostedEvent> {
 
   constructor(
-    private websocketGateway: WebsocketGateway,
+    private readonly websocketGateway: WebsocketGateway,
   ) {
   }
 

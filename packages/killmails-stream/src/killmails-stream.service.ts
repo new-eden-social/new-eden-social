@@ -6,12 +6,12 @@ import { ZKillboardService, IKillmail } from '@new-eden-social/zkillboard';
 @Injectable()
 export class KillmailsStreamService {
 
-  private baseUrl = 'wss://api.pizza.moe/stream/killmails/';
-  private userAgent = `@new-eden-social/killmails-stream:${process.env.npm_package_version} https://github.com/new-eden-social/new-eden-social`;
-  private client: WebSocket;
+  private readonly baseUrl = 'wss://api.pizza.moe/stream/killmails/';
+  private readonly userAgent = `@new-eden-social/killmails-stream:${process.env.npm_package_version} https://github.com/new-eden-social/new-eden-social`;
+  private readonly client: WebSocket;
 
   constructor(
-    private zkillboardService: ZKillboardService,
+    private readonly zkillboardService: ZKillboardService,
   ) {
     this.client = new WebSocket(this.baseUrl, null, {
       headers: {
@@ -26,7 +26,7 @@ export class KillmailsStreamService {
    */
   public subscribe(callback: (data: IKillmail) => void) {
     this.client.on('message', (data: WebSocket.Data) => {
-      const rawKillmail = <IKillmailStreamRaw> JSON.parse(data.toString());
+      const rawKillmail = JSON.parse(data.toString()) as IKillmailStreamRaw;
       callback(this.zkillboardService.formatKillmail(rawKillmail.killmail, rawKillmail.zkb));
     });
   }
@@ -37,7 +37,7 @@ export class KillmailsStreamService {
    */
   public subscribeRaw(callback: (data: IKillmailStreamRaw) => void) {
     this.client.on('message', (data: WebSocket.Data) => {
-      const rawKillmail = <IKillmailStreamRaw> JSON.parse(data.toString());
+      const rawKillmail = JSON.parse(data.toString()) as IKillmailStreamRaw;
       callback(rawKillmail);
     });
   }

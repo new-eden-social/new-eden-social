@@ -46,5 +46,4 @@ async function bootstrap() {
   await nestApp.listen(parseInt(process.env.PORT, 10));
 }
 
-bootstrap()
-.catch(console.error);
+bootstrap();

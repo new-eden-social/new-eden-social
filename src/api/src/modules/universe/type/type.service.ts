@@ -9,10 +9,10 @@ import { ESIService, ESIEntetyNotFoundException } from '@new-eden-social/esi';
 export class UniverseTypeService {
 
   constructor(
-    private esiService: ESIService,
-    private groupService: UniverseGroupService,
+    private readonly esiService: ESIService,
+    private readonly groupService: UniverseGroupService,
     @InjectRepository(UniverseTypeRepository)
-    private typeRepository: UniverseTypeRepository,
+    private readonly typeRepository: UniverseTypeRepository,
   ) {
   }
 
@@ -34,7 +34,7 @@ export class UniverseTypeService {
     try {
       await this.get(id);
     } catch (err) {
-      if (err instanceof ESIEntetyNotFoundException) return false;
+      if (err instanceof ESIEntetyNotFoundException) { return false; }
       throw err;
     }
     return true;
@@ -48,7 +48,7 @@ export class UniverseTypeService {
   private async findTypeById(id: number): Promise<UniverseType> {
     const foundType = await this.typeRepository.findOne(id);
 
-    if (foundType) return foundType;
+    if (foundType) { return foundType; }
 
     // If event not in DB, load it from ESI
     const type = new UniverseType();

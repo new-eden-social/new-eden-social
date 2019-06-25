@@ -1,12 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { createHash } from 'crypto';
-// tslint:disable-next-line:variable-name
+// tslint:disable-next-line: variable-name
+// tslint:disable-next-line: no-var-requires
 const Hashids = require('hashids');
 
 @Injectable()
 export class UtilsService {
 
-  private hashids;
+  private readonly hashids;
 
   constructor() {
     this.hashids = new Hashids(

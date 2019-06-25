@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
   selector: 'app-profile-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
+// tslint:disable-next-line: use-component-view-encapsulation
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent implements OnInit {

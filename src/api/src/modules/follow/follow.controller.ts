@@ -15,10 +15,10 @@ import { FOLLOW_ACTION_TYPE } from './follow.constants';
 export class FollowController {
 
   constructor(
-    private followService: FollowService,
-    private characterService: CharacterService,
-    private corporationService: CorporationService,
-    private allianceService: AllianceService,
+    private readonly followService: FollowService,
+    private readonly characterService: CharacterService,
+    private readonly corporationService: CorporationService,
+    private readonly allianceService: AllianceService,
   ) {
   }
 
