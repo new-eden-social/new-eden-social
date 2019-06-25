@@ -5,8 +5,8 @@
 <h3 align="center">Hub for EVE Online community.</h3>
 
 <div align="center">
-  <a target="_blank" href="https://circleci.com/gh/new-eden-social/hub">
-    <img src="https://circleci.com/gh/new-eden-social/hub.svg?style=shield" alt="CircleCI" />
+  <a target="_blank" href="https://circleci.com/gh/new-eden-social/new-eden-social">
+    <img src="https://circleci.com/gh/new-eden-social/new-eden-social.svg?style=shield" alt="CircleCI" />
   </a>
   <a target="_blank" href="https://coveralls.io/github/new-eden-social/hub">
     <img src="https://coveralls.io/repos/github/new-eden-social/hub/badge.svg" alt="Coverage Status" />
