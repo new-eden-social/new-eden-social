@@ -1,0 +1,29 @@
+{
+  "name": "@new-eden-social/esi",
+  "version": "0.0.0",
+  "description": "ESI API component of new-eden-social",
+  "repository": "https://github.com/new-eden-social/new-eden-social",
+  "author": "new-eden-social contributers",
+  "license": "GPL-3.0",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prebuild": "rm -rf lib",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "@new-eden-social/logger": "^0.0.0",
+    "@new-eden-social/request-context": "^0.0.0",
+    "@reactivex/rxjs": "^6.5.2",
+    "axios": "^0.19.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^6.3.2"
+  }
+}

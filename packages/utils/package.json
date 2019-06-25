@@ -1,0 +1,29 @@
+{
+  "name": "@new-eden-social/utils",
+  "version": "0.0.0",
+  "description": "Utils component of new-eden-social",
+  "repository": "https://github.com/new-eden-social/new-eden-social",
+  "author": "new-eden-social contributers",
+  "license": "GPL-3.0",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prebuild": "rm -rf lib",
+    "build": "tsc"
+  },
+  "dependencies": {
+    "hashids": "^1.2.2"
+  },
+  "devDependencies": {
+    "@types/hashids": "^1.0.30"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^6.3.2"
+  }
+}

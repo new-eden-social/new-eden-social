@@ -1,0 +1,104 @@
+{
+  "name": "@new-eden-social/api",
+  "version": "0.1.0",
+  "private": true,
+  "license": "GPL-3.0",
+  "engines": {
+    "node": "^10.16.0"
+  },
+  "scripts": {
+    "start:killmails": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/killmails.ts",
+    "start:updater": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/updater.ts",
+    "start": "nodemon --watch src --ext ts --ignore 'src/**/*.spec.ts' --exec ts-node ./src/api.ts",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "build": "tsc",
+    "prod": "node dist/api.js",
+    "prod:killmails": "node dist/killmails.js",
+    "prod:updater": "node dist/updater.js",
+    "test": "exit 0 || nyc --require ts-node/register mocha src/**/*.spec.ts --reporter spec",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  },
+  "nyc": {
+    "include": [
+      "src/**/*.ts"
+    ],
+    "exclude": [
+      "node_modules/",
+      "src/**/*.spec.ts"
+    ],
+    "extension": [
+      ".ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ],
+    "reporter": [
+      "text-summary",
+      "html"
+    ],
+    "sourceMap": true,
+    "instrument": true
+  },
+  "dependencies": {
+    "@godaddy/terminus": "^4.1.2",
+    "@nestjs/common": "^6.3.1",
+    "@nestjs/core": "^6.3.1",
+    "@nestjs/cqrs": "^6.0.0",
+    "@nestjs/microservices": "^6.3.1",
+    "@nestjs/platform-express": "^6.3.1",
+    "@nestjs/platform-socket.io": "^6.3.1",
+    "@nestjs/swagger": "^3.0.2",
+    "@nestjs/terminus": "^6.3.3",
+    "@nestjs/testing": "^6.3.1",
+    "@nestjs/typeorm": "^6.1.2",
+    "@nestjs/websockets": "^6.3.1",
+    "@new-eden-social/esi": "^0.0.0",
+    "@new-eden-social/eve-sso": "^0.0.0",
+    "@new-eden-social/logger": "^0.0.0",
+    "@new-eden-social/pagination": "^0.0.0",
+    "@new-eden-social/request-context": "^0.0.0",
+    "@new-eden-social/utils": "^0.0.0",
+    "@new-eden-social/validation": "^0.0.0",
+    "@new-eden-social/zkillboard": "^0.0.0",
+    "@new-eden-social/killmails-stream": "^0.0.0",
+    "class-sanitizer": "^0.0.5",
+    "class-transformer": "^0.2.3",
+    "class-validator": "^0.9.1",
+    "metascraper": "^5.4.3",
+    "metascraper-author": "^5.4.3",
+    "metascraper-date": "^5.4.3",
+    "metascraper-description": "^5.4.4",
+    "metascraper-image": "^5.4.3",
+    "metascraper-logo": "^5.4.3",
+    "metascraper-publisher": "^5.4.3",
+    "metascraper-title": "^5.4.3",
+    "metascraper-url": "^5.4.3",
+    "metascraper-video": "^5.4.3",
+    "metascraper-video-provider": "^4.0.2",
+    "moment": "^2.24.0",
+    "nest-morgan": "^1.0.1",
+    "pg": "^7.11.0",
+    "pg-query-stream": "^2.0.0",
+    "redis": "^2.8.0",
+    "reflect-metadata": "^0.1.13",
+    "rxjs": "^6.5.2",
+    "swagger-ui-express": "^4.0.6",
+    "typeorm": "^0.2.18",
+    "typescript": "^3.5.2",
+    "uuid": "^3.3.2",
+    "ws": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/faker": "^4.1.5",
+    "@types/socket.io": "^2.1.2",
+    "@types/bluebird": "^3.5.27",
+    "@types/ioredis": "^4.0.12",
+    "@types/node": "^12.0.8",
+    "@types/ws": "^6.0.1",
+    "chai": "^4.2.0",
+    "faker": "^4.1.0",
+    "nyc": "^14.1.1",
+    "ts-node": "^8.3.0"
+  }
+}
