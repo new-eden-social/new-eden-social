@@ -21,7 +21,7 @@
     "hashids": "^1.2.2"
   },
   "devDependencies": {
-    "@types/hashids": "^1.0.30"
+    "@types/hashids": "1.0.30"
   },
   "peerDependencies": {
     "@nestjs/common": "^6.3.2"
