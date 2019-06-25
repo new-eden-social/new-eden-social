@@ -56,88 +56,43 @@ jobs:
         name: Push Image
         command: docker push newedensocial/web:$CIRCLE_SHA1
 
-  test-lint-api:
+
+  test-lint:
     executor: node-test
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-api-node-modules-{{ .Branch }}-
-            - v1-api-node-modules-master-
+            - v1-node-modules-{{ .Branch }}-
+            - v1-node-modules-master-
       - run:
           name: Install Dependencies
-          working_directory: api
           command: yarn
       - save_cache:
-          key: v1-api-node-modules-{{ .Branch }}-{{ epoch }}
+          key: v1-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
-            - /app/api/node_modules
+            - /app/node_modules
       - run:
           name: Run Linter
-          working_directory: api
           command: yarn lint
 
-  test-lint-web:
+  test:
     executor: node-test
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-web-node-modules-{{ .Branch }}-
-            - v1-web-node-modules-master-
+            - v1-node-modules-{{ .Branch }}-
+            - v1-node-modules-master-
       - run:
           name: Install Dependencies
-          working_directory: web
           command: yarn
       - save_cache:
-          key: v1-web-node-modules-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /app/web/node_modules
-      - run:
-          name: Run Linter
-          working_directory: web
-          command: yarn lint
-
-  test-api:
-    executor: node-test
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-api-node-modules-{{ .Branch }}-
-            - v1-api-node-modules-master-
-      - run:
-          name: Install Dependencies
-          working_directory: api
-          command: yarn
-      - save_cache:
-          key: v1-api-node-modules-{{ .Branch }}-{{ epoch }}
+          key: v1-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
             - /app/api/node_modules
       - run:
           name: Run Tests
-          working_directory: api
-          command: yarn test
-
-  test-web:
-    executor: node-test
-    steps:
-      - checkout
-      - restore_cache:
-          keys:
-            - v1-web-node-modules-{{ .Branch }}-
-            - v1-web-node-modules-master-
-      - run:
-          name: Install Dependencies
-          working_directory: web
-          command: yarn
-      - save_cache:
-          key: v1-web-node-modules-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /app/web/node_modules
-      - run:
-          name: Run Tests
-          working_directory: web
           command: yarn test
 
   push_latest:
@@ -176,19 +131,15 @@ workflows:
   version: 2
   feature-branch-workflow:
     jobs:
-      - test-lint-api
-      - test-lint-web
-      - test-api
-      - test-web
+      - test-lint
+      - test
       - build-api
       - build-web
       # Release latest version
       - push_latest:
           requires:
-            - test-lint-api
-            - test-lint-web
-            - test-api
-            - test-web
+            - test-lint
+            - test
             - build-api
             - build-web
           filters:
@@ -203,10 +154,8 @@ workflows:
       # Release new version
       - push_release:
           requires:
-            - test-lint-api
-            - test-lint-web
-            - test-api
-            - test-web
+            - test-lint
+            - test
             - build-api
             - build-web
           filters:
