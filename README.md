@@ -8,9 +8,6 @@
   <a target="_blank" href="https://circleci.com/gh/new-eden-social/hub">
     <img src="https://circleci.com/gh/new-eden-social/hub.svg?style=shield" alt="CircleCI" />
   </a>
-  <a target="_blank" href="https://greenkeeper.io/">
-    <img src="https://badges.greenkeeper.io/new-eden-social/hub.svg" alt="Greenkeeper" />
-  </a>
   <a target="_blank" href="https://coveralls.io/github/new-eden-social/hub">
     <img src="https://coveralls.io/repos/github/new-eden-social/hub/badge.svg" alt="Coverage Status" />
   </a>
