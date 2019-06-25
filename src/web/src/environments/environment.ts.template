@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiEndpoint: \"${API_ENDPOINT:-"http://localhost:3000/"};\"
-};
+  apiEndpoint: \"${API_ENDPOINT:-"http://localhost:3000/"}\"
+}\;
