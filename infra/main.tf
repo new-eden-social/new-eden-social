@@ -1,6 +1,6 @@
 module "gke-cluster" {
   source  = "google-terraform-modules/kubernetes-engine/google"
-  version = "1.15.0"
+  version = "1.19.1"
 
   general = {
     name = "new-eden-social-main"
