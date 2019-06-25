@@ -1,6 +1,6 @@
 {
   "name": "@new-eden-social/eve-sso",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "EVE SSO component of new-eden-social",
   "repository": "https://github.com/new-eden-social/new-eden-social",
   "author": "new-eden-social contributers",

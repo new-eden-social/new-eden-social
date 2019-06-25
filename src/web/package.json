@@ -1,6 +1,6 @@
 {
   "name": "@new-eden-social/web",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "license": "GPL-3.0",
   "engines": {
@@ -21,7 +21,6 @@
     "serve:ssr": "node dist/server"
   },
   "dependencies": {
-    "@ctrl/ngx-emoji-mart": "^0.17.0",
     "@angular/animations": "^8.0.2",
     "@angular/cdk": "^8.0.1",
     "@angular/common": "^8.0.2",
@@ -33,6 +32,7 @@
     "@angular/platform-browser-dynamic": "^8.0.2",
     "@angular/platform-server": "^8.0.2",
     "@angular/router": "^8.0.2",
+    "@ctrl/ngx-emoji-mart": "^0.17.0",
     "@ngrx/effects": "^8.0.1",
     "@ngrx/router-store": "^8.0.1",
     "@ngrx/store": "^8.0.1",

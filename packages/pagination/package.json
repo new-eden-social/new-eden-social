@@ -1,6 +1,6 @@
 {
   "name": "@new-eden-social/pagination",
-  "version": "0.0.0",
+  "version": "0.1.1",
   "description": "Pagination component of new-eden-social",
   "repository": "https://github.com/new-eden-social/new-eden-social",
   "author": "new-eden-social contributers",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@nestjs/swagger": "^3.0.2",
-    "@new-eden-social/validation": "^0.0.0",
+    "@new-eden-social/validation": "^0.1.1",
     "express": "^4.17.1"
   },
   "peerDependencies": {
