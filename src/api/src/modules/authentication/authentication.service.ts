@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { SSOService, IAuthenticationResponse } from '@new-eden-social/eve-sso';
+import { EVESSOService, IAuthenticationResponse } from '@new-eden-social/eve-sso';
 import { CharacterService } from '../character/character.service';
 import { Character } from '../character/character.entity';
 
@@ -7,7 +7,7 @@ import { Character } from '../character/character.entity';
 export class AuthenticationService {
 
   constructor(
-    private ssoService: SSOService,
+    private ssoService: EVESSOService,
     private charactersService: CharacterService,
   ) {
   }

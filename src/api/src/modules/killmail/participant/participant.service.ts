@@ -8,7 +8,7 @@ import {
   IKillmailAttacker,
   TKillmailParticipant,
   IKillmailVictim,
-} from '../../core/external/zkillboard/zkillboard.interface';
+} from '@new-eden-social/zkillboard';
 
 @Injectable()
 export class KillmailParticipantService {

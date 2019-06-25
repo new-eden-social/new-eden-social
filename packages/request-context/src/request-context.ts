@@ -3,10 +3,10 @@ declare const Zone;
 export class RequestContext {
 
   public readonly id: Number;
-  public request: Request;
-  public response: Response;
+  public request: any;
+  public response: any;
 
-  constructor(request: Request, response: Response) {
+  constructor(request: any, response: any) {
     this.id = Math.random();
     this.request = request;
     this.response = response;
@@ -16,7 +16,7 @@ export class RequestContext {
     return Zone.current.get(RequestContext.name);
   }
 
-  public static currentRequest(): Request {
+  public static currentRequest(): any {
     const requestContext = RequestContext.currentRequestContext();
 
     if (requestContext) {

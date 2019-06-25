@@ -1,12 +1,11 @@
 import { Module } from '@nestjs/common';
-import { LoggerModule } from './core/logger/logger.module';
-import { UtilsModule } from './core/utils/utils.module';
+import { LoggerModule } from '@new-eden-social/logger';
+import { UtilsModule } from '@new-eden-social/utils';
 import { KillmailModule } from './killmail/killmail.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
-import { KillmailsStreamService } from './core/external/zkillboard/killmailsStream/killmailsStream.service';
+import { KillmailsStreamService, KillmailsStreamModule } from '@new-eden-social/killmails-stream';
 import { KillmailService } from './killmail/killmail.service';
-import { KillmailsStreamModule } from './core/external/zkillboard/killmailsStream/killmailsStream.module';
 
 @Module({
   imports: [

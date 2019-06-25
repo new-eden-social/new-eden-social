@@ -5,11 +5,26 @@
   "repository": "https://github.com/new-eden-social/new-eden-social",
   "author": "new-eden-social contributers",
   "license": "GPL-3.0",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "prebuild": "rm -rf lib",
+    "build": "tsc"
+  },
   "dependencies": {
-    "@nestjs/common": "^6.3.2",
     "hashids": "^1.2.2"
   },
   "devDependencies": {
     "@types/hashids": "^1.0.30"
+  },
+  "peerDependencies": {
+    "@nestjs/common": "^6.3.2"
   }
 }

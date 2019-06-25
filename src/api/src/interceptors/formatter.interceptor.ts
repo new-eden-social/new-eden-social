@@ -1,6 +1,6 @@
 import { ExecutionContext, Injectable, NestInterceptor, CallHandler } from '@nestjs/common';
-import { Observable } from 'rxjs/Observable';
 import { map } from 'rxjs/internal/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class FormatterInterceptor implements NestInterceptor {
