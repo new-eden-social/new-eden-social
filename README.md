@@ -24,6 +24,10 @@
     <img alt="Liberapay receiving" src="https://img.shields.io/liberapay/receives/new-eden-social.svg"
     alt="Librepay Donations">
   </a>
+  <a target="_blank" href="https://lerna.js.org/">
+    <img alt="Liberapay receiving" src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg"
+    alt="Maintained with lerna">
+  </a>
 </div>
 
 ## What's it about
