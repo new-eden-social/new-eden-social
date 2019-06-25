@@ -7,6 +7,9 @@
     "nodemon": "^1.19.1",
     "tslint": "^5.18.0"
   },
+  "scripts": {
+    "publish": "lerna run build && lerna publish"
+  },
   "workspaces": [
     "packages/*",
     "src/*"
