@@ -66,11 +66,11 @@ jobs:
             - v1-node-modules-{{ .Branch }}-
             - v1-node-modules-master-
       - run:
-          name: Install Dependencies
-          command: yarn run bootstrap
-      - run:
           name: Install Lerna
           command: yarn global add lerna
+      - run:
+          name: Install Dependencies
+          command: yarn run bootstrap
       - save_cache:
           key: v1-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
@@ -88,11 +88,11 @@ jobs:
             - v1-node-modules-{{ .Branch }}-
             - v1-node-modules-master-
       - run:
-          name: Install Dependencies
-          command: yarn run bootstrap
-      - run:
           name: Install Lerna
           command: yarn global add lerna
+      - run:
+          name: Install Dependencies
+          command: yarn run bootstrap
       - save_cache:
           key: v1-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
