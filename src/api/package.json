@@ -86,7 +86,7 @@
     "typeorm": "0.2.18",
     "typescript": "3.5.2",
     "uuid": "3.3.2",
-    "ws": "7.0.0"
+    "ws": "7.0.1"
   },
   "devDependencies": {
     "@types/bluebird": "3.5.27",
