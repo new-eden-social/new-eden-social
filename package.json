@@ -16,7 +16,8 @@
     "publish": "yarn run build && lerna publish",
     "lint": "lerna exec --no-bail -- tslint -p tsconfig.json --fix",
     "test": "lerna run --no-bail test",
-    "build": "lerna run --no-bail build"
+    "build": "lerna run --no-bail build",
+    "bootstrap": "lerna bootstrap"
   },
   "workspaces": [
     "packages/*",

@@ -37,7 +37,7 @@ jobs:
      - authenticate_docker_hub
      - run:
         name: Building image
-        working_directory: api
+        working_directory: src/api
         command: docker build . -t newedensocial/api:$CIRCLE_SHA1
      - run:
         name: Push Image
@@ -50,7 +50,7 @@ jobs:
      - authenticate_docker_hub
      - run:
         name: Building image
-        working_directory: web
+        working_directory: src/web
         command: docker build . -t newedensocial/web:$CIRCLE_SHA1
      - run:
         name: Push Image
@@ -67,7 +67,7 @@ jobs:
             - v1-node-modules-master-
       - run:
           name: Install Dependencies
-          command: yarn
+          command: yarn run bootstrap
       - save_cache:
           key: v1-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
@@ -86,7 +86,7 @@ jobs:
             - v1-node-modules-master-
       - run:
           name: Install Dependencies
-          command: yarn
+          command: yarn run bootstrap
       - save_cache:
           key: v1-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
