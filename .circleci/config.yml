@@ -68,6 +68,9 @@ jobs:
       - run:
           name: Install Dependencies
           command: yarn run bootstrap
+      - run:
+          name: Install Lerna
+          command: yarn global add lerna
       - save_cache:
           key: v1-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
@@ -87,6 +90,9 @@ jobs:
       - run:
           name: Install Dependencies
           command: yarn run bootstrap
+      - run:
+          name: Install Lerna
+          command: yarn global add lerna
       - save_cache:
           key: v1-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
