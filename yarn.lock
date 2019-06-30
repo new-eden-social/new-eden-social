@@ -8213,12 +8213,12 @@ metascraper-publisher@5.5.0:
   dependencies:
     "@metascraper/helpers" "^5.5.0"
 
-metascraper-title@5.4.3:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/metascraper-title/-/metascraper-title-5.4.3.tgz#c938f73ed1cad67c4d5d1f28d3ccf7097ffc3767"
-  integrity sha512-QFgFbpRps91kzudeSQIa6cdtXOTmz/8KNOobMHB03rk2B79f+NzAT1DaZt19j0LVAwNKcm4NmJym9xFXF9j8ZQ==
+metascraper-title@5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/metascraper-title/-/metascraper-title-5.5.0.tgz#9c07e84f1f76be14c48d04a706b7cb4ee62feda6"
+  integrity sha512-lxa/nx0JeaYorfW2aRGyrB4Kv/2zpAp03Oo40SkKzr6EAl35ZneITajBZYD0adl2k88PiWqyiiHL0P65mpBB2Q==
   dependencies:
-    "@metascraper/helpers" "^5.4.3"
+    "@metascraper/helpers" "^5.5.0"
     lodash "~4.17.11"
 
 metascraper-url@5.5.0:
