@@ -58,6 +58,8 @@ Changelog is located in [CHANGELOG.md](https://github.com/new-eden-social/hub/bl
 ## Contribution
 We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/new-eden-social/new-eden-social/issues) or directly on [slack](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/) in `#new-eden-social`.
 
+## Progress tracking
+Current state of what is being worked on, can be found in [this project](https://github.com/orgs/new-eden-social/projects/1).
 
 ## Packages
 List of packages that can be re-used by 3th parties. They are written for NestJS framework, but in the future, there is plan to write them in platform agnostic way.
