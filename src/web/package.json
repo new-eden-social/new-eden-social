@@ -51,7 +51,7 @@
     "normalize.css": "8.0.1",
     "rxjs": "6.5.2",
     "socket.io-client": "2.2.0",
-    "ts-loader": "6.0.3",
+    "ts-loader": "6.0.4",
     "webpack": "4.35.0",
     "zone.js": "0.9.1"
   },
