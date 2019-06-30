@@ -8247,12 +8247,12 @@ metascraper-video@5.5.0:
     "@metascraper/helpers" "^5.5.0"
     lodash "~4.17.11"
 
-metascraper@5.4.3:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/metascraper/-/metascraper-5.4.3.tgz#0bae68b92f9df7cf76b283a23834313b1d339c62"
-  integrity sha512-ZgbzINQG6BDK+VbYp51pXZ64vT4qV4g07/KLo2RQCNbEjhQFaKiGQiyYOMN6wKv7Kjh3huLjwaBWk/WItv7hrg==
+metascraper@5.5.3:
+  version "5.5.3"
+  resolved "https://registry.yarnpkg.com/metascraper/-/metascraper-5.5.3.tgz#c5576039ca6eb6aac93eefbaf764b5b7b38954ba"
+  integrity sha512-QxK8lnBLpxCB64ddHWaKkY/R69s0RDlGAhEjdnOtOFeeTW9PrSQYrosEFbKT/66r4o5LVOKoFrL91tZ0rVGE3Q==
   dependencies:
-    "@metascraper/helpers" "^5.4.3"
+    "@metascraper/helpers" "^5.5.0"
     cheerio "~1.0.0-rc.2"
     cheerio-advanced-selectors "~2.0.1"
     lodash "~4.17.11"
