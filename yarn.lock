@@ -8221,12 +8221,12 @@ metascraper-title@5.4.3:
     "@metascraper/helpers" "^5.4.3"
     lodash "~4.17.11"
 
-metascraper-url@5.4.3:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/metascraper-url/-/metascraper-url-5.4.3.tgz#44679fa0eec4a2ac8480aa14e94e59cc262833f9"
-  integrity sha512-Kn07LoTWfGVmI3UN+ZW7mI5uetY7XWAqO2mfh8DT4Em9B4Sb4JH/BCv0WlUm+2lxoWFu/JI7ssbdhGQ3i36lDQ==
+metascraper-url@5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/metascraper-url/-/metascraper-url-5.5.0.tgz#c2d98cfa3512121c7c662e35a859d8d4dda06c79"
+  integrity sha512-niQQENVT6J6HpLZjgjqY7AHwnyGAKiDUbHUiFTVgXRXxXxRNEBSF9QEk4y0dylM48aNdrlKrjn5P/1HLWzs2NA==
   dependencies:
-    "@metascraper/helpers" "^5.4.3"
+    "@metascraper/helpers" "^5.5.0"
 
 metascraper-video-provider@4.0.2:
   version "4.0.2"
