@@ -8199,12 +8199,12 @@ metascraper-image@5.5.0:
   dependencies:
     "@metascraper/helpers" "^5.5.0"
 
-metascraper-logo@5.4.3:
-  version "5.4.3"
-  resolved "https://registry.yarnpkg.com/metascraper-logo/-/metascraper-logo-5.4.3.tgz#ff0afa0f8b0452d2467a365568daa5abca62a764"
-  integrity sha512-EHWFEBXBRliUv1DWJs/CES0BSJ8c5wOtw2fJzOeg+X25XwMXBy+EKHnJxrjy9U/c22Cbb+PmpY1LNaXCUUnfMw==
+metascraper-logo@5.5.0:
+  version "5.5.0"
+  resolved "https://registry.yarnpkg.com/metascraper-logo/-/metascraper-logo-5.5.0.tgz#3c69bfe6e12c09501193aefc195cfb8e00f6580c"
+  integrity sha512-MnnJX4zUouaRv7NBJPiEwOMWgHTp/50GgDJzAsR6HHnxHGh0jRSx6vg1zb8QotNFhWu4ev68so39IXCYVD3aHA==
   dependencies:
-    "@metascraper/helpers" "^5.4.3"
+    "@metascraper/helpers" "^5.5.0"
 
 metascraper-publisher@5.5.0:
   version "5.5.0"
