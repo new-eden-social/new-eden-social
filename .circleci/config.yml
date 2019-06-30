@@ -47,7 +47,6 @@ jobs:
      - authenticate_docker_hub
      - run:
         name: Building image
-        working_directory: src
         command: docker build . -t newedensocial/base:$CIRCLE_SHA1
      - run:
         name: Push Image
