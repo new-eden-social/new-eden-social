@@ -1,34 +1,16 @@
-FROM node:lts-alpine as build-env
+FROM newedensocial/base as build-env
 
-# For building native dependencies
-RUN apk add --no-cache make gcc g++ python
+WORKDIR /app/src/web
 
-# App root
-# /app
-#    |- node_modules (dependencies)
-#    |- src (app sources)
-#
-WORKDIR /app
+ADD . .
 
-# Needed to install dependencies
-COPY package.json /app
-COPY yarn.lock /app
+ENV PATH /app/src/web/node_modules/.bin:$PATH
 
-# Set dependencies path
-ENV PATH /app/node_modules/.bin:$PATH
-
-# Dependencies
-RUN yarn install --frozen-lockfile
-
-# Copy app source
-COPY . .
-
-# Build app
 RUN yarn run prebuild
 RUN yarn run build:ssr
 
 # Production image
 FROM gcr.io/distroless/nodejs as prod
-COPY --from=build-env /app/dist /app
+COPY --from=build-env /app/src/web/dist /app
 WORKDIR /app
 CMD ["server.js"]

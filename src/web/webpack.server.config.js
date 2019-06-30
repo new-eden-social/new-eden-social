@@ -12,7 +12,7 @@ module.exports = {
   target: 'node',
   resolve: { extensions: ['.ts', '.js'] },
   // Make sure we include all node_modules etc
-  externals: [/node_modules/],
+  externals: [/node_modules/, 'bufferutil', 'utf-8-validate'],
   optimization: {
     minimize: false
   },

@@ -51,3 +51,12 @@ Changelog is located in [CHANGELOG.md](https://github.com/new-eden-social/hub/bl
 
 ## Contribution
 We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/new-eden-social/hub/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/new-eden-social/hub/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/new-eden-social/hub/issues) or directly on [slack](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/) in `#new-eden-social`.
+
+
+## Packages
+> **TODO:** Write documentation for them.
+
+ * [@new-eden-social/esi](/blob/master/packages/esi) ![npm](https://img.shields.io/npm/v/@new-eden-social/esi.svg)
+ * [@new-eden-social/eve-sso](/blob/master/packages/eve-sso) ![npm](https://img.shields.io/npm/v/@new-eden-social/eve-sso.svg)
+ * [@new-eden-social/zkillboard](/blob/master/packages/zkillboard) ![npm](https://img.shields.io/npm/v/@new-eden-social/zkillboard.svg)
+ * [@new-eden-social/killmails-stream](/blob/master/packages/killmails-stream) ![npm](https://img.shields.io/npm/v/@new-eden-social/killmails-stream.svg)

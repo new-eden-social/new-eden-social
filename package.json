@@ -17,7 +17,8 @@
     "lint": "lerna exec --no-bail -- tslint -p tsconfig.json --fix",
     "test": "lerna run --no-bail test",
     "build": "lerna run --no-bail build",
-    "bootstrap": "lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "bootstrap:prod": "lerna bootstrap -- --frozen-lockfile"
   },
   "workspaces": [
     "packages/*",

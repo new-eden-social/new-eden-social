@@ -16,6 +16,16 @@ commands:
       - run: docker pull << parameters.image >>:$CIRCLE_SHA1
       - run: docker tag << parameters.image >>:$CIRCLE_SHA1 << parameters.image >>:<< parameters.tag >>
       - run: docker push << parameters.image >>:<< parameters.tag >>
+  pull_tag:
+    description: "Pull and Tag image"
+    parameters:
+      image:
+        type: string
+      tag:
+        type: string
+    steps:
+      - run: docker pull << parameters.image >>:$CIRCLE_SHA1
+      - run: docker tag << parameters.image >>:$CIRCLE_SHA1 << parameters.image >>:<< parameters.tag >>
   demo_deploy:
     description: "Placeholder for real deploy logic"
     steps:
@@ -30,11 +40,27 @@ executors:
       image: circleci/classic:201808-01
 
 jobs:
+  build-base:
+    executor: docker-build
+    steps:
+     - checkout
+     - authenticate_docker_hub
+     - run:
+        name: Building image
+        working_directory: src
+        command: docker build . -t newedensocial/base:$CIRCLE_SHA1
+     - run:
+        name: Push Image
+        command: docker push newedensocial/base:$CIRCLE_SHA1
+
   build-api:
     executor: docker-build
     steps:
      - checkout
      - authenticate_docker_hub
+     - pull_tag:
+        image: newedensocial/base
+        tag: latest
      - run:
         name: Building image
         working_directory: src/api
@@ -48,6 +74,9 @@ jobs:
     steps:
      - checkout
      - authenticate_docker_hub
+     - pull_tag:
+        image: newedensocial/base
+        tag: latest
      - run:
         name: Building image
         working_directory: src/web
@@ -106,6 +135,9 @@ jobs:
     steps:
       - authenticate_docker_hub
       - pull_tag_push:
+          image: newedensocial/base
+          tag: latest
+      - pull_tag_push:
           image: newedensocial/api
           tag: latest
       - pull_tag_push:
@@ -116,6 +148,9 @@ jobs:
     executor: docker-build
     steps:
       - authenticate_docker_hub
+      - pull_tag_push:
+          image: newedensocial/base
+          tag: $CIRCLE_TAG
       - pull_tag_push:
           image: newedensocial/api
           tag: $CIRCLE_TAG
@@ -139,13 +174,19 @@ workflows:
     jobs:
       - test-lint
       - test
-      - build-api
-      - build-web
+      - build-base
+      - build-api:
+          requires:
+            - build-base
+      - build-web:
+          requires:
+            - build-base
       # Release latest version
       - push_latest:
           requires:
             - test-lint
             - test
+            - build-base
             - build-api
             - build-web
           filters:
@@ -162,6 +203,7 @@ workflows:
           requires:
             - test-lint
             - test
+            - build-base
             - build-api
             - build-web
           filters:
