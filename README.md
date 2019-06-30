@@ -8,11 +8,17 @@
   <a target="_blank" href="https://circleci.com/gh/new-eden-social/new-eden-social">
     <img src="https://circleci.com/gh/new-eden-social/new-eden-social.svg?style=shield" alt="CircleCI" />
   </a>
-  <a target="_blank" href="https://coveralls.io/github/new-eden-social/hub">
-    <img src="https://coveralls.io/repos/github/new-eden-social/hub/badge.svg" alt="Coverage Status" />
+  <a target="_blank" href="https://coveralls.io/github/new-eden-social/new-eden-social">
+    <img src="https://coveralls.io/repos/github/new-eden-social/new-eden-social/badge.svg" alt="Coverage Status" />
+  </a>
+  <a href="https://microbadger.com/images/newedensocial/base:latest" title="Docker Image Status">
+    <img src="https://images.microbadger.com/badges/image/newedensocial/base:latest.svg">
   </a>
   <a href="https://microbadger.com/images/newedensocial/api:latest" title="Docker Image Status">
     <img src="https://images.microbadger.com/badges/image/newedensocial/api:latest.svg">
+  </a>
+  <a href="https://microbadger.com/images/newedensocial/web:latest" title="Docker Image Status">
+    <img src="https://images.microbadger.com/badges/image/newedensocial/web:latest.svg">
   </a>
   <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
     <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
@@ -42,21 +48,23 @@ Think of it as combination of r/eve and twitter. A hub of EVE Online community.
 Branch `master` is automatically deployed on each commit/merge to development servers. Production servers are automaticly deployed
 on each release (tag).
 
-| Version        | API                            | WEB                       |Documentation|
-| -------------- | ------------------------------ | ------------------------- |-------------|
-| master branch  | api.development.newdeden.social |development.neweden.social | [Development](http://api.development.newdeden.social/docs)
-| latest release | api.newdeden.social            |newdeden.social            | [Release](http://api.newdeden.social/docs)
+| Version        | API                             | WEB                       |Documentation                                               |
+| -------------- | ------------------------------- | ------------------------- |------------------------------------------------------------|
+| master branch  | api.development.neweden.social |development.neweden.social | [Development](http://api.development.neweden.social/docs) |
+| latest release | api.neweden.social             |neweden.social            | [Release](http://api.neweden.social/docs)                 |
 
 Changelog is located in [CHANGELOG.md](https://github.com/new-eden-social/hub/blob/master/CHANGELOG.md)
 
 ## Contribution
-We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](https://github.com/new-eden-social/hub/blob/master/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](https://github.com/new-eden-social/hub/blob/master/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/new-eden-social/hub/issues) or directly on [slack](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/) in `#new-eden-social`.
+We welcome everyone that wants to contribute! You should read [CONTRIBUTING.md](/CONTRIBUTING.md) and [CODE_OF_CONDUCT.md](/CODE_OF_CONDUCT.md) before you start. If you have any questions you can ask them on [issues](https://github.com/new-eden-social/new-eden-social/issues) or directly on [slack](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/) in `#new-eden-social`.
 
 
 ## Packages
-> **TODO:** Write documentation for them.
+List of packages that can be re-used by 3th parties. They are written for NestJS framework, but in the future, there is plan to write them in platform agnostic way.
 
- * [@new-eden-social/esi](/blob/master/packages/esi) ![npm](https://img.shields.io/npm/v/@new-eden-social/esi.svg)
- * [@new-eden-social/eve-sso](/blob/master/packages/eve-sso) ![npm](https://img.shields.io/npm/v/@new-eden-social/eve-sso.svg)
- * [@new-eden-social/zkillboard](/blob/master/packages/zkillboard) ![npm](https://img.shields.io/npm/v/@new-eden-social/zkillboard.svg)
- * [@new-eden-social/killmails-stream](/blob/master/packages/killmails-stream) ![npm](https://img.shields.io/npm/v/@new-eden-social/killmails-stream.svg)
+| Name                                                          | Description                            | NPM   |  
+|---------------------------------------------------------------|----------------------------------------|-----------|
+|[@new-eden-social/esi](/packages/esi)                          | ESI Client for NestJS                  |![npm](https://img.shields.io/npm/v/@new-eden-social/esi.svg)
+|[@new-eden-social/eve-sso](/packages/eve-sso)                  | EVE SSO Client for NestJS              |![npm](https://img.shields.io/npm/v/@new-eden-social/eve-sso.svg)
+|[@new-eden-social/zkillboard](/packages/zkillboard)            | ZKillboard Client for NestJS           |![npm](https://img.shields.io/npm/v/@new-eden-social/zkillboard.svg)
+|[@new-eden-social/killmails-stream](/packages/killmails-stream)| ZKillboard KillStream Client for NestJS|![npm](https://img.shields.io/npm/v/@new-eden-social/killmails-stream.svg)
