@@ -55,9 +55,13 @@ export function localStorage(reducer: ActionReducer<any>): ActionReducer<any> {
   })(reducer);
 }
 
-export const metaReducers: Array<MetaReducer<any, any>> = [
-   localStorage,
-];
+export const metaReducers: Array<MetaReducer<any, any>> = [];
+
+// Check if we are rendering on server
+// In that case, we dont want to use localStorage sync
+if (typeof window !== 'undefined') {
+  metaReducers.push(localStorage);
+}
 
 // Define the global store shape by combining our application's
 // reducers together into a given structure.

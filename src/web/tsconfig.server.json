@@ -1,20 +1,21 @@
 {
-  "extends": "./tsconfig.json",
+  "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./out-tsc/app",
-    // Set the module format to "commonjs":
-    "module": "commonjs",
-    "types": [
-      "node"
+    "outDir": "./dist",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types",
+      "../../node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
     ]
   },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
-  ],
-  // Add "angularCompilerOptions" with the AppServerModule you wrote
-  // set as the "entryModule".
-  "angularCompilerOptions": {
-    "entryModule": "src/app/app.server.module#AppServerModule"
-  }
+  "include": ["server.ts"]
 }

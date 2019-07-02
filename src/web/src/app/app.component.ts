@@ -29,17 +29,17 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('Trying to initially connect to websocket');
-    this.store.dispatch(new Connect());
+    //this.store.dispatch(new Connect());
 
     // Initially we check if we are authenticated, if we are, we try to establish connection
-    this.store.pipe(
-      select('authentication'),
-      filter(authentication => authentication.authenticated),
-    ).subscribe(authentication => {
-      console.log('Trying to initially get notifications');
-      this.store.dispatch(new Load({ limit: 100, page: 0 }));
-      console.log('Trying to initially get character');
-      this.store.dispatch(new LoadCharacter(authentication.character.id));
-    });
+    // this.store.pipe(
+    //   select('authentication'),
+    //   filter(authentication => authentication.authenticated),
+    // ).subscribe(authentication => {
+    //   console.log('Trying to initially get notifications');
+    //   this.store.dispatch(new Load({ limit: 100, page: 0 }));
+    //   console.log('Trying to initially get character');
+    //   this.store.dispatch(new LoadCharacter(authentication.character.id));
+    // });
   }
 }

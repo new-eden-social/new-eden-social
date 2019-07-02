@@ -15,7 +15,7 @@
     "e2e": "ng e2e",
     "localization": "ng xi18n --output-path locale",
     "prebuild": "eval \"echo \"$(cat src/environments/environment.ts.template)\"\" > src/environments/environment.ts",
-    "compile:server": "webpack --config webpack.server.config.js --progress",
+    "compile:server": "tsc -p tsconfig.server.json",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
     "build:client-and-server-bundles": "ng build --prod && ng run new-eden-social-web:server:production"
@@ -79,6 +79,7 @@
     "protractor": "5.4.2",
     "ts-node": "8.3.0",
     "typescript": "3.4.5",
-    "webpack-command": "0.4.2"
+    "webpack-command": "0.4.2",
+    "webpack-node-externals": "^1.7.2"
   }
 }
