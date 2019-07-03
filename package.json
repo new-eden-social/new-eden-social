@@ -22,6 +22,7 @@
   },
   "workspaces": [
     "packages/*",
+    "src/services/*",
     "src/*"
   ],
   "config": {
