@@ -38,7 +38,7 @@
     "@ngrx/store": "8.0.1",
     "@ngrx/store-devtools": "8.0.1",
     "@nguniversal/common": "7.1.1",
-    "@nguniversal/express-engine": "7.1.1",
+    "@nguniversal/express-engine": "8.1.1",
     "@nguniversal/module-map-ngfactory-loader": "7.1.1",
     "angular2-moment": "1.9.0",
     "core-js": "3.1.4",
