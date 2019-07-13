@@ -11,7 +11,9 @@
   },
   "scripts": {
     "test": "exit 0",
-    "build": "tsc"
+    "build:lib": "tsc tsconfig.lib.json",
+    "build:dist": "tsc tsconfig.json",
+    "build": "npm run build:lib && npm run build:dist"
   },
   "dependencies": {
     "@godaddy/terminus": "4.1.2",
