@@ -3,12 +3,12 @@ import { Character } from './character.entity';
 import { ZKillboardService } from '@new-eden-social/zkillboard';
 import { IService } from '../../interfaces/service.interface';
 import { IGetCharacterRoles, ESIService, ESIEntetyNotFoundException } from '@new-eden-social/esi';
-import { CorporationService } from '../corporation/corporation.service';
+import { CorporationService } from '@new-eden-social/api-corporation';
 import { LoggerService } from '@new-eden-social/logger';
 import { UtilsService } from '@new-eden-social/utils';
 import { CharacterRepository } from './character.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Corporation } from '../corporation/corporation.entity';
+import { Corporation } from '@new-eden-social/api-corporation';
 import { Alliance } from '../../../services/alliance/src/alliance.entity';
 
 @Injectable()

@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { Comment } from './comment.entity';
 import { VCreateComment } from './comment.validate';
-import { Character } from '../character/character.entity';
-import { Post } from '../post/post.entity';
+import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Post } from '@new-eden-social/api-post';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateCommentCommand } from './commands/create.command';
-import { Corporation } from '../corporation/corporation.entity';
-import { Alliance } from '../alliance/alliance.entity';
+import { Corporation } from '@new-eden-social/api-corporation';
+import { Alliance } from '@new-eden-social/api-alliance';
 
 @Injectable()
 export class CommentService {

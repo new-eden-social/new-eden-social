@@ -1,4 +1,4 @@
-import { DCharacterShort } from '../../character/character.dto';
+import { DCharacterShort } from '../@new-eden-social/api-character/character.dto';
 import { KillmailParticipant } from './participant.entity';
 import { DUniverseType } from '../../universe/type/type.dto';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';

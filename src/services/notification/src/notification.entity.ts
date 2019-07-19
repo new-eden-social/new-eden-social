@@ -1,11 +1,11 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Character } from '../character/character.entity';
-import { Post } from '../post/post.entity';
-import { Comment } from '../comment/comment.entity';
+import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Post } from '@new-eden-social/api-post';
+import { Comment } from '@new-eden-social/api-comment';
 import { NOTIFICATION_TYPE } from './notification.constants';
-import { Alliance } from '../alliance/alliance.entity';
-import { Corporation } from '../corporation/corporation.entity';
+import { Alliance } from '@new-eden-social/api-alliance';
+import { Corporation } from '@new-eden-social/api-corporation';
 import { CreateNotificationEvent } from './events/create.event';
 import { SeenNotificationEvent } from './events/seen.event';
 

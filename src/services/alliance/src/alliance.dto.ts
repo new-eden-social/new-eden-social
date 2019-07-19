@@ -3,7 +3,7 @@ import { Alliance } from './alliance.entity';
 import { DPagination } from '@new-eden-social/pagination';
 import { IAllianceIcon } from './alliance.interface';
 import { ApiModelProperty } from '@nestjs/swagger';
-import { Follow } from '../follow/follow.entity';
+import { Follow } from '@new-eden-social/api-follow';
 import { DFollow } from '../follow/follow.dto';
 
 export class DAllianceIcon {

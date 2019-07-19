@@ -8,13 +8,13 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { IGetCharacter } from '@new-eden-social/esi';
-import { Post } from '../post/post.entity';
-import { Comment } from '../comment/comment.entity';
+import { Post } from '@new-eden-social/api-post';
+import { Comment } from '@new-eden-social/api-comment';
 import { ICharacterPortrait } from './character.interface';
 import { KillmailParticipant } from '../killmail/participant/participant.entity';
-import { Corporation } from '../corporation/corporation.entity';
-import { Notification } from '../notification/notification.entity';
-import { Follow } from '../follow/follow.entity';
+import { Corporation } from '@new-eden-social/api-corporation';
+import { Notification } from '@new-eden-social/api-notification';
+import { Follow } from '@new-eden-social/api-follow';
 
 @Entity()
 export class Character {

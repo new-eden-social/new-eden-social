@@ -2,8 +2,8 @@ import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
 import { CharacterService } from './character.service';
 import { DCharacter } from './character.dto';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { FollowService } from '../follow/follow.service';
-import { PostService } from '../post/post.service';
+import { FollowService } from '@new-eden-social/api-follow';
+import { PostService } from '@new-eden-social/api-post';
 
 @ApiUseTags('characters')
 @Controller('characters')

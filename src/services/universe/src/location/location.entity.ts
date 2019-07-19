@@ -1,5 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
-import { Post } from '../../post/post.entity';
+import { Post } from '@new-eden-social/api-post';
 import { Categories, IUniverseName } from '@new-eden-social/esi';
 
 @Entity()

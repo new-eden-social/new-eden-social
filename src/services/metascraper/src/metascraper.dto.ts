@@ -1,6 +1,6 @@
 import { URL_META_TYPE } from './metascraper.constants';
 import { IURLMetadata } from './metascraper.interface';
-import { Killmail } from '../killmail/killmail.entity';
+import { Killmail } from '@new-eden-social/killmail';
 import { DKillmailShort } from '../killmail/killmail.dto';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 

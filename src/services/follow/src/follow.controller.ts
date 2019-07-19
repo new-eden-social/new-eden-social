@@ -1,13 +1,13 @@
 import { ApiUseTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { Controller, HttpStatus, Param, UseGuards, Post } from '@nestjs/common';
-import { Character } from '../character/character.entity';
+import { Character } from '@new-eden-soci@new-eden-social/api-character';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
 import { DFollowAction } from './follow.dto';
 import { FollowService } from './follow.service';
-import { CharacterService } from '../character/character.service';
-import { CorporationService } from '../corporation/corporation.service';
-import { AllianceService } from '../alliance/alliance.service';
+import { CharacterService } from '@new-eden-soci@new-eden-social/api-character';
+import { CorporationService } from '@new-eden-social/api-corporation';
+import { AllianceService } from '@new-eden-social/api-alliance';
 import { FOLLOW_ACTION_TYPE } from './follow.constants';
 
 @ApiUseTags('follow')

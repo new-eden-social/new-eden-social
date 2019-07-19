@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { UpdaterService } from './updater.service';
-import { CharacterModule } from '../character/character.module';
+import { CharacterModule } from '@new-eden-social/api-character/character.module';
 import { CorporationModule } from '../corporation/corporation.module';
 import { AllianceModule } from '../alliance/alliance.module';
 import { UtilsModule } from '@new-eden-social/utils';

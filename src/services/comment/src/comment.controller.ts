@@ -1,17 +1,17 @@
 import { Body, Controller, Get, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
-import { Character } from '../character/character.entity';
+import { Character } from '@new-eden-soci@new-eden-social/api-character';
 import { ApiBearerAuth, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { CommentService } from './comment.service';
 import { DComment, DCommentList } from './comment.dto';
 import { VCreateComment } from './comment.validate';
-import { PostService } from '../post/post.service';
+import { PostService } from '@new-eden-social/api-post';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
 import { Pagination, VPagination } from '@new-eden-social/pagination';
-import { CORPORATION_ROLES } from '../corporation/corporation.constants';
-import { CorporationRoles } from '../corporation/corporation.roles.decorator';
-import { CorporationRolesGuard } from '../corporation/corporation.roles.guard';
-import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
+import { CORPORATION_ROLES } from '@new-eden-social/api-corporation';
+import { CorporationRoles } from '@new-eden-social/api-corporation';
+import { CorporationRolesGuard } from '@new-eden-social/api-corporation';
+import { CorporationAllianceExecutorGuard } from '@new-eden-social/api-corporation';
 
 @ApiUseTags('comments')
 @Controller('comments')

@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Character } from '../character/character.entity';
+import { Character } from '@new-eden-soci@new-eden-social/api-character';
 import { Follow } from './follow.entity';
 import { CommandBus } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FollowRepository } from './follow.repository';
 import { FollowCommand } from './commands/follow.command';
-import { Corporation } from '../corporation/corporation.entity';
-import { Alliance } from '../alliance/alliance.entity';
+import { Corporation } from '@new-eden-social/api-corporation';
+import { Alliance } from '@new-eden-social/api-alliance';
 import { UnFollowCommand } from './commands/unfollow.command';
 
 @Injectable()

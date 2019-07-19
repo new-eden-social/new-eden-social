@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { KillmailParticipant } from './participant.entity';
-import { CharacterService } from '../../character/character.service';
+import { CharacterService } from '../@new-eden-soci@new-eden-social/api-character';
 import { UniverseTypeService } from '../../universe/type/type.service';
 import { KillmailParticipantRepository } from './participant.repository';
 import { InjectRepository } from '@nestjs/typeorm';

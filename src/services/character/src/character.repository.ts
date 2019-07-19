@@ -1,8 +1,8 @@
 import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 import { Character } from './character.entity';
-import { Corporation } from '../corporation/corporation.entity';
-import { Alliance } from '../alliance/alliance.entity';
+import { Corporation } from '@new-eden-social/api-corporation';
+import { Alliance } from '@new-eden-social/api-alliance';
 
 @EntityRepository(Character)
 export class CharacterRepository extends Repository<Character> {

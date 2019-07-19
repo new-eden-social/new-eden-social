@@ -1,8 +1,8 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Follow } from './follow.entity';
-import { Character } from '../character/character.entity';
-import { Corporation } from '../corporation/corporation.entity';
-import { Alliance } from '../alliance/alliance.entity';
+import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Corporation } from '@new-eden-social/api-corporation';
+import { Alliance } from '@new-eden-social/api-alliance';
 
 @EntityRepository(Follow)
 export class FollowRepository extends Repository<Follow> {

@@ -3,7 +3,7 @@ import { Character } from './character.entity';
 import { ICharacterPortrait } from './character.interface';
 import { DPagination } from '@new-eden-social/pagination';
 import { ApiModelProperty } from '@nestjs/swagger';
-import { Follow } from '../follow/follow.entity';
+import { Follow } from '@new-eden-social/api-follow';
 import { DFollow } from '../follow/follow.dto';
 
 export class DCharacterPortrait {

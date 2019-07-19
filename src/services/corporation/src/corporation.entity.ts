@@ -8,12 +8,12 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { IGetCorporation } from '@new-eden-social/esi';
-import { Character } from '../character/character.entity';
-import { Alliance } from '../alliance/alliance.entity';
-import { Post } from '../post/post.entity';
+import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Alliance } from '@new-eden-social/api-alliance';
+import { Post } from '@new-eden-social/api-post';
 import { ICorporationIcon } from './corporation.interface';
-import { Comment } from '../comment/comment.entity';
-import { Follow } from '../follow/follow.entity';
+import { Comment } from '@new-eden-social/api-comment';
+import { Follow } from '@new-eden-social/api-follow';
 
 @Entity()
 export class Corporation {

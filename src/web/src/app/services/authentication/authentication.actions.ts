@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import {DCharacter, DCharacterShort} from '../character/character.dto';
+import {DCharacter, DCharacterShort} from '@new-eden-social/api-character/character.dto';
 import { IAuthenticationData } from './authentication.interface';
 
 export enum AuthenticationActionTypes {

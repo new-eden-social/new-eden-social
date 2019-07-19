@@ -3,7 +3,7 @@ import { CorporationController } from './corporation.controller';
 import { CorporationService } from './corporation.service';
 import { ZKillboardModule } from '@new-eden-social/zkillboard';
 import { ESIModule } from '@new-eden-social/esi';
-import { CharacterModule } from '../character/character.module';
+import { CharacterModule } from '@new-eden-social/api-character/character.module';
 import { AllianceModule } from '../alliance/alliance.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CorporationRepository } from './corporation.repository';

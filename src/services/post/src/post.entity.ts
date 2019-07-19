@@ -8,12 +8,12 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Character } from '../character/character.entity';
-import { Comment } from '../comment/comment.entity';
-import { Killmail } from '../killmail/killmail.entity';
-import { Corporation } from '../corporation/corporation.entity';
-import { Alliance } from '../alliance/alliance.entity';
-import { Hashtag } from '../hashtag/hashtag.entity';
+import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Comment } from '@new-eden-social/api-comment';
+import { Killmail } from '@new-eden-social/killmail';
+import { Corporation } from '@new-eden-social/api-corporation';
+import { Alliance } from '@new-eden-social/api-alliance';
+import { Hashtag } from '@new-eden-social/api-hashtag';
 import { POST_TYPES } from './post.constants';
 import { UniverseLocation } from '../universe/location/location.entity';
 import { AggregateRoot } from '@nestjs/cqrs';

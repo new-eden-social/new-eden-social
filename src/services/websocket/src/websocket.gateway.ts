@@ -3,7 +3,7 @@ import {
   SubscribeMessage, WebSocketGateway, WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
-import { Character } from '../character/character.entity';
+import { Character } from '@new-eden-soci@new-eden-social/api-character';
 import { ISocket } from '../../interfaces/socket.interface';
 import { UsePipes, ValidationPipe, UseInterceptors } from '@nestjs/common';
 import { VWebsocketAuthentication } from './websocket.validate';
@@ -22,10 +22,10 @@ import {
   WS_UN_SUBSCRIBE_EVENTS,
 } from './websocket.constants';
 import { AuthenticationService } from '../authentication/authentication.service';
-import { Corporation } from '../corporation/corporation.entity';
-import { Alliance } from '../alliance/alliance.entity';
-import { Post } from '../post/post.entity';
-import { Hashtag } from '../hashtag/hashtag.entity';
+import { Corporation } from '@new-eden-social/api-corporation';
+import { Alliance } from '@new-eden-social/api-alliance';
+import { Post } from '@new-eden-social/api-post';
+import { Hashtag } from '@new-eden-social/api-hashtag';
 import { WsLoggerExceptionInterceptor, LoggerService } from '@new-eden-social/logger';
 
 @WebSocketGateway()

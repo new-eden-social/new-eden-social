@@ -1,6 +1,6 @@
 import { POST_TYPES } from './post.constants';
 import { Post } from './post.entity';
-import { DCharacterShort } from '../character/character.dto';
+import { DCharacterShort } from '@new-eden-social/api-character/character.dto';
 import { DKillmailShort } from '../killmail/killmail.dto';
 import { DPagination } from '@new-eden-social/pagination';
 import { DUniverseLocation } from '../universe/location/location.dto';

@@ -5,7 +5,7 @@ import { KillmailModule } from './killmail/killmail.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { KillmailsStreamService, KillmailsStreamModule } from '@new-eden-social/killmails-stream';
-import { KillmailService } from './killmail/killmail.service';
+import { KillmailService } from './@new-eden-social/killmail';
 
 @Module({
   imports: [

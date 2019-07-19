@@ -1,5 +1,5 @@
 import { Module, forwardRef } from '@nestjs/common';
-import { CharacterModule } from '../../character/character.module';
+import { CharacterModule } from '../@new-eden-social/api-character/character.module';
 import { KillmailParticipantService } from './participant.service';
 import { UniverseTypeModule } from '../../universe/type/type.module';
 import { TypeOrmModule } from '@nestjs/typeorm';

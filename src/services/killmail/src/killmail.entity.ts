@@ -1,6 +1,6 @@
 import { Column, Entity, JoinTable, OneToMany, PrimaryColumn } from 'typeorm';
 import { KillmailParticipant } from './participant/participant.entity';
-import { Post } from '../post/post.entity';
+import { Post } from '@new-eden-social/api-post';
 
 @Entity()
 export class Killmail {

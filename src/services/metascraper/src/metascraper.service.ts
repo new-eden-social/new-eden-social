@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import * as metascraper from 'metascraper';
 import Axios, { AxiosInstance, AxiosPromise } from 'axios';
 import { IURLMetadata } from './metascraper.interface';
-import { Killmail } from '../killmail/killmail.entity';
-import { KillmailService } from '../killmail/killmail.service';
+import { Killmail } from '@new-eden-social/killmail';
+import { KillmailService } from '@new-eden-social/killmail';
 
 @Injectable()
 export class MetascraperService {

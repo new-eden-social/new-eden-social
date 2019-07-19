@@ -6,7 +6,7 @@ import {
 import { Notification } from './notification.entity';
 import { WsResponse } from '@nestjs/websockets';
 import { DPagination } from '@new-eden-social/pagination';
-import { DCharacterShort } from '../character/character.dto';
+import { DCharacterShort } from '@new-eden-social/api-character/character.dto';
 import { DCorporationShort } from '../corporation/corporation.dto';
 import { DAllianceShort } from '../alliance/alliance.dto';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';

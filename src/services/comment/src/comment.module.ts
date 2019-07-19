@@ -3,7 +3,7 @@ import { CorporationModule } from '../../../src/modules/corporation/corporation.
 import { AllianceModule } from '../../alliance/src/alliance.module';
 import { PostModule } from '../../post/src/post.module';
 import { CommentService } from './comment.service';
-import { CharacterModule } from '../character/character.module';
+import { CharacterModule } from '@new-eden-social/api-character/character.module';
 import { CommentController } from './comment.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentRepository } from './comment.repository';

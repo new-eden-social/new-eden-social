@@ -3,7 +3,7 @@ import {
   Response,
 } from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
-import { DCharacterShort } from '../character/character.dto';
+import { DCharacterShort } from '@new-eden-social/api-character/character.dto';
 import { ApiBearerAuth, ApiImplicitBody, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { IAuthenticationResponse } from '@new-eden-social/eve-sso';
 

@@ -4,9 +4,9 @@ import {
   CharacterPostedOnCharacterWallEvent, CharacterPostedOnCorporationWallEvent,
   CharacterPostedOnWallEvent,
 } from '../create.character.event';
-import { NOTIFICATION_TYPE } from '../../../notification/notification.constants';
-import { Character } from '../../../character/character.entity';
-import { Notification } from '../../../notification/notification.entity';
+import { NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
+import { Character } from '../../@new-eden-soci@new-eden-social/api-character';
+import { Notification } from '@new-eden-social/api-notification';
 import * as uuidv4 from 'uuid/v4';
 import { CreateNotificationCommand } from '../../../notification/commands/create.command';
 

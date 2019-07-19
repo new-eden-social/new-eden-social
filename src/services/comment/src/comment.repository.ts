@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 import { Comment } from './comment.entity';
-import { Post } from '../post/post.entity';
+import { Post } from '@new-eden-social/api-post';
 
 @EntityRepository(Comment)
 export class CommentRepository extends Repository<Comment> {

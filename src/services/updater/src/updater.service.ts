@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CharacterService } from '../character/character.service';
-import { CorporationService } from '../corporation/corporation.service';
-import { AllianceService } from '../alliance/alliance.service';
-import { CharacterRepository } from '../character/character.repository';
+import { CharacterService } from '@new-eden-soci@new-eden-social/api-character';
+import { CorporationService } from '@new-eden-social/api-corporation';
+import { AllianceService } from '@new-eden-social/api-alliance';
+import { CharacterRepository } from '@new-eden-social/api-character/character.repository';
 import { CorporationRepository } from '../corporation/corporation.repository';
 import { AllianceRepository } from '../alliance/alliance.repository';
 import { LoggerService } from '@new-eden-social/logger';

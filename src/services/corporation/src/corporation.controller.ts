@@ -2,8 +2,8 @@ import { Controller, Get, HttpStatus, Param, Response } from '@nestjs/common';
 import { CorporationService } from './corporation.service';
 import { DCorporation } from './corporation.dto';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { FollowService } from '../follow/follow.service';
-import { PostService } from '../post/post.service';
+import { FollowService } from '@new-eden-social/api-follow';
+import { PostService } from '@new-eden-social/api-post';
 
 @ApiUseTags('corporations')
 @Controller('corporations')

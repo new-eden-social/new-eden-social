@@ -6,7 +6,7 @@ import {
   UnAuthenticate,
 } from './authentication.actions';
 import { catchError, map, mergeMap, tap } from 'rxjs/internal/operators';
-import {DCharacter, DCharacterShort} from '../character/character.dto';
+import {DCharacter, DCharacterShort} from '@new-eden-social/api-character/character.dto';
 import { of } from 'rxjs/index';
 import { Effect, ofType } from '@ngrx/effects';
 import { Observable } from 'rxjs';

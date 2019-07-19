@@ -4,7 +4,7 @@ import { DPagination } from '@new-eden-social/pagination';
 import { ICorporationIcon } from './corporation.interface';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { DFollow } from '../follow/follow.dto';
-import { Follow } from '../follow/follow.entity';
+import { Follow } from '@new-eden-social/api-follow';
 
 export class DCorporationIcon {
   @ApiModelProperty()

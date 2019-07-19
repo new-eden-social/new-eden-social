@@ -8,11 +8,11 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { IGetAlliance } from '@new-eden-social/esi';
-import { Corporation } from '../corporation/corporation.entity';
-import { Post } from '../post/post.entity';
+import { Corporation } from '@new-eden-social/api-corporation';
+import { Post } from '@new-eden-social/api-post';
 import { IAllianceIcon } from './alliance.interface';
-import { Comment } from '../comment/comment.entity';
-import { Follow } from '../follow/follow.entity';
+import { Comment } from '@new-eden-social/api-comment';
+import { Follow } from '@new-eden-social/api-follow';
 
 @Entity()
 export class Alliance {
