@@ -1,6 +1,6 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { Post } from '@new-eden-social/api-post';
 import { Comment } from '@new-eden-social/api-comment';
 import { NOTIFICATION_TYPE } from './notification.constants';

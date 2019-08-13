@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { Follow } from './follow.entity';
 import { CommandBus } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';

@@ -18,9 +18,7 @@ export class FollowCommandHandler implements ICommandHandler<FollowCommand> {
       await this.repository.save(follow),
     );
 
-    // Sends actual event
     await entity.follow();
-
     entity.commit();
   }
 }

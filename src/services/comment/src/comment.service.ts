@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { Comment } from './comment.entity';
 import { VCreateComment } from './comment.validate';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { Post } from '@new-eden-social/api-post';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommandBus } from '@nestjs/cqrs';

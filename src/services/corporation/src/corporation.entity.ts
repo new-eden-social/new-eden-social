@@ -8,7 +8,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { IGetCorporation } from '@new-eden-social/esi';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { Alliance } from '@new-eden-social/api-alliance';
 import { Post } from '@new-eden-social/api-post';
 import { ICorporationIcon } from './corporation.interface';

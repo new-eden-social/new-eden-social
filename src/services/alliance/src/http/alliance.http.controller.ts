@@ -1,13 +1,11 @@
 import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
-import { AllianceService } from './alliance.service';
+import { AllianceService } from '../alliance.service';
 import { DAlliance } from './alliance.dto';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { FollowService } from '@new-eden-social/api-follow';
-import { PostService } from '../../post/src/post.service';
 
 @ApiUseTags('alliances')
 @Controller('alliances')
-export class AllianceController {
+export class AllianceHttpController {
 
   constructor(
     private readonly allianceService: AllianceService,

@@ -8,7 +8,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { Comment } from '@new-eden-social/api-comment';
 import { Killmail } from '@new-eden-social/killmail';
 import { Corporation } from '@new-eden-social/api-corporation';

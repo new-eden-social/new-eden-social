@@ -4,7 +4,7 @@ import { Pagination, VPagination } from '@new-eden-social/pagination';
 import { DNotificationList } from './notification.dto';
 import { NotificationService } from './notification.service';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
 
 @ApiUseTags('notifications')

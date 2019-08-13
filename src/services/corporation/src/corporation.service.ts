@@ -3,7 +3,7 @@ import { ZKillboardService } from '@new-eden-social/zkillboard';
 import { ESIEntetyNotFoundException, ESIService } from '@new-eden-social/esi';
 import { IService } from '../../interfaces/service.interface';
 import { Corporation } from './corporation.entity';
-import { CharacterService } from '@new-eden-soci@new-eden-social/api-character';
+import { CharacterService } from '@new-eden-social/api-character';
 import { AllianceService } from '@new-eden-social/api-alliance';
 import { LoggerService } from '@new-eden-social/logger';
 import { UtilsService } from '@new-eden-social/utils';

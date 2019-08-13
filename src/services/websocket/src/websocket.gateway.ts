@@ -3,7 +3,7 @@ import {
   SubscribeMessage, WebSocketGateway, WebSocketServer,
   WsResponse,
 } from '@nestjs/websockets';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { ISocket } from '../../interfaces/socket.interface';
 import { UsePipes, ValidationPipe, UseInterceptors } from '@nestjs/common';
 import { VWebsocketAuthentication } from './websocket.validate';

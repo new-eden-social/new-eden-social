@@ -22,6 +22,7 @@ export class FollowCharacterEventHandler implements IEventHandler<FollowCharacte
     notification.senderCharacter = event.follow.follower;
     notification.eventUuid = eventUuid;
 
-    this.commandBus.execute(new CreateNotificationCommand(notification));
+    // How should this be handeled, direct grpc call?
+    // this.commandBus.execute(new CreateNotificationCommand(notification));
   }
 }

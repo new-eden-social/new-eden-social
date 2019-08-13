@@ -1,10 +1,9 @@
 import { Alliance } from './alliance.entity';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { IService } from '../../../src/interfaces/service.interface';
 import { ESIService, ESIEntetyNotFoundException } from '@new-eden-social/esi';
 import { ZKillboardService } from '@new-eden-social/zkillboard';
-import { CorporationService } from '../../../src/modules/@new-eden-social/api-corporation';
-import { Corporation } from '../../../src/modules/@new-eden-social/api-corporation';
+import { CorporationService } from '@new-eden-social/api-corporation';
+import { Corporation } from '@new-eden-social/api-corporation';
 import { LoggerService } from '@new-eden-social/logger';
 import { UtilsService } from '@new-eden-social/utils';
 import { AllianceRepository } from './alliance.repository';

@@ -15,11 +15,9 @@ export class UnFollowCommandHandler implements ICommandHandler<UnFollowCommand> 
   async execute(command: UnFollowCommand) {
     const { follow } = command;
 
-    // Sends actual event
     await follow.unFollow();
+    await this.repository.delete(follow.id);
 
     follow.commit();
-
-    await this.repository.delete(follow.id);
   }
 }

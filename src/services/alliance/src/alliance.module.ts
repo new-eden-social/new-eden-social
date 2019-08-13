@@ -1,13 +1,11 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AllianceService } from './alliance.service';
-import { AllianceController } from './alliance.controller';
+import { AllianceHttpController } from './http/alliance.http.controller';
+import { AllianceGrpcController } from './grpc/alliance.grpc.controller';
 import { ESIModule } from '@new-eden-social/esi';
 import { ZKillboardModule } from '@new-eden-social/zkillboard';
-import { CorporationModule } from '../../../src/modules/corporation/corporation.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AllianceRepository } from './alliance.repository';
-import { FollowModule } from '../../../src/modules/follow/follow.module';
-import { PostModule } from '../../post/src/post.module';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
@@ -33,17 +31,12 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 
     ZKillboardModule,
     ESIModule,
-    forwardRef(() => CorporationModule),
-    forwardRef(() => FollowModule),
-    forwardRef(() => PostModule),
   ],
   controllers: [
-    AllianceController,
+    AllianceHttpController,
+    AllianceGrpcController
   ],
   providers: [
-    AllianceService,
-  ],
-  exports: [
     AllianceService,
   ],
 })

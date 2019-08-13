@@ -4,7 +4,7 @@ import * as uuidv4 from 'uuid/v4';
 import { CreateNotificationCommand } from '../../../notification/commands/create.command';
 import { CreateCommentEvent } from '../create.event';
 import { PostService } from '@new-eden-social/api-post';
-import { Character } from '../../@new-eden-soci@new-eden-social/api-character';
+import { Character } from '../../@new-eden-social/api-character';
 import { NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
 import { WebsocketGateway } from '../../../websocket/websocket.gateway';
 import { DComment } from '../../comment.dto';

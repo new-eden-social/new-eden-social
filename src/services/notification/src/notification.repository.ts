@@ -1,7 +1,7 @@
 import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 import { Notification } from './notification.entity';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 
 @EntityRepository(Notification)
 export class NotificationRepository extends Repository<Notification> {

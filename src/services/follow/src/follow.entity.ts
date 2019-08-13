@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { Corporation } from '@new-eden-social/api-corporation';
 import { Alliance } from '@new-eden-social/api-alliance';
 import { UnFollowEvent } from './events/unfollow.event';

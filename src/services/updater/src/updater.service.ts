@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CharacterService } from '@new-eden-soci@new-eden-social/api-character';
+import { CharacterService } from '@new-eden-social/api-character';
 import { CorporationService } from '@new-eden-social/api-corporation';
 import { AllianceService } from '@new-eden-social/api-alliance';
 import { CharacterRepository } from '@new-eden-social/api-character/character.repository';

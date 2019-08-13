@@ -1,7 +1,7 @@
 import { Repository, SelectQueryBuilder } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 import { Post } from './post.entity';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { Corporation } from '@new-eden-social/api-corporation';
 import { Alliance } from '@new-eden-social/api-alliance';
 

@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { CharacterService } from '@new-eden-soci@new-eden-social/api-character';
+import { CharacterService } from '@new-eden-social/api-character';
 import { LoggerService } from '@new-eden-social/logger';
 
 @Injectable()

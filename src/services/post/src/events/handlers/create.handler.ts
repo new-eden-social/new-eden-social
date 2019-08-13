@@ -17,7 +17,7 @@ import {
 } from '../create.alliance.event';
 import { PostedEvent } from '../create.event';
 import { WebsocketGateway } from '../../../websocket/websocket.gateway';
-import { Character } from '../../@new-eden-soci@new-eden-social/api-character';
+import { Character } from '../../@new-eden-social/api-character';
 import { Corporation } from '@new-eden-social/api-corporation';
 import { Alliance } from '@new-eden-social/api-alliance';
 import { DPost } from '../../post.dto';

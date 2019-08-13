@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+service FollowService {
+    rpc GetAllianceFollowers (AllianceRequest) returns (FollowersResponse);
+}
+
+message AllianceRequest {
+    int64 id = 1;
+}
+
+message FollowResponse {
+    int64 id = 1;
+    // ...
+    // todo: add missing fields
+}
+
+message FollowersResponse {
+  repeated FollowResponse followers = 1;
+}

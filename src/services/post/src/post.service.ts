@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
 import { VCreatePost } from './post.validate';
-import { Character } from '@new-eden-soci@new-eden-social/api-character';
+import { Character } from '@new-eden-social/api-character';
 import { Killmail } from '@new-eden-social/killmail';
 import { POST_TYPES } from './post.constants';
 import { CorporationService } from '@new-eden-social/api-corporation';
-import { CharacterService } from '@new-eden-soci@new-eden-social/api-character';
+import { CharacterService } from '@new-eden-social/api-character';
 import { Corporation } from '@new-eden-social/api-corporation';
 import { Alliance } from '@new-eden-social/api-alliance';
 import { AllianceService } from '@new-eden-social/api-alliance';

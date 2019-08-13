@@ -1,5 +1,5 @@
 import { Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Character } from '../@new-eden-soci@new-eden-social/api-character';
+import { Character } from '../@new-eden-social/api-character';
 import { Killmail } from '../killmail.entity';
 import { UniverseType } from '../../universe/type/type.entity';
 

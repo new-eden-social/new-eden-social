@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service AllianceService {
+    rpc Exists (ExistsRequest) returns (ExistsResponse);
+}
+
+message ExistsRequest {
+    int64 id = 1;
+}
+
+message ExistsResponse {
+    bool exists = 1;
+}

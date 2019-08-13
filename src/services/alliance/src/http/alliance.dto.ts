@@ -1,10 +1,10 @@
-import { DCorporationShortWithoutAlliance } from '../corporation/corporation.dto';
+import { DCorporationShortWithoutAlliance } from '@new-eden-social/api-corporation';
 import { Alliance } from './alliance.entity';
 import { DPagination } from '@new-eden-social/pagination';
 import { IAllianceIcon } from './alliance.interface';
 import { ApiModelProperty } from '@nestjs/swagger';
 import { Follow } from '@new-eden-social/api-follow';
-import { DFollow } from '../follow/follow.dto';
+import { DFollow } from '@new-eden-social/api-follow';
 
 export class DAllianceIcon {
   @ApiModelProperty()
