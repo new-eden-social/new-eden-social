@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FollowRepository } from './follow.repository';
 import { FollowCommand } from './commands/follow.command';
 import { Corporation } from '@new-eden-social/api-corporation';
-import { Alliance } from '@new-eden-social/api-alliance';
+import { IAllianceEntity } from '@new-eden-social/api-alliance';
 import { UnFollowCommand } from './commands/unfollow.command';
 
 @Injectable()
@@ -53,7 +53,7 @@ export class FollowService {
 
   followAlliance(
         follower: Character,
-        following: Alliance,
+        following: IAllianceEntity,
     ): Promise<Follow> {
     const follow = new Follow();
     follow.follower = follower;
@@ -80,7 +80,7 @@ export class FollowService {
 
   checkIfFolowingAlliance(
         follower: Character,
-        following: Alliance,
+        following: IAllianceEntity,
     ): Promise<Follow> {
     return this.followRepository.getFollowingAlliance(follower, following);
   }
@@ -93,7 +93,7 @@ export class FollowService {
     return this.followRepository.getCorporationFollowers(corporation);
   }
 
-  getAllianceFollowers(alliance: Alliance): Promise<Follow[]> {
+  getAllianceFollowers(alliance: IAllianceEntity): Promise<Follow[]> {
     return this.followRepository.getAllianceFollowers(alliance);
   }
 

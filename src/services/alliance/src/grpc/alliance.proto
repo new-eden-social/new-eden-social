@@ -2,6 +2,7 @@ syntax = "proto3";
 
 service AllianceService {
     rpc Exists (ExistsRequest) returns (ExistsResponse);
+    rpc Get (GetRequest) returns (GetResponse);
 }
 
 message ExistsRequest {
@@ -10,4 +11,17 @@ message ExistsRequest {
 
 message ExistsResponse {
     bool exists = 1;
+}
+
+message GetRequest {
+    int64 id = 1;
+}
+
+message GetResponse {
+    int64 id = 1;
+    string handle = 2;
+    string name = 3;
+    string ticker = 4;
+    string dateFounded = 5;
+    string executorCorporationId = 6;
 }

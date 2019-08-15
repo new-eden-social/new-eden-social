@@ -1,9 +1,15 @@
-import { GrpcOptions } from '@nestjs/common/interfaces/microservices/microservice-configuration.interface';
-import { join } from 'path';
+import { Injectable, OnModuleInit } from '@nestjs/common';
+import { AllianceGRPCClientOptions, IAllianceService } from '../..';
+import { Client, ClientGrpc } from '@nestjs/microservices';
 
-export const AllianceGRPCClientOptions: GrpcOptions = {
-  options: {
-    package: 'alliance',
-    protoPath: join(__dirname, 'alliance.proto'),
+@Injectable()
+export class AllianceClient implements OnModuleInit {
+
+  @Client(AllianceGRPCClientOptions)
+  private readonly client: ClientGrpc;
+  public service: IAllianceService;
+
+  onModuleInit() {
+    this.service = this.client.getService<IAllianceService>('AllianceService');
   }
-};
+}

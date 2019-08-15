@@ -4,21 +4,16 @@ import { Character } from '@new-eden-social/api-character';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
 import { FollowService } from '../follow.service';
-import { CharacterService } from '@new-eden-social/api-character';
-import { CorporationService } from '@new-eden-social/api-corporation';
-import { AllianceService } from '@new-eden-social/api-alliance';
+import { AllianceClient } from '@new-eden-social/api-alliance';
 
 @ApiUseTags('follow')
 @Controller('follow')
-export class FollowController {
+export class FollowHttpController {
 
   constructor(
-    private readonly followService: FollowService,
-    private readonly characterService: CharacterService,
-    private readonly corporationService: CorporationService,
-    private readonly allianceService: AllianceService,
-  ) {
-  }
+    private followService: FollowService,
+    private allianceClient: AllianceClient,
+  ){}
 
   @ApiResponse({
     status: HttpStatus.OK,
@@ -73,7 +68,7 @@ export class FollowController {
     @Param('allianceId') allianceId: number,
     @AuthenticatedCharacter() follower: Character,
   ): Promise<void> {
-    const alliance = await this.allianceService.get(allianceId);
+    const alliance = await this.allianceClient.service.get(allianceId).toPromise();
     const follow = await this.followService.checkIfFolowingAlliance(follower, alliance);
 
     if (follow) {

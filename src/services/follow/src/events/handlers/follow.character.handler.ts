@@ -1,6 +1,5 @@
 import { EventsHandler, IEventHandler, CommandBus } from '@nestjs/cqrs';
 import { FollowEvent, FollowCharacterEvent } from '../follow.event';
-import { CreateNotificationCommand } from '../../../notification/commands/create.command';
 import { Notification } from '@new-eden-social/api-notification';
 import { NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
 import * as uuidv4 from 'uuid/v4';

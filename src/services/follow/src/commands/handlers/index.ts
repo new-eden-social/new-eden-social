@@ -1,7 +1,7 @@
 import { FollowCommandHandler } from './follow.command';
 import { UnFollowCommandHandler } from './unfollow.command';
 
-export const commandHandlers = [
+export const CommandHandlers = [
   FollowCommandHandler,
   UnFollowCommandHandler,
 ];

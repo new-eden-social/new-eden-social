@@ -2,7 +2,7 @@ import { EntityRepository, Repository } from 'typeorm';
 import { Follow } from './follow.entity';
 import { Character } from '@new-eden-social/api-character';
 import { Corporation } from '@new-eden-social/api-corporation';
-import { Alliance } from '@new-eden-social/api-alliance';
+import { IAllianceEntity } from '@new-eden-social/api-alliance';
 
 @EntityRepository(Follow)
 export class FollowRepository extends Repository<Follow> {
@@ -33,7 +33,7 @@ export class FollowRepository extends Repository<Follow> {
 
   getFollowingAlliance(
         follower: Character,
-        followingAlliance: Alliance,
+        followingAlliance: IAllianceEntity,
     ): Promise<Follow> {
     return this.findOne({
       where: {
@@ -64,7 +64,7 @@ export class FollowRepository extends Repository<Follow> {
   }
 
   getAllianceFollowers(
-        alliance: Alliance,
+        alliance: IAllianceEntity,
     ): Promise<Follow[]> {
     return this.find({
       where: {

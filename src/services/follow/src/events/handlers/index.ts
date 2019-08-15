@@ -1,5 +1,5 @@
 import { FollowCharacterEventHandler } from './follow.character.handler';
 
-export const eventHandlers = [
+export const EventHandlers = [
   FollowCharacterEventHandler,
 ];

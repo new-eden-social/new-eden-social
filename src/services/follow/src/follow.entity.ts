@@ -22,7 +22,7 @@ export class Follow extends AggregateRoot {
     followingCorporation: Corporation;
 
   @ManyToOne(type => Alliance, alliance => alliance.followers, { eager: true })
-    followingAlliance: Alliance;
+    followingAlliance: Alliance; // FIXME: Can use relations anymore, this has to be manyToOne but to generic ids?? Should be jus list of ids?
 
   async unFollow(): Promise<void> {
     await this.apply(new UnFollowEvent(this));
