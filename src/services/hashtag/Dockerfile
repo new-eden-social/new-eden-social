@@ -1,6 +1,6 @@
 FROM newedensocial/base as build-env
 
-WORKDIR /app/src/api/services/hashtag
+WORKDIR /app/src/services/hashtag
 
 ADD . .
 RUN yarn build

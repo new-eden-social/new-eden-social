@@ -1,19 +1,11 @@
 import {
   Column,
   Entity,
-  ManyToOne,
-  OneToMany,
-  OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { IGetCorporation } from '@new-eden-social/esi';
-import { Character } from '@new-eden-social/api-character';
-import { Alliance } from '@new-eden-social/api-alliance';
-import { Post } from '@new-eden-social/api-post';
 import { ICorporationIcon } from './corporation.interface';
-import { Comment } from '@new-eden-social/api-comment';
-import { Follow } from '@new-eden-social/api-follow';
 
 @Entity()
 export class Corporation {
@@ -33,32 +25,17 @@ export class Corporation {
   @Column('text')
   description: string;
 
-  @ManyToOne(type => Character, character => character.corporationCeo)
-  ceo?: Character;
+  @Column()
+  ceoId?: number;
 
-  @ManyToOne(type => Character, character => character.createdCorporations)
-  creator?: Character;
+  @Column()
+  creatorId?: number;
 
-  @ManyToOne(type => Alliance, alliance => alliance.corporations, { eager: true })
-  alliance?: Alliance;
+  @Column()
+  allianceId?: number;
 
-  @OneToMany(type => Character, character => character.corporation)
-  characters: Character[];
-
-  @OneToMany(type => Post, post => post.corporationWall)
-  wall: Post[];
-
-  @OneToMany(type => Post, post => post.corporation)
-  posts: Post[];
-
-  @OneToMany(type => Comment, comment => comment.corporation)
-  comments: Comment[];
-
-  @OneToOne(type => Alliance, alliance => alliance.executorCorporation)
-  executingAlliance: Alliance;
-
-  @OneToMany(type => Follow, follow => follow.followingCorporation)
-  followers: Promise<Follow[]>;
+  @Column()
+  executingAllianceId?: number;
 
   @Column({ nullable: true })
   createdAt?: Date;
@@ -77,11 +54,23 @@ export class Corporation {
     };
   }
 
-  public populateESI(corp: IGetCorporation) {
-    this.name = corp.name;
-    this.ticker = corp.ticker;
-    this.description = corp.description;
-    this.createdAt = corp.creation_date;
-    this.taxRate = corp.tax_rate;
+  public populateESI(corporation: IGetCorporation) {
+    this.name = corporation.name;
+    this.ticker = corporation.ticker;
+    this.description = corporation.description;
+    this.createdAt = corporation.creation_date;
+    this.taxRate = corporation.tax_rate;
+
+    if (corporation.alliance_id && corporation.alliance_id !== 1) {
+      this.allianceId = corporation.alliance_id;
+    }
+
+    if (corporation.ceo_id && corporation.ceo_id !== 1) {
+      this.ceoId = corporation.ceo_id;
+    }
+
+    if (corporation.creator_id && corporation.creator_id !== 1) {
+      this.creatorId = corporation.creator_id;
+    }
   }
 }

@@ -1,6 +1,6 @@
 FROM newedensocial/base as build-env
 
-WORKDIR /app/src/api/services/websocket
+WORKDIR /app/src/services/websocket
 
 ADD . .
 RUN yarn build

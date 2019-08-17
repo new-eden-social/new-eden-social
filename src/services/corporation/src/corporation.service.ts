@@ -1,29 +1,20 @@
-import { Injectable, forwardRef, Inject } from '@nestjs/common';
-import { ZKillboardService } from '@new-eden-social/zkillboard';
+import { Injectable } from '@nestjs/common';
 import { ESIEntetyNotFoundException, ESIService } from '@new-eden-social/esi';
-import { IService } from '../../interfaces/service.interface';
 import { Corporation } from './corporation.entity';
-import { CharacterService } from '@new-eden-social/api-character';
-import { AllianceService } from '@new-eden-social/api-alliance';
 import { LoggerService } from '@new-eden-social/logger';
 import { UtilsService } from '@new-eden-social/utils';
 import { CorporationRepository } from './corporation.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
-export class CorporationService implements IService<Corporation> {
+export class CorporationService {
 
   constructor(
     private readonly utilsService: UtilsService,
     private readonly loggerService: LoggerService,
     private readonly esiService: ESIService,
-    private readonly zkillboardService: ZKillboardService,
     @InjectRepository(CorporationRepository)
     private readonly corporationRepository: CorporationRepository,
-    @Inject(forwardRef(() => CharacterService))
-    private readonly characterService: CharacterService,
-    @Inject(forwardRef(() => AllianceService))
-    private readonly allianceService: AllianceService,
   ) {
   }
 
@@ -60,16 +51,7 @@ export class CorporationService implements IService<Corporation> {
    */
   public async update(corporation: Corporation): Promise<Corporation> {
     const esiCorporation = await this.esiService.getCorporation(corporation.id);
-
     corporation.populateESI(esiCorporation);
-
-    await this.updateCeoAndCreatorAndAlliance(
-      corporation,
-      esiCorporation.ceo_id,
-      esiCorporation.creator_id,
-      esiCorporation.alliance_id,
-    );
-
     return this.corporationRepository.save(corporation);
   }
 
@@ -109,55 +91,6 @@ export class CorporationService implements IService<Corporation> {
     // Create handle
     corporation.handle = this.utilsService.createHandle(corporation.id, corporation.name);
 
-    await this.corporationRepository.save(corporation);
-
-    // Populate ceo/creator/alliance
-    await this.updateCeoAndCreatorAndAlliance(
-      corporation,
-      esiCorporation.ceo_id,
-      esiCorporation.creator_id,
-      esiCorporation.alliance_id,
-    );
-
-    return corporation;
-  }
-
-  /**
-   * Update CEO and Creator
-   * @param {Corporation} corporation
-   * @param {number} ceoId
-   * @param {number} creatorId
-   * @param {number} allianceId
-   * @returns {Promise<void>}
-   */
-  private async updateCeoAndCreatorAndAlliance(
-    corporation: Corporation,
-    ceoId: number,
-    creatorId: number,
-    allianceId: number,
-  ): Promise<void> {
-    // id = 1 means that ceo/creator isn't a real character (but a npc?)
-    if (ceoId !== 1 || creatorId !== 1 || allianceId !== 1) {
-      if (allianceId && allianceId !== 1) {
-        this.loggerService.debug('Corporation get alliance', allianceId);
-        corporation.alliance = await this.allianceService.get(allianceId);
-      }
-
-      if (ceoId && ceoId !== 1) {
-        this.loggerService.debug('Corporation get ceo character', ceoId);
-        corporation.ceo = await this.characterService.get(ceoId);
-      }
-
-      if (creatorId && creatorId !== 1) {
-        this.loggerService.debug('Corporation get creator character', creatorId);
-        corporation.creator = await this.characterService.get(creatorId);
-      }
-
-      await this.corporationRepository.update(corporation.id, {
-        alliance: corporation.alliance ? { id: corporation.alliance.id } : null,
-        ceo: corporation.ceo ? { id: corporation.ceo.id } : null,
-        creator: corporation.creator ? { id: corporation.creator.id } : null,
-      });
-    }
+    return this.corporationRepository.save(corporation);
   }
 }

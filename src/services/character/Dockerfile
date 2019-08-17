@@ -1,6 +1,6 @@
 FROM newedensocial/base as build-env
 
-WORKDIR /app/src/api/services/character
+WORKDIR /app/src/services/character
 
 ADD . .
 RUN yarn build

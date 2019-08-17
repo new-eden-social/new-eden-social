@@ -12,6 +12,7 @@ import { UtilsModule } from '@new-eden-social/utils';
 import { FollowGrpcController } from './grpc/follow.grpc.controller';
 import { AllianceGrpcModule } from '@new-eden-social/api-alliance';
 import { Follow } from './follow.entity';
+import { CorporationGrpcModule } from '@new-eden-social/api-corporation';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { Follow } from './follow.entity';
     CqrsModule,
 
     AllianceGrpcModule,
+    CorporationGrpcModule,
   ],
   controllers: [
     FollowHttpController,

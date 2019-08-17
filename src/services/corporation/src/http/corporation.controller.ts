@@ -1,18 +1,14 @@
 import { Controller, Get, HttpStatus, Param, Response } from '@nestjs/common';
-import { CorporationService } from './corporation.service';
+import { CorporationService } from '../corporation.service';
 import { DCorporation } from './corporation.dto';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
-import { FollowService } from '@new-eden-social/api-follow';
-import { PostService } from '@new-eden-social/api-post';
 
 @ApiUseTags('corporations')
 @Controller('corporations')
-export class CorporationController {
+export class CorporationHttpController {
 
   constructor(
     private readonly corporationService: CorporationService,
-    private readonly followService: FollowService,
-    private readonly postService: PostService,
   ) {
   }
 
@@ -26,10 +22,7 @@ export class CorporationController {
     @Param('corporationId') corporationId: number,
   ): Promise<DCorporation> {
     const corporation = await this.corporationService.get(corporationId);
-    const followers = await this.followService.getCorporationFollowers(corporation);
-    const numPosts = await this.postService.getNumOfPostsByCorporation(corporation);
-
-    return new DCorporation(corporation, followers, numPosts);
+    return new DCorporation(corporation);
   }
 
 }

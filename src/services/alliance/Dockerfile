@@ -1,9 +1,10 @@
 FROM newedensocial/base as build-env
 
-WORKDIR /app/src/api/services/alliance
+WORKDIR /app/src/services/alliance
 
 ADD . .
-RUN yarn build
+
+RUN yarn build:dist
 
 CMD [ "node", "dist/server.js" ]
 

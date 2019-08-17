@@ -1,6 +1,6 @@
 FROM newedensocial/base as build-env
 
-WORKDIR /app/src/api/services/metascraper
+WORKDIR /app/src/services/metascraper
 
 ADD . .
 RUN yarn build

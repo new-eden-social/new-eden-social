@@ -1,6 +1,6 @@
 FROM newedensocial/base as build-env
 
-WORKDIR /app/src/api/services/killmail
+WORKDIR /app/src/services/killmail
 
 ADD . .
 RUN yarn build

@@ -1,17 +1,15 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { CorporationController } from './corporation.controller';
+import { CorporationHttpController } from './http/corporation.controller';
 import { CorporationService } from './corporation.service';
 import { ZKillboardModule } from '@new-eden-social/zkillboard';
 import { ESIModule } from '@new-eden-social/esi';
-import { CharacterModule } from '@new-eden-social/api-character/character.module';
-import { AllianceModule } from '../alliance/alliance.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CorporationRepository } from './corporation.repository';
-import { FollowModule } from '../follow/follow.module';
-import { PostModule } from '../post/post.module';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
+import { Corporation } from './corporation.entity';
+import { CorporationGrpcController } from './grpc/corporation.grpc.controller';
 
 @Module({
   imports: [
@@ -26,25 +24,19 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       logging: process.env.DB_LOG as LoggerOptions,
-      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
+      entities: [Corporation],
       synchronize: process.env.DB_SYNC === 'true',
     }),
     TypeOrmModule.forFeature([CorporationRepository]),
 
     ZKillboardModule,
     ESIModule,
-    forwardRef(() => CharacterModule),
-    forwardRef(() => AllianceModule),
-    forwardRef(() => FollowModule),
-    forwardRef(() => PostModule),
   ],
   controllers: [
-    CorporationController,
+    CorporationHttpController,
+    CorporationGrpcController
   ],
   providers: [
-    CorporationService,
-  ],
-  exports: [
     CorporationService,
   ],
 })

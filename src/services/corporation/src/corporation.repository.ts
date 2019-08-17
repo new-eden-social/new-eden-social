@@ -8,7 +8,6 @@ export class CorporationRepository extends Repository<Corporation> {
   public async getAllByIds(ids: number[]): Promise<Corporation[]> {
     return this.createQueryBuilder('corporation')
     .where('corporation.id IN (:ids)', { ids })
-    .leftJoinAndSelect('corporation.alliance', 'alliance')
     .getMany();
   }
 

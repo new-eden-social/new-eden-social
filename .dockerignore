@@ -1,8 +1,13 @@
-node_modules
+# Ignore everything
+**
 
-# Ignore packages, so we download from NPM
-packages
-# Ignore src as we don't need source code changes
-#src
-# But we need dependencies information
+!package.json
+!yarn.lock
+!lerna.json
+
+# We need dependencies information
 !src/**/package.json
+# ^---- Should work but it doesnt?????
+!src/services/alliance/package.json
+# We need tsconfig.base.json
+!src/**/tsconfig.base.json
