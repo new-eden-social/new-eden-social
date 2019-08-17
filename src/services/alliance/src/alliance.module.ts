@@ -9,6 +9,7 @@ import { AllianceRepository } from './alliance.repository';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
+import { Alliance } from './alliance.entity';
 
 @Module({
   imports: [
@@ -23,7 +24,7 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       logging: process.env.DB_LOG as LoggerOptions,
-      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
+      entities: [Alliance],
       synchronize: process.env.DB_SYNC === 'true',
     }),
 

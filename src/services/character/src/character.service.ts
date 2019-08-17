@@ -1,28 +1,20 @@
-import { Injectable, forwardRef, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Character } from './character.entity';
-import { ZKillboardService } from '@new-eden-social/zkillboard';
-import { IService } from '../../interfaces/service.interface';
 import { IGetCharacterRoles, ESIService, ESIEntetyNotFoundException } from '@new-eden-social/esi';
-import { CorporationService } from '@new-eden-social/api-corporation';
 import { LoggerService } from '@new-eden-social/logger';
 import { UtilsService } from '@new-eden-social/utils';
 import { CharacterRepository } from './character.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { Alliance } from '../../../services/alliance/src/alliance.entity';
 
 @Injectable()
-export class CharacterService implements IService<Character> {
+export class CharacterService {
 
   constructor(
     private readonly esiService: ESIService,
     private readonly loggerService: LoggerService,
     private readonly utilsService: UtilsService,
-    private readonly zkillboardService: ZKillboardService,
     @InjectRepository(CharacterRepository)
     private readonly characterRepository: CharacterRepository,
-    @Inject(forwardRef(() => CorporationService))
-    private readonly corporationService: CorporationService,
   ) {
   }
 
@@ -43,7 +35,6 @@ export class CharacterService implements IService<Character> {
   public async update(character: Character): Promise<Character> {
     const esiCharacter = await this.esiService.getCharacter(character.id);
     character.populateESI(esiCharacter);
-    character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
 
     return this.characterRepository.save(character);
   }
@@ -73,15 +64,15 @@ export class CharacterService implements IService<Character> {
   }
 
   public async findInCorporation(
-    corporation: Corporation,
+    corporationId: number,
   ): Promise<Character[]> {
-    return this.characterRepository.findForCorporation(corporation);
+    return this.characterRepository.findForCorporation(corporationId);
   }
 
   public async findInAlliance(
-    alliance: Alliance,
+    allianceId: number,
   ): Promise<Character[]> {
-    return this.characterRepository.findForAlliance(alliance);
+    return this.characterRepository.findForAlliance(allianceId);
   }
 
   /**
@@ -105,20 +96,6 @@ export class CharacterService implements IService<Character> {
     // Create handle
     character.handle = this.utilsService.createHandle(character.id, character.name);
 
-    // Save without corporation
-    await this.characterRepository.save(character);
-
-    if (esiCharacter.corporation_id && esiCharacter.corporation_id !== 1) {
-      this.loggerService.debug('Character get corporation', esiCharacter.corporation_id);
-      // Load corporation
-      character.corporation = await this.corporationService.get(esiCharacter.corporation_id);
-
-      // Update corporation id
-      await this.characterRepository.update(character.id, {
-        corporation: { id: character.corporation.id },
-      });
-    }
-
-    return character;
+    return this.characterRepository.save(character);
   }
 }

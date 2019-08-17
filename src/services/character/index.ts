@@ -1,3 +1,4 @@
-export * from './src/character.entity';
-export * from './src/character.interface';
-export * from './src/character.dto';
+export * from './src/grpc/character.grpc.interface';
+export * from './src/grpc/character.grpc.client.options';
+export * from './src/grpc/character.grpc.client';
+export * from './src/grpc/character.grpc.module';

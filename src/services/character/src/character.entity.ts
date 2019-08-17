@@ -2,19 +2,11 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  ManyToOne,
-  OneToMany,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { IGetCharacter } from '@new-eden-social/esi';
-import { Post } from '@new-eden-social/api-post';
-import { Comment } from '@new-eden-social/api-comment';
 import { ICharacterPortrait } from './character.interface';
-import { KillmailParticipant } from '../killmail/participant/participant.entity';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { Notification } from '@new-eden-social/api-notification';
-import { Follow } from '@new-eden-social/api-follow';
 
 @Entity()
 export class Character {
@@ -25,35 +17,8 @@ export class Character {
   @Column({ unique: true })
   handle: string;
 
-  @OneToMany(type => Post, post => post.character)
-  posts: Post[];
-
-  @OneToMany(type => KillmailParticipant, killmailParticipant => killmailParticipant.character)
-  killmails: KillmailParticipant[];
-
-  @OneToMany(type => Comment, comment => comment.character)
-  comments: Comment[];
-
-  @OneToMany(type => Corporation, corporation => corporation.creator)
-  createdCorporations: Corporation[];
-
-  @OneToMany(type => Corporation, corporation => corporation.ceo)
-  corporationCeo: Corporation[];
-
-  @ManyToOne(type => Corporation, corporation => corporation.characters, { eager: true })
-  corporation: Corporation;
-
-  @OneToMany(type => Post, post => post.characterWall)
-  wall: Post[];
-
-  @OneToMany(type => Notification, notification => notification.recipient)
-  notifications: Notification[];
-
-  @OneToMany(type => Follow, follow => follow.follower)
-  following: Follow[];
-
-  @OneToMany(type => Follow, follow => follow.followingCharacter)
-  followers: Follow[];
+  @Column()
+  corporationId: number;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -91,13 +56,16 @@ export class Character {
     };
   }
 
-  public populateESI(char: IGetCharacter) {
-    this.name = char.name;
-    this.description = char.description;
-    this.gender = char.gender;
-    this.raceId = char.race_id;
-    this.bloodlineId = char.bloodline_id;
-    this.ancestryId = char.ancestry_id;
-    this.securityStatus = char.security_status;
+  public populateESI(character: IGetCharacter) {
+    this.name = character.name;
+    this.description = character.description;
+    this.gender = character.gender;
+    this.raceId = character.race_id;
+    this.bloodlineId = character.bloodline_id;
+    this.ancestryId = character.ancestry_id;
+    this.securityStatus = character.security_status;
+    if (character.corporation_id && character.corporation_id !== 1) {
+      this.corporationId = character.corporation_id;
+    }
   }
 }

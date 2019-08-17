@@ -1,18 +1,17 @@
 import { ApiUseTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { Controller, HttpStatus, Param, UseGuards, Post } from '@nestjs/common';
-import { Character } from '@new-eden-social/api-character';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
 import { FollowService } from '../follow.service';
-import { AllianceClient } from '@new-eden-social/api-alliance';
+import { AllianceGrpcClient } from '@new-eden-social/api-alliance';
 
 @ApiUseTags('follow')
 @Controller('follow')
 export class FollowHttpController {
 
   constructor(
-    private followService: FollowService,
-    private allianceClient: AllianceClient,
+    private readonly followService: FollowService,
+    private readonly allianceClient: AllianceGrpcClient,
   ){}
 
   @ApiResponse({

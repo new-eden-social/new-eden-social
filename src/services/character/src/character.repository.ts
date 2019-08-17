@@ -1,8 +1,6 @@
 import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 import { Character } from './character.entity';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { Alliance } from '@new-eden-social/api-alliance';
 
 @EntityRepository(Character)
 export class CharacterRepository extends Repository<Character> {
@@ -15,16 +13,16 @@ export class CharacterRepository extends Repository<Character> {
     .getMany();
   }
 
-  public async findForCorporation(corporation: Corporation): Promise<Character[]> {
+  public async findForCorporation(corporationId: number): Promise<Character[]> {
     return this.createQueryBuilder('character')
-    .where('character."corporationId" = :corporationId', { corporationId: corporation.id })
+    .where('character."corporationId" = :corporationId', { corporationId })
     .getMany();
   }
 
-  public async findForAlliance(alliance: Alliance): Promise<Character[]> {
+  public async findForAlliance(allianceId: number): Promise<Character[]> {
     return this.createQueryBuilder('character')
     .leftJoinAndSelect('character.corporation', 'corporation')
-    .where('corporation."allianceId" = :allianceId', { allianceId: alliance.id })
+    .where('corporation."allianceId" = :allianceId', { allianceId })
     .getMany();
   }
 

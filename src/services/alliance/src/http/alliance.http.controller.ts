@@ -9,8 +9,6 @@ export class AllianceHttpController {
 
   constructor(
     private readonly allianceService: AllianceService,
-    private readonly followService: FollowService,
-    private readonly postService: PostService,
   ) {
   }
 
@@ -24,10 +22,7 @@ export class AllianceHttpController {
     @Param('allianceId') allianceId: number,
   ): Promise<DAlliance> {
     const alliance = await this.allianceService.get(allianceId);
-    const followers = await this.followService.getAllianceFollowers(alliance);
-    const numPosts = await this.postService.getNumOfPostsByAlliance(alliance);
-
-    return new DAlliance(alliance, followers, numPosts);
+    return new DAlliance(alliance);
   }
 
 }

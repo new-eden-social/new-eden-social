@@ -1,18 +1,12 @@
 import {
   Column,
   Entity,
-  JoinColumn,
-  OneToMany,
-  OneToOne,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { IGetAlliance } from '@new-eden-social/esi';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { Post } from '@new-eden-social/api-post';
 import { IAllianceIcon } from './alliance.interface';
-import { Comment } from '@new-eden-social/api-comment';
-import { Follow } from '@new-eden-social/api-follow';
+import { all } from 'bluebird';
 
 @Entity()
 export class Alliance {
@@ -23,9 +17,6 @@ export class Alliance {
   @Column({ unique: true })
   handle: string;
 
-  @OneToMany(type => Corporation, corporation => corporation.alliance)
-  corporations: Corporation[];
-
   @Column()
   name: string;
 
@@ -35,21 +26,8 @@ export class Alliance {
   @Column()
   dateFounded: Date;
 
-  @OneToOne(type => Corporation, corporation => corporation.executingAlliance)
-  @JoinColumn()
-  executorCorporation: Corporation;
-
-  @OneToMany(type => Post, post => post.allianceWall)
-  wall: Post[];
-
-  @OneToMany(type => Post, post => post.alliance)
-  posts: Post[];
-
-  @OneToMany(type => Comment, comment => comment.alliance)
-  comments: Comment[];
-
-  @OneToMany(type => Follow, follow => follow.followingAlliance)
-  followers: Promise<Follow[]>;
+  @Column()
+  executorCorporationId: number;
 
   @UpdateDateColumn()
   updatedAt: Date;
@@ -65,5 +43,9 @@ export class Alliance {
     this.name = alliance.name;
     this.ticker = alliance.ticker;
     this.dateFounded = alliance.date_founded;
+
+    if (alliance.executor_corporation_id && alliance.executor_corporation_id !== 1) {
+      this.executorCorporationId = alliance.executor_corporation_id;
+    }
   }
 }

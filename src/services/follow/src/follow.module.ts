@@ -9,6 +9,9 @@ import { FollowRepository } from './follow.repository';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
+import { FollowGrpcController } from './grpc/follow.grpc.controller';
+import { AllianceGrpcModule } from '@new-eden-social/api-alliance';
+import { Follow } from './follow.entity';
 
 @Module({
   imports: [
@@ -23,15 +26,18 @@ import { UtilsModule } from '@new-eden-social/utils';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       logging: process.env.DB_LOG as LoggerOptions,
-      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
+      entities: [Follow],
       synchronize: process.env.DB_SYNC === 'true',
     }),
     TypeOrmModule.forFeature([FollowRepository]),
 
     CqrsModule,
+
+    AllianceGrpcModule,
   ],
   controllers: [
     FollowHttpController,
+    FollowGrpcController,
   ],
   providers: [
     FollowService,

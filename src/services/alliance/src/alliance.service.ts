@@ -1,9 +1,6 @@
 import { Alliance } from './alliance.entity';
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { ESIService, ESIEntetyNotFoundException } from '@new-eden-social/esi';
-import { ZKillboardService } from '@new-eden-social/zkillboard';
-import { CorporationService } from '@new-eden-social/api-corporation';
-import { Corporation } from '@new-eden-social/api-corporation';
 import { LoggerService } from '@new-eden-social/logger';
 import { UtilsService } from '@new-eden-social/utils';
 import { AllianceRepository } from './alliance.repository';
@@ -15,14 +12,9 @@ export class AllianceService {
   constructor(
     private readonly loggerService: LoggerService,
     private readonly utilsService: UtilsService,
+    private readonly esiService: ESIService,
     @InjectRepository(AllianceRepository)
     private readonly allianceRepository: AllianceRepository,
-    @Inject(forwardRef(() => CorporationService))
-    private readonly corporationService: CorporationService,
-    @Inject(forwardRef(() => ZKillboardService)) // FIXME: This forwardRef probably isn't needed
-    private readonly zkillboardService: ZKillboardService,
-    @Inject(forwardRef(() => ESIService)) // FIXME: This forwardRef probably isn't needed
-    private readonly esiService: ESIService,
   ) {
   }
 
@@ -68,20 +60,6 @@ export class AllianceService {
   }
 
   /**
-   * Get alliance executor corporation
-   * @param {number} id
-   * @returns {Promise<Corporation>}
-   */
-  public async getExecutorCorporation(id: number): Promise<Corporation> {
-    const alliance = await this.allianceRepository.findOne({
-      where: { id },
-      relations: ['executorCorporation'],
-    });
-
-    return alliance.executorCorporation;
-  }
-
-  /**
    * Update corporation by id
    * @param {Alliance} alliance
    * @return {Promise<Corporation>}
@@ -101,10 +79,7 @@ export class AllianceService {
    */
   private async findAllianceById(id: number) {
     this.loggerService.debug(`get alliance ${id}`);
-    const foundAlliance = await this.allianceRepository.findOne(
-      id,
-      { relations: ['executorCorporation'] },
-    );
+    const foundAlliance = await this.allianceRepository.findOne(id);
 
     if (foundAlliance) { return foundAlliance; }
 
@@ -118,24 +93,6 @@ export class AllianceService {
     // Create handle
     alliance.handle = this.utilsService.createHandle(alliance.id, alliance.name);
 
-    // Save without corporation
-    await this.allianceRepository.save(alliance);
-
-    if (esiAlliance.executor_corporation_id && esiAlliance.executor_corporation_id !== 1) {
-      this.loggerService.debug(
-        'Alliance get executor corporation', esiAlliance.executor_corporation_id);
-      // Load corporation
-      alliance.executorCorporation =
-        await this.corporationService.get(esiAlliance.executor_corporation_id);
-      this.loggerService.debug(
-        'Alliance done get executor corporation', esiAlliance.executor_corporation_id);
-
-      // Update corporation id
-      await this.allianceRepository.update(alliance.id, {
-        executorCorporation: { id: alliance.executorCorporation.id },
-      });
-    }
-
-    return alliance;
+    return this.allianceRepository.save(alliance);
   }
 }

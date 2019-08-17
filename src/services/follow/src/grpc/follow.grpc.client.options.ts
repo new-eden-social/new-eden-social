@@ -1,9 +1,9 @@
 import { GrpcOptions } from '@nestjs/common/interfaces/microservices/microservice-configuration.interface';
 import { join } from 'path';
 
-export const AllianceGrpcClientOptions: GrpcOptions = {
+export const FollowGRPCClientOptions: GrpcOptions = {
   options: {
-    package: 'alliance',
-    protoPath: join(__dirname, 'alliance.proto'),
+    package: 'follow',
+    protoPath: join(__dirname, 'follow.proto'),
   }
 };
