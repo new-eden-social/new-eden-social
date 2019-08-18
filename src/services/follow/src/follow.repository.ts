@@ -1,6 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Follow } from './follow.entity';
-import { IAllianceEntity } from '@new-eden-social/api-alliance';
 
 @EntityRepository(Follow)
 export class FollowRepository extends Repository<Follow> {

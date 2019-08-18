@@ -1,5 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
-import { CorporationHttpController } from './http/corporation.controller';
+import { Module } from '@nestjs/common';
 import { CorporationService } from './corporation.service';
 import { ZKillboardModule } from '@new-eden-social/zkillboard';
 import { ESIModule } from '@new-eden-social/esi';
@@ -33,7 +32,6 @@ import { CorporationGrpcController } from './grpc/corporation.grpc.controller';
     ESIModule,
   ],
   controllers: [
-    CorporationHttpController,
     CorporationGrpcController
   ],
   providers: [

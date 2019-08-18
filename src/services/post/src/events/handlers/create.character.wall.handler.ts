@@ -4,11 +4,7 @@ import {
   CharacterPostedOnCharacterWallEvent, CharacterPostedOnCorporationWallEvent,
   CharacterPostedOnWallEvent,
 } from '../create.character.event';
-import { NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
-import { Character } from '../../@new-eden-social/api-character';
-import { Notification } from '@new-eden-social/api-notification';
 import * as uuidv4 from 'uuid/v4';
-import { CreateNotificationCommand } from '../../../notification/commands/create.command';
 
 @EventsHandler(
   CharacterPostedOnCharacterWallEvent,

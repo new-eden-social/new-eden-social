@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { AggregateRoot } from '@nestjs/cqrs';
 import { UnFollowEvent } from './events/unfollow.event';
 import { FollowCharacterEvent, FollowCorporationEvent, FollowAllianceEvent } from './events/follow.event';
