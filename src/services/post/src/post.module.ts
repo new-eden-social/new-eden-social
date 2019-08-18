@@ -1,6 +1,6 @@
 import { Module, OnModuleInit, forwardRef } from '@nestjs/common';
 import { PostService } from './post.service';
-import { UniverseLocationModule } from '../../universe/src/location/location.module';
+import { UniverseLocationModule } from '../../universe/src/modules/location/location.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostRepository } from './post.repository';
 import { CommandBus, EventBus, CqrsModule } from '@nestjs/cqrs';

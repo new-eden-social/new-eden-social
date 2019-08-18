@@ -45,14 +45,23 @@ export class CorporationService {
   }
 
   /**
-   * Update corporation by id
+   * refresh corporation by id, fetch from esi and store to db
    * @param {Corporation} corporation
-   * @return {Promise<Corporation>}
+   * @return {Promise<Character>}
    */
-  public async update(corporation: Corporation): Promise<Corporation> {
+  public async refresh(corporation: Corporation): Promise<Corporation> {
     const esiCorporation = await this.esiService.getCorporation(corporation.id);
     corporation.populateESI(esiCorporation);
     return this.corporationRepository.save(corporation);
+  }
+
+  /**
+   * Get corporations that haven't been updated in the interval
+   * @param interval String
+   * @param limit Number
+   */
+  public async getNotUpdated(interval: string, limit: number) {
+    return this.corporationRepository.getNotUpdated(interval, limit);
   }
 
   /**

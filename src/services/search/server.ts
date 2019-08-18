@@ -22,7 +22,6 @@ async function bootstrap() {
   });
   // tslint:disable-next-line: no-console
   nestApp.listen(() => console.log('Microservice is listening'));
-
 }
 
 bootstrap();

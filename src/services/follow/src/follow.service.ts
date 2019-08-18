@@ -1,12 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Character } from '@new-eden-social/api-character';
 import { Follow } from './follow.entity';
 import { CommandBus } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FollowRepository } from './follow.repository';
 import { FollowCommand } from './commands/follow.command';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { IAllianceEntity } from '@new-eden-social/api-alliance';
 import { UnFollowCommand } from './commands/unfollow.command';
 
 @Injectable()
@@ -26,12 +23,12 @@ export class FollowService {
   }
 
   followCharacter(
-        follower: Character,
-        following: Character,
+        followerId: number,
+        followingId: number,
     ): Promise<Follow> {
     const follow = new Follow();
-    follow.follower = follower;
-    follow.followingCharacter = following;
+    follow.followerId = followerId;
+    follow.followingCharacterId = followingId;
 
     return this.commandBus.execute(
             new FollowCommand(follow),
@@ -39,12 +36,12 @@ export class FollowService {
   }
 
   followCorporation(
-        follower: Character,
-        following: Corporation,
+        followerId: number,
+        followingId: number,
     ): Promise<Follow> {
     const follow = new Follow();
-    follow.follower = follower;
-    follow.followingCorporation = following;
+    follow.followerId = followerId;
+    follow.followingCorporationId = followingId;
 
     return this.commandBus.execute(
             new FollowCommand(follow),
@@ -52,12 +49,12 @@ export class FollowService {
   }
 
   followAlliance(
-        follower: Character,
-        following: IAllianceEntity,
+        followerId: number,
+        followingId: number,
     ): Promise<Follow> {
     const follow = new Follow();
-    follow.follower = follower;
-    follow.followingAlliance = following;
+    follow.followerId = followerId;
+    follow.followingAllianceId = followingId;
 
     return this.commandBus.execute(
             new FollowCommand(follow),
@@ -65,39 +62,39 @@ export class FollowService {
   }
 
   checkIfFolowingCharacter(
-        follower: Character,
-        following: Character,
+        followerId: number,
+        followingId: number,
     ): Promise<Follow> {
-    return this.followRepository.getFollowingCharacter(follower, following);
+    return this.followRepository.getFollowingCharacter(followerId, followingId);
   }
 
   checkIfFolowingCorporation(
-        follower: Character,
-        following: Corporation,
+        followerId: number,
+        followingId: number,
     ): Promise<Follow> {
-    return this.followRepository.getFollowingCorporation(follower, following);
+    return this.followRepository.getFollowingCorporation(followerId, followingId);
   }
 
   checkIfFolowingAlliance(
-        follower: Character,
-        following: IAllianceEntity,
+        followerId: number,
+        followingId: number,
     ): Promise<Follow> {
-    return this.followRepository.getFollowingAlliance(follower, following);
+    return this.followRepository.getFollowingAlliance(followerId, followingId);
   }
 
-  getCharacterFollowers(character: Character): Promise<Follow[]> {
+  getCharacterFollowers(character: number): Promise<Follow[]> {
     return this.followRepository.getCharacterFollowers(character);
   }
 
-  getCorporationFollowers(corporation: Corporation): Promise<Follow[]> {
+  getCorporationFollowers(corporation: number): Promise<Follow[]> {
     return this.followRepository.getCorporationFollowers(corporation);
   }
 
-  getAllianceFollowers(alliance: IAllianceEntity): Promise<Follow[]> {
+  getAllianceFollowers(alliance: number): Promise<Follow[]> {
     return this.followRepository.getAllianceFollowers(alliance);
   }
 
-  getCharacterFollowing(character: Character): Promise<Follow[]> {
+  getCharacterFollowing(character: number): Promise<Follow[]> {
     return this.followRepository.getCharacterFollowing(character);
   }
 

@@ -18,7 +18,8 @@
     "compile:server": "tsc -p tsconfig.server.json",
     "serve:ssr": "node dist/server",
     "build:ssr": "npm run build:client-and-server-bundles && npm run compile:server",
-    "build:client-and-server-bundles": "ng build --prod && ng run new-eden-social-web:server:production"
+    "build:client-and-server-bundles": "ng build --prod && ng run new-eden-social-web:server:production",
+    "build:docker": "docker build . -t newedensocial/web"
   },
   "dependencies": {
     "@angular/animations": "8.0.3",

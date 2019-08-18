@@ -24,14 +24,32 @@ export class AllianceGrpcController implements IAllianceGrpcService {
   @GrpcMethod('AllianceService')
   get(id: number): Observable<IAllianceEntity> {
     return from(this.allianceService.get(id)).pipe<IAllianceEntity>(
-      map<Alliance, IAllianceEntity>(alliance => ({
-        id: alliance.id,
-        handle: alliance.handle,
-        name: alliance.name,
-        ticker: alliance.ticker,
-        dateFounded: alliance.dateFounded.toString(),
-        executorCorporationId: alliance.executorCorporationId,
-      }))
+      map<Alliance, IAllianceEntity>(this.allianceTransform)
     );
+  }
+
+  @GrpcMethod('AllianceService')
+  getNotUpdated(interval: string, limit: number): Observable<IAllianceEntity[]> {
+    return from(this.allianceService.getNotUpdated(interval, limit)).pipe<IAllianceEntity[]>(
+      map<Alliance[], IAllianceEntity[]>(alliances => alliances.map(this.allianceTransform))
+    );
+  }
+
+  @GrpcMethod('AllianceService')
+  refresh(id: number): Observable<IAllianceEntity> {
+    return from(this.allianceService.get(id)).pipe<IAllianceEntity>(
+      map<Alliance, IAllianceEntity>(this.allianceTransform)
+    );
+  }
+
+  private allianceTransform(alliance: Alliance): IAllianceEntity {
+    return {
+      id: alliance.id,
+      handle: alliance.handle,
+      name: alliance.name,
+      ticker: alliance.ticker,
+      dateFounded: alliance.dateFounded.toISOString(),
+      executorCorporationId: alliance.executorCorporationId,
+    };
   }
 }

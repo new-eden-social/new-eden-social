@@ -11,4 +11,12 @@ export class CorporationRepository extends Repository<Corporation> {
     .getMany();
   }
 
+  public async getNotUpdated(interval: string, limit: number): Promise<Corporation[]> {
+    return this.createQueryBuilder('corporation')
+    .select('id')
+    .where('"updatedAt" < (NOW() - interval :interval)', { interval })
+    .limit(limit)
+    .getMany();
+  }
+
 }

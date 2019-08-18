@@ -1,7 +1,5 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { KillmailParticipant } from './participant.entity';
-import { CharacterService } from '../@new-eden-social/api-character';
-import { UniverseTypeService } from '../../universe/type/type.service';
 import { KillmailParticipantRepository } from './participant.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import {
@@ -14,8 +12,6 @@ import {
 export class KillmailParticipantService {
 
   constructor(
-    private readonly charactersService: CharacterService,
-    private readonly universeTypeService: UniverseTypeService,
     @InjectRepository(KillmailParticipantRepository)
     private readonly killmailParticipantRepository: KillmailParticipantRepository,
   ) {
@@ -35,16 +31,15 @@ export class KillmailParticipantService {
 
     if (type === 'attacker') {
       participant.damageDone = (data as IKillmailAttacker).damageDone;
-      participant.weapon = await this.universeTypeService.get(
-        (data as IKillmailAttacker).weaponId);
+      participant.weaponId = (data as IKillmailAttacker).weaponId;
       participant.finalBlow = (data as IKillmailAttacker).finalBlow;
     } else if (type === 'victim') {
       participant.damageTaken = (data as IKillmailVictim).damageTaken;
     }
 
     participant.type = type;
-    participant.character = await this.charactersService.get(data.id);
-    participant.ship = await this.universeTypeService.get(data.shipId);
+    participant.characterId = data.id;
+    participant.shipId = data.shipId;
 
     return this.killmailParticipantRepository.save(participant);
   }

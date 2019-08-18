@@ -17,6 +17,8 @@
     "lint": "lerna exec --no-bail -- tslint -p tsconfig.json",
     "test": "lerna run --no-bail test",
     "build": "lerna run --no-bail build",
+    "build:docker": "yarn run build:docker:base && lerna run build:docker",
+    "build:docker:base": "docker build . -t newedensocial/base",
     "bootstrap": "lerna bootstrap",
     "bootstrap:prod": "lerna bootstrap -- --frozen-lockfile"
   },

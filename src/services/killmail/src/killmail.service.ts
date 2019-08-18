@@ -12,7 +12,6 @@ export class KillmailService {
   constructor(
     private readonly killmailParticipantService: KillmailParticipantService,
     private readonly zkillboardService: ZKillboardService,
-    // private postService: PostService,
     private readonly loggerService: LoggerService,
     @InjectRepository(KillmailRepository)
     private readonly killmailRepository: KillmailRepository,
@@ -36,7 +35,7 @@ export class KillmailService {
 
     const finalBlow = killmail.participants.find(participant => participant.finalBlow);
 
-    if (!finalBlow.character) {
+    if (!finalBlow.characterId) {
       this.loggerService.debug('skipping killmail - finalBlow has no character');
       return;
     }

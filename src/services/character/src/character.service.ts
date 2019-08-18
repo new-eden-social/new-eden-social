@@ -28,15 +28,23 @@ export class CharacterService {
   }
 
   /**
-   * Update character by id
+   * refresh character by id, fetch from esi and store to db
    * @param {Character} character
    * @return {Promise<Character>}
    */
-  public async update(character: Character): Promise<Character> {
+  public async refresh(character: Character): Promise<Character> {
     const esiCharacter = await this.esiService.getCharacter(character.id);
     character.populateESI(esiCharacter);
-
     return this.characterRepository.save(character);
+  }
+
+  /**
+   * Get characters that haven't been updated in the interval
+   * @param interval String
+   * @param limit Number
+   */
+  public async getNotUpdated(interval: string, limit: number) {
+    return this.characterRepository.getNotUpdated(interval, limit);
   }
 
   /**

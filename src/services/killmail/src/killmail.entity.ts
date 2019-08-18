@@ -1,6 +1,5 @@
-import { Column, Entity, JoinTable, OneToMany, PrimaryColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryColumn } from 'typeorm';
 import { KillmailParticipant } from './participant/participant.entity';
-import { Post } from '@new-eden-social/api-post';
 
 @Entity()
 export class Killmail {
@@ -23,10 +22,6 @@ export class Killmail {
   @Column('timestamp')
   createdAt: Date;
 
-  @JoinTable()
   @OneToMany(type => KillmailParticipant, participant => participant.killmail, { eager: true })
   participants: KillmailParticipant[];
-
-  @OneToMany(type => Post, post => post.killmail)
-  posts: Post[];
 }

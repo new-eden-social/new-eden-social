@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 export interface ICorporationGrpcService {
   exists(id: number): Observable<{ exists: boolean }>;
   get(id: number): Observable<ICorporationEntity>;
+  getNotUpdated(interval: string, limit: number): Observable<ICorporationEntity[]>;
+  refresh(id: number): Observable<ICorporationEntity>;
 }
 
 export interface ICorporationEntity {

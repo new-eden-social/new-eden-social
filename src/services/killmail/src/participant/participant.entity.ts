@@ -1,7 +1,5 @@
 import { Column, Entity, JoinTable, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Character } from '../@new-eden-social/api-character';
 import { Killmail } from '../killmail.entity';
-import { UniverseType } from '../../universe/type/type.entity';
 
 @Entity()
 export class KillmailParticipant {
@@ -13,15 +11,14 @@ export class KillmailParticipant {
   @ManyToOne(type => Killmail, killmail => killmail.participants)
   killmail: Killmail;
 
-  @JoinTable()
-  @ManyToOne(type => Character, character => character.killmails, { eager: true })
-  character: Character;
+  @Column()
+  characterId: number;
 
   @Column()
   type: 'attacker' | 'victim';
 
-  @ManyToOne(type => UniverseType, { nullable: true, eager: true })
-  ship?: UniverseType; // Sometimes, for some reason. shipId can be null
+  @Column({ nullable: true })
+  shipId?: number; // Sometimes, for some reason. shipId can be null
 
   // Attacker
   @Column('real', { nullable: true })
@@ -30,8 +27,8 @@ export class KillmailParticipant {
   @Column({ nullable: true })
   finalBlow?: boolean;
 
-  @ManyToOne(type => UniverseType, { nullable: true, eager: true })
-  weapon?: UniverseType;
+  @Column({ nullable: true })
+  weaponId?: number;
 
   // Victim
   @Column('real', { nullable: true })

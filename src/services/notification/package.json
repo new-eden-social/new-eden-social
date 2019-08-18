@@ -10,6 +10,7 @@
     "test": "exit 0",
     "build:lib": "tsc --build tsconfig.lib.json",
     "build:dist": "tsc --build tsconfig.json",
+    "build:docker": "docker build . -t newedensocial/api-notification",
     "build": "npm run build:lib && npm run build:dist"
   },
   "dependencies": {

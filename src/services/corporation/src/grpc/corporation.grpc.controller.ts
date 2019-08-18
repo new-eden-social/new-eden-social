@@ -24,11 +24,29 @@ export class CorporationGrpcController implements ICorporationGrpcService {
   @GrpcMethod('CorporationService')
   get(id: number): Observable<ICorporationEntity> {
     return from(this.corporationService.get(id)).pipe<ICorporationEntity>(
-      map<Corporation, ICorporationEntity>(corporation => ({
-        id: corporation.id,
-        handle: corporation.handle,
-        name: corporation.name,
-      }))
+      map<Corporation, ICorporationEntity>(this.corporationTransform)
     );
+  }
+
+  @GrpcMethod('CorporationService')
+  getNotUpdated(interval: string, limit: number): Observable<ICorporationEntity[]> {
+    return from(this.corporationService.getNotUpdated(interval, limit)).pipe<ICorporationEntity[]>(
+      map<Corporation[], ICorporationEntity[]>(characters => characters.map(this.corporationTransform))
+    );
+  }
+
+  @GrpcMethod('CorporationService')
+  refresh(id: number): Observable<ICorporationEntity> {
+    return from(this.corporationService.get(id)).pipe<ICorporationEntity>(
+      map<Corporation, ICorporationEntity>(this.corporationTransform)
+    );
+  }
+
+  private corporationTransform(corporation: Corporation): ICorporationEntity {
+    return {
+      id: corporation.id,
+      handle: corporation.handle,
+      name: corporation.name,
+    };
   }
 }

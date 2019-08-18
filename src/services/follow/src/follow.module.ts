@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { CqrsModule } from '@nestjs/cqrs';
 import { CommandHandlers } from './commands/handlers';
 import { EventHandlers } from './events/handlers';
-import { FollowHttpController } from './http/follow.http.controller';
 import { FollowService } from './follow.service';
 import { FollowRepository } from './follow.repository';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
@@ -13,6 +12,7 @@ import { FollowGrpcController } from './grpc/follow.grpc.controller';
 import { AllianceGrpcModule } from '@new-eden-social/api-alliance';
 import { Follow } from './follow.entity';
 import { CorporationGrpcModule } from '@new-eden-social/api-corporation';
+import { CharacterGrpcModule } from '@new-eden-social/api-character';
 
 @Module({
   imports: [
@@ -36,9 +36,9 @@ import { CorporationGrpcModule } from '@new-eden-social/api-corporation';
 
     AllianceGrpcModule,
     CorporationGrpcModule,
+    CharacterGrpcModule,
   ],
   controllers: [
-    FollowHttpController,
     FollowGrpcController,
   ],
   providers: [

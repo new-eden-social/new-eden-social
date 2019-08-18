@@ -22,3 +22,12 @@ message GetResponse {
     string handle = 2;
     string name = 3;
 }
+
+message GetNotUpdatedRequest {
+    string interval = 1; // interval is PostgreSQL interval value
+    int32 limit = 2;
+}
+
+message GetNotUpdatedResponse {
+    repeated GetResponse corporations = 1;
+}

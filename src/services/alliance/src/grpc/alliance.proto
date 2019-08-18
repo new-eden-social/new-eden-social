@@ -25,3 +25,12 @@ message GetResponse {
     string dateFounded = 5;
     string executorCorporationId = 6;
 }
+
+message GetNotUpdatedRequest {
+    string interval = 1; // interval is PostgreSQL interval value
+    int32 limit = 2;
+}
+
+message GetNotUpdatedResponse {
+    repeated GetResponse alliances = 1;
+}

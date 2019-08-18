@@ -1,13 +1,15 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { KillmailService } from './killmail.service';
 import { KillmailParticipantModule } from './participant/participant.module';
-import { PostModule } from '../post/post.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { KillmailRepository } from './killmail.repository';
 import { ZKillboardModule } from '@new-eden-social/zkillboard';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
+import { Killmail } from './killmail.entity';
+import { KillmailParticipant } from './participant/participant.entity';
+import { KillmailGrpcController } from './grpc/killmail.grpc.controller';
 
 @Module({
   imports: [
@@ -22,21 +24,20 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       logging: process.env.DB_LOG as LoggerOptions,
-      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
+      entities: [Killmail, KillmailParticipant],
       synchronize: process.env.DB_SYNC === 'true',
     }),
     TypeOrmModule.forFeature([KillmailRepository]),
 
-    forwardRef(() => PostModule),
     KillmailParticipantModule,
     ZKillboardModule,
   ],
   providers: [
     KillmailService,
   ],
-  exports: [
-    KillmailService,
-  ],
+  controllers: [
+    KillmailGrpcController,
+  ]
 })
 export class KillmailModule {
 }

@@ -11,4 +11,11 @@ export class AllianceRepository extends Repository<Alliance> {
     .getMany();
   }
 
+  public async getNotUpdated(interval: string, limit: number): Promise<Alliance[]> {
+    return this.createQueryBuilder('alliance')
+    .select('id')
+    .where('"updatedAt" < (NOW() - interval :interval)', { interval })
+    .limit(limit)
+    .getMany();
+  }
 }

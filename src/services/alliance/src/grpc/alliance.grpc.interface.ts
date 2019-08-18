@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 export interface IAllianceGrpcService {
   exists(id: number): Observable<{ exists: boolean }>;
   get(id: number): Observable<IAllianceEntity>;
+  getNotUpdated(interval: string, limit: number): Observable<IAllianceEntity[]>;
+  refresh(id: number): Observable<IAllianceEntity>;
 }
 
 export interface IAllianceEntity {

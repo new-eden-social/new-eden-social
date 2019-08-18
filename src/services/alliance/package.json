@@ -14,6 +14,7 @@
     "test": "exit 0",
     "build:lib": "tsc --build tsconfig.lib.json",
     "build:dist": "tsc --build tsconfig.json",
+    "build:docker": "docker build . -t newedensocial/api-alliance",
     "build": "npm run build:lib && npm run build:dist"
   },
   "dependencies": {
@@ -27,6 +28,7 @@
     "@nestjs/testing": "6.4.0",
     "@nestjs/typeorm": "6.1.2",
     "@new-eden-social/esi": "^0.1.1",
+    "@new-eden-social/zkillboard": "^0.1.1",
     "@new-eden-social/logger": "^0.1.1",
     "@new-eden-social/pagination": "^0.1.1",
     "@new-eden-social/request-context": "^0.1.1",

@@ -15,7 +15,8 @@
   },
   "scripts": {
     "prebuild": "rm -rf lib",
-    "build": "tsc"
+    "build": "tsc",
+    "build:docker": "exit 0"
   },
   "dependencies": {
     "@new-eden-social/logger": "^0.1.1",

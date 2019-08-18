@@ -60,16 +60,23 @@ export class AllianceService {
   }
 
   /**
-   * Update corporation by id
+   * refresh alliance by id, fetch from esi and store to db
    * @param {Alliance} alliance
-   * @return {Promise<Corporation>}
+   * @return {Promise<Alliance>}
    */
-  public async update(alliance: Alliance): Promise<Alliance> {
+  public async refresh(alliance: Alliance): Promise<Alliance> {
     const esiAlliance = await this.esiService.getAlliance(alliance.id);
-
     alliance.populateESI(esiAlliance);
-
     return this.allianceRepository.save(alliance);
+  }
+
+  /**
+   * Get alliances that haven't been updated in the interval
+   * @param interval String
+   * @param limit Number
+   */
+  public async getNotUpdated(interval: string, limit: number) {
+    return this.allianceRepository.getNotUpdated(interval, limit);
   }
 
   /**

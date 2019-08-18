@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 export interface ICharacterGrpcService {
   exists(id: number): Observable<{ exists: boolean }>;
   get(id: number): Observable<ICharacterEntity>;
+  getNotUpdated(interval: string, limit: number): Observable<ICharacterEntity[]>;
+  refresh(id: number): Observable<ICharacterEntity>;
 }
 
 export interface ICharacterEntity {

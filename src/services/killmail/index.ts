@@ -1,4 +1,4 @@
-export * from './src/killmail.entity';
-export * from './src/killmail.constants';
-
-export * from './src/participant/participant.entity';
+export * from './src/grpc/killmail.grpc.interface';
+export * from './src/grpc/killmail.grpc.client.options';
+export * from './src/grpc/killmail.grpc.client';
+export * from './src/grpc/killmail.grpc.module';

@@ -1,84 +1,82 @@
 import { EntityRepository, Repository } from 'typeorm';
 import { Follow } from './follow.entity';
-import { Character } from '@new-eden-social/api-character';
-import { Corporation } from '@new-eden-social/api-corporation';
 import { IAllianceEntity } from '@new-eden-social/api-alliance';
 
 @EntityRepository(Follow)
 export class FollowRepository extends Repository<Follow> {
 
   getFollowingCharacter(
-        follower: Character,
-        followingCharacter: Character,
+        followerId: number,
+        followingCharacterId: number,
     ): Promise<Follow> {
     return this.findOne({
       where: {
-        follower,
-        followingCharacter,
+        followerId,
+        followingCharacterId,
       },
     });
   }
 
   getFollowingCorporation(
-        follower: Character,
-        followingCorporation: Corporation,
+        followerId: number,
+        followingCorporationId: number,
     ): Promise<Follow> {
     return this.findOne({
       where: {
-        follower,
-        followingCorporation,
+        followerId,
+        followingCorporationId,
       },
     });
   }
 
   getFollowingAlliance(
-        follower: Character,
-        followingAlliance: IAllianceEntity,
+        followerId: number,
+        followingAllianceId: number,
     ): Promise<Follow> {
     return this.findOne({
       where: {
-        follower,
-        followingAlliance,
+        followerId,
+        followingAllianceId,
       },
     });
   }
 
   getCharacterFollowers(
-        character: Character,
+        characterId: number,
     ): Promise<Follow[]> {
     return this.find({
       where: {
-        followingCharacter: character,
+        followingCharacterId: characterId,
       },
     });
   }
 
   getCorporationFollowers(
-        corporation: Corporation,
+        corporationId: number,
     ): Promise<Follow[]> {
     return this.find({
       where: {
-        followingCorporation: corporation,
+        followingCorporationId: corporationId,
       },
     });
   }
 
   getAllianceFollowers(
-        alliance: IAllianceEntity,
+        allianceId: number,
     ): Promise<Follow[]> {
     return this.find({
       where: {
-        followingAlliance: alliance,
+        followingAllianceId: allianceId,
       },
     });
   }
 
   getCharacterFollowing(
-        character: Character,
+        characterId: number,
     ): Promise<Follow[]> {
     return this.find({
       where: {
-        follower: character,
+        followerId: characterId,
       },
     });
   }

@@ -1,8 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, ManyToOne, Column } from 'typeorm';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { Character } from '@new-eden-social/api-character';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { Alliance } from '@new-eden-social/api-alliance';
 import { UnFollowEvent } from './events/unfollow.event';
 import { FollowCharacterEvent, FollowCorporationEvent, FollowAllianceEvent } from './events/follow.event';
 
@@ -10,30 +7,30 @@ import { FollowCharacterEvent, FollowCorporationEvent, FollowAllianceEvent } fro
 export class Follow extends AggregateRoot {
 
   @PrimaryGeneratedColumn('uuid')
-    id: string;
+  id: string;
 
-  @ManyToOne(type => Character, character => character.following, { eager: true })
-    follower: Character;
+  @Column()
+  followerId: number;
 
-  @ManyToOne(type => Character, character => character.followers, { eager: true })
-    followingCharacter: Character;
+  @Column()
+  followingCharacterId: number;
 
-  @ManyToOne(type => Corporation, corporation => corporation.followers, { eager: true })
-    followingCorporation: Corporation;
+  @Column()
+  followingCorporationId: number;
 
-  @ManyToOne(type => Alliance, alliance => alliance.followers, { eager: true })
-    followingAlliance: Alliance; // FIXME: Can use relations anymore, this has to be manyToOne but to generic ids?? Should be jus list of ids?
+  @Column()
+  followingAllianceId: number;
 
   async unFollow(): Promise<void> {
     await this.apply(new UnFollowEvent(this));
   }
 
   async follow(): Promise<void> {
-    if (this.followingCharacter) {
+    if (this.followingCharacterId) {
       await this.apply(new FollowCharacterEvent(this));
-    } else if (this.followingCorporation) {
+    } else if (this.followingCorporationId) {
       await this.apply(new FollowCorporationEvent(this));
-    } else if (this.followingAlliance) {
+    } else if (this.followingAllianceId) {
       await this.apply(new FollowAllianceEvent(this));
     }
   }
