@@ -1,12 +1,17 @@
 import { Module } from '@nestjs/common';
-import { UniverseLocationModule } from './location/location.module';
-import { UniverseGroupModule } from './group/group.module';
-import { UniverseCategoryModule } from './category/category.module';
-import { UniverseTypeModule } from './type/type.module';
+import { UniverseLocationModule } from './modules/location/location.module';
+import { UniverseGroupModule } from './modules/group/group.module';
+import { UniverseCategoryModule } from './modules/category/category.module';
+import { UniverseTypeModule } from './modules/type/type.module';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
+import { UniverseCategory } from './modules/category/category.entity';
+import { UniverseGroup } from './modules/group/group.entity';
+import { UniverseLocation } from './modules/location/location.entity';
+import { UniverseType } from './modules/type/type.entity';
+import { UniverseGrpcController } from './grpc/universe.grpc.controller';
 
 @Module({
   imports: [
@@ -21,7 +26,12 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       logging: process.env.DB_LOG as LoggerOptions,
-      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
+      entities: [
+        UniverseCategory,
+        UniverseGroup,
+        UniverseLocation,
+        UniverseType
+      ],
       synchronize: process.env.DB_SYNC === 'true',
     }),
     UniverseCategoryModule,
@@ -29,16 +39,9 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
     UniverseLocationModule,
     UniverseTypeModule
   ],
-  exports: [
-    UniverseCategoryModule,
-    UniverseGroupModule,
-    UniverseLocationModule,
-    UniverseTypeModule
-  ],
   controllers: [
-  ],
-  providers: [
-  ],
+    UniverseGrpcController,
+  ]
 })
 export class UniverseModule {
 }

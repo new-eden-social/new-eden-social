@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service HashTagService {
+    rpc parse(ParseRequest) returns (ParseResponse);
+}
+
+message ParseRequest {
+    string text = 1;
+}
+
+message ParseResponse {
+    repeated string hashtags = 1;
+}

@@ -1,5 +1,5 @@
 import { HttpException, HttpStatus } from '@nestjs/common';
-import { createExceptionBody } from '../../exceptions/exceptionBody.util';
+import { createExceptionBody } from '@new-eden-social/utils';
 
 export const ERROR_CODE = 'NOTIFICATION_ALREADY_SEEN';
 export const ERROR_MESSAGE = 'Notification was already seen!';

@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { Character } from '@new-eden-social/api-character';
 import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
@@ -18,12 +17,12 @@ export class NotificationService {
   }
 
   public async getLatest(
-    character: Character,
+    characterId: number,
     limit: number = 20,
     page: number = 0,
   ): Promise<{ notifications: Notification[], count: number }> {
     const [notifications, count] = await this.notificationRepository.getLatestForCharacter(
-      character,
+      characterId,
       limit,
       page);
 
@@ -44,9 +43,9 @@ export class NotificationService {
 
   public async get(
     notificationId: string,
-    character: Character,
+    characterId: number,
   ): Promise<Notification> {
-    return this.notificationRepository.findOneForCharacter(notificationId, character);
+    return this.notificationRepository.findOneForCharacter(notificationId, characterId);
   }
 
 }

@@ -1,18 +1,20 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidatorPipe } from '@new-eden-social/validation';
-// Used for TypeORM
-import 'reflect-metadata';
-// Request context
-import 'zone.js';
-import 'zone.js/dist/zone-node.js';
-import 'zone.js/dist/long-stack-trace-zone.js';
+import { UpdaterService } from './src/updater.service';
 import { UpdaterModule } from './src/updater.module';
+import { LoggerService } from '@new-eden-social/logger';
 
 async function bootstrap() {
-  const nestApp = await NestFactory.create(UpdaterModule);
-  nestApp.enableCors();
-  nestApp.useGlobalPipes(new ValidatorPipe());
-  await nestApp.listen(parseInt(process.env.PORT, 10));
+  const app = await NestFactory.create(UpdaterModule);
+  const updaterService = app.get(UpdaterService);
+  const loggerService = app.get(LoggerService);
+
+  loggerService.info('Started updating...');
+
+  await updaterService.updateCharacters();
+  await updaterService.updateCorporations();
+  await updaterService.updateAlliances();
+
+  loggerService.info('Finished updating');
 }
 
 bootstrap();

@@ -1,18 +1,18 @@
 import { Module } from '@nestjs/common';
 import { SearchService } from './search.service';
-import { SearchController } from './search.controller';
 import { ESIModule } from '@new-eden-social/esi';
+import { SearchrGrpcController } from './grpc/search.grpc.controller';
 
 @Module({
   imports: [
     ESIModule,
   ],
-  controllers: [
-    SearchController,
-  ],
   providers: [
     SearchService,
   ],
+  controllers: [
+    SearchrGrpcController,
+  ]
 })
 export class SearchModule {
 }

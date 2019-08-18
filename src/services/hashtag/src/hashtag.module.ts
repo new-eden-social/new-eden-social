@@ -6,6 +6,8 @@ import { HashtagRepository } from './hashtag.repository';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
+import { HashtagGrpcController } from './grpc/hashtag.grpc.controller';
+import { Hashtag } from './hashtag.entity';
 
 @Module({
   imports: [
@@ -20,7 +22,7 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       logging: process.env.DB_LOG as LoggerOptions,
-      entities: [`${__dirname}/../**/*.entity{.ts,.js}`],
+      entities: [Hashtag],
       synchronize: process.env.DB_SYNC === 'true',
     }),
     TypeOrmModule.forFeature([HashtagRepository]),
@@ -30,8 +32,8 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
   providers: [
     HashtagService,
   ],
-  exports: [
-    HashtagService,
+  controllers: [
+    HashtagGrpcController,
   ],
 })
 export class HashtagModule {

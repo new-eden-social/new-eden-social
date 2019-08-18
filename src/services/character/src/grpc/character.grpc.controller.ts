@@ -14,14 +14,14 @@ export class CharacterGrpcController implements ICharacterGrpcService {
     ) {
   }
 
-  @GrpcMethod('AllianceService')
+  @GrpcMethod('CharacterService')
   exists(id: number): Observable<{ exists: boolean; }> {
     return from(this.characterService.exists(id)).pipe<{ exists: boolean }>(
       map<boolean, {exists: boolean}>(exists => ({ exists })),
     );
   }
 
-  @GrpcMethod('AllianceService')
+  @GrpcMethod('CharacterService')
   get(id: number): Observable<ICharacterEntity> {
     return from(this.characterService.get(id)).pipe<ICharacterEntity>(
       map<Character, ICharacterEntity>(character => ({

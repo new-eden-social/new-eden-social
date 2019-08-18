@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+service SearchService {
+  rpc Search (SearchRequest) returns (SearchResponse);
+}
+
+message SearchRequest {
+  string query = 1;
+}
+
+message SearchResponse {
+  repeated UniverseName results = 1;
+}
+
+message UniverseName {
+  int32 id = 1;
+  string name = 2;
+  // Should it be enum? But proto buf dose not support
+  // string value enums only int...
+  string category = 3;
+}

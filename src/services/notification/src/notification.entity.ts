@@ -1,11 +1,7 @@
 import { AggregateRoot } from '@nestjs/cqrs';
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Character } from '@new-eden-social/api-character';
-import { Post } from '@new-eden-social/api-post';
 import { Comment } from '@new-eden-social/api-comment';
 import { NOTIFICATION_TYPE } from './notification.constants';
-import { Alliance } from '@new-eden-social/api-alliance';
-import { Corporation } from '@new-eden-social/api-corporation';
 import { CreateNotificationEvent } from './events/create.event';
 import { SeenNotificationEvent } from './events/seen.event';
 
@@ -27,22 +23,22 @@ export class Notification extends AggregateRoot {
   @Column('varchar')
   type: NOTIFICATION_TYPE;
 
-  @ManyToOne(type => Character)
-  recipient: Character;
+  @Column()
+  recipientId: number;
 
-  @ManyToOne(type => Character, null, { nullable: true, eager: true })
-  senderCharacter?: Character;
+  @Column()
+  senderCharacterId?: number;
 
-  @ManyToOne(type => Corporation, null, { nullable: true, eager: true })
-  senderCorporation?: Corporation;
+  @Column()
+  senderCorporationId?: number;
 
-  @ManyToOne(type => Alliance, null, { nullable: true, eager: true })
-  senderAlliance?: Alliance;
+  @Column()
+  senderAllianceId?: number;
 
-  @ManyToOne(type => Post, null, { nullable: true })
-  post?: Post;
+  @Column()
+  postId?: string;
 
-  @ManyToOne(type => Comment, null, { nullable: true })
+  @Column()
   comment?: Comment;
 
   /**
