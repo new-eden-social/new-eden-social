@@ -2,20 +2,9 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  JoinTable,
-  ManyToMany,
-  ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Character } from '@new-eden-social/api-character';
-import { Comment } from '@new-eden-social/api-comment';
-import { Killmail } from '@new-eden-social/killmail';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { Alliance } from '@new-eden-social/api-alliance';
-import { Hashtag } from '@new-eden-social/api-hashtag';
 import { POST_TYPES } from './post.constants';
-import { UniverseLocation } from '../universe/location/location.entity';
 import { AggregateRoot } from '@nestjs/cqrs';
 import {
   CharacterPostedEvent,
@@ -33,7 +22,7 @@ import {
   CorporationPostedOnCharacterWallEvent,
   CorporationPostedOnCorporationWallEvent,
 } from './events/create.corporation.event';
-import { IURLMetadata } from '../metascraper/metascraper.interface';
+import { IURLMetadata } from '@new-eden-social/api-metascraper';
 
 @Entity()
 export class Post extends AggregateRoot {
@@ -47,8 +36,8 @@ export class Post extends AggregateRoot {
   @Column('varchar')
   type: POST_TYPES;
 
-  @ManyToOne(type => Killmail, killmail => killmail.posts, { nullable: true, eager: true })
-  killmail: Killmail;
+  @Column()
+  killmailId: number;
 
   @Column('jsonb', { nullable: true })
   url: IURLMetadata;
@@ -56,67 +45,63 @@ export class Post extends AggregateRoot {
   @CreateDateColumn()
   createdAt: Date;
 
-  @ManyToOne(type => UniverseLocation, location => location.posts, { nullable: true, eager: true })
-  location: UniverseLocation;
+  @Column()
+  locationId: number;
 
-  @ManyToOne(type => Character, character => character.posts, { nullable: true, eager: true })
-  character?: Character;
+  @Column()
+  characterId?: number;
 
-  @ManyToOne(type => Corporation, corporation => corporation.posts, { nullable: true, eager: true })
-  corporation?: Corporation;
+  @Column()
+  corporationId?: number;
 
-  @ManyToOne(type => Alliance, alliance => alliance.posts, { nullable: true, eager: true })
-  alliance?: Alliance;
+  @Column()
+  allianceId?: number;
 
-  @OneToMany(type => Comment, comment => comment.post)
-  comments: Comment[];
+  @Column()
+  characterWallId?: number;
 
-  @ManyToOne(type => Character, character => character.wall, { nullable: true, eager: true })
-  characterWall?: Character;
+  @Column()
+  corporationWallId?: number;
 
-  @ManyToOne(type => Corporation, corporation => corporation.wall, { nullable: true, eager: true })
-  corporationWall?: Corporation;
+  @Column()
+  allianceWallId?: number;
 
-  @ManyToOne(type => Alliance, alliance => alliance.wall, { nullable: true, eager: true })
-  allianceWall?: Alliance;
-
-  @ManyToMany(type => Hashtag, { eager: true })
-  @JoinTable()
-  hashtags: Hashtag[];
+  @Column()
+  hashtags: string[];
 
   /**
    * Sends proper events on post creation
    * @return {Promise<Post>}
    */
   public async create(): Promise<Post> {
-    if (this.character) {
-      if (this.characterWall) {
+    if (this.characterId) {
+      if (this.characterWallId) {
         await this.apply(new CharacterPostedOnCharacterWallEvent(this));
-      } else if (this.corporationWall) {
+      } else if (this.corporationWallId) {
         await this.apply(new CharacterPostedOnCorporationWallEvent(this));
-      } else if (this.allianceWall) {
+      } else if (this.allianceWallId) {
         await this.apply(new CharacterPostedOnAllianceWallEvent(this));
       } else {
         await this.apply(new CharacterPostedEvent(this));
       }
     }
-    if (this.corporation) {
-      if (this.characterWall) {
+    if (this.corporationId) {
+      if (this.characterWallId) {
         await this.apply(new CorporationPostedOnCharacterWallEvent(this));
-      } else if (this.corporationWall) {
+      } else if (this.corporationWallId) {
         await this.apply(new CorporationPostedOnCorporationWallEvent(this));
-      } else if (this.allianceWall) {
+      } else if (this.allianceWallId) {
         await this.apply(new CorporationPostedOnAllianceWallEvent(this));
       } else {
         await this.apply(new CorporationPostedEvent(this));
       }
     }
-    if (this.alliance) {
-      if (this.characterWall) {
+    if (this.allianceId) {
+      if (this.characterWallId) {
         await this.apply(new AlliancePostedOnCharacterWallEvent(this));
-      } else if (this.corporationWall) {
+      } else if (this.corporationWallId) {
         await this.apply(new AlliancePostedOnCorporationWallEvent(this));
-      } else if (this.allianceWall) {
+      } else if (this.allianceWallId) {
         await this.apply(new AlliancePostedOnAllianceWallEvent(this));
       } else {
         await this.apply(new AlliancePostedEvent(this));

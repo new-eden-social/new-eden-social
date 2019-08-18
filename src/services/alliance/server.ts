@@ -1,5 +1,4 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidatorPipe } from '@new-eden-social/validation';
 // Used for TypeORM
 import 'reflect-metadata';
 // Request context
@@ -13,21 +12,16 @@ import { join } from 'path';
 async function bootstrap() {
   const PORT = parseInt(process.env.PORT, 10) || 3000; // Default to 3000
 
-  const nestApp = await NestFactory.create(AllianceModule);
-  nestApp.enableCors();
-  nestApp.useGlobalPipes(new ValidatorPipe());
-
-  const microservice = nestApp.connectMicroservice({
+  const nestApp = await NestFactory.createMicroservice(AllianceModule, {
     transport: Transport.GRPC,
     options: {
-      url: `0.0.0.0:${PORT + 1}`, // Listening on PORT + 1
+      url: `0.0.0.0:${PORT}`,
       package: 'alliance',
-      protoPath: join(__dirname, 'src/alliance.proto'),
+      protoPath: join(__dirname, 'src/grpc/alliance.proto'),
     },
   });
-
-  await nestApp.startAllMicroservicesAsync();
-  await nestApp.listen(PORT);
+  // tslint:disable-next-line: no-console
+  nestApp.listen(() => console.log('Microservice is listening'));
 }
 
 bootstrap();

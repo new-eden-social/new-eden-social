@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CharacterHttpController } from './http/character.http.controller';
 import { CharacterService } from './character.service';
 import { ZKillboardModule } from '@new-eden-social/zkillboard';
 import { ESIModule } from '@new-eden-social/esi';
@@ -33,7 +32,6 @@ import { CharacterGrpcController } from './grpc/character.grpc.controller';
     ESIModule,
   ],
   controllers: [
-    CharacterHttpController,
     CharacterGrpcController,
   ],
   providers: [

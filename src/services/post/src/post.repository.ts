@@ -1,55 +1,61 @@
-import { Repository, SelectQueryBuilder } from 'typeorm';
+import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 import { Post } from './post.entity';
-import { Character } from '@new-eden-social/api-character';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { Alliance } from '@new-eden-social/api-alliance';
 
 @EntityRepository(Post)
 export class PostRepository extends Repository<Post> {
 
   public async getCharacterWall(
-    character: Character,
+    characterId: number,
     limit: number,
     page: number,
   ): Promise<[Post[], number]> {
-    return this.getAll(limit, page)
+    return this.createQueryBuilder('post')
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
     .where(
       `
       post."characterWallId" = :characterId OR
-      (authorCharacter.id = :characterId AND post."characterWallId" IS NULL)
+      (post."characterId" = :characterId AND post."characterWallId" IS NULL)
       `,
-      { characterId: character.id })
+      { characterId })
     .getManyAndCount();
   }
 
   public async getCorporationWall(
-    corporation: Corporation,
+    corporationId: number,
     limit: number,
     page: number,
   ): Promise<[Post[], number]> {
-    return this.getAll(limit, page)
+    return this.createQueryBuilder('post')
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
     .where(
       `
       post."corporationWallId" = :corporationId OR
-      (authorCorporation.id = :corporationId AND post."corporationWallId" IS NULL)
+      (post."corporationId" = :corporationId AND post."corporationWallId" IS NULL)
       `,
-      { corporationId: corporation.id })
+      { corporationId })
     .getManyAndCount();
   }
 
   public async getAllianceWall(
-    alliance: Alliance,
+    allianceId: number,
     limit: number,
     page: number,
   ): Promise<[Post[], number]> {
-    return this.getAll(limit, page)
+    return this.createQueryBuilder('post')
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
     .where(
       `
       post."allianceWallId" = :allianceId OR
-      (authorAlliance.id = :allianceId AND post."allianceWallId" IS NULL)
+      (post."allianceId" = :allianceId AND post."allianceWallId" IS NULL)
       `,
-      { allianceId: alliance.id })
+      { allianceId })
     .getManyAndCount();
   }
 
@@ -58,8 +64,11 @@ export class PostRepository extends Repository<Post> {
     limit: number,
     page: number,
   ): Promise<[Post[], number]> {
-    return this.getAll(limit, page)
-    .where('location."id" = :locationId', { locationId })
+    return this.createQueryBuilder('post')
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
+    .where('post."locationId" = :locationId', { locationId })
     .getManyAndCount();
   }
 
@@ -68,8 +77,11 @@ export class PostRepository extends Repository<Post> {
     limit: number,
     page: number,
   ): Promise<[Post[], number]> {
-    return this.getAll(limit, page)
-    .where('hashtag."name" = :hashtag', { hashtag })
+    return this.createQueryBuilder('post')
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
+    .where(':hashtag = ANY (post."hashtags")', { hashtag })
     .getManyAndCount();
   }
 
@@ -77,99 +89,28 @@ export class PostRepository extends Repository<Post> {
     limit: number,
     page: number,
   ): Promise<[Post[], number]> {
-    return this.getAll(limit, page)
+    return this.createQueryBuilder('post')
+    .orderBy({ 'post."createdAt"': 'DESC' })
+    .offset(limit * page)
+    .limit(limit)
     .getManyAndCount();
   }
 
-  public async getParticipants(
-    post: Post,
-  ): Promise<{ characters: Character[], corporations: Corporation[], alliances: Alliance[] }> {
-    const postWithComments = await this.createQueryBuilder('post')
-    .leftJoinAndSelect('post.character', 'characterAuthor')
-    .leftJoinAndSelect('post.corporation', 'corporationAuthor')
-    .leftJoinAndSelect('post.alliance', 'allianceAuthor')
-    .leftJoinAndSelect('post.comments', 'comment')
-    .leftJoinAndSelect('comment.character', 'character')
-    .leftJoinAndSelect('comment.corporation', 'corporation')
-    .leftJoinAndSelect('comment.alliance', 'alliance')
-    .where('post.id = :postId', { postId: post.id })
-    .getOne();
-
-    const characters = postWithComments.comments
-    .map(comment => comment.character)
-    .filter(character => character);
-    if (postWithComments.character) { characters.push(postWithComments.character); }
-
-    const corporations = postWithComments.comments
-    .map(comment => comment.corporation)
-    .filter(corporation => corporation);
-    if (postWithComments.corporation) { corporations.push(postWithComments.corporation); }
-
-    const alliances = postWithComments.comments
-    .map(comment => comment.alliance)
-    .filter(alliance => alliance);
-    if (postWithComments.alliance) { alliances.push(postWithComments.alliance); }
-
-    return {
-      characters: characters.filter((v, i, a) => a.findIndex(v1 => v1.id === v.id) === i), // unique
-      corporations: corporations.filter((v, i, a) => a.findIndex(v1 => v1.id === v.id) === i), // unique
-      alliances: alliances.filter((v, i, a) => a.findIndex(v1 => v1.id === v.id) === i), // unique
-    };
-  }
-
   public getNumOfPostsByCharacter(
-    character: Character,
+    characterId: number,
   ): Promise<number> {
-    return this.count({ where: { character } });
+    return this.count({ where: { characterId } });
   }
 
   public getNumOfPostsByCorporation(
-    corporation: Corporation,
+    corporationId: number,
   ): Promise<number> {
-    return this.count({ where: { corporation } });
+    return this.count({ where: { corporationId } });
   }
 
   public getNumOfPostsByAlliance(
-    alliance: Alliance,
+    allianceId: number,
   ): Promise<number> {
-    return this.count({ where: { alliance } });
-  }
-
-  /**
-   * Wrapper for querying posts
-   * @param {number} limit
-   * @param {number} page
-   * @returns {SelectQueryBuilder<Post>}
-   */
-  private getAll(limit: number, page: number): SelectQueryBuilder<Post> {
-    return this.createQueryBuilder('post')
-    .leftJoinAndSelect('post.character', 'authorCharacter')
-    .leftJoinAndSelect('authorCharacter.corporation', 'authorCharacterCorporation')
-    .leftJoinAndSelect('authorCharacterCorporation.alliance', 'authorCharacterAlliance')
-    .leftJoinAndSelect('post.corporation', 'authorCorporation')
-    .leftJoinAndSelect('authorCorporation.alliance', 'authorCorporationAlliance')
-    .leftJoinAndSelect('post.alliance', 'authorAlliance')
-    .leftJoinAndSelect('post.characterWall', 'onCharacterWall')
-    .leftJoinAndSelect('onCharacterWall.corporation', 'onCharacterWallCorporation')
-    .leftJoinAndSelect('onCharacterWallCorporation.alliance', 'onCharacterWallAlliance')
-    .leftJoinAndSelect('post.corporationWall', 'onCorporationWall')
-    .leftJoinAndSelect('onCorporationWall.alliance', 'onCorporationWallAlliance')
-    .leftJoinAndSelect('post.allianceWall', 'onAllianceWall')
-    .leftJoinAndSelect('post.killmail', 'killmail')
-    .leftJoinAndSelect('post.hashtags', 'hashtag')
-    .leftJoinAndSelect('post.location', 'location')
-    .leftJoinAndSelect('killmail.participants', 'killmailP')
-    .leftJoinAndSelect('killmailP.character', 'killmailPCharacter')
-    .leftJoinAndSelect('killmailPCharacter.corporation', 'killmailPCorporation')
-    .leftJoinAndSelect('killmailPCorporation.alliance', 'killmailPAlliance')
-    .leftJoinAndSelect('killmailP.ship', 'killmailPShip')
-    .leftJoinAndSelect('killmailPShip.group', 'killmailPShipGroup')
-    .leftJoinAndSelect('killmailPShipGroup.category', 'killmailPShipGroupCategory')
-    .leftJoinAndSelect('killmailP.weapon', 'killmailPWeapon')
-    .leftJoinAndSelect('killmailPWeapon.group', 'killmailPWeaponGroup')
-    .leftJoinAndSelect('killmailPWeaponGroup.category', 'killmailPWeaponGroupCategory')
-    .orderBy({ 'post."createdAt"': 'DESC' })
-    .offset(limit * page)
-    .limit(limit);
+    return this.count({ where: { allianceId } });
   }
 }

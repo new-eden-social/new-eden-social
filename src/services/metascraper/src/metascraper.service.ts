@@ -2,14 +2,11 @@ import { Injectable } from '@nestjs/common';
 import * as metascraper from 'metascraper';
 import Axios, { AxiosInstance, AxiosPromise } from 'axios';
 import { IURLMetadata } from './metascraper.interface';
-import { Killmail } from '@new-eden-social/killmail';
-import { KillmailService } from '@new-eden-social/killmail';
 
 @Injectable()
 export class MetascraperService {
 
   constructor(
-    private readonly killmailService: KillmailService,
   ) {
     this.metascraper = metascraper([
       require('metascraper-author')(),
@@ -37,18 +34,26 @@ export class MetascraperService {
   private readonly metascraper;
   private readonly client: AxiosInstance;
 
-  async processUrl(url: string): Promise<IURLMetadata> {
+  /**
+   * Processes URL using metascraper
+   * Also checks if url is killmail, in that case it adds killmailId
+   * @param url string
+   */
+  public async processUrl(url: string): Promise<IURLMetadata> {
     const response = await this.request(url);
-    return (await this.metascraper({ url, html: response.data })) as IURLMetadata;
+    const metadata = (await this.metascraper({ url, html: response.data })) as IURLMetadata;
+    if (this.isUrlmetaForKillmail(metadata)) {
+      metadata.killmailId = this.getKillmailIdFromUrl(metadata.url);
+    }
+    return metadata;
   }
 
-  isUrlmetaForKillmail(metadata: IURLMetadata): boolean {
+  private isUrlmetaForKillmail(metadata: IURLMetadata): boolean {
     return metadata.publisher === 'zkillboard.com' && metadata.url.includes('/kill/');
   }
 
-  processKillmail(url: string): Promise<Killmail> {
-    const id = +url.match(/kill\/\d+\//)[0].replace('kill', '').replace(/\//g, '');
-    return this.killmailService.getById(id);
+  private getKillmailIdFromUrl(url: string): number {
+    return +url.match(/kill\/\d+\//)[0].replace('kill', '').replace(/\//g, '');
   }
 
   private request(url): AxiosPromise<string> {

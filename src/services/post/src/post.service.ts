@@ -1,38 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
 import { VCreatePost } from './post.validate';
-import { Character } from '@new-eden-social/api-character';
-import { Killmail } from '@new-eden-social/killmail';
 import { POST_TYPES } from './post.constants';
-import { CorporationService } from '@new-eden-social/api-corporation';
-import { CharacterService } from '@new-eden-social/api-character';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { Alliance } from '@new-eden-social/api-alliance';
-import { AllianceService } from '@new-eden-social/api-alliance';
-import { HashtagService } from '@new-eden-social/api-hashtag';
-import { UniverseLocationService } from '../universe/location/location.service';
 import { PostRepository } from './post.repository';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreatePostCommand } from './commands/create.command';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MetascraperService } from '@new-eden-social/api-metascraper';
-import { ESIEntetyNotFoundException } from '@new-eden-social/esi';
 import { LoggerService } from '@new-eden-social/logger';
+import { MetascraperGrpcClient } from '@new-eden-social/api-metascraper';
 
 @Injectable()
 export class PostService {
 
   constructor(
-    private readonly corporationService: CorporationService,
-    private readonly characterService: CharacterService,
-    private readonly allianceService: AllianceService,
-    private readonly hashtagService: HashtagService,
-    private readonly universeLocationService: UniverseLocationService,
     private readonly loggerService: LoggerService,
-    private readonly metascraperService: MetascraperService,
     private readonly commandBus: CommandBus,
     @InjectRepository(PostRepository)
     private readonly postRepository: PostRepository,
+    private readonly metascraperClient: MetascraperGrpcClient,
   ) {
   }
 
@@ -48,17 +33,17 @@ export class PostService {
   /**
    * Create Post as character
    * @param {VCreatePost} postData
-   * @param {Character} character
+   * @param {Number} characterId
    * @return {Promise<Post>}
    */
   public async createAsCharacter(
     postData: VCreatePost,
-    character: Character,
+    characterId: number,
   ): Promise<Post> {
     const post = new Post();
     post.content = postData.content;
     post.type = postData.type;
-    post.character = character;
+    post.characterId = characterId;
 
     return this.create(post, postData);
   }
@@ -66,17 +51,17 @@ export class PostService {
   /**
    * Create Post as corporation
    * @param {VCreatePost} postData
-   * @param {Corporation} corporation
+   * @param {Number} corporationId
    * @return {Promise<Post>}
    */
   public async createAsCorporation(
     postData: VCreatePost,
-    corporation: Corporation,
+    corporationId: number,
   ): Promise<Post> {
     const post = new Post();
     post.content = postData.content;
     post.type = postData.type;
-    post.corporation = corporation;
+    post.corporationId = corporationId;
 
     return this.create(post, postData);
   }
@@ -84,68 +69,68 @@ export class PostService {
   /**
    * Create Post as alliance
    * @param {VCreatePost} postData
-   * @param {Alliance} alliance
+   * @param {Number} allianceId
    * @return {Promise<Post>}
    */
   public async createAsAlliance(
     postData: VCreatePost,
-    alliance: Alliance,
+    allianceId: number,
   ): Promise<Post> {
     const post = new Post();
     post.content = postData.content;
     post.type = postData.type;
-    post.alliance = alliance;
+    post.allianceId = allianceId;
 
     return this.create(post, postData);
   }
 
   /**
    * Get character wall
-   * @param {Character} character
+   * @param {Number} characterId
    * @param {Number} limit
    * @param {Number} page
    * @return {Promise<Post[]>}
    */
   public async getCharacterWall(
-    character: Character,
+    characterId: number,
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    const [posts, count] = await this.postRepository.getCharacterWall(character, limit, page);
+    const [posts, count] = await this.postRepository.getCharacterWall(characterId, limit, page);
 
     return { posts, count };
   }
 
   /**
    * Get corporation wall
-   * @param {Corporation} corporation
+   * @param {Number} corporationId
    * @param {Number} limit
    * @param {Number} page
    * @return {Promise<Post[]>}
    */
   public async getCorporationWall(
-    corporation: Corporation,
+    corporationId: number,
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    const [posts, count] = await this.postRepository.getCorporationWall(corporation, limit, page);
+    const [posts, count] = await this.postRepository.getCorporationWall(corporationId, limit, page);
 
     return { posts, count };
   }
 
   /**
    * Get alliance wall
-   * @param {Alliance} alliance
+   * @param {Number} allianceId
    * @param {Number} limit
    * @param {Number} page
    * @return {Promise<Post[]>}
    */
   public async getAllianceWall(
-    alliance: Alliance,
+    allianceId: number,
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
-    const [posts, count] = await this.postRepository.getAllianceWall(alliance, limit, page);
+    const [posts, count] = await this.postRepository.getAllianceWall(allianceId, limit, page);
 
     return { posts, count };
   }
@@ -202,51 +187,35 @@ export class PostService {
   /**
    * Create killmail post
    * @param {Killmail} killmail
-   * @param {Character} finalBlow
+   * @param {Number} finalBlow
    * @return {Promise<Post>}
    */
-  public async createKillmailPost(killmail: Killmail, finalBlow: Character): Promise<Post> {
+  public async createKillmailPost(killmail: IKillmail, finalBlow: number): Promise<Post> {
     const post = new Post();
     post.type = POST_TYPES.KILLMAIL;
-    post.killmail = killmail;
-    post.character = finalBlow;
+    post.killmailId = killmail;
+    post.characterId = finalBlow;
     post.createdAt = killmail.createdAt;
-
-    if (killmail.locationId) {
-      try {
-        post.location = await this.universeLocationService.get(killmail.locationId);
-      } catch (e) {
-        if (e instanceof ESIEntetyNotFoundException) {
-          this.loggerService.warning('locationId was not found!');
-        } else { throw e; }
-      }
-    }
-
+    post.locationId = killmail.locationId;
     return post.create();
   }
 
-  public async getParticipants(
-    post: Post,
-  ): Promise<{ characters: Character[], corporations: Corporation[], alliances: Alliance[] }> {
-    return this.postRepository.getParticipants(post);
-  }
-
   public async getNumOfPostsByCharacter(
-    character: Character,
+    characterId: number,
   ): Promise<number> {
-    return this.postRepository.getNumOfPostsByCharacter(character);
+    return this.postRepository.getNumOfPostsByCharacter(characterId);
   }
 
   public async getNumOfPostsByCorporation(
-    corporation: Corporation,
+    corporationId: number,
   ): Promise<number> {
-    return this.postRepository.getNumOfPostsByCorporation(corporation);
+    return this.postRepository.getNumOfPostsByCorporation(corporationId);
   }
 
   public async getNumOfPostsByAlliance(
-    alliance: Alliance,
+    allianceId: number,
   ): Promise<number> {
-    return this.postRepository.getNumOfPostsByAlliance(alliance);
+    return this.postRepository.getNumOfPostsByAlliance(allianceId);
   }
 
   /**
@@ -257,29 +226,25 @@ export class PostService {
    */
   private async create(post: Post, postData: VCreatePost): Promise<Post> {
     if (postData.allianceId) {
-      post.allianceWall = await this.allianceService.get(postData.allianceId);
+      post.allianceWallId = postData.allianceId;
     }
 
     if (postData.corporationId) {
-      post.corporationWall = await this.corporationService.get(postData.corporationId);
+      post.corporationWallId = postData.corporationId;
     }
 
     if (postData.characterId) {
-      post.characterWall = await this.characterService.get(postData.characterId);
+      post.characterWallId = postData.characterId;
     }
 
     if (postData.locationId) {
-      post.location = await this.universeLocationService.get(postData.locationId);
+      post.locationId = postData.locationId;
     }
 
     if (postData.url) {
-      const urlMetadata = await this.metascraperService.processUrl(postData.url);
+      const urlMetadata = await this.metascraperClient.service.processUrl(postData.url).toPromise();
       post.url = urlMetadata;
-
-      if (this.metascraperService.isUrlmetaForKillmail(urlMetadata)) {
-        const killmail = await this.metascraperService.processKillmail(urlMetadata.url);
-        post.killmail = killmail;
-      }
+      post.killmailId = urlMetadata.killmailId;
     }
 
     post.hashtags = await this.hashtagService.parse(post.content);

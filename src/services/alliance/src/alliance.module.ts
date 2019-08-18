@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { AllianceService } from './alliance.service';
-import { AllianceHttpController } from './http/alliance.http.controller';
 import { AllianceGrpcController } from './grpc/alliance.grpc.controller';
 import { ESIModule } from '@new-eden-social/esi';
 import { ZKillboardModule } from '@new-eden-social/zkillboard';
@@ -34,7 +33,6 @@ import { Alliance } from './alliance.entity';
     ESIModule,
   ],
   controllers: [
-    AllianceHttpController,
     AllianceGrpcController
   ],
   providers: [

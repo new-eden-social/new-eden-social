@@ -1,24 +1,19 @@
-import { Module, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MetascraperService } from './metascraper.service';
-import { MetascraperController } from './metascraper.controller';
-import { KillmailModule } from '../killmail/killmail.module';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
+import { MetascraperGrpcController } from './grpc/metascraper.grpc.controller';
 
 @Module({
   imports: [
     LoggerModule,
     UtilsModule,
-    forwardRef(() => KillmailModule),
   ],
   providers: [
     MetascraperService,
   ],
-  exports: [
-    MetascraperService,
-  ],
   controllers: [
-    MetascraperController,
+    MetascraperGrpcController,
   ],
 })
 export class MetascraperModule {

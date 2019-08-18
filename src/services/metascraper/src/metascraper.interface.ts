@@ -9,4 +9,6 @@ export interface IURLMetadata {
   publisher: string;
   title: string;
   url: string;
+
+  killmailId?: number;
 }

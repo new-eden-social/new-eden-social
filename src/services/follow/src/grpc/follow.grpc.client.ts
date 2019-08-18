@@ -1,16 +1,16 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Client, ClientGrpc } from '@nestjs/microservices';
-import { FollowGRPCClientOptions } from './follow.grpc.client.options';
-import { IFollowService } from './follow.grpc.interface';
+import { IFollowGrpcService } from './follow.grpc.interface';
+import { FollowGrpcClientOptions } from './follow.grpc.client.options';
 
 @Injectable()
-export class AllianceClient implements OnModuleInit {
+export class FollowGrpcClient implements OnModuleInit {
 
-  @Client(FollowGRPCClientOptions)
+  @Client(FollowGrpcClientOptions)
   private readonly client: ClientGrpc;
-  public service: IFollowService;
+  public service: IFollowGrpcService;
 
   onModuleInit() {
-    this.service = this.client.getService<IFollowService>('FollowService');
+    this.service = this.client.getService<IFollowGrpcService>('FollowService');
   }
 }

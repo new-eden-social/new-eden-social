@@ -2,13 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { Comment } from './comment.entity';
 import { VCreateComment } from './comment.validate';
-import { Character } from '@new-eden-social/api-character';
-import { Post } from '@new-eden-social/api-post';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CommandBus } from '@nestjs/cqrs';
 import { CreateCommentCommand } from './commands/create.command';
-import { Corporation } from '@new-eden-social/api-corporation';
-import { Alliance } from '@new-eden-social/api-alliance';
 
 @Injectable()
 export class CommentService {
@@ -22,13 +18,13 @@ export class CommentService {
 
   public async createAsCharacter(
     commentData: VCreateComment,
-    post: Post,
-    character: Character,
+    postId: string,
+    characterId: number,
   ): Promise<Comment> {
     const comment = new Comment();
     comment.content = commentData.content;
-    comment.post = post;
-    comment.character = character;
+    comment.postId = postId;
+    comment.characterId = characterId;
 
     return this.commandBus.execute(
       new CreateCommentCommand(comment),
@@ -37,13 +33,13 @@ export class CommentService {
 
   public async createAsCorporation(
     commentData: VCreateComment,
-    post: Post,
-    corporation: Corporation,
+    postId: string,
+    corporationId: number,
   ): Promise<Comment> {
     const comment = new Comment();
     comment.content = commentData.content;
-    comment.post = post;
-    comment.corporation = corporation;
+    comment.postId = postId;
+    comment.corporationId = corporationId;
 
     return this.commandBus.execute(
       new CreateCommentCommand(comment),
@@ -52,13 +48,13 @@ export class CommentService {
 
   public async createAsAlliance(
     commentData: VCreateComment,
-    post: Post,
-    alliance: Alliance,
+    postId: string,
+    allianceId: number,
   ): Promise<Comment> {
     const comment = new Comment();
     comment.content = commentData.content;
-    comment.post = post;
-    comment.alliance = alliance;
+    comment.postId = postId;
+    comment.allianceId = allianceId;
 
     return this.commandBus.execute(
       new CreateCommentCommand(comment),
@@ -66,12 +62,11 @@ export class CommentService {
   }
 
   public async getLatestForPost(
-    post: Post,
+    postId: string,
     limit = 10,
     page = 0,
   ): Promise<{ comments: Comment[], count: number }> {
-    const [comments, count] = await this.commentRepository.getLatestForPost(post, limit, page);
-
+    const [comments, count] = await this.commentRepository.getLatestForPost(postId, limit, page);
     return { comments, count };
   }
 

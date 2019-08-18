@@ -6,5 +6,5 @@ import { CharacterGrpcClient } from './character.grpc.client';
     CharacterGrpcClient
   ]
 })
-export class CharacterGRPCModule {
+export class CharacterGrpcModule {
 }

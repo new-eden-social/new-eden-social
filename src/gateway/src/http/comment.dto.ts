@@ -1,8 +1,5 @@
-import { Comment } from './comment.entity';
+import { Comment } from '../comment.entity';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
-import { DCharacterShort } from '@new-eden-social/api-character/character.dto';
-import { DAllianceShort } from '../alliance/alliance.dto';
-import { DCorporationShort } from '../corporation/corporation.dto';
 import { DPagination } from '@new-eden-social/pagination';
 
 export class DComment {
@@ -11,11 +8,11 @@ export class DComment {
   @ApiModelProperty()
   content: string;
   @ApiModelPropertyOptional()
-  character?: DCharacterShort;
+  characterId?: number;
   @ApiModelPropertyOptional()
-  corporation?: DCorporationShort;
+  corporationId?: number;
   @ApiModelPropertyOptional()
-  alliance?: DAllianceShort;
+  allianceId?: number;
   @ApiModelProperty({ type: String })
   createdAt: Date;
   @ApiModelProperty()
@@ -25,10 +22,10 @@ export class DComment {
     this.id = comment.id;
     this.content = comment.content;
     this.createdAt = comment.createdAt;
-    this.postId = comment.post.id;
-    if (comment.character) { this.character = new DCharacterShort(comment.character); }
-    if (comment.corporation) { this.corporation = new DCorporationShort(comment.corporation); }
-    if (comment.alliance) { this.alliance = new DAllianceShort(comment.alliance); }
+    this.postId = comment.postId;
+    this.characterId = comment.characterId;
+    this.corporationId = comment.corporationId;
+    this.allianceId = comment.allianceId;
   }
 }
 
