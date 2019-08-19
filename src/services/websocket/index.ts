@@ -1,2 +1,2 @@
-export * from './src/websocket.constants';
-export * from './src/websocket.dto';
+export * from './src/redis/websocket.redis.dto';
+export * from './src/redis/websocket.redis.events';

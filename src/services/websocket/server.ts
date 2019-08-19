@@ -1,18 +1,24 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidatorPipe } from '@new-eden-social/validation';
 // Used for TypeORM
 import 'reflect-metadata';
-// Request context
-import 'zone.js';
-import 'zone.js/dist/zone-node.js';
-import 'zone.js/dist/long-stack-trace-zone.js';
 import { WebsocketModule } from './src/websocket.module';
+import { Transport } from '@nestjs/common/enums/transport.enum';
 
 async function bootstrap() {
-  const nestApp = await NestFactory.create(WebsocketModule);
-  nestApp.enableCors();
-  nestApp.useGlobalPipes(new ValidatorPipe());
-  await nestApp.listen(parseInt(process.env.PORT, 10));
+  const PORT = parseInt(process.env.PORT, 10) || 3000; // Default to 3000
+
+  const app = await NestFactory.create(WebsocketModule);
+  app.enableCors();
+
+  const microservice = app.connectMicroservice({
+    transport: Transport.REDIS,
+    options: {
+      url: process.env.REDIS_HOST,
+    }
+  });
+
+  await app.startAllMicroservicesAsync();
+  await app.listen(PORT);
 }
 
 bootstrap();

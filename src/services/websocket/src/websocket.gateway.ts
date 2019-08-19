@@ -1,7 +1,6 @@
 import {
   OnGatewayConnection, OnGatewayDisconnect,
   SubscribeMessage, WebSocketGateway, WebSocketServer,
-  WsResponse,
 } from '@nestjs/websockets';
 import { UsePipes, ValidationPipe, UseInterceptors } from '@nestjs/common';
 import { VWebsocketAuthentication } from './websocket.validate';
@@ -21,6 +20,9 @@ import {
 } from './websocket.constants';
 import { WsLoggerExceptionInterceptor, LoggerService } from '@new-eden-social/logger';
 import { ISocket } from './websocket.interface';
+import { EventPattern } from '@nestjs/microservices';
+import { WS_REDIS_EVENTS } from './redis/websocket.redis.events';
+import { DWsRedisLatestWall, DWsRedisCharacterWall, DWsRedisCharacter, DWsRedisHashtagWall, DWsRedisAllianceWall, DWsRedisCorporationWall, DWsRedisPostComments } from './redis/websocket.redis.dto';
 
 @WebSocketGateway()
 @UsePipes(new ValidationPipe())
@@ -209,93 +211,87 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
 
   /**
    * Send event to character (All sockets for this character)
-   * @param characterId Number
-   * @param event WsResponse
    */
-  public sendEventToCharacter(characterId: number, event: WsResponse): void {
-    const clients = this.getSocketsForCharacter(characterId);
+  @EventPattern(WS_REDIS_EVENTS.CHARACTER)
+  public sendEventToCharacter(payload: DWsRedisCharacter): void {
+    const clients = this.getSocketsForCharacter(payload.characterId);
     this.logger.debug(
       `[Websocket.Gateway] sendEventToCharacter [${clients.length}]` +
-      ` => ${characterId} = ${event.event}`,
+      ` => ${payload.characterId} = ${payload.event}`,
     );
-    clients.forEach(socket => socket.emit(event.event, event.data));
+    clients.forEach(socket => socket.emit(payload.event, payload.data));
   }
 
   /**
    * Send event to all sockets connected to latest wall
-   * @param data T
    */
-  public sendEventToLatestWallSub<T>(data: T): void {
-    const event = new DWsNewSubscriptionEvent<T>(data, WS_SUBSCRIPTIONS.TO_LATEST_WALL);
+  @EventPattern(WS_REDIS_EVENTS.LATEST_WALL)
+  public sendEventToLatestWallSub(payload: DWsRedisLatestWall): void {
+    const event = new DWsNewSubscriptionEvent(payload.data, WS_SUBSCRIPTIONS.TO_LATEST_WALL);
     this.logger.debug(
       `[Websocket.Gateway] sendEventToLatestSub => latest = ${event.event}`,
     );
-    this.server.to('wall:latest').emit(event.event, event.data);
+    this.server.to(getRoomForLatestWall()).emit(event.event, event.data);
   }
 
   /**
    * Send event to all sockets connected to this character's wall
-   * @param characterId Number
-   * @param data T
    */
-  public sendEventToCharacterWallSub<T>(characterId: number, data: T): void {
-    const event = new DWsNewSubscriptionEvent<T>(data, WS_SUBSCRIPTIONS.TO_CHARACTER_WALL);
+  @EventPattern(WS_REDIS_EVENTS.CHARACTER_WALL)
+  public sendEventToCharacterWallSub<T>(payload: DWsRedisCharacterWall): void {
+    const event = new DWsNewSubscriptionEvent<T>(payload.data, WS_SUBSCRIPTIONS.TO_CHARACTER_WALL);
     this.logger.debug(
-      `[Websocket.Gateway] sendEventToCharacterWall => ${characterId} = ${event.event}`,
+      `[Websocket.Gateway] sendEventToCharacterWall => ${payload.characterId} = ${event.event}`,
     );
-    this.server.to(`wall:character:${characterId}`).emit(event.event, event.data);
+    this.server.to(getRoomForCharacterWall(payload.characterId)).emit(event.event, event.data);
   }
 
   /**
    * Send event to all sockets connected to this corporation's wall
-   * @param corporationId Number
-   * @param data T
    */
-  public sendEventToCorporationWallSub<T>(corporationId: number, data: T): void {
-    const event = new DWsNewSubscriptionEvent<T>(data, WS_SUBSCRIPTIONS.TO_CORPORATION_WALL);
+  @EventPattern(WS_REDIS_EVENTS.CORPORATION_WALL)
+  public sendEventToCorporationWallSub<T>(payload: DWsRedisCorporationWall): void {
+    const event = new DWsNewSubscriptionEvent<T>(payload.data, WS_SUBSCRIPTIONS.TO_CORPORATION_WALL);
     this.logger.debug(
-      `[Websocket.Gateway] sendEventToCorporationWall => ${corporationId} = ${event.event}`,
+      `[Websocket.Gateway] sendEventToCorporationWall => ${payload.corporationId} = ${event.event}`,
     );
-    this.server.to(`wall:corporation:${corporationId}`).emit(event.event, event.data);
+    this.server.to(getRoomForCorporationWall(payload.corporationId)).emit(event.event, event.data);
   }
 
   /**
    * Send event to all sockets connected to this alliance's wall
-   * @param allianceId Number
-   * @param data T
    */
-  public sendEventToAllianceWallSub<T>(allianceId: number, data: T): void {
-    const event = new DWsNewSubscriptionEvent<T>(data, WS_SUBSCRIPTIONS.TO_ALLIANCE_WALL);
+  @EventPattern(WS_REDIS_EVENTS.ALLIANCE_WALL)
+  public sendEventToAllianceWallSub<T>(payload: DWsRedisAllianceWall): void {
+    const event = new DWsNewSubscriptionEvent<T>(payload.data, WS_SUBSCRIPTIONS.TO_ALLIANCE_WALL);
     this.logger.debug(
-      `[Websocket.Gateway] sendEventToAllianceWall => ${allianceId} = ${event.event}`,
+      `[Websocket.Gateway] sendEventToAllianceWall => ${payload.allianceId} = ${event.event}`,
     );
-    this.server.to(`wall:alliance:${allianceId}`).emit(event.event, event.data);
+    this.server.to(getRoomForAllianceWall(payload.allianceId)).emit(event.event, event.data);
   }
 
   /**
    * Send event to all sockets connected to this hashtag's wall
-   * @param hashtag String
-   * @param event T
    */
-  public sendEventToHashtagWallSub<T>(hashtag: string, data: T): void {
-    const event = new DWsNewSubscriptionEvent<T>(data, WS_SUBSCRIPTIONS.TO_HASHTAG_WALL);
+  @EventPattern(WS_REDIS_EVENTS.HASHTAG_WALL)
+  public sendEventToHashtagWallSub<T>(payload: DWsRedisHashtagWall): void {
+    const event = new DWsNewSubscriptionEvent<T>(payload.data, WS_SUBSCRIPTIONS.TO_HASHTAG_WALL);
     this.logger.debug(
-      `[Websocket.Gateway] sendEventToHashtagWall => ${hashtag} = ${event.event}`,
+      `[Websocket.Gateway] sendEventToHashtagWall => ${payload.hashtag} = ${event.event}`,
     );
-    this.server.to(`wall:hashtag:${hashtag}`).emit(event.event, event.data);
+    this.server.to(getRoomForHashtagWall(payload.hashtag)).emit(event.event, event.data);
   }
 
   /**
    * Send event to all sockets connected to this post's comments
-   * @param postId String
-   * @param event WsResponse
    */
-  public sendEventToPostCommentSub<T>(postId: string, data: T): void {
-    const event = new DWsNewSubscriptionEvent<T>(data, WS_SUBSCRIPTIONS.TO_POST_COMMENTS);
+  @EventPattern(WS_REDIS_EVENTS.POST_COMMENTS)
+  public sendEventToPostCommentSub<T>(payload: DWsRedisPostComments): void {
+    const event = new DWsNewSubscriptionEvent<T>(payload.data, WS_SUBSCRIPTIONS.TO_POST_COMMENTS);
     this.logger.debug(
-      `[Websocket.Gateway] sendEventToPostCommentSub => ${postId} = ${event.event}`,
+      `[Websocket.Gateway] sendEventToPostCommentSub => ${payload.postId} = ${event.event}`,
     );
-    this.server.to(`post:comments:${postId}`).emit(event.event, event.data);
+    this.server.to(getRoomForPostComments(payload.postId)).emit(event.event, event.data);
   }
 
   private getSocketsForCharacter(characterId: number): ISocket[] {

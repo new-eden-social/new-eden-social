@@ -43,7 +43,7 @@ export const WS_EVENT_UNSUBSCRIBE_TO_POST_COMMENTS = 'WS_EVENT_UNSUBSCRIBE_TO_PO
 
 export const getRoomForLatestWall = () => 'wall:latest';
 export const getRoomForHashtagWall = (hashtag: string) => `wall:hashtag:${hashtag}`;
-export const getRoomForCharacterWall = (characterId: string) => `wall:character:${characterId}`;
-export const getRoomForCorporationWall = (corpId: string) => `wall:corporation:${corpId}`;
-export const getRoomForAllianceWall = (allianceId: string) => `wall:alliance:${allianceId}`;
+export const getRoomForCharacterWall = (characterId: number) => `wall:character:${characterId}`;
+export const getRoomForCorporationWall = (corpId: number) => `wall:corporation:${corpId}`;
+export const getRoomForAllianceWall = (allianceId: number) => `wall:alliance:${allianceId}`;
 export const getRoomForPostComments = (postId: string) => `post:comments:${postId}`;
