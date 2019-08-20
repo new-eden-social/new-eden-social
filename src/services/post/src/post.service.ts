@@ -3,8 +3,6 @@ import { Post } from './post.entity';
 import { VCreatePost } from './post.validate';
 import { POST_TYPES } from './post.constants';
 import { PostRepository } from './post.repository';
-import { CommandBus } from '@nestjs/cqrs';
-import { CreatePostCommand } from './commands/create.command';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MetascraperGrpcClient } from '@new-eden-social/api-metascraper';
 import { IKillmail } from '@new-eden-social/zkillboard';
@@ -14,7 +12,6 @@ import { HashtagGrpcClient } from '@new-eden-social/api-hashtag';
 export class PostService {
 
   constructor(
-    private readonly commandBus: CommandBus,
     @InjectRepository(PostRepository)
     private readonly postRepository: PostRepository,
     private readonly metascraperClient: MetascraperGrpcClient,
@@ -250,8 +247,6 @@ export class PostService {
 
     post.hashtags = await this.hashtagClient.service.parse(post.content).toPromise();
 
-    return this.commandBus.execute(
-      new CreatePostCommand(post),
-    );
+    return this.postRepository.save(post);
   }
 }

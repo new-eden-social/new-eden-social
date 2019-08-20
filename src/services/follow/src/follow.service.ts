@@ -3,26 +3,21 @@ import { Follow } from './follow.entity';
 import { CommandBus } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FollowRepository } from './follow.repository';
-import { FollowCommand } from './commands/follow.command';
-import { UnFollowCommand } from './commands/unfollow.command';
 
 @Injectable()
 export class FollowService {
 
   constructor(
-        private readonly commandBus: CommandBus,
         @InjectRepository(FollowRepository)
         private readonly followRepository: FollowRepository,
     ) {
   }
 
   async unfollow(follow: Follow): Promise<void> {
-    return this.commandBus.execute(
-            new UnFollowCommand(follow),
-        );
+    await this.followRepository.delete(follow);
   }
 
-  followCharacter(
+  async followCharacter(
         followerId: number,
         followingId: number,
     ): Promise<Follow> {
@@ -30,12 +25,10 @@ export class FollowService {
     follow.followerId = followerId;
     follow.followingCharacterId = followingId;
 
-    return this.commandBus.execute(
-            new FollowCommand(follow),
-        );
+    return this.followRepository.save(follow);
   }
 
-  followCorporation(
+  async followCorporation(
         followerId: number,
         followingId: number,
     ): Promise<Follow> {
@@ -43,9 +36,7 @@ export class FollowService {
     follow.followerId = followerId;
     follow.followingCorporationId = followingId;
 
-    return this.commandBus.execute(
-            new FollowCommand(follow),
-        );
+    return this.followRepository.save(follow);
   }
 
   followAlliance(
@@ -56,9 +47,7 @@ export class FollowService {
     follow.followerId = followerId;
     follow.followingAllianceId = followingId;
 
-    return this.commandBus.execute(
-            new FollowCommand(follow),
-        );
+    return this.followRepository.save(follow);
   }
 
   checkIfFolowingCharacter(

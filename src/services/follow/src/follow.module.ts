@@ -1,8 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CqrsModule } from '@nestjs/cqrs';
-import { CommandHandlers } from './commands/handlers';
-import { EventHandlers } from './events/handlers';
 import { FollowService } from './follow.service';
 import { FollowRepository } from './follow.repository';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
@@ -32,8 +29,6 @@ import { CharacterGrpcModule } from '@new-eden-social/api-character';
     }),
     TypeOrmModule.forFeature([FollowRepository]),
 
-    CqrsModule,
-
     AllianceGrpcModule,
     CorporationGrpcModule,
     CharacterGrpcModule,
@@ -43,8 +38,6 @@ import { CharacterGrpcModule } from '@new-eden-social/api-character';
   ],
   providers: [
     FollowService,
-    ...CommandHandlers,
-    ...EventHandlers,
   ],
 })
 export class FollowModule {

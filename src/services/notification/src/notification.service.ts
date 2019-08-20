@@ -2,9 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
-import { HttpNotificationAlreadySeenException } from './notificationAlreadySeen.exception';
-import { CommandBus } from '@nestjs/cqrs';
-import { SeenNotificationCommand } from './commands/seen.command';
+import { NOTIFICATION_TYPE } from './notification.constants';
 
 @Injectable()
 export class NotificationService {
@@ -12,8 +10,23 @@ export class NotificationService {
   constructor(
     @InjectRepository(NotificationRepository)
     private readonly notificationRepository: NotificationRepository,
-    private readonly commandBus: CommandBus,
   ) {
+  }
+
+  public async create(
+    eventUuid: string,
+    type: NOTIFICATION_TYPE,
+    recipientId: number,
+    senderCharacterId?: number,
+    senderCorporationId?: number,
+    senderAllianceId?: number,
+    postId?: string,
+    commentId?: string,
+  ): Promise<Notification> {
+    // TODO: should we split this to different functions for each optional
+    // variable?
+    const notification = new Notification();
+    return this.notificationRepository.save(notification);
   }
 
   public async getLatest(
@@ -33,12 +46,10 @@ export class NotificationService {
     notification: Notification,
   ): Promise<void> {
     if (notification.seenAt) {
-      throw new HttpNotificationAlreadySeenException();
+      throw new Error('notification already marked as seen');
     }
 
-    await this.commandBus.execute(
-      new SeenNotificationCommand(notification),
-    );
+    this.notificationRepository.markAsSeen(notification);
   }
 
   public async get(

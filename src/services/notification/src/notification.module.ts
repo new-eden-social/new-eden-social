@@ -1,11 +1,8 @@
-import { CommandBus, EventBus, CqrsModule } from '@nestjs/cqrs';
+import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module, OnModuleInit } from '@nestjs/common';
-import { ModuleRef } from '@nestjs/core';
+import { Module } from '@nestjs/common';
 import { NotificationService } from './notification.service';
 import { NotificationRepository } from './notification.repository';
-import { commandHandlers } from './commands/handlers';
-import { eventHandlers } from './events/handlers';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
@@ -34,8 +31,6 @@ import { Notification } from 'rxjs';
   ],
   providers: [
     NotificationService,
-    ...commandHandlers,
-    ...eventHandlers,
   ],
 })
 export class NotificationModule {

@@ -1,14 +1,8 @@
-import { Module, OnModuleInit, forwardRef } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { PostService } from './post.service';
-import { UniverseLocationModule } from '../../universe/src/modules/location/location.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostRepository } from './post.repository';
-import { CommandBus, EventBus, CqrsModule } from '@nestjs/cqrs';
-import { commandHandlers } from './commands/handlers';
 import { eventHandlers } from './events/handlers';
-import { ModuleRef } from '@nestjs/core';
-import { WebsocketModule } from '../../websocket/src/websocket.module';
-import { MetascraperModule } from '../../metascraper/src/metascraper.module';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
@@ -33,14 +27,10 @@ import { Post } from './post.entity';
     }),
     TypeOrmModule.forFeature([PostRepository]),
 
-    CqrsModule,
-
     MetascraperGrpcModule,
   ],
   providers: [
     PostService,
-    ...commandHandlers,
-    ...eventHandlers,
   ],
 })
 export class PostModule {
