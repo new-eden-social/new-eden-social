@@ -3,9 +3,13 @@ import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
 import { NOTIFICATION_TYPE } from './notification.constants';
+import { Client, Transport } from '@nestjs/microservices';
 
 @Injectable()
 export class NotificationService {
+
+  @Client({ transport: Transport.REDIS })
+  client: ClientProxy;
 
   constructor(
     @InjectRepository(NotificationRepository)

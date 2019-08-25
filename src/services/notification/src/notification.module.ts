@@ -7,6 +7,7 @@ import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { Notification } from 'rxjs';
+import { NotificationGrpcController } from './grpc/notification.grpc.controller';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { Notification } from 'rxjs';
     TypeOrmModule.forFeature([NotificationRepository]),
   ],
   controllers: [
+    NotificationGrpcController,
   ],
   providers: [
     NotificationService,

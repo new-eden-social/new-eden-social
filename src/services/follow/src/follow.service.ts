@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Follow } from './follow.entity';
-import { CommandBus } from '@nestjs/cqrs';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FollowRepository } from './follow.repository';
 
