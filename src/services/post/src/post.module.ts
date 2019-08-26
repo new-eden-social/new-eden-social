@@ -2,12 +2,12 @@ import { Module } from '@nestjs/common';
 import { PostService } from './post.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostRepository } from './post.repository';
-import { eventHandlers } from './events/handlers';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { MetascraperGrpcModule } from '@new-eden-social/api-metascraper';
 import { Post } from './post.entity';
+import { WebsocketRedisModule } from '@new-eden-social/api-websocket';
 
 @Module({
   imports: [
@@ -28,6 +28,7 @@ import { Post } from './post.entity';
     TypeOrmModule.forFeature([PostRepository]),
 
     MetascraperGrpcModule,
+    WebsocketRedisModule,
   ],
   providers: [
     PostService,

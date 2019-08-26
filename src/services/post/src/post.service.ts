@@ -7,6 +7,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { MetascraperGrpcClient } from '@new-eden-social/api-metascraper';
 import { IKillmail } from '@new-eden-social/zkillboard';
 import { HashtagGrpcClient } from '@new-eden-social/api-hashtag';
+import { NotificationGrpcClient, NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
+import * as uuidv4 from 'uuid/v4';
 
 @Injectable()
 export class PostService {
@@ -16,6 +18,7 @@ export class PostService {
     private readonly postRepository: PostRepository,
     private readonly metascraperClient: MetascraperGrpcClient,
     private readonly hashtagClient: HashtagGrpcClient,
+    private readonly notificationClient: NotificationGrpcClient,
   ) {
   }
 
@@ -42,8 +45,18 @@ export class PostService {
     post.content = postData.content;
     post.type = postData.type;
     post.characterId = characterId;
+    const createdPost = await this.create(post, postData);
 
-    return this.create(post, postData);
+    const eventUuid = uuidv4();
+    await this.notificationClient.service.create({
+      eventUuid,
+      senderCharacterId: createdPost.characterId,
+      postId: createdPost.id,
+      recipientId: characterId,
+      type: NOTIFICATION_TYPE.NEW_POST_ON_YOUR_WALL,
+    });
+
+    return createdPost;
   }
 
   /**
@@ -60,6 +73,8 @@ export class PostService {
     post.content = postData.content;
     post.type = postData.type;
     post.corporationId = corporationId;
+
+    // TODO: Notification
 
     return this.create(post, postData);
   }
@@ -79,6 +94,8 @@ export class PostService {
     post.type = postData.type;
     post.allianceId = allianceId;
 
+    // TODO: Notification
+
     return this.create(post, postData);
   }
 
@@ -95,7 +112,6 @@ export class PostService {
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
     const [posts, count] = await this.postRepository.getCharacterWall(characterId, limit, page);
-
     return { posts, count };
   }
 
@@ -112,7 +128,6 @@ export class PostService {
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
     const [posts, count] = await this.postRepository.getCorporationWall(corporationId, limit, page);
-
     return { posts, count };
   }
 
@@ -129,7 +144,6 @@ export class PostService {
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
     const [posts, count] = await this.postRepository.getAllianceWall(allianceId, limit, page);
-
     return { posts, count };
   }
 
@@ -146,7 +160,6 @@ export class PostService {
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
     const [posts, count] = await this.postRepository.getByHashtag(hashtag, limit, page);
-
     return { posts, count };
   }
 
@@ -163,7 +176,6 @@ export class PostService {
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
     const [posts, count] = await this.postRepository.getByLocation(locationId, limit, page);
-
     return { posts, count };
   }
 
@@ -178,7 +190,6 @@ export class PostService {
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {
     const [posts, count] = await this.postRepository.getLatest(limit, page);
-
     return { posts, count };
   }
 
@@ -195,7 +206,7 @@ export class PostService {
     post.characterId = finalBlow;
     post.createdAt = killmail.date;
     post.locationId = killmail.locationId;
-    return post.create();
+    return this.postRepository.save(post);
   }
 
   public async getNumOfPostsByCharacter(

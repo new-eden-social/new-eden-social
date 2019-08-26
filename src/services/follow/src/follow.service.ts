@@ -2,13 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { Follow } from './follow.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FollowRepository } from './follow.repository';
+import { NotificationGrpcClient, NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
+import * as uuidv4 from 'uuid/v4';
 
 @Injectable()
 export class FollowService {
 
   constructor(
-        @InjectRepository(FollowRepository)
-        private readonly followRepository: FollowRepository,
+    @InjectRepository(FollowRepository)
+    private readonly followRepository: FollowRepository,
+    private readonly notificationClient: NotificationGrpcClient,
     ) {
   }
 
@@ -24,7 +27,17 @@ export class FollowService {
     follow.followerId = followerId;
     follow.followingCharacterId = followingId;
 
-    return this.followRepository.save(follow);
+    const createdFollow = await this.followRepository.save(follow);
+
+    const eventUuid = uuidv4();
+    this.notificationClient.service.create({
+      eventUuid,
+      type: NOTIFICATION_TYPE.NEW_FOLLOWER,
+      recipientId: followingId,
+      senderCharacterId: followerId
+    });
+
+    return createdFollow;
   }
 
   async followCorporation(
@@ -34,6 +47,8 @@ export class FollowService {
     const follow = new Follow();
     follow.followerId = followerId;
     follow.followingCorporationId = followingId;
+
+    // TODO: Notification
 
     return this.followRepository.save(follow);
   }
@@ -45,6 +60,8 @@ export class FollowService {
     const follow = new Follow();
     follow.followerId = followerId;
     follow.followingAllianceId = followingId;
+
+    // TODO: Notification
 
     return this.followRepository.save(follow);
   }

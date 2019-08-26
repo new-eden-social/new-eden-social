@@ -10,6 +10,7 @@ import { AllianceGrpcModule } from '@new-eden-social/api-alliance';
 import { Follow } from './follow.entity';
 import { CorporationGrpcModule } from '@new-eden-social/api-corporation';
 import { CharacterGrpcModule } from '@new-eden-social/api-character';
+import { NotificationGrpcModule } from '@new-eden-social/api-notification';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CharacterGrpcModule } from '@new-eden-social/api-character';
     AllianceGrpcModule,
     CorporationGrpcModule,
     CharacterGrpcModule,
+    NotificationGrpcModule,
   ],
   controllers: [
     FollowGrpcController,

@@ -18,4 +18,14 @@ export class CommentRepository extends Repository<Comment> {
     .getManyAndCount();
   }
 
+  public async getParticipantsForPost(
+    postId: string,
+  ): Promise<Comment[]> {
+    return this.createQueryBuilder('comment')
+    .select('DISTINCT(comment."characterId")', 'characterId')
+    .select('DISTINCT(comment."corporationId")', 'corporationId')
+    .select('DISTINCT(comment."allianceId")', 'allianceId')
+    .where('comment."postId" = :postId', { postId })
+    .getMany();
+  }
 }

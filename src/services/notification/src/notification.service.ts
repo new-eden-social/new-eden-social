@@ -2,18 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
-import { NOTIFICATION_TYPE } from './notification.constants';
-import { Client, Transport } from '@nestjs/microservices';
+import { NOTIFICATION_TYPE, WS_NOTIFICATION_EVENT, WS_NOTIFICATION_SEEN_EVENT } from './notification.constants';
+import { WebsocketRedisClient } from '@new-eden-social/api-websocket';
 
 @Injectable()
 export class NotificationService {
 
-  @Client({ transport: Transport.REDIS })
-  client: ClientProxy;
-
   constructor(
     @InjectRepository(NotificationRepository)
     private readonly notificationRepository: NotificationRepository,
+    private readonly websocketRedisClient: WebsocketRedisClient,
   ) {
   }
 
@@ -30,7 +28,23 @@ export class NotificationService {
     // TODO: should we split this to different functions for each optional
     // variable?
     const notification = new Notification();
-    return this.notificationRepository.save(notification);
+    notification.eventUuid = eventUuid;
+    notification.type = type;
+    notification.recipientId = recipientId;
+    notification.senderCharacterId = senderCharacterId;
+    notification.senderCorporationId = senderCorporationId;
+    notification.senderAllianceId = senderAllianceId;
+    notification.postId = postId;
+    notification.commentId = commentId;
+    await this.notificationRepository.save(notification);
+
+    await this.websocketRedisClient.emitCharacterEvent<Notification>(
+      notification.recipientId,
+      WS_NOTIFICATION_EVENT,
+      notification,
+    ).toPromise();
+
+    return notification;
   }
 
   public async getLatest(
@@ -54,6 +68,12 @@ export class NotificationService {
     }
 
     this.notificationRepository.markAsSeen(notification);
+
+    await this.websocketRedisClient.emitCharacterEvent<Notification>(
+      notification.recipientId,
+      WS_NOTIFICATION_SEEN_EVENT,
+      notification,
+    );
   }
 
   public async get(

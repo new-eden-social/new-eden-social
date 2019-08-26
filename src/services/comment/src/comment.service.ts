@@ -3,6 +3,8 @@ import { CommentRepository } from './comment.repository';
 import { Comment } from './comment.entity';
 import { VCreateComment } from './comment.validate';
 import { InjectRepository } from '@nestjs/typeorm';
+import { from } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Injectable()
 export class CommentService {
@@ -23,7 +25,29 @@ export class CommentService {
     comment.postId = postId;
     comment.characterId = characterId;
 
-    return this.commentRepository.save(comment);
+    const createdComment = await this.commentRepository.save(comment);
+
+    const participants = await this.getParticipantsForPost(postId);
+
+    // from(participants.characterIds).pipe(
+    //   filter(id => id !== characterId), // Skip comment author
+    //   // TODO: Paralelize notification creation.
+    // )
+
+    // for (const participantId of participants.characterIds) {
+    //   if (characterId === participantId) {
+    //     continue;
+    //   }
+    //   const notification = new Notification();
+    //   notification.eventUuid = eventUuid;
+    //   notification.senderCharacter = event.comment.character;
+    //   notification.recipient = participant;
+    //   notification.comment = event.comment;
+    //   notification.post = event.comment.post;
+    //   notification.type = NOTIFICATION_TYPE.NEW_COMMENT_ON_A_POST_YOU_PARTICIPATE;
+    //   // Execute create notification command
+    // }
+
   }
 
   public async createAsCorporation(
@@ -61,35 +85,26 @@ export class CommentService {
     return { comments, count };
   }
 
+  public async getParticipantsForPost(
+    postId: string,
+  ): Promise<{characterIds: number[], corporationIds: number[], allianceIds: number[]}> {
+    const comments = await this.commentRepository.getParticipantsForPost(postId);
+
+    const characterIds = comments.filter(comment => comment.characterId)
+    .map(comment => comment.characterId);
+    const corporationIds = comments.filter(comment => comment.corporationId)
+    .map(comment => comment.corporationId);
+    const allianceIds = comments.filter(comment => comment.allianceId)
+    .map(comment => comment.allianceId);
+
+    return {characterIds, corporationIds, allianceIds};
+  }
+
   private async sendNotificationForCreate() {
     const participants = await this.postService.getParticipants(event.comment.post);
     const eventUuid = uuidv4();
 
-    const joinedParticipants: Character[] = [
-      ...participants.characters,
-    ].filter((v, i, a) => a.findIndex(v1 => v1.id === v.id) === i);
-
     // Create notification for all the characters
-    for (const participant of joinedParticipants) {
-      // Skip event comment author
-      if (event.comment.character && participant.id === event.comment.character.id) {
-        continue;
-      }
-      const notification = new Notification();
-      notification.eventUuid = eventUuid;
-      notification.senderCharacter = event.comment.character;
-      notification.recipient = participant;
-      notification.comment = event.comment;
-      notification.post = event.comment.post;
-      notification.type = NOTIFICATION_TYPE.NEW_COMMENT_ON_A_POST_YOU_PARTICIPATE;
-      // Execute create notification command
-      await this.commandBus.execute(new CreateNotificationCommand(notification));
-    }
 
-    // Send comment to subscribers
-    this.websocketGateway.sendEventToPostCommentSub<DComment>(
-      event.comment.post,
-      new DComment(event.comment),
-    );
   }
 }

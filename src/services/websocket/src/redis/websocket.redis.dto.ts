@@ -31,6 +31,7 @@ export class DWsRedisCharacterWall<T = any> {
 export class DWsRedisCorporationWall<T = any> {
   corporationId: number;
   data: T;
+
   constructor(corporationId: number, data: T) {
     this.corporationId = corporationId;
     this.data = data;
@@ -40,6 +41,7 @@ export class DWsRedisCorporationWall<T = any> {
 export class DWsRedisAllianceWall<T = any> {
   allianceId: number;
   data: T;
+
   constructor(allianceId: number, data: T) {
     this.allianceId = allianceId;
     this.data = data;

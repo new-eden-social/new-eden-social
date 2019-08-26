@@ -1,4 +1,3 @@
-import { CqrsModule } from '@nestjs/cqrs';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Module } from '@nestjs/common';
 import { NotificationService } from './notification.service';
@@ -8,6 +7,7 @@ import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { Notification } from 'rxjs';
 import { NotificationGrpcController } from './grpc/notification.grpc.controller';
+import { WebsocketRedisModule } from '@new-eden-social/api-websocket';
 
 @Module({
   imports: [
@@ -25,8 +25,9 @@ import { NotificationGrpcController } from './grpc/notification.grpc.controller'
       entities: [Notification],
       synchronize: process.env.DB_SYNC === 'true',
     }),
-    CqrsModule,
     TypeOrmModule.forFeature([NotificationRepository]),
+
+    WebsocketRedisModule,
   ],
   controllers: [
     NotificationGrpcController,
