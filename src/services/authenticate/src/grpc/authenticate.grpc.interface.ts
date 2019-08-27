@@ -1,4 +1,4 @@
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 
 // Should reflect the .proto file!
 export interface IAuthenticateGrpcService {
