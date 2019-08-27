@@ -28,7 +28,6 @@ export class NotificationGrpcController implements INotificationGrpcService {
     )).pipe<INotificationEntity>(
       map<Notification, INotificationEntity>(this.notificationTransform)
     );
-
   }
 
   private notificationTransform(notification: Notification): INotificationEntity {

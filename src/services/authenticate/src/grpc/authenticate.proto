@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+service AuthenticateService {
+  rpc Verify (VerifyRequest) returns (VerifyResponse);
+}
+
+message VerifyRequest {
+  string token = 1; // Represents new-eden-social JWT token
+}
+
+message VerifyResponse {
+  int64 characterId = 1;
+}

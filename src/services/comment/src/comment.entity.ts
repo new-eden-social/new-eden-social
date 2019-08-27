@@ -1,9 +1,8 @@
 import {
-  Column, CreateDateColumn, Entity, ManyToOne,
+  Column, CreateDateColumn, Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { CreateCommentEvent } from './events/create.event';
 
 @Entity()
 export class Comment extends AggregateRoot {
@@ -28,13 +27,4 @@ export class Comment extends AggregateRoot {
 
   @Column()
   allianceId?: number;
-
-  /**
-   * Sends proper event on comment creation
-   * @return {Promise<Comment>}
-   */
-  public async create(): Promise<Comment> {
-    await this.apply(new CreateCommentEvent(this));
-    return this;
-  }
 }

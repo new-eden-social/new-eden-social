@@ -8,7 +8,7 @@ export interface IAuthenticationResponse {
 export interface IAuthenticationVerify {
   readonly CharacterID: number;
   readonly CharacterName: string;
-  readonly ExpiresOn: Date;
+  readonly ExpiresOn: string;
   readonly Scopes: string;
   readonly TokenType: string;
   readonly CharacterOwnerHash: string;

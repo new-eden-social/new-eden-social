@@ -23,6 +23,7 @@ import { ISocket } from './websocket.interface';
 import { EventPattern } from '@nestjs/microservices';
 import { WS_REDIS_EVENTS } from './redis/websocket.redis.events';
 import { DWsRedisLatestWall, DWsRedisCharacterWall, DWsRedisCharacter, DWsRedisHashtagWall, DWsRedisAllianceWall, DWsRedisCorporationWall, DWsRedisPostComments } from './redis/websocket.redis.dto';
+import { AuthenticateGrpcClient } from '@new-eden-social/api-authenticate';
 
 @WebSocketGateway()
 @UsePipes(new ValidationPipe())
@@ -35,6 +36,7 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
 
   constructor(
     private readonly logger: LoggerService,
+    private readonly authenticateClient: AuthenticateGrpcClient,
   ) {
   }
 
@@ -196,7 +198,8 @@ export class WebsocketGateway implements OnGatewayConnection, OnGatewayDisconnec
     data: VWebsocketAuthentication,
   ): Promise<DWsAuthentication> {
     try {
-      client.characterId = await this.authenticationService.verifyAuthentication(data.token);
+      const verifyResponse = await this.authenticateClient.service.verify({ token: data.token }).toPromise();
+      client.characterId = verifyResponse.characterId;
       this.logger.debug(
         `[Websocket.Gateway] authenticate => ${client.characterId} = success`,
       );

@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "exit 0",
+    "build:lib": "tsc --build tsconfig.lib.json",
     "build:dist": "tsc --build tsconfig.json",
     "build:docker": "docker build . -t newedensocial/api-websocket",
     "build": "npm run build:lib && npm run build:dist"
@@ -24,7 +25,7 @@
     "@nestjs/terminus": "6.3.4",
     "@nestjs/testing": "6.4.0",
     "@nestjs/typeorm": "6.1.2",
-    "@nestjs/websockets": "6.4.0",
+    "@nestjs/websockets": "^6.5.3",
     "@new-eden-social/esi": "^0.1.1",
     "@new-eden-social/eve-sso": "^0.1.1",
     "@new-eden-social/killmails-stream": "^0.1.1",
