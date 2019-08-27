@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { from, Observable } from 'rxjs';
-import { ISearchGrpcService } from './search.grpc.interface';
+import { map } from 'rxjs/operators';
+import { ISearchGrpcService, ISearchRequest, ISearchResponse } from './search.grpc.interface';
 import { SearchService } from '../search.service';
 import { IUniverseName } from '@new-eden-social/esi';
 import { GrpcMethod } from '@nestjs/microservices';
@@ -13,7 +14,9 @@ export class SearchrGrpcController implements ISearchGrpcService {
   ){}
 
   @GrpcMethod('SearchService')
-  search(query: string): Observable<IUniverseName[]> {
-    return from(this.searchService.search(query));
+  search(data: ISearchRequest): Observable<ISearchResponse> {
+    return from(this.searchService.search(data.query)).pipe<ISearchResponse>(
+      map<IUniverseName[], ISearchResponse>(results => ({ results }))
+    );
   }
 }
