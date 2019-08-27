@@ -1,15 +1,12 @@
 import { Module } from '@nestjs/common';
 import { CommentService } from './comment.service';
-import { CommentController } from './http/comment.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CommentRepository } from './comment.repository';
-import { eventHandlers } from './events/handlers';
-import { commandHandlers } from './commands/handlers';
-import { CqrsModule } from '@nestjs/cqrs';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { Comment } from './comment.entity';
+import { NotificationGrpcModule } from '@new-eden-social/api-notification';
 
 @Module({
   imports: [
@@ -29,16 +26,12 @@ import { Comment } from './comment.entity';
     }),
     TypeOrmModule.forFeature([CommentRepository]),
 
-    CqrsModule,
-
+    NotificationGrpcModule,
   ],
   controllers: [
-    CommentController,
   ],
   providers: [
     CommentService,
-    ...commandHandlers,
-    ...eventHandlers,
   ],
 })
 export class CommentModule {

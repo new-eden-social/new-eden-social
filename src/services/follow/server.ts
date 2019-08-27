@@ -20,13 +20,6 @@ async function bootstrap() {
     },
   });
 
-  app.connectMicroservice({
-    transport: Transport.REDIS,
-    options: {
-      url: process.env.REDIS_HOST,
-    },
-  });
-
   await app.startAllMicroservicesAsync();
   await app.listen(HTTP_PORT);
 }

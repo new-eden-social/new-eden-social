@@ -10,18 +10,22 @@ import { Transport } from '@nestjs/common/enums/transport.enum';
 import { join } from 'path';
 
 async function bootstrap() {
-  const PORT = parseInt(process.env.PORT, 10) || 3000; // Default to 3000
+  const HTTP_PORT = parseInt(process.env.HTTP_PORT, 10) || 3000; // Default to 3000
+  const GRPC_PORT = parseInt(process.env.GRPC_PORT, 10) || 4000; // Default to 4000
 
-  const nestApp = await NestFactory.createMicroservice(MetascraperModule, {
+  const app = await NestFactory.create(MetascraperModule);
+
+  app.connectMicroservice({
     transport: Transport.GRPC,
     options: {
-      url: `0.0.0.0:${PORT}`,
+      url: `0.0.0.0:${GRPC_PORT}`,
       package: 'metascraper',
       protoPath: join(__dirname, 'src/grpc/metascraper.proto'),
     },
   });
-  // tslint:disable-next-line: no-console
-  nestApp.listen(() => console.log('Microservice is listening'));
+
+  await app.startAllMicroservicesAsync();
+  await app.listen(HTTP_PORT);
 }
 
 bootstrap();

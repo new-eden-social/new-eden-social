@@ -4,14 +4,20 @@ import { Comment } from './comment.entity';
 import { VCreateComment } from './comment.validate';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, mergeMap } from 'rxjs/operators';
+import { NotificationGrpcClient, NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
+import * as uuidv4 from 'uuid/v4';
 
 @Injectable()
 export class CommentService {
 
+  // Number of parallel notifications creations
+  private readonly NOTIFICATIONS_PARALLEL_CREATE = 4;
+
   constructor(
     @InjectRepository(CommentRepository)
     private readonly commentRepository: CommentRepository,
+    private readonly notificationClient: NotificationGrpcClient
   ) {
   }
 
@@ -27,27 +33,14 @@ export class CommentService {
 
     const createdComment = await this.commentRepository.save(comment);
 
-    const participants = await this.getParticipantsForPost(postId);
+    // Should we even await this? Or just let it run in background?
+    await this.sendNotificationToParticipantsAsCharacter(
+      characterId,
+      createdComment.id,
+      postId,
+    );
 
-    // from(participants.characterIds).pipe(
-    //   filter(id => id !== characterId), // Skip comment author
-    //   // TODO: Paralelize notification creation.
-    // )
-
-    // for (const participantId of participants.characterIds) {
-    //   if (characterId === participantId) {
-    //     continue;
-    //   }
-    //   const notification = new Notification();
-    //   notification.eventUuid = eventUuid;
-    //   notification.senderCharacter = event.comment.character;
-    //   notification.recipient = participant;
-    //   notification.comment = event.comment;
-    //   notification.post = event.comment.post;
-    //   notification.type = NOTIFICATION_TYPE.NEW_COMMENT_ON_A_POST_YOU_PARTICIPATE;
-    //   // Execute create notification command
-    // }
-
+    return createdComment;
   }
 
   public async createAsCorporation(
@@ -60,7 +53,16 @@ export class CommentService {
     comment.postId = postId;
     comment.corporationId = corporationId;
 
-    return this.commentRepository.save(comment);
+    const createdComment = await this.commentRepository.save(comment);
+
+    // Should we even await this? Or just let it run in background?
+    await this.sendNotificationToParticipantsAsCorporation(
+      corporationId,
+      createdComment.id,
+      postId,
+    );
+
+    return createdComment;
   }
 
   public async createAsAlliance(
@@ -73,7 +75,16 @@ export class CommentService {
     comment.postId = postId;
     comment.allianceId = allianceId;
 
-    return this.commentRepository.save(comment);
+    const createdComment = await this.commentRepository.save(comment);
+
+    // Should we even await this? Or just let it run in background?
+    await this.sendNotificationToParticipantsAsAlliance(
+      allianceId,
+      createdComment.id,
+      postId,
+    );
+
+    return createdComment;
   }
 
   public async getLatestForPost(
@@ -100,11 +111,61 @@ export class CommentService {
     return {characterIds, corporationIds, allianceIds};
   }
 
-  private async sendNotificationForCreate() {
-    const participants = await this.postService.getParticipants(event.comment.post);
+  private async sendNotificationToParticipantsAsCharacter(
+    senderCharacterId: number,
+    commentId: string,
+    postId: string,
+  ): Promise<void> {
     const eventUuid = uuidv4();
+    const participants = await this.getParticipantsForPost(postId);
+    await from(participants.characterIds).pipe(
+      filter(id => id !== senderCharacterId), // Skip comment author
+      mergeMap(id => this.notificationClient.service.create({
+        eventUuid,
+        senderCharacterId,
+        recipientId: id,
+        commentId,
+        postId,
+        type: NOTIFICATION_TYPE.NEW_COMMENT_ON_A_POST_YOU_PARTICIPATE,
+      }), this.NOTIFICATIONS_PARALLEL_CREATE), // Create notifications in parallel
+    ).toPromise();
+  }
 
-    // Create notification for all the characters
+  private async sendNotificationToParticipantsAsCorporation(
+    senderCorporationId: number,
+    commentId: string,
+    postId: string,
+  ): Promise<void> {
+    const eventUuid = uuidv4();
+    const participants = await this.getParticipantsForPost(postId);
+    await from(participants.characterIds).pipe(
+      mergeMap(id => this.notificationClient.service.create({
+        eventUuid,
+        senderCorporationId,
+        recipientId: id,
+        commentId,
+        postId,
+        type: NOTIFICATION_TYPE.NEW_COMMENT_ON_A_POST_YOU_PARTICIPATE,
+      }), this.NOTIFICATIONS_PARALLEL_CREATE), // Create notifications in parallel
+    ).toPromise();
+  }
 
+  private async sendNotificationToParticipantsAsAlliance(
+    senderAllianceId: number,
+    commentId: string,
+    postId: string,
+  ): Promise<void> {
+    const eventUuid = uuidv4();
+    const participants = await this.getParticipantsForPost(postId);
+    await from(participants.characterIds).pipe(
+      mergeMap(id => this.notificationClient.service.create({
+        eventUuid,
+        senderAllianceId,
+        recipientId: id,
+        commentId,
+        postId,
+        type: NOTIFICATION_TYPE.NEW_COMMENT_ON_A_POST_YOU_PARTICIPATE,
+      }), this.NOTIFICATIONS_PARALLEL_CREATE), // Create notifications in parallel
+    ).toPromise();
   }
 }

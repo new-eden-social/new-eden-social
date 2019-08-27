@@ -9,7 +9,6 @@ async function bootstrap() {
   // const GRPC_PORT = parseInt(process.env.GRPC_PORT, 10) || 4000; // Default to 4000
 
   const app = await NestFactory.create(WebsocketModule);
-  app.enableCors();
 
   app.connectMicroservice({
     transport: Transport.REDIS,
