@@ -1,4 +1,4 @@
-import {DCharacter, DCharacterShort} from '@new-eden-social/api-character/character.dto';
+import { DCharacterShort } from '../character/character.dto';
 
 export interface IAuthenticationData {
   readonly accessToken: string;

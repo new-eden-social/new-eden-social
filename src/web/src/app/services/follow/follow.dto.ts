@@ -1,7 +1,7 @@
 import {FOLLOW_ACTION_TYPE} from './follow.constants';
-import {DCharacterShort} from '@new-eden-social/api-character/character.dto';
 import {DCorporationShort} from '../corporation/corporation.dto';
 import {DAllianceShort} from '../alliance/alliance.dto';
+import { DCharacterShort } from '../character/character.dto';
 
 
 export class DFollow {
