@@ -7,16 +7,7 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import { PostService } from './post.service';
-import { VCreatePost } from './post.validate';
-import { CharacterService } from '@new-eden-social/api-character';
-import { CorporationService } from '@new-eden-social/api-corporation';
-import { CorporationRoles } from '@new-eden-social/api-corporation';
-import { CORPORATION_ROLES } from '@new-eden-social/api-corporation';
-import { AllianceService } from '@new-eden-social/api-alliance';
-import { CorporationAllianceExecutorGuard } from '@new-eden-social/api-corporation';
 import { DPost, DPostList } from './post.dto';
-import { CorporationRolesGuard } from '@new-eden-social/api-corporation';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { Character } from '@new-eden-social/api-character';
 import { ApiBearerAuth, ApiResponse, ApiUseTags } from '@nestjs/swagger';

@@ -6,8 +6,23 @@
 !lerna.json
 
 # We need dependencies information
-!src/**/package.json
-# ^---- Should work but it doesnt?????
 !src/services/alliance/package.json
+!src/services/authenticate/package.json
+!src/services/character/package.json
+!src/services/comment/package.json
+!src/services/corporation/package.json
+!src/services/follow/package.json
+!src/services/hashtag/package.json
+!src/services/killmail/package.json
+!src/services/metascraper/package.json
+!src/services/notification/package.json
+!src/services/post/package.json
+!src/services/search/package.json
+!src/services/universe/package.json
+!src/services/updater/package.json
+!src/services/websocket/package.json
+!src/web/package.json
+!src/gateway/package.json
+
 # We need tsconfig.base.json
-!src/**/tsconfig.base.json
+!src/services/tsconfig.base.json
