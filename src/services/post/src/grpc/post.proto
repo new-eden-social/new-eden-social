@@ -1,0 +1,81 @@
+syntax = "proto3";
+
+service PostService {
+  rpc CreateAsCharacter(CreateAsCharacterRequest) returns (PostResponse);
+  rpc CreateAsCorporaiton(CreateAsCorporationRequest) returns (PostResponse);
+  rpc CreateAsAlliance(CreateAsAllianceRequest) returns (PostResponse);
+
+  rpc GetCharacterWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
+  rpc GetCorporationWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
+  rpc GetAllianceWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
+  rpc GetHashtagWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
+  rpc GetLocationWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
+  rpc GetLatestWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
+}
+
+message CreatePost {
+  string content = 1;
+  string type = 2; // POST_CREATABLE_TYPES
+  int32 locationId = 3;
+  int32 corporationId = 4;
+  int32 characterId = 5;
+  int32 allianceId = 6;
+  string url = 7;
+}
+
+message CreateAsCharacterRequest {
+  CreatePost post = 1;
+  int32 characterId = 2;
+}
+
+message CreateAsCorporationRequest {
+  CreatePost post = 1;
+  int32 corporationId = 2;
+}
+
+message CreateAsAllianceRequest {
+  CreatePost post = 1;
+  int32 allianceId = 2;
+}
+
+message PagginationRequest {
+  int32 limit = 1;
+  int32 page = 2;
+}
+
+message GetCharacterWallRequest {
+  PagginationRequest paggination = 1;
+  int32 characterId = 2;
+}
+
+message GetCorporationWallRequest {
+  PagginationRequest paggination = 1;
+  int32 corporationId = 2;
+}
+
+message GetAllianceWallRequest {
+  PagginationRequest paggination = 1;
+  int32 allianceId = 2;
+}
+
+message GetHashtagWallRequest {
+  PagginationRequest paggination = 1;
+  string hashtag = 2;
+}
+
+message GetLocationWallRequest {
+  PagginationRequest paggination = 1;
+  int32 locationId = 2;
+}
+
+message GetLatestWallRequest {
+  PagginationRequest paggination = 1;
+}
+
+message PostResponse {
+}
+
+message PaginatedPostResponse {
+  repeated PostResponse post = 1;
+  int32 count = 2;
+}

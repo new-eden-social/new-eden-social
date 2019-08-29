@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ICharacterGrpcService, ICharacterEntity } from './character.grpc.interface';
+import { ICharacterGrpcService, ICharacterEntity, IGetRefreshResponse, IGetNotUpdatedResponse, IExistsResponse, IExistsGetRefreshRequest } from './character.grpc.interface';
 import { CharacterService } from '../character.service';
 import { Character } from '../character.entity';
 
@@ -15,30 +15,30 @@ export class CharacterGrpcController implements ICharacterGrpcService {
   }
 
   @GrpcMethod('CharacterService')
-  exists(id: number): Observable<{ exists: boolean; }> {
-    return from(this.characterService.exists(id)).pipe<{ exists: boolean }>(
-      map<boolean, {exists: boolean}>(exists => ({ exists })),
+  exists(data: IExistsGetRefreshRequest): Observable<IExistsResponse> {
+    return from(this.characterService.exists(data.characterId)).pipe<IExistsResponse>(
+      map<boolean, IExistsResponse>(exists => ({ exists })),
     );
   }
 
   @GrpcMethod('CharacterService')
-  get(id: number): Observable<ICharacterEntity> {
-    return from(this.characterService.get(id)).pipe<ICharacterEntity>(
-      map<Character, ICharacterEntity>(this.characterTransform)
+  get(data: IExistsGetRefreshRequest): Observable<IGetRefreshResponse> {
+    return from(this.characterService.get(data.characterId)).pipe<IGetRefreshResponse>(
+      map<Character, IGetRefreshResponse>(character => ({ character: this.characterTransform(character)}))
     );
   }
 
   @GrpcMethod('CharacterService')
-  getNotUpdated(interval: string, limit: number): Observable<ICharacterEntity[]> {
-    return from(this.characterService.getNotUpdated(interval, limit)).pipe<ICharacterEntity[]>(
-      map<Character[], ICharacterEntity[]>(characters => characters.map(this.characterTransform))
+  getNotUpdated(interval: string, limit: number): Observable<IGetNotUpdatedResponse> {
+    return from(this.characterService.getNotUpdated(interval, limit)).pipe<IGetNotUpdatedResponse>(
+      map<Character[], IGetNotUpdatedResponse>(characters => ({ characters: characters.map(this.characterTransform)}))
     );
   }
 
   @GrpcMethod('CharacterService')
-  refresh(id: number): Observable<ICharacterEntity> {
-    return from(this.characterService.get(id)).pipe<ICharacterEntity>(
-      map<Character, ICharacterEntity>(this.characterTransform)
+  refresh(data: IExistsGetRefreshRequest): Observable<IGetRefreshResponse> {
+    return from(this.characterService.get(data.characterId)).pipe<IGetRefreshResponse>(
+      map<Character, IGetRefreshResponse>(character => ({ character: this.characterTransform(character)}))
     );
   }
 

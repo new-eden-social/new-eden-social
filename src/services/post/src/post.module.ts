@@ -8,6 +8,7 @@ import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { MetascraperGrpcModule } from '@new-eden-social/api-metascraper';
 import { Post } from './post.entity';
 import { WebsocketRedisModule } from '@new-eden-social/api-websocket';
+import { PostGrpcController } from './grpc/post.grpc.controller';
 
 @Module({
   imports: [
@@ -33,6 +34,9 @@ import { WebsocketRedisModule } from '@new-eden-social/api-websocket';
   providers: [
     PostService,
   ],
+  controllers: [
+    PostGrpcController,
+  ]
 })
 export class PostModule {
 }

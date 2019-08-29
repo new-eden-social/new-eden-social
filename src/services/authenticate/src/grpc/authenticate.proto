@@ -13,14 +13,14 @@ message VerifyDecodeRequest {
 message VerifyDecodeResponse {
   string ssoToken = 1; // Represents eve online sso token
   string ssoRefreshToken = 2; // Represents eve online sso refresh token
-  int64 characterId = 3;
+  int32 characterId = 3;
 }
 
 message AuthenticateRequest {
   string ssoToken = 1; // Represents eve online sso token
   string ssoRefreshToken = 2; // Represents eve online sso refresh token
   string ssoExpiresIn = 3; // Time in which ssoToken will expire
-  int64 characterId = 4;
+  int32 characterId = 4;
 }
 
 message AuthenticateResponse {

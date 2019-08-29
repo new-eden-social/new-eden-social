@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 service HashTagService {
-    rpc parse(ParseRequest) returns (ParseResponse);
+    rpc Parse(ParseRequest) returns (ParseResponse);
 }
 
 message ParseRequest {

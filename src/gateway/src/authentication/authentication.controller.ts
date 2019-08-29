@@ -107,7 +107,7 @@ export class AuthenticationController {
       // When JWT token is valid, try to validate ssoToken as well
       await this.ssoService.verifyAuthentication(verifyResponse.ssoToken);
       // When both are valid, get character information
-      const character = await this.characterClient.service.get(verifyResponse.characterId).toPromise();
+      const character = await this.characterClient.service.get({ characterId: verifyResponse.characterId }).toPromise();
       // Return with character information
       return new DCharacter(character);
     } catch {

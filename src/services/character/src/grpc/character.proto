@@ -1,26 +1,22 @@
 syntax = "proto3";
 
 service CharacterService {
-    rpc Exists (ExistsRequest) returns (ExistsResponse);
-    rpc Get (GetRequest) returns (GetResponse);
+    rpc Exists (ExistsGetRefreshRequest) returns (ExistsResponse);
+    rpc Get (ExistsGetRefreshRequest) returns (GetResponse);
     rpc GetNotUpdated(GetNotUpdatedRequest) returns (GetNotUpdatedResponse);
-    rpc Refresh(GetRequest) returns (GetResponse);
+    rpc Refresh(ExistsGetRefreshRequest) returns (GetResponse);
 }
 
-message ExistsRequest {
-    int64 id = 1;
+message ExistsGetRefreshRequest {
+    int32 id = 1;
 }
 
 message ExistsResponse {
     bool exists = 1;
 }
 
-message GetRequest {
-    int64 id = 1;
-}
-
 message GetResponse {
-    int64 id = 1;
+    int32 id = 1;
     string handle = 2;
     string name = 3;
 }

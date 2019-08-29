@@ -9,20 +9,17 @@ import {
 } from '@nestjs/common';
 import { DPost, DPostList } from './post.dto';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
-import { Character } from '@new-eden-social/api-character';
 import { ApiBearerAuth, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { Pagination, VPagination } from '@new-eden-social/pagination';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
+import { } from '@new-eden-social/api-post';
 
 @ApiUseTags('posts')
 @Controller('posts')
 export class PostController {
 
   constructor(
-    private readonly postService: PostService,
-    private readonly characterService: CharacterService,
-    private readonly corporationService: CorporationService,
-    private readonly allianceService: AllianceService,
+    private readonly postClient: PostGrpcClient,
   ) {
   }
 

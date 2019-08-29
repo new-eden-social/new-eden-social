@@ -1,10 +1,13 @@
 import { Injectable, NestMiddleware } from '@nestjs/common';
-import { TokenExpiredException } from '@new-eden-social/eve-sso';
 import { AuthenticateGrpcClient } from '@new-eden-social/api-authenticate';
+import { CharacterGrpcClient } from '@new-eden-social/api-character';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-  constructor(private readonly authenticationClient: AuthenticateGrpcClient) {
+  constructor(
+    private readonly authenticationClient: AuthenticateGrpcClient,
+    private readonly characterClient: CharacterGrpcClient,
+  ) {
   }
 
   async use(req, res, next): Promise<void> {
@@ -17,9 +20,10 @@ export class AuthMiddleware implements NestMiddleware {
     try {
       const token = req.headers.authorization.slice('Bearer '.length);
       req.token = token;
-      req.characterId = await this.authenticationClient.service.verify({ token });
+      const verifyResponse = await this.authenticationClient.service.verify({ token }).toPromise();
+      req.character = await this.characterClient.service.get({ characterId: verifyResponse.characterId}).toPromise();
     } catch (error) {
-      req.characterId = null;
+      req.character = null;
     }
 
     next();
