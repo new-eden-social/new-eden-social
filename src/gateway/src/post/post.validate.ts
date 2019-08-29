@@ -1,4 +1,4 @@
-import { POST_CREATABLE_TYPES, POST_TYPES } from './post.constants';
+import { POST_CREATABLE_TYPES, POST_TYPES } from '@new-eden-social/api-post';
 import { IsIn, IsNumber, IsOptional, IsString, IsUrl } from 'class-validator';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 

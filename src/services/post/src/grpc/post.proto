@@ -1,21 +1,27 @@
 syntax = "proto3";
 
 service PostService {
+  rpc Get(GetRequest) returns (PostResponse);
+
   rpc CreateAsCharacter(CreateAsCharacterRequest) returns (PostResponse);
   rpc CreateAsCorporaiton(CreateAsCorporationRequest) returns (PostResponse);
   rpc CreateAsAlliance(CreateAsAllianceRequest) returns (PostResponse);
 
   rpc GetCharacterWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
-  rpc GetCorporationWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
-  rpc GetAllianceWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
-  rpc GetHashtagWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
-  rpc GetLocationWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
-  rpc GetLatestWall(GetCharacterWallRequest) returns (PaginatedPostResponse);
+  rpc GetCorporationWall(GetCorporationWallRequest) returns (PaginatedPostResponse);
+  rpc GetAllianceWall(GetAllianceWallRequest) returns (PaginatedPostResponse);
+  rpc GetHashtagWall(GetHashtagWallRequest) returns (PaginatedPostResponse);
+  rpc GetLocationWall(GetLocationWallRequest) returns (PaginatedPostResponse);
+  rpc GetLatestWall(GetLatestWallRequest) returns (PaginatedPostResponse);
+}
+
+message GetRequest {
+  string postId = 1;
 }
 
 message CreatePost {
   string content = 1;
-  string type = 2; // POST_CREATABLE_TYPES
+  string type = 2; // POST_TYPES
   int32 locationId = 3;
   int32 corporationId = 4;
   int32 characterId = 5;
@@ -72,10 +78,39 @@ message GetLatestWallRequest {
   PagginationRequest paggination = 1;
 }
 
+message UrlResponse {
+  string author = 1;
+  string date = 2;
+  string description = 3;
+  string image = 4;
+  string video = 5;
+  string lang = 6;
+  string logo = 7;
+  string publisher = 8;
+  string title = 9;
+  string url = 10;
+
+  int32 killmailId = 11;
+}
+
 message PostResponse {
+  string id = 1;
+  string content = 2;
+  string type = 3; // POST_TYPES
+  int32 killmailId = 4;
+  UrlResponse url = 5;
+  string createdAt = 6;
+  int32 locationId = 7;
+  int32 characterId = 8;
+  int32 corporationId = 9;
+  int32 allianceId = 10;
+  int32 characterWallId = 11;
+  int32 corporationWallId = 12;
+  int32 allianceWallId = 13;
+  repeated string hashtags = 14;
 }
 
 message PaginatedPostResponse {
-  repeated PostResponse post = 1;
+  repeated PostResponse posts = 1;
   int32 count = 2;
 }

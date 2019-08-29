@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
-import { VCreatePost } from './post.validate';
+import { VCreatePost } from '../../../gateway/src/post/post.validate';
 import { POST_TYPES } from './post.constants';
 import { PostRepository } from './post.repository';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -9,6 +9,7 @@ import { IKillmail } from '@new-eden-social/zkillboard';
 import { HashtagGrpcClient } from '@new-eden-social/api-hashtag';
 import { NotificationGrpcClient, NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
 import * as uuidv4 from 'uuid/v4';
+import { ICreatePost } from './post.interface';
 
 @Injectable()
 export class PostService {
@@ -38,7 +39,7 @@ export class PostService {
    * @return {Promise<Post>}
    */
   public async createAsCharacter(
-    postData: VCreatePost,
+    postData: ICreatePost,
     characterId: number,
   ): Promise<Post> {
     const post = new Post();
@@ -154,7 +155,7 @@ export class PostService {
    * @param {number} page
    * @returns {Promise<{posts: Post[]; count: number}>}
    */
-  public async getByHashtag(
+  public async getHashtagWall(
     hashtag: string,
     limit = 10,
     page = 0,
@@ -170,7 +171,7 @@ export class PostService {
    * @param {number} page
    * @returns {Promise<{posts: Post[]; count: number}>}
    */
-  public async getByLocation(
+  public async getLocationWall(
     locationId: number,
     limit = 10,
     page = 0,
@@ -185,7 +186,7 @@ export class PostService {
    * @param {Number} page
    * @return {Promise<Post[]>}
    */
-  public async getLatest(
+  public async getLatestWall(
     limit = 10,
     page = 0,
   ): Promise<{ posts: Post[], count: number }> {

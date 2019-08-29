@@ -12,7 +12,11 @@ import { AuthenticatedCharacter } from '../authentication/authentication.decorat
 import { ApiBearerAuth, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { Pagination, VPagination } from '@new-eden-social/pagination';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
-import { } from '@new-eden-social/api-post';
+import { PostGrpcClient } from '@new-eden-social/api-post';
+import { VCreatePost } from './post.validate';
+import { ICharacterEntity } from '@new-eden-social/api-character';
+import { CorporationRolesGuard } from '../corporation/corporation.roles.guard';
+import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
 
 @ApiUseTags('posts')
 @Controller('posts')
@@ -32,7 +36,12 @@ export class PostController {
   public async getLatestPosts(
     @Pagination() pagination: VPagination,
   ) {
-    const { posts, count } = await this.postService.getLatest(pagination.limit, pagination.page);
+    const { posts, count } = await this.postClient.service.getLatestWall({
+      paggination: {
+        limit: pagination.limit,
+        page: pagination.page,
+      }
+    }).toPromise();
 
     return new DPostList(posts, pagination.page, pagination.limit, count);
   }
@@ -47,11 +56,13 @@ export class PostController {
     @Param('characterId') characterId: number,
     @Pagination() pagination: VPagination,
   ): Promise<DPostList> {
-    const character = await this.characterService.get(characterId);
-    const { posts, count } = await this.postService.getCharacterWall(
-      character,
-      pagination.limit,
-      pagination.page);
+    const { posts, count } = await this.postClient.service.getCharacterWall({
+      characterId,
+      paggination: {
+        limit: pagination.limit,
+        page: pagination.page,
+      }
+    }).toPromise();
 
     return new DPostList(posts, pagination.page, pagination.limit, count);
   }
@@ -66,11 +77,13 @@ export class PostController {
     @Param('corporationId') corporationId: number,
     @Pagination() pagination: VPagination,
   ): Promise<DPostList> {
-    const corporation = await this.corporationService.get(corporationId);
-    const { posts, count } = await this.postService.getCorporationWall(
-      corporation,
-      pagination.limit,
-      pagination.page);
+    const { posts, count } = await this.postClient.service.getCorporationWall({
+      corporationId,
+      paggination: {
+        limit: pagination.limit,
+        page: pagination.page,
+      }
+    }).toPromise();
 
     return new DPostList(posts, pagination.page, pagination.limit, count);
   }
@@ -85,11 +98,13 @@ export class PostController {
     @Param('allianceId') allianceId: number,
     @Pagination() pagination: VPagination,
   ): Promise<DPostList> {
-    const alliance = await this.allianceService.get(allianceId);
-    const { posts, count } = await this.postService.getAllianceWall(
-      alliance,
-      pagination.limit,
-      pagination.page);
+    const { posts, count } = await this.postClient.service.getAllianceWall({
+      allianceId,
+      paggination: {
+        limit: pagination.limit,
+        page: pagination.page,
+      }
+    }).toPromise();
 
     return new DPostList(posts, pagination.page, pagination.limit, count);
   }
@@ -104,11 +119,13 @@ export class PostController {
     @Param('hashtag') hashtag: string,
     @Pagination() pagination: VPagination,
   ): Promise<DPostList> {
-    const { posts, count } = await this.postService.getByHashtag(
+    const { posts, count } = await this.postClient.service.getHashtagWall({
       hashtag,
-      pagination.limit,
-      pagination.page);
-
+      paggination: {
+        limit: pagination.limit,
+        page: pagination.page,
+      }
+    }).toPromise();
     return new DPostList(posts, pagination.page, pagination.limit, count);
   }
 
@@ -122,11 +139,13 @@ export class PostController {
     @Param('locationId') locationId: number,
     @Pagination() pagination: VPagination,
   ): Promise<DPostList> {
-    const { posts, count } = await this.postService.getByLocation(
+    const { posts, count } = await this.postClient.service.getLocationWall({
       locationId,
-      pagination.limit,
-      pagination.page);
-
+      paggination: {
+        limit: pagination.limit,
+        page: pagination.page,
+      }
+    }).toPromise();
     return new DPostList(posts, pagination.page, pagination.limit, count);
   }
 
@@ -139,7 +158,7 @@ export class PostController {
   public async get(
     @Param('id') postId: string,
   ): Promise<DPost> {
-    const post = await this.postService.get(postId);
+    const post = await this.postClient.service.get({ postId });
     return new DPost(post);
   }
 
@@ -153,9 +172,12 @@ export class PostController {
   @Post('/character')
   public async createAsCharacter(
     @Body() postData: VCreatePost,
-    @AuthenticatedCharacter() character: Character,
+    @AuthenticatedCharacter() character: ICharacterEntity,
   ): Promise<any> {
-    const post = await this.postService.createAsCharacter(postData, character);
+    const post = await this.postClient.service.createAsCharacter({
+      post: postData,
+      characterId: character.id,
+    }).toPromise();
     return new DPost(post);
   }
 
@@ -173,9 +195,12 @@ export class PostController {
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsCorporation(
     @Body() postData: VCreatePost,
-    @AuthenticatedCharacter() character: Character,
+    @AuthenticatedCharacter() character: ICharacterEntity,
   ): Promise<DPost> {
-    const post = await this.postService.createAsCorporation(postData, character.corporation);
+    const post = await this.postClient.service.createAsCorporation({
+      post: postData,
+      corporationId: character.corporationId,
+    }).toPromise();
     return new DPost(post);
   }
 
@@ -193,11 +218,12 @@ export class PostController {
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsAlliance(
     @Body() postData: VCreatePost,
-    @AuthenticatedCharacter() character: Character,
+    @AuthenticatedCharacter() character: ICharacterEntity,
   ): Promise<DPost> {
-    const post = await this.postService.createAsAlliance(
-      postData,
-      character.corporation.alliance);
+    const post = await this.postClient.service.createAsAlliance({
+      post: postData,
+      allianceId: character.allianceId,
+    });
 
     return new DPost(post);
   }
