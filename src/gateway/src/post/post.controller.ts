@@ -14,9 +14,11 @@ import { Pagination, VPagination } from '@new-eden-social/pagination';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
 import { PostGrpcClient } from '@new-eden-social/api-post';
 import { VCreatePost } from './post.validate';
-import { ICharacterEntity } from '@new-eden-social/api-character';
+import { ICharacterResponse } from '@new-eden-social/api-character';
 import { CorporationRolesGuard } from '../corporation/corporation.roles.guard';
 import { CorporationAllianceExecutorGuard } from '../corporation/corporation.allianceExecutor.guard';
+import { CorporationGrpcClient, CORPORATION_ROLES } from '@new-eden-social/api-corporation';
+import { CorporationRoles } from '../corporation/corporation.roles.decorator';
 
 @ApiUseTags('posts')
 @Controller('posts')
@@ -24,6 +26,7 @@ export class PostController {
 
   constructor(
     private readonly postClient: PostGrpcClient,
+    private readonly corporationClient: CorporationGrpcClient,
   ) {
   }
 
@@ -158,7 +161,7 @@ export class PostController {
   public async get(
     @Param('id') postId: string,
   ): Promise<DPost> {
-    const post = await this.postClient.service.get({ postId });
+    const post = await this.postClient.service.get({ postId }).toPromise();
     return new DPost(post);
   }
 
@@ -172,7 +175,7 @@ export class PostController {
   @Post('/character')
   public async createAsCharacter(
     @Body() postData: VCreatePost,
-    @AuthenticatedCharacter() character: ICharacterEntity,
+    @AuthenticatedCharacter() character: ICharacterResponse,
   ): Promise<any> {
     const post = await this.postClient.service.createAsCharacter({
       post: postData,
@@ -195,7 +198,7 @@ export class PostController {
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsCorporation(
     @Body() postData: VCreatePost,
-    @AuthenticatedCharacter() character: ICharacterEntity,
+    @AuthenticatedCharacter() character: ICharacterResponse,
   ): Promise<DPost> {
     const post = await this.postClient.service.createAsCorporation({
       post: postData,
@@ -218,13 +221,16 @@ export class PostController {
     CORPORATION_ROLES.COMMUNICATION_OFFICER)
   public async createAsAlliance(
     @Body() postData: VCreatePost,
-    @AuthenticatedCharacter() character: ICharacterEntity,
+    @AuthenticatedCharacter() character: ICharacterResponse,
   ): Promise<DPost> {
+    const corporation = await this.corporationClient.service.get({
+      corporationId: character.corporationId,
+    }).toPromise();
+
     const post = await this.postClient.service.createAsAlliance({
       post: postData,
-      allianceId: character.allianceId,
-    });
-
+      allianceId: corporation.allianceId,
+    }).toPromise();
     return new DPost(post);
   }
 

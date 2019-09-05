@@ -25,7 +25,6 @@ export class PostGrpcController implements IPostGrpcService {
     );
   }
 
-
   @GrpcMethod('PostService')
   createAsCharacter(data: ICreateAsCharacterRequest): Observable<IPostResponse> {
     return from(this.postService.createAsCharacter(data.post, data.characterId)).pipe<IPostResponse>(

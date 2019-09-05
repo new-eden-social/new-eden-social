@@ -1,7 +1,7 @@
-import { Character } from '../character.entity';
-import { ICharacterPortrait } from '../character.interface';
 import { DPagination } from '@new-eden-social/pagination';
 import { ApiModelProperty } from '@nestjs/swagger';
+import { IGetCharacterPortrait } from '@new-eden-social/esi';
+import { ICharacterResponse } from '@new-eden-social/api-character';
 
 export class DCharacterPortrait {
   @ApiModelProperty()
@@ -13,7 +13,7 @@ export class DCharacterPortrait {
   @ApiModelProperty()
   px512x512: string;
 
-  constructor(portrait: ICharacterPortrait) {
+  constructor(portrait: IGetCharacterPortrait) {
     this.px64x64 = portrait.px64x64;
     this.px128x128 = portrait.px128x128;
     this.px256x256 = portrait.px256x256;
@@ -45,7 +45,7 @@ export class DCharacter {
   @ApiModelProperty()
   corporationId: number;
 
-  constructor(character: Character) {
+  constructor(character: ICharacterResponse) {
     this.id = character.id;
     this.handle = character.handle;
     this.name = character.name;
@@ -61,7 +61,7 @@ export class DCharacter {
 }
 
 export class DCharacterList extends DPagination<DCharacter> {
-  constructor(characters: Character[], page: number, perPage: number, count: number) {
+  constructor(characters: ICharacterResponse[], page: number, perPage: number, count: number) {
     const formattedCharacters = characters.map(character => new DCharacter(character));
     super(formattedCharacters, page, perPage, count);
   }

@@ -1,5 +1,4 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
-import { AllianceService } from '@new-eden-social/api-alliance';
 import { LoggerService } from '@new-eden-social/logger';
 
 @Injectable()

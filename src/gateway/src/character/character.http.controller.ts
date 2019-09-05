@@ -1,14 +1,14 @@
 import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
-import { CharacterService } from '../character.service';
 import { DCharacter } from './character.dto';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { CharacterGrpcClient } from '@new-eden-social/api-character';
 
 @ApiUseTags('characters')
 @Controller('characters')
 export class CharacterHttpController {
 
   constructor(
-    private readonly characterService: CharacterService,
+    private readonly characterClient: CharacterGrpcClient,
   ) {
   }
 
@@ -21,7 +21,7 @@ export class CharacterHttpController {
   public async search(
     @Param('characterId') characterId: number,
   ): Promise<DCharacter> {
-    const character = await this.characterService.get(characterId);
+    const character = await this.characterClient.service.get({ characterId }).toPromise();
     return new DCharacter(character);
   }
 }

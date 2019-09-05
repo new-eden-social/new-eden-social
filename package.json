@@ -21,7 +21,6 @@
     "karma-jasmine": "2.0.1",
     "karma-jasmine-html-reporter": "1.4.2",
     "protractor": "5.4.2",
-    "typescript": "3.4.5",
     "webpack-command": "0.4.2",
     "webpack-node-externals": "^1.7.2",
     "@types/bluebird": "3.5.27",

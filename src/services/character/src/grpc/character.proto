@@ -2,23 +2,39 @@ syntax = "proto3";
 
 service CharacterService {
     rpc Exists (ExistsGetRefreshRequest) returns (ExistsResponse);
-    rpc Get (ExistsGetRefreshRequest) returns (GetResponse);
+    rpc Get (ExistsGetRefreshRequest) returns (CharacterResponse);
     rpc GetNotUpdated(GetNotUpdatedRequest) returns (GetNotUpdatedResponse);
-    rpc Refresh(ExistsGetRefreshRequest) returns (GetResponse);
+    rpc Refresh(ExistsGetRefreshRequest) returns (CharacterResponse);
+    rpc Roles(ExistsGetRefreshRequest) returns (CharacterRolesResponse);
 }
 
 message ExistsGetRefreshRequest {
-    int32 id = 1;
+    int32 characterId = 1;
 }
 
 message ExistsResponse {
     bool exists = 1;
 }
 
-message GetResponse {
+message CharacterResponse {
     int32 id = 1;
     string handle = 2;
-    string name = 3;
+    int32 corporationId = 3;
+    string name = 4;
+    string description = 5;
+    string gender = 6;
+    int32 raceId = 7;
+    int32 bloodlineId = 8;
+    int32 ancestryId = 9;
+    float securityStatus = 10;
+    CharacterPortraitResponse portrait = 11;
+}
+
+message CharacterPortraitResponse {
+    string px64x64 = 1;
+    string px128x128 = 2;
+    string px256x256 = 3;
+    string px512x512 = 4;
 }
 
 message GetNotUpdatedRequest {
@@ -27,5 +43,9 @@ message GetNotUpdatedRequest {
 }
 
 message GetNotUpdatedResponse {
-    repeated GetResponse characters = 1;
+    repeated CharacterResponse characters = 1;
+}
+
+message CharacterRolesResponse {
+    repeated string roles = 1;
 }

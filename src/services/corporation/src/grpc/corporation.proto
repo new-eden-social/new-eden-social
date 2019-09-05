@@ -1,26 +1,38 @@
 syntax = "proto3";
 
 service CorporationService {
-    rpc Exists (ExistsRequest) returns (ExistsResponse);
-    rpc Get (GetRequest) returns (GetResponse);
-}
-
-message ExistsRequest {
-    int32 id = 1;
+    rpc Exists (ExistsGetRefreshRequest) returns (ExistsResponse);
+    rpc Get (ExistsGetRefreshRequest) returns (CorporationResponse);
+    rpc getNotUpdated(GetNotUpdatedRequest) returns (GetNotUpdatedResponse);
+    rpc refresh(ExistsGetRefreshRequest) returns (CorporationResponse);
 }
 
 message ExistsResponse {
     bool exists = 1;
 }
 
-message GetRequest {
-    int32 id = 1;
+message ExistsGetRefreshRequest {
+    int32 corporationId = 1;
 }
 
-message GetResponse {
+message CorporationResponse {
     int32 id = 1;
     string handle = 2;
     string name = 3;
+    string ticker = 4;
+    string description = 5;
+    int32 ceoId = 6;
+    int32 creatorId = 7;
+    int32 allianceId = 8;
+    int32 executingAllianceId = 9;
+    float taxRate = 10;
+    CorporationIconResponse icon = 11;
+}
+
+message CorporationIconResponse {
+    string px64x64 = 1;
+    string px128x128 = 2;
+    string px256x256 = 3;
 }
 
 message GetNotUpdatedRequest {
@@ -29,5 +41,5 @@ message GetNotUpdatedRequest {
 }
 
 message GetNotUpdatedResponse {
-    repeated GetResponse corporations = 1;
+    repeated CorporationResponse corporations = 1;
 }

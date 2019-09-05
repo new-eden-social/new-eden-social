@@ -1,13 +1,13 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { CharacterService } from '@new-eden-social/api-character';
 import { LoggerService } from '@new-eden-social/logger';
+import { CharacterGrpcClient } from '@new-eden-social/api-character';
 
 @Injectable()
 export class CorporationRolesGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
-    private readonly characterService: CharacterService,
+    private readonly characterClient: CharacterGrpcClient,
     private readonly loggerService: LoggerService,
   ) {
   }
@@ -27,7 +27,9 @@ export class CorporationRolesGuard implements CanActivate {
 
     const character = httpContext ?
       httpContext.getRequest().character : wsContext.getClient().character;
-    const { roles } = await this.characterService.getRoles(character.id);
+    const { roles } = await this.characterClient.service.roles({
+      characterId: character.id,
+    }).toPromise();
 
     this.loggerService.debug('[CorporationRolesGuard]', roles, requiredRoles);
 

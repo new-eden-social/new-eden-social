@@ -2,9 +2,11 @@ import { Controller } from '@nestjs/common';
 import { GrpcMethod } from '@nestjs/microservices';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ICharacterGrpcService, ICharacterEntity, IGetRefreshResponse, IGetNotUpdatedResponse, IExistsResponse, IExistsGetRefreshRequest } from './character.grpc.interface';
+import { ICharacterGrpcService, ICharacterResponse, IGetNotUpdatedResponse, IExistsResponse, IExistsGetRefreshRequest, IGetNotUpdatedRequest, ICharacterPortraitResponse, ICharacterRolesResponse } from './character.grpc.interface';
 import { CharacterService } from '../character.service';
 import { Character } from '../character.entity';
+import { ICharacterPortrait } from '../character.interface';
+import { IGetCharacterRoles } from '@new-eden-social/esi';
 
 @Controller()
 export class CharacterGrpcController implements ICharacterGrpcService {
@@ -22,31 +24,55 @@ export class CharacterGrpcController implements ICharacterGrpcService {
   }
 
   @GrpcMethod('CharacterService')
-  get(data: IExistsGetRefreshRequest): Observable<IGetRefreshResponse> {
-    return from(this.characterService.get(data.characterId)).pipe<IGetRefreshResponse>(
-      map<Character, IGetRefreshResponse>(character => ({ character: this.characterTransform(character)}))
+  get(data: IExistsGetRefreshRequest): Observable<ICharacterResponse> {
+    return from(this.characterService.get(data.characterId)).pipe<ICharacterResponse>(
+      map<Character, ICharacterResponse>(this.characterTransform),
     );
   }
 
   @GrpcMethod('CharacterService')
-  getNotUpdated(interval: string, limit: number): Observable<IGetNotUpdatedResponse> {
-    return from(this.characterService.getNotUpdated(interval, limit)).pipe<IGetNotUpdatedResponse>(
+  getNotUpdated(data: IGetNotUpdatedRequest): Observable<IGetNotUpdatedResponse> {
+    return from(this.characterService.getNotUpdated(data.interval, data.limit)).pipe<IGetNotUpdatedResponse>(
       map<Character[], IGetNotUpdatedResponse>(characters => ({ characters: characters.map(this.characterTransform)}))
     );
   }
 
   @GrpcMethod('CharacterService')
-  refresh(data: IExistsGetRefreshRequest): Observable<IGetRefreshResponse> {
-    return from(this.characterService.get(data.characterId)).pipe<IGetRefreshResponse>(
-      map<Character, IGetRefreshResponse>(character => ({ character: this.characterTransform(character)}))
+  refresh(data: IExistsGetRefreshRequest): Observable<ICharacterResponse> {
+    return from(this.characterService.get(data.characterId)).pipe<ICharacterResponse>(
+      map<Character, ICharacterResponse>(this.characterTransform),
     );
   }
 
-  private characterTransform(character: Character): ICharacterEntity {
+  @GrpcMethod('CharacterService')
+  roles(data: IExistsGetRefreshRequest): Observable<ICharacterRolesResponse> {
+    return from(this.characterService.getRoles(data.characterId)).pipe<ICharacterRolesResponse>(
+      map<IGetCharacterRoles, ICharacterRolesResponse>(roles => roles),
+    );
+  }
+
+  private characterTransform(character: Character): ICharacterResponse {
     return {
       id: character.id,
       handle: character.handle,
+      corporationId: character.corporationId,
       name: character.name,
+      description: character.description,
+      gender: character.gender,
+      raceId: character.raceId,
+      bloodlineId: character.bloodlineId,
+      ancestryId: character.ancestryId,
+      securityStatus: character.securityStatus,
+      portrait: this.portraitTransform(character.portrait),
+    };
+  }
+
+  private portraitTransform(portrait: ICharacterPortrait): ICharacterPortraitResponse {
+    return {
+      px64x64: portrait.px64x64,
+      px128x128: portrait.px128x128,
+      px256x256: portrait.px256x256,
+      px512x512: portrait.px512x512,
     };
   }
 }

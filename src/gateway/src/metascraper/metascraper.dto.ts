@@ -6,11 +6,11 @@ import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 
 export abstract class DUrlMeta {
   @ApiModelProperty()
-    type: URL_META_TYPE;
+  type: URL_META_TYPE;
   @ApiModelProperty()
-    metadata: IURLMetadata;
+  metadata: IURLMetadata;
   @ApiModelPropertyOptional()
-    killmail: DKillmailShort;
+  killmailId?: number;
 
   constructor(metadata: IURLMetadata) {
     this.metadata = metadata;
@@ -24,8 +24,8 @@ export class DUrlMetaWebsite extends DUrlMeta {
 export class DUrlMetaKillmail extends DUrlMeta {
   type = URL_META_TYPE.KILLMAIL;
 
-  constructor(metadata: IURLMetadata, killmail: Killmail) {
+  constructor(metadata: IURLMetadata, killmailId: number) {
     super(metadata);
-    this.killmail = new DKillmailShort(killmail);
+    this.killmailId = killmailId;
   }
 }
