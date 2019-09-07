@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { CommentRepository } from './comment.repository';
 import { Comment } from './comment.entity';
-import { VCreateComment } from './comment.validate';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
 import { NotificationGrpcClient, NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
 import * as uuidv4 from 'uuid/v4';
+import { ICreateComment } from './comment.interface';
 
 @Injectable()
 export class CommentService {
@@ -22,7 +22,7 @@ export class CommentService {
   }
 
   public async createAsCharacter(
-    commentData: VCreateComment,
+    commentData: ICreateComment,
     postId: string,
     characterId: number,
   ): Promise<Comment> {
@@ -44,7 +44,7 @@ export class CommentService {
   }
 
   public async createAsCorporation(
-    commentData: VCreateComment,
+    commentData: ICreateComment,
     postId: string,
     corporationId: number,
   ): Promise<Comment> {
@@ -66,7 +66,7 @@ export class CommentService {
   }
 
   public async createAsAlliance(
-    commentData: VCreateComment,
+    commentData: ICreateComment,
     postId: string,
     allianceId: number,
   ): Promise<Comment> {

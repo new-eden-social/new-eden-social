@@ -1,6 +1,6 @@
-import { Comment } from '../comment.entity';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
 import { DPagination } from '@new-eden-social/pagination';
+import { ICommentResponse } from '@new-eden-social/api-comment';
 
 export class DComment {
   @ApiModelProperty()
@@ -18,10 +18,10 @@ export class DComment {
   @ApiModelProperty()
   postId: string;
 
-  constructor(comment: Comment) {
+  constructor(comment: ICommentResponse) {
     this.id = comment.id;
     this.content = comment.content;
-    this.createdAt = comment.createdAt;
+    this.createdAt = new Date(comment.createdAt);
     this.postId = comment.postId;
     this.characterId = comment.characterId;
     this.corporationId = comment.corporationId;
@@ -30,7 +30,7 @@ export class DComment {
 }
 
 export class DCommentList extends DPagination<DComment> {
-  constructor(comments: Comment[], page: number, perPage: number, count: number) {
+  constructor(comments: ICommentResponse[], page: number, perPage: number, count: number) {
     const formattedComments = comments.map(comment => new DComment(comment));
     super(formattedComments, page, perPage, count);
   }

@@ -6,5 +6,5 @@ import { PostGrpcClient } from './post.grpc.client';
     PostGrpcClient,
   ]
 })
-export class HashtagGrpcModule {
+export class PostGrpcModule {
 }
