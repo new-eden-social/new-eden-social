@@ -1,14 +1,14 @@
 import { Controller, Get, HttpStatus, Param } from '@nestjs/common';
-import { AllianceService } from '../alliance.service';
 import { DAlliance } from './alliance.dto';
 import { ApiResponse, ApiUseTags } from '@nestjs/swagger';
+import { AllianceGrpcClient } from '@new-eden-social/api-alliance';
 
 @ApiUseTags('alliances')
 @Controller('alliances')
 export class AllianceHttpController {
 
   constructor(
-    private readonly allianceService: AllianceService,
+    private readonly allianceClient: AllianceGrpcClient,
   ) {
   }
 
@@ -21,7 +21,9 @@ export class AllianceHttpController {
   public async search(
     @Param('allianceId') allianceId: number,
   ): Promise<DAlliance> {
-    const alliance = await this.allianceService.get(allianceId);
+    const alliance = await this.allianceClient.service.get({
+      allianceId,
+    }).toPromise();
     return new DAlliance(alliance);
   }
 

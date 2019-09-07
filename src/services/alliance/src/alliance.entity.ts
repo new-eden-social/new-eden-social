@@ -6,7 +6,6 @@ import {
 } from 'typeorm';
 import { IGetAlliance } from '@new-eden-social/esi';
 import { IAllianceIcon } from './alliance.interface';
-import { all } from 'bluebird';
 
 @Entity()
 export class Alliance {

@@ -1,10 +1,14 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { LoggerService } from '@new-eden-social/logger';
+import { AllianceGrpcClient } from '@new-eden-social/api-alliance';
+import { CorporationGrpcClient } from '@new-eden-social/api-corporation';
+import { IAuthenticatedRequest } from '../authentication/authentication.interface';
 
 @Injectable()
 export class CorporationAllianceExecutorGuard implements CanActivate {
   constructor(
-    private readonly allianceService: AllianceService,
+    private readonly allianceClient: AllianceGrpcClient,
+    private readonly corporationClient: CorporationGrpcClient,
     private readonly loggerService: LoggerService,
   ) {
   }
@@ -12,20 +16,32 @@ export class CorporationAllianceExecutorGuard implements CanActivate {
   async canActivate(
     context: ExecutionContext,
   ): Promise<boolean> {
-    const request = context.switchToHttp().getRequest();
+    const request = context.switchToHttp().getRequest<IAuthenticatedRequest>();
 
     const character = request.character;
+    if (character.corporationId == null) {
+      return false;
+    }
 
-    // TODO: Handle "not in alliance" exception! #74
+    const corporation = await this.corporationClient.service.get({
+      corporationId: character.corporationId,
+    }).toPromise();
+    if (corporation.allianceId == null) {
+      return false;
+    }
 
-    const executorCorporation = await this.allianceService.getExecutorCorporation(
-      character.corporation.alliance.id);
+    const alliance = await this.allianceClient.service.get({
+      allianceId: corporation.allianceId,
+    }).toPromise();
+    if (alliance.executorCorporationId !== corporation.id) {
+      return false;
+    }
 
     this.loggerService.debug(
-      '[CorporationAllianceExecutorGuard]',
-      character.alliance,
-      executorCorporation);
+      '[CorporationAllianceExecutorGuard] => allow',
+      character.corporationId,
+      alliance.executorCorporationId);
 
-    return character && executorCorporation && character.corporation.id === executorCorporation.id;
+    return true;
   }
 }
