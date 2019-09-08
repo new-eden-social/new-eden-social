@@ -40,13 +40,13 @@ export interface ICreateAsAllianceRequest {
   allianceId: number;
 }
 
-export interface IPagginationRequest {
+export interface IPaginationRequest {
   limit: number;
   page: number;
 }
 
 export interface IGetLatestRequest {
-  paggination: IPagginationRequest;
+  pagination: IPaginationRequest;
   postId: string;
 }
 

@@ -109,7 +109,7 @@ export class CommentController {
   ) {
     const { comments, count } = await this.commentClient.service.getLatest({
       postId,
-      paggination: {
+      pagination: {
         limit: pagination.limit,
         page: pagination.page,
       }

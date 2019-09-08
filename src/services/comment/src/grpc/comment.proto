@@ -42,13 +42,13 @@ message CreateAsAllianceRequest {
   int32 allianceId = 3;
 }
 
-message PagginationRequest {
+message PaginationRequest {
   int32 limit = 1;
   int32 page = 2;
 }
 
 message GetLatestRequest {
-  PagginationRequest paggination = 1;
+  PaginationRequest pagination = 1;
   int32 postId = 2;
 }
 

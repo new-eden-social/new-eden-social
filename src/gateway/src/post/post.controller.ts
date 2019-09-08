@@ -40,7 +40,7 @@ export class PostController {
     @Pagination() pagination: VPagination,
   ) {
     const { posts, count } = await this.postClient.service.getLatestWall({
-      paggination: {
+      pagination: {
         limit: pagination.limit,
         page: pagination.page,
       }
@@ -61,7 +61,7 @@ export class PostController {
   ): Promise<DPostList> {
     const { posts, count } = await this.postClient.service.getCharacterWall({
       characterId,
-      paggination: {
+      pagination: {
         limit: pagination.limit,
         page: pagination.page,
       }
@@ -82,7 +82,7 @@ export class PostController {
   ): Promise<DPostList> {
     const { posts, count } = await this.postClient.service.getCorporationWall({
       corporationId,
-      paggination: {
+      pagination: {
         limit: pagination.limit,
         page: pagination.page,
       }
@@ -103,7 +103,7 @@ export class PostController {
   ): Promise<DPostList> {
     const { posts, count } = await this.postClient.service.getAllianceWall({
       allianceId,
-      paggination: {
+      pagination: {
         limit: pagination.limit,
         page: pagination.page,
       }
@@ -124,7 +124,7 @@ export class PostController {
   ): Promise<DPostList> {
     const { posts, count } = await this.postClient.service.getHashtagWall({
       hashtag,
-      paggination: {
+      pagination: {
         limit: pagination.limit,
         page: pagination.page,
       }
@@ -144,7 +144,7 @@ export class PostController {
   ): Promise<DPostList> {
     const { posts, count } = await this.postClient.service.getLocationWall({
       locationId,
-      paggination: {
+      pagination: {
         limit: pagination.limit,
         page: pagination.page,
       }

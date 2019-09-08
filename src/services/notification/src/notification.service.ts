@@ -62,18 +62,20 @@ export class NotificationService {
 
   public async markAsSeen(
     notification: Notification,
-  ): Promise<void> {
+  ): Promise<Notification> {
     if (notification.seenAt) {
       throw new Error('notification already marked as seen');
     }
 
-    this.notificationRepository.markAsSeen(notification);
+    const markedAsSeen = await this.notificationRepository.markAsSeen(notification);
 
     await this.websocketRedisClient.emitCharacterEvent<Notification>(
       notification.recipientId,
       WS_NOTIFICATION_SEEN_EVENT,
       notification,
     );
+
+    return markedAsSeen;
   }
 
   public async get(

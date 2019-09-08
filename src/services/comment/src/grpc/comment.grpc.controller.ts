@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { Observable, from } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { GrpcMethod } from '@nestjs/microservices';
-import { ICommentGrpcService, ICreateAsCharacterRequest, ICreateAsCorporationRequest, ICreateAsAllianceRequest, ICommentResponse, IPaginatedCommentsResponse, IPagginationRequest, IGetLatestRequest, IGetParticipantsReqiest, IGetParticipantsResponse } from './comment.grpc.interface';
+import { ICommentGrpcService, ICreateAsCharacterRequest, ICreateAsCorporationRequest, ICreateAsAllianceRequest, ICommentResponse, IPaginatedCommentsResponse, IPaginationRequest, IGetLatestRequest, IGetParticipantsReqiest, IGetParticipantsResponse } from './comment.grpc.interface';
 import { CommentService } from '../comment.service';
 import { Comment } from '../comment.entity';
 
@@ -39,8 +39,8 @@ export class CommentGrpcController implements ICommentGrpcService {
   getLatest(data: IGetLatestRequest): Observable<IPaginatedCommentsResponse> {
     return from(this.commentService.getLatestForPost(
       data.postId,
-      data.paggination.limit,
-      data.paggination.page,
+      data.pagination.limit,
+      data.pagination.page,
       )).pipe<IPaginatedCommentsResponse>(
       map<{comments: Comment[], count: number}, IPaginatedCommentsResponse>(latestData => ({
           comments: latestData.comments.map(this.commentTransform),

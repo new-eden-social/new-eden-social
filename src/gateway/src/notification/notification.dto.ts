@@ -1,16 +1,6 @@
-import {
-  NOTIFICATION_TYPE,
-  WS_NOTIFICATION_EVENT,
-  WS_NOTIFICATION_SEEN_EVENT,
-} from './notification.constants';
-import { Notification } from './notification.entity';
-import { WsResponse } from '@nestjs/websockets';
 import { DPagination } from '@new-eden-social/pagination';
-import { DCharacterShort } from '@new-eden-social/api-character/character.dto';
-import { DCorporationShort } from '../corporation/corporation.dto';
-import { DAllianceShort } from '../alliance/alliance.dto';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
-import { DPost } from '../post/post.dto';
+import { NOTIFICATION_TYPE, INotificationResponse } from '@new-eden-social/api-notification';
 
 export class DNotification {
   @ApiModelProperty()
@@ -24,59 +14,33 @@ export class DNotification {
   type: NOTIFICATION_TYPE;
 
   @ApiModelPropertyOptional()
-  post?: DPost;
+  postId?: string;
   @ApiModelPropertyOptional()
   commentId?: string;
 
   @ApiModelPropertyOptional()
-  senderCharacter?: DCharacterShort;
+  senderCharacterId?: number;
   @ApiModelPropertyOptional()
-  senderCorporation?: DCorporationShort;
+  senderCorporationId?: number;
   @ApiModelPropertyOptional()
-  senderAlliance?: DAllianceShort;
+  senderAllianceId?: number;
 
-  constructor(notification: Notification) {
+  constructor(notification: INotificationResponse) {
     this.id = notification.id;
-    this.createdAt = notification.createdAt;
-    this.seenAt = notification.seenAt;
+    this.createdAt = new Date(notification.createdAt);
+    this.seenAt = new Date(notification.seenAt);
     this.type = notification.type;
-
-    if (notification.senderCharacter) {
-      this.senderCharacter = new DCharacterShort(notification.senderCharacter);
-    }
-    if (notification.senderCorporation) {
-      this.senderCorporation = new DCorporationShort(notification.senderCorporation);
-    }
-    if (notification.senderAlliance) {
-      this.senderAlliance = new DAllianceShort(notification.senderAlliance);
-    }
-
-    if (notification.post) { this.post = new DPost(notification.post); }
-    if (notification.comment) { this.commentId = notification.comment.id; }
+    this.postId = notification.postId;
+    this.commentId = notification.commentId;
+    this.senderCharacterId = notification.senderCharacterId;
+    this.senderCorporationId = notification.senderCorporationId;
+    this.senderAllianceId = notification.senderAllianceId;
   }
 }
 
 export class DNotificationList extends DPagination<DNotification> {
-  constructor(notifications: Notification[], page: number, perPage: number, count: number) {
+  constructor(notifications: INotificationResponse[], page: number, perPage: number, count: number) {
     const formattedNotifications = notifications.map(item => new DNotification(item));
     super(formattedNotifications, page, perPage, count);
-  }
-}
-
-export class DWsNotificationEvent implements WsResponse<DNotification> {
-  event = WS_NOTIFICATION_EVENT;
-  data: DNotification;
-
-  constructor(notification: Notification) {
-    this.data = new DNotification(notification);
-  }
-}
-
-export class DWsNotificationSeenEvent implements WsResponse<DNotification> {
-  event = WS_NOTIFICATION_SEEN_EVENT;
-  data: DNotification;
-
-  constructor(notification: Notification) {
-    this.data = new DNotification(notification);
   }
 }

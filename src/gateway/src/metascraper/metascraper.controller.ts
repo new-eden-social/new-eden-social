@@ -1,15 +1,14 @@
 import { ApiUseTags, ApiResponse } from '@nestjs/swagger';
 import { Controller, HttpStatus, Param, Get } from '@nestjs/common';
 import { DUrlMeta, DUrlMetaKillmail, DUrlMetaWebsite } from './metascraper.dto';
-import { MetascraperService } from './metascraper.service';
-import { IURLMetadata } from './metascraper.interface';
+import { MetascraperGrpcClient, IURLMetadata } from '@new-eden-social/api-metascraper';
 
 @ApiUseTags('metascraper')
 @Controller('metascraper')
 export class MetascraperController {
 
   constructor(
-    private readonly metascraperService: MetascraperService,
+    private readonly metascraperClient: MetascraperGrpcClient,
   ) {
   }
 
@@ -22,15 +21,13 @@ export class MetascraperController {
   public async processUrl(
     @Param('url') url: string,
   ): Promise<DUrlMeta> {
-    const metadata = await this.metascraperService.processUrl(url);
+    const metadata = await this.metascraperClient.service.processUrl({ url }).toPromise();
     return this.getProperUrlMeta(metadata);
   }
 
   private async getProperUrlMeta(metadata: IURLMetadata) {
-
-    if (this.metascraperService.isUrlmetaForKillmail(metadata)) {
-      const killmail = await this.metascraperService.processKillmail(metadata.url);
-      return new DUrlMetaKillmail(metadata, killmail);
+    if (metadata.killmailId) {
+      return new DUrlMetaKillmail(metadata, metadata.killmailId);
     }
 
     return new DUrlMetaWebsite(metadata);

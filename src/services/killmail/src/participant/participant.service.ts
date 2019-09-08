@@ -1,4 +1,4 @@
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { KillmailParticipant } from './participant.entity';
 import { KillmailParticipantRepository } from './participant.repository';
 import { InjectRepository } from '@nestjs/typeorm';

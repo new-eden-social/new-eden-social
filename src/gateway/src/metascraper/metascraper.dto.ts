@@ -1,8 +1,5 @@
-import { URL_META_TYPE } from './metascraper.constants';
-import { IURLMetadata } from './metascraper.interface';
-import { Killmail } from '@new-eden-social/killmail';
-import { DKillmailShort } from '../killmail/killmail.dto';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
+import { IURLMetadata, URL_META_TYPE } from '@new-eden-social/api-metascraper';
 
 export abstract class DUrlMeta {
   @ApiModelProperty()

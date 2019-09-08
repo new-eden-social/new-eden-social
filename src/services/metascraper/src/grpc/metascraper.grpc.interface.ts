@@ -3,7 +3,9 @@ import { IURLMetadata } from '../metascraper.interface';
 
 // Should reflect the .proto file!
 export interface IMetascraperGrpcService {
-  processUrl(url: string): Observable<IURLMetadata>;
+  processUrl(data: IProcessUrlRequest): Observable<IURLMetadata>;
 }
 
-export * from '../metascraper.interface';
+export interface IProcessUrlRequest {
+  url: string;
+}

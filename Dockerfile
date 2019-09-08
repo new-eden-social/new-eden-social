@@ -11,6 +11,4 @@ RUN yarn global add lerna typescript
 
 ADD . .
 
-RUN ls -l src/services
-
 RUN yarn bootstrap:prod

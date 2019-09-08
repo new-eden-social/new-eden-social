@@ -2,17 +2,17 @@ import { ApiBearerAuth, ApiResponse, ApiUseTags } from '@nestjs/swagger';
 import { Controller, Get, HttpStatus, Param, Post, UseGuards } from '@nestjs/common';
 import { Pagination, VPagination } from '@new-eden-social/pagination';
 import { DNotificationList } from './notification.dto';
-import { NotificationService } from './notification.service';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
-import { Character } from '@new-eden-social/api-character';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
+import { NotificationGrpcClient } from '@new-eden-social/api-notification';
+import { ICharacterResponse } from '@new-eden-social/api-character';
 
 @ApiUseTags('notifications')
 @Controller('notifications')
 export class NotificationController {
 
   constructor(
-    private readonly notificationService: NotificationService,
+    private readonly notificationClient: NotificationGrpcClient,
   ) {
   }
 
@@ -26,12 +26,15 @@ export class NotificationController {
   @Get('/latest')
   public async latest(
     @Pagination() pagination: VPagination,
-    @AuthenticatedCharacter() character: Character,
+    @AuthenticatedCharacter() character: ICharacterResponse,
   ): Promise<DNotificationList> {
-    const { notifications, count } = await this.notificationService.getLatest(
-      character,
-      pagination.limit,
-      pagination.page);
+    const { notifications, count } = await this.notificationClient.service.getLatest({
+      characterId: character.id,
+      pagination: {
+        limit: pagination.limit,
+        page: pagination.page,
+      }
+    }).toPromise();
 
     return new DNotificationList(notifications, pagination.page, pagination.limit, count);
   }
@@ -45,9 +48,11 @@ export class NotificationController {
   @Post('/:notificationId/seen')
   public async markSeen(
     @Param('notificationId') notificationId: string,
-    @AuthenticatedCharacter() character: Character,
+    @AuthenticatedCharacter() character: ICharacterResponse,
   ): Promise<void> {
-    const notification = await this.notificationService.get(notificationId, character);
-    await this.notificationService.markAsSeen(notification);
+    await this.notificationClient.service.markAsSeen({
+      notificationId,
+      characterId: character.id,
+    }).toPromise();
   }
 }

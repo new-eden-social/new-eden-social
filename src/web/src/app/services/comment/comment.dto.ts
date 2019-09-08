@@ -1,6 +1,6 @@
 import { DAllianceShort } from '../alliance/alliance.dto';
 import { DCorporationShort } from '../corporation/corporation.dto';
-import { DPagination } from '../paggination.dto';
+import { DPagination } from '../pagination.dto';
 import { DCharacterShort } from '../character/character.dto';
 
 export class DComment {

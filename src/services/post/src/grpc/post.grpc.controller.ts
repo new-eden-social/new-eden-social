@@ -50,8 +50,8 @@ export class PostGrpcController implements IPostGrpcService {
   getCharacterWall(data: IGetCharacterWallRequest): Observable<IPaginatedPostResponse> {
     return from(this.postService.getCharacterWall(
       data.characterId,
-      data.paggination.limit,
-      data.paggination.page,
+      data.pagination.limit,
+      data.pagination.page,
       )).pipe<IPaginatedPostResponse>(
       map<{posts: Post[], count: number}, IPaginatedPostResponse>(wallData => ({
           posts: wallData.posts.map(this.postTransform),
@@ -64,8 +64,8 @@ export class PostGrpcController implements IPostGrpcService {
   getCorporationWall(data: IGetCorporationWallRequest): Observable<IPaginatedPostResponse> {
     return from(this.postService.getCorporationWall(
       data.corporationId,
-      data.paggination.limit,
-      data.paggination.page,
+      data.pagination.limit,
+      data.pagination.page,
       )).pipe<IPaginatedPostResponse>(
       map<{posts: Post[], count: number}, IPaginatedPostResponse>(wallData => ({
           posts: wallData.posts.map(this.postTransform),
@@ -78,8 +78,8 @@ export class PostGrpcController implements IPostGrpcService {
   getAllianceWall(data: IGetAllianceWallRequest): Observable<IPaginatedPostResponse> {
     return from(this.postService.getAllianceWall(
       data.allianceId,
-      data.paggination.limit,
-      data.paggination.page,
+      data.pagination.limit,
+      data.pagination.page,
       )).pipe<IPaginatedPostResponse>(
       map<{posts: Post[], count: number}, IPaginatedPostResponse>(wallData => ({
           posts: wallData.posts.map(this.postTransform),
@@ -92,8 +92,8 @@ export class PostGrpcController implements IPostGrpcService {
   getHashtagWall(data: IGetHashtagWallRequest): Observable<IPaginatedPostResponse> {
     return from(this.postService.getHashtagWall(
       data.hashtag,
-      data.paggination.limit,
-      data.paggination.page,
+      data.pagination.limit,
+      data.pagination.page,
       )).pipe<IPaginatedPostResponse>(
       map<{posts: Post[], count: number}, IPaginatedPostResponse>(wallData => ({
           posts: wallData.posts.map(this.postTransform),
@@ -106,8 +106,8 @@ export class PostGrpcController implements IPostGrpcService {
   getLocationWall(data: IGetLocationWallRequest): Observable<IPaginatedPostResponse> {
     return from(this.postService.getLocationWall(
       data.locationId,
-      data.paggination.limit,
-      data.paggination.page,
+      data.pagination.limit,
+      data.pagination.page,
       )).pipe<IPaginatedPostResponse>(
       map<{posts: Post[], count: number}, IPaginatedPostResponse>(wallData => ({
           posts: wallData.posts.map(this.postTransform),
@@ -119,8 +119,8 @@ export class PostGrpcController implements IPostGrpcService {
   @GrpcMethod('PostService')
   getLatestWall(data: IGetLatestWallRequest): Observable<IPaginatedPostResponse> {
     return from(this.postService.getLatestWall(
-      data.paggination.limit,
-      data.paggination.page,
+      data.pagination.limit,
+      data.pagination.page,
       )).pipe<IPaginatedPostResponse>(
       map<{posts: Post[], count: number}, IPaginatedPostResponse>(wallData => ({
           posts: wallData.posts.map(this.postTransform),

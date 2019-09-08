@@ -1,18 +1,17 @@
 import { ApiUseTags, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { Controller, HttpStatus, Param, UseGuards, Post } from '@nestjs/common';
-import { Character, CharacterGrpcClient } from '@new-eden-social/api-character';
+import { CharacterGrpcClient, ICharacterResponse } from '@new-eden-social/api-character';
 import { AuthenticatedCharacter } from '../authentication/authentication.decorators';
 import { AuthenticationGuard } from '../authentication/authentication.guard';
-import { FollowService } from '../follow.service';
 import { AllianceGrpcClient } from '@new-eden-social/api-alliance';
 import { CorporationGrpcClient } from '@new-eden-social/api-corporation';
 
 @ApiUseTags('follow')
 @Controller('follow')
-export class FollowHttpController {
+export class FollowController {
 
   constructor(
-    private readonly followService: FollowService,
+    private readonly followClient: FollowG,
     private readonly allianceClient: AllianceGrpcClient,
     private readonly characterClient: CharacterGrpcClient,
     private readonly corporationClient: CorporationGrpcClient,
@@ -27,7 +26,7 @@ export class FollowHttpController {
   @Post('character/:characterId')
   public async followCharacter(
     @Param('characterId') characterId: number,
-    @AuthenticatedCharacter() follower: Character,
+    @AuthenticatedCharacter() follower: ICharacterResponse,
   ): Promise<void> {
     const character = await this.characterClient.service.get(characterId);
     const follow = await this.followService.checkIfFolowingCharacter(follower, character);
@@ -48,7 +47,7 @@ export class FollowHttpController {
   @Post('corporation/:corporationId')
   public async followCorporation(
     @Param('corporationId') corporationId: number,
-    @AuthenticatedCharacter() follower: Character,
+    @AuthenticatedCharacter() follower: ICharacterResponse,
   ): Promise<void> {
     const corporation = await this.corporationClient.service.get(corporationId);
     const follow = await this.followService.checkIfFolowingCorporation(follower, corporation);
@@ -69,7 +68,7 @@ export class FollowHttpController {
   @Post('alliance/:allianceId')
   public async followAlliance(
     @Param('allianceId') allianceId: number,
-    @AuthenticatedCharacter() follower: Character,
+    @AuthenticatedCharacter() follower: ICharacterResponse,
   ): Promise<void> {
     const alliance = await this.allianceClient.service.get(allianceId).toPromise();
     const follow = await this.followService.checkIfFolowingAlliance(follower, alliance);

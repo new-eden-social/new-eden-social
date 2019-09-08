@@ -37,38 +37,38 @@ export interface ICreateAsAllianceRequest {
   allianceId: number;
 }
 
-export interface IPagginationRequest {
+export interface IPaginationRequest {
   limit: number;
   page: number;
 }
 
 export interface IGetCharacterWallRequest {
-  paggination: IPagginationRequest;
+  pagination: IPaginationRequest;
   characterId: number;
 }
 
 export interface IGetCorporationWallRequest {
-  paggination: IPagginationRequest;
+  pagination: IPaginationRequest;
   corporationId: number;
 }
 
 export interface IGetAllianceWallRequest {
-  paggination: IPagginationRequest;
+  pagination: IPaginationRequest;
   allianceId: number;
 }
 
 export interface IGetHashtagWallRequest {
-  paggination: IPagginationRequest;
+  pagination: IPaginationRequest;
   hashtag: string;
 }
 
 export interface IGetLocationWallRequest {
-  paggination: IPagginationRequest;
+  pagination: IPaginationRequest;
   locationId: number;
 }
 
 export interface IGetLatestWallRequest {
-  paggination: IPagginationRequest;
+  pagination: IPaginationRequest;
 }
 
 export interface IUrlResponse {

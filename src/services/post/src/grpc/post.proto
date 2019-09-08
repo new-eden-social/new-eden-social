@@ -44,38 +44,38 @@ message CreateAsAllianceRequest {
   int32 allianceId = 2;
 }
 
-message PagginationRequest {
+message PaginationRequest {
   int32 limit = 1;
   int32 page = 2;
 }
 
 message GetCharacterWallRequest {
-  PagginationRequest paggination = 1;
+  PaginationRequest pagination = 1;
   int32 characterId = 2;
 }
 
 message GetCorporationWallRequest {
-  PagginationRequest paggination = 1;
+  PaginationRequest pagination = 1;
   int32 corporationId = 2;
 }
 
 message GetAllianceWallRequest {
-  PagginationRequest paggination = 1;
+  PaginationRequest pagination = 1;
   int32 allianceId = 2;
 }
 
 message GetHashtagWallRequest {
-  PagginationRequest paggination = 1;
+  PaginationRequest pagination = 1;
   string hashtag = 2;
 }
 
 message GetLocationWallRequest {
-  PagginationRequest paggination = 1;
+  PaginationRequest pagination = 1;
   int32 locationId = 2;
 }
 
 message GetLatestWallRequest {
-  PagginationRequest paggination = 1;
+  PaginationRequest pagination = 1;
 }
 
 message UrlResponse {

@@ -1,5 +1,5 @@
 import { DAllianceShort } from '../alliance/alliance.dto';
-import { DPagination } from '../paggination.dto';
+import { DPagination } from '../pagination.dto';
 import {DFollow} from '../follow/follow.dto';
 
 export class DCorporationIcon {

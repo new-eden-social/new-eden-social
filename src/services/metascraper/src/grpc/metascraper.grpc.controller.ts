@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { IMetascraperGrpcService } from './metascraper.grpc.interface';
+import { IMetascraperGrpcService, IProcessUrlRequest } from './metascraper.grpc.interface';
 import { IURLMetadata } from '../metascraper.interface';
 import { Observable } from 'rxjs/internal/Observable';
 import { MetascraperService } from '../metascraper.service';
@@ -14,7 +14,7 @@ export class MetascraperGrpcController implements IMetascraperGrpcService {
   ){}
 
   @GrpcMethod('MetascraperService')
-  processUrl(url: string): Observable<IURLMetadata> {
-    return from(this.metascraperService.processUrl(url));
+  processUrl(data: IProcessUrlRequest): Observable<IURLMetadata> {
+    return from(this.metascraperService.processUrl(data.url));
   }
 }

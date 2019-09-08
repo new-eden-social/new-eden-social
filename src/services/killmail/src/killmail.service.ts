@@ -48,7 +48,7 @@ export class KillmailService {
    * @param id number
    * @return Promise<Killmail>
    */
-  public async getById(id: number): Promise<Killmail> {
+  public async get(id: number): Promise<Killmail> {
     const found = await this.killmailRepository.findOne(id);
 
     if (found) {

@@ -8,9 +8,20 @@ import { CharacterGrpcModule } from '@new-eden-social/api-character';
 import { CorporationGrpcModule } from '@new-eden-social/api-corporation';
 import { AllianceGrpcModule } from '@new-eden-social/api-alliance';
 import { CommentGrpcModule } from '@new-eden-social/api-comment';
+import { FollowGrpcModule } from '@new-eden-social/api-follow';
+import { MetascraperGrpcModule } from '@new-eden-social/api-metascraper';
+import { UtilsModule } from '@new-eden-social/utils';
+import { PostController } from './post/post.controller';
+import { CommentController } from './comment/comment.controller';
+import { MetascraperController } from './metascraper/metascraper.controller';
+// import { FollowController } from './follow/follow.controller';
+import { CharacterHttpController } from './character/character.http.controller';
+import { CorporationHttpController } from './corporation/corporation.controller';
+import { AllianceHttpController } from './alliance/alliance.http.controller';
 
 @Module({
   imports: [
+    UtilsModule,
     LoggerModule,
 
     CharacterGrpcModule,
@@ -20,9 +31,19 @@ import { CommentGrpcModule } from '@new-eden-social/api-comment';
     SearchGrpcModule,
     PostGrpcModule,
     CommentGrpcModule,
+    FollowGrpcModule,
+    MetascraperGrpcModule
   ],
   controllers: [
     SearchController,
+    PostController,
+    CommentController,
+    // FollowController,
+    MetascraperController,
+
+    CharacterHttpController,
+    CorporationHttpController,
+    AllianceHttpController,
   ]
 })
 export class GatewayModule implements NestModule {

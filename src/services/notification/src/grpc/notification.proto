@@ -1,35 +1,51 @@
 syntax = "proto3";
 
-service CharacterService {
-    rpc Exists (ExistsRequest) returns (ExistsResponse);
-    rpc Get (GetRequest) returns (GetResponse);
-    rpc GetNotUpdated(GetNotUpdatedRequest) returns (GetNotUpdatedResponse);
-    rpc Refresh(GetRequest) returns (GetResponse);
+service NotificationService {
+    rpc GetLatest(GetLatestRequest) returns (PaginatedNotificationResponse);
+    rpc Create(CreateRequest) returns (NotificationResponse);
+    rpc MartAsSeen(MarkAsSeenRequest) returns (NotificationResponse);
 }
 
-message ExistsRequest {
-    int32 id = 1;
+message MarkAsSeenRequest {
+    string notificationId = 1;
+    int32 characterId = 2;
 }
 
-message ExistsResponse {
-    bool exists = 1;
+message CreateRequest {
+    string eventUuid = 1;
+    string type = 2;
+    int32 recipientId = 3;
+    int32 senderCharacterId = 4;
+    int32 senderCorporationId = 5;
+    int32 senderAllianceId = 6;
+    string postId = 7;
+    string commentId = 8;
 }
 
-message GetRequest {
-    int32 id = 1;
+message GetLatestRequest {
+    PaginationRequest pagination = 1;
+    int32 characterId = 2;
 }
 
-message GetResponse {
-    int32 id = 1;
-    string handle = 2;
-    string name = 3;
+message PaginationRequest {
+    int32 limit = 1;
+    int32 page = 2;
 }
 
-message GetNotUpdatedRequest {
-    string interval = 1; // interval is PostgreSQL interval value
-    int32 limit = 2;
+message NotificationResponse {
+    string id = 1;
+    string createdAt = 2;
+    string seenAt = 3;
+    string type = 4;
+    int32 recipientId = 5;
+    int32 senderCharacterId = 6;
+    int32 senderCorporationId = 7;
+    int32 senderAllianceId = 8;
+    string postId = 9;
+    string commentId = 10;
 }
 
-message GetNotUpdatedResponse {
-    repeated GetResponse characters = 1;
+message PaginatedNotificationResponse {
+    repeated NotificationResponse notifications = 1;
+    int32 count = 2;
 }
