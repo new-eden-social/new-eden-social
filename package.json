@@ -117,7 +117,7 @@
     "swagger-ui-express": "4.0.6",
     "ts-loader": "6.0.4",
     "typeorm": "0.2.18",
-    "typescript": "3.5.2",
+    "typescript": "3.6.2",
     "uuid": "3.3.2",
     "webpack": "4.35.2",
     "ws": "7.0.1",
