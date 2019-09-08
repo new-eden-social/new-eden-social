@@ -59,7 +59,7 @@
     "@godaddy/terminus": "4.1.2",
     "@nestjs/common": "6.4.0",
     "@nestjs/core": "6.4.0",
-    "@nestjs/cqrs": "6.0.0",
+    "@nestjs/cqrs": "6.0.1",
     "@nestjs/microservices": "6.4.0",
     "@nestjs/platform-express": "6.4.0",
     "@nestjs/platform-socket.io": "6.4.0",
