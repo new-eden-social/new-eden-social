@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+service PostService {
+  rpc GetLatest(GetLatestRequest) returns (PaginatedCommentResponse);
+
+  rpc CreateAsCharacter(CreateAsCharacterRequest) returns (CommentResponse);
+  rpc CreateAsCorporaiton(CreateAsCorporationRequest) returns (CommentResponse);
+  rpc CreateAsAlliance(CreateAsAllianceRequest) returns (CommentResponse);
+
+  rpc GetParticipantsForPost(GetParticipantsRequest) returns (GetParticipantsResponse);
+}
+
+message GetParticipantsRequest {
+  string postId = 1;
+}
+
+message GetParticipantsResponse {
+  repeated int32 characterIds = 1;
+  repeated int32 corporationIds = 2;
+  repeated int32 allianceIds = 3;
+}
+
+message CreateComment {
+  string content = 1;
+}
+
+message CreateAsCharacterRequest {
+  CreateComment comment = 1;
+  string postId = 2;
+  int32 characterId = 3;
+}
+
+message CreateAsCorporationRequest {
+  CreateComment comment = 1;
+  string postId = 2;
+  int32 corporationId = 3;
+}
+
+message CreateAsAllianceRequest {
+  CreateComment comment = 1;
+  string postId = 2;
+  int32 allianceId = 3;
+}
+
+message PaginationRequest {
+  int32 limit = 1;
+  int32 page = 2;
+}
+
+message GetLatestRequest {
+  PaginationRequest pagination = 1;
+  int32 postId = 2;
+}
+
+message CommentResponse {
+  string id = 1;
+  string content = 2;
+  string postId = 3;
+  int32 characterId = 4;
+  int32 corporationId = 5;
+  int32 allianceId = 6;
+  string createdAt = 7;
+}
+
+message PaginatedCommentResponse {
+  repeated CommentResponse comments = 1;
+  int32 count = 2;
+}

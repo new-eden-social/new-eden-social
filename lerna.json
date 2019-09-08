@@ -9,5 +9,10 @@
     "version": {
       "message": "chore(release): release"
     }
-  }
+  },
+  "packages": [
+    "packages/*",
+    "src/services/*",
+    "src/*"
+  ]
 }

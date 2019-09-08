@@ -15,7 +15,8 @@
   },
   "scripts": {
     "prebuild": "rm -rf lib",
-    "build": "tsc"
+    "build": "tsc",
+    "build:docker": "exit 0"
   },
   "dependencies": {
     "@nestjs/swagger": "^3.0.2",

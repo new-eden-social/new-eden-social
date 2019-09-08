@@ -10,6 +10,7 @@ export class EVESSOService {
   private readonly userAgent = `@new-eden-social/eve-sso:${process.env.npm_package_version} https://github.com/new-eden-social/new-eden-social`;
   private readonly client: AxiosInstance;
 
+  // TODO: This should be passed as arguments to Module.forRoot() or via providers
   private readonly authenticationRedirect = process.env.ESI_REDIRECT as string;
   private readonly clientId = process.env.ESI_CLIENT as string;
   private readonly secretKey = process.env.ESI_SECRET as string;

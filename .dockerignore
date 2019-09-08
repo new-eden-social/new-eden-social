@@ -1,8 +1,9 @@
-node_modules
+# Ignore everything
+**
 
-# Ignore packages, so we download from NPM
-packages
-# Ignore src as we don't need source code changes
-#src
-# But we need dependencies information
-!src/**/package.json
+!package.json
+!yarn.lock
+!lerna.json
+
+# We need tsconfig.base.json
+!src/services/tsconfig.base.json

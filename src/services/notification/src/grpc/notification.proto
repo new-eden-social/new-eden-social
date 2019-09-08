@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+service NotificationService {
+    rpc GetLatest(GetLatestRequest) returns (PaginatedNotificationResponse);
+    rpc Create(CreateRequest) returns (NotificationResponse);
+    rpc MartAsSeen(MarkAsSeenRequest) returns (NotificationResponse);
+}
+
+message MarkAsSeenRequest {
+    string notificationId = 1;
+    int32 characterId = 2;
+}
+
+message CreateRequest {
+    string eventUuid = 1;
+    string type = 2;
+    int32 recipientId = 3;
+    int32 senderCharacterId = 4;
+    int32 senderCorporationId = 5;
+    int32 senderAllianceId = 6;
+    string postId = 7;
+    string commentId = 8;
+}
+
+message GetLatestRequest {
+    PaginationRequest pagination = 1;
+    int32 characterId = 2;
+}
+
+message PaginationRequest {
+    int32 limit = 1;
+    int32 page = 2;
+}
+
+message NotificationResponse {
+    string id = 1;
+    string createdAt = 2;
+    string seenAt = 3;
+    string type = 4;
+    int32 recipientId = 5;
+    int32 senderCharacterId = 6;
+    int32 senderCorporationId = 7;
+    int32 senderAllianceId = 8;
+    string postId = 9;
+    string commentId = 10;
+}
+
+message PaginatedNotificationResponse {
+    repeated NotificationResponse notifications = 1;
+    int32 count = 2;
+}

@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+service KillmailService {
+  rpc Get(GetRequest) returns (KillmailResponse);
+}
+
+message GetRequest {
+  int32 killmailId = 1;
+}
+
+message KillmailResponse {
+  int32 id = 1;
+  int32 locationId = 2;
+  int32 warId = 3;
+  float totalValue = 4;
+  bool npc = 5;
+  string createdAt = 6;
+
+  repeated KillmailParticipantResponse participants = 7;
+}
+
+message KillmailParticipantResponse {
+  int32 characterId = 1;
+  string type = 2; // attacker | victim
+  int32 shipId = 3;
+  float damageDone = 4;
+  bool finalBlow = 5;
+  int32 weaponId = 6;
+  float damageTaken = 7;
+}

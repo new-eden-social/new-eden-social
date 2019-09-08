@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
-import {DCharacter, DCharacterShort} from '../character/character.dto';
 import { IAuthenticationData } from './authentication.interface';
+import { DCharacterShort } from '../character/character.dto';
 
 export enum AuthenticationActionTypes {
   AUTHENTICATE = '[Authentication] Authenticating User',

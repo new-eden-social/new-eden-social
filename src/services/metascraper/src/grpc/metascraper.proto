@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+service MetascraperService {
+  rpc ProcessUrl (ProcessUrlRequest) returns (UrlMetadata);
+}
+
+message ProcessUrlRequest {
+  string url = 1;
+}
+
+message UrlMetadata {
+  string author = 1;
+  string date = 2;
+  string description = 3;
+  string image = 4;
+  string video = 5;
+  string lang = 6;
+  string logo = 7;
+  string publisher = 8;
+  string title = 9;
+  string url = 10;
+  int32 killmailId = 11;
+}

@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+service AuthenticateService {
+  rpc Verify (VerifyDecodeRequest) returns (VerifyDecodeResponse);
+  rpc Decode (VerifyDecodeRequest) returns (VerifyDecodeResponse);
+  rpc Authenticate (AuthenticateRequest) returns (AuthenticateResponse);
+}
+
+message VerifyDecodeRequest {
+  string token = 1; // Represents new-eden-social JWT token
+}
+
+message VerifyDecodeResponse {
+  string ssoToken = 1; // Represents eve online sso token
+  string ssoRefreshToken = 2; // Represents eve online sso refresh token
+  int32 characterId = 3;
+}
+
+message AuthenticateRequest {
+  string ssoToken = 1; // Represents eve online sso token
+  string ssoRefreshToken = 2; // Represents eve online sso refresh token
+  string ssoExpiresIn = 3; // Time in which ssoToken will expire
+  int32 characterId = 4;
+}
+
+message AuthenticateResponse {
+  string token = 1;
+}

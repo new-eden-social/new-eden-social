@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+service CorporationService {
+    rpc Exists (ExistsGetRefreshRequest) returns (ExistsResponse);
+    rpc Get (ExistsGetRefreshRequest) returns (AllianceResponse);
+    rpc getNotUpdated(GetNotUpdatedRequest) returns (GetNotUpdatedResponse);
+    rpc refresh(ExistsGetRefreshRequest) returns (AllianceResponse);
+}
+
+message ExistsResponse {
+    bool exists = 1;
+}
+
+message ExistsGetRefreshRequest {
+    int32 allianceId = 1;
+}
+
+message AllianceResponse {
+    int32 id = 1;
+    string handle = 2;
+    string name = 3;
+    string ticker = 4;
+    string dateFounded = 5;
+    int32 executorCorporationId = 6;
+    AllianceIconResponse icon = 7;
+}
+
+message AllianceIconResponse {
+    string px64x64 = 1;
+    string px128x128 = 2;
+}
+
+message GetNotUpdatedRequest {
+    string interval = 1; // interval is PostgreSQL interval value
+    int32 limit = 2;
+}
+
+message GetNotUpdatedResponse {
+    repeated AllianceResponse alliances = 1;
+}

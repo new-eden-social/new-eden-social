@@ -1,4 +1,4 @@
-import { DPagination } from '../paggination.dto';
+import { DPagination } from '../pagination.dto';
 import { DCorporationShortWithoutAlliance } from '../corporation/corporation.dto';
 import {DFollow} from '../follow/follow.dto';
 

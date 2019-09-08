@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+service FollowService {
+  rpc FollowCaracter(FollowGetCharacterRequest) returns (FollowResponse);
+  rpc FollowCorporation(FollowGetCorporationRequest) returns (FollowResponse);
+  rpc FollowAlliance(FollowGetAllianceRequest) returns (FollowResponse);
+
+  rpc UnFollowCaracter(FollowGetCharacterRequest) returns (FollowResponse);
+  rpc UnFollowCorporation(FollowGetCorporationRequest) returns (FollowResponse);
+  rpc UnFollowAlliance(FollowGetAllianceRequest) returns (FollowResponse);
+
+  rpc GetFollowCaracter(FollowGetCharacterRequest) returns (FollowResponse);
+  rpc GetFollowCorporation(FollowGetCorporationRequest) returns (FollowResponse);
+  rpc GetFollowlliance(FollowGetAllianceRequest) returns (FollowResponse);
+
+  rpc GetCharacterFollowers(GetCharacterFollowersRequest) returns (PaginatedFollowResponse);
+  rpc GetCorporationFollowers(GetCorporationFollowersRequest) returns (PaginatedFollowResponse);
+  rpc GetAllianceFollowers(GetAllianceFollowersRequest) returns (PaginatedFollowResponse);
+}
+
+message PaginationRequest {
+  int32 limit = 1;
+  int32 page = 2;
+}
+
+message FollowResponse {
+  int32 characterId = 1;
+  int32 followingCharacterId = 2;
+  int32 followingCorporationId = 3;
+  int32 followingAllianceId = 4;
+}
+
+message PaginatedFollowResponse {
+  repeated FollowResponse followers = 1;
+  int32 count = 2;
+}
+
+message GetCharacterFollowersRequest {
+  PaginationRequest pagination = 1;
+  int32 characterId = 2;
+}
+
+message GetCorporationFollowersRequest {
+  PaginationRequest pagination = 1;
+  int32 corporationId = 2;
+}
+
+message GetAllianceFollowersRequest {
+  PaginationRequest pagination = 1;
+  int32 allianceId = 2;
+}
+
+message FollowGetCharacterRequest {
+  int32 characterId = 1;
+  int32 followingId = 2;
+}
+
+message FollowGetCorporationRequest {
+  int32 corporationId = 1;
+  int32 followingId = 2;
+}
+
+message FollowGetAllianceRequest {
+  int32 allianceId = 1;
+  int32 followingId = 2;
+}

@@ -1,0 +1,20 @@
+{
+  "name": "@new-eden-social/api-gateway",
+  "version": "0.1.1",
+  "private": true,
+  "license": "GPL-3.0",
+  "engines": {
+    "node": "^10.16.0"
+  },
+  "scripts": {
+    "test": "exit 0",
+    "build:lib": "tsc --build tsconfig.lib.json",
+    "build:dist": "tsc --build tsconfig.json",
+    "build:docker": "docker build . -t newedensocial/api-gateway",
+    "build": "npm run build:lib && npm run build:dist"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+  }
+}
