@@ -135,8 +135,6 @@ workflows:
             - test-lint
             - test
             - build-base
-            - build-api
-            - build-web
           filters:
             branches:
               only: master
