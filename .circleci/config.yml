@@ -52,39 +52,6 @@ jobs:
         name: Push Image
         command: docker push newedensocial/base:$CIRCLE_SHA1
 
-  build-api:
-    executor: docker-build
-    steps:
-     - checkout
-     - authenticate_docker_hub
-     - pull_tag:
-        image: newedensocial/base
-        tag: latest
-     - run:
-        name: Building image
-        working_directory: src/api
-        command: docker build . -t newedensocial/api:$CIRCLE_SHA1
-     - run:
-        name: Push Image
-        command: docker push newedensocial/api:$CIRCLE_SHA1
-
-  build-web:
-    executor: docker-build
-    steps:
-     - checkout
-     - authenticate_docker_hub
-     - pull_tag:
-        image: newedensocial/base
-        tag: latest
-     - run:
-        name: Building image
-        working_directory: src/web
-        command: docker build . -t newedensocial/web:$CIRCLE_SHA1
-     - run:
-        name: Push Image
-        command: docker push newedensocial/web:$CIRCLE_SHA1
-
-
   test-lint:
     executor: node-test
     steps:
@@ -136,12 +103,6 @@ jobs:
       - pull_tag_push:
           image: newedensocial/base
           tag: latest
-      - pull_tag_push:
-          image: newedensocial/api
-          tag: latest
-      - pull_tag_push:
-          image: newedensocial/web
-          tag: latest
 
   push_release:
     executor: docker-build
@@ -149,12 +110,6 @@ jobs:
       - authenticate_docker_hub
       - pull_tag_push:
           image: newedensocial/base
-          tag: $CIRCLE_TAG
-      - pull_tag_push:
-          image: newedensocial/api
-          tag: $CIRCLE_TAG
-      - pull_tag_push:
-          image: newedensocial/web
           tag: $CIRCLE_TAG
 
   deploy_latest:
@@ -174,12 +129,6 @@ workflows:
       - test-lint
       - test
       - build-base
-      - build-api:
-          requires:
-            - build-base
-      - build-web:
-          requires:
-            - build-base
       # Release latest version
       - push_latest:
           requires:
@@ -203,8 +152,6 @@ workflows:
             - test-lint
             - test
             - build-base
-            - build-api
-            - build-web
           filters:
             branches:
               ignore:
