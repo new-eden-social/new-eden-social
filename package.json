@@ -134,7 +134,6 @@
     "bootstrap:prod": "lerna bootstrap -- --frozen-lockfile"
   },
   "workspaces": [
-    "packages/*",
     "src/services/*",
     "src/*"
   ],

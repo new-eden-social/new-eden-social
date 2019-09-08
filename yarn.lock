@@ -1435,6 +1435,79 @@
   dependencies:
     iterare "1.2.0"
 
+"@new-eden-social/esi@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@new-eden-social/esi/-/esi-0.1.1.tgz#7bc821bfe7eddf3e312bcd4350448b79950b6bf4"
+  integrity sha512-eHlc5ry452TA7lzEuK8AoRr3Bg3qHBq0VEo6KQH7p8xtIZC5GKJriYQ3C5Rf+5m8qY3g94QBJVJ8O55fFTbXUQ==
+  dependencies:
+    "@new-eden-social/logger" "^0.1.1"
+    "@new-eden-social/request-context" "^0.1.1"
+    "@reactivex/rxjs" "^6.5.2"
+    axios "^0.19.0"
+
+"@new-eden-social/eve-sso@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@new-eden-social/eve-sso/-/eve-sso-0.1.1.tgz#008b30aca939c23f1890e16db03e464f27930fbf"
+  integrity sha512-Zx/v1Wj0DaxqWRn7DvMl2epWEM1XUYZuHgf3TqQjpEivahIG7FJMDBwb+/ktiuiYdLFDEB3w7ZgTQj1N5kVIKg==
+  dependencies:
+    axios "^0.19.0"
+
+"@new-eden-social/killmails-stream@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@new-eden-social/killmails-stream/-/killmails-stream-0.1.1.tgz#8b8ba7e7deef01f64e8360365601dfde7c8dd0d5"
+  integrity sha512-CotanOhGePO9TdyEncLpsQN8wDxG0Y+4o/XZyCGiEY1BY3dFn3iyjDa55tiXTJl5Q+iwl7NQLH3WConOpjww+w==
+  dependencies:
+    "@new-eden-social/zkillboard" "^0.1.1"
+    ws "7.0.1"
+
+"@new-eden-social/logger@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@new-eden-social/logger/-/logger-0.1.1.tgz#51bd095da985196bc450c7cd111dce2a9fb41c91"
+  integrity sha512-5W1FWp8FPCOFQcnrwm4x1J/zbMiaFbBsyvhVJ26cwYwH+VVIqjKQo+5L6EMAGSUCqxBQXC3XdCsYpqi+NbhX/A==
+  dependencies:
+    logform "^2.1.2"
+    winston "^3.2.1"
+
+"@new-eden-social/pagination@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@new-eden-social/pagination/-/pagination-0.1.1.tgz#85d83a38b77505af957ab0c35da379e6023ddecc"
+  integrity sha512-1jKX3CsG8AxvM6sF6rJ+jNYrvorOg4fvJbybLHsBSBfqT/qMQd1JDNEbVUipCyu+2sokH8kVZw25aPCGRnjyFQ==
+  dependencies:
+    "@nestjs/swagger" "^3.0.2"
+    "@new-eden-social/validation" "^0.1.1"
+    express "^4.17.1"
+
+"@new-eden-social/request-context@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@new-eden-social/request-context/-/request-context-0.1.1.tgz#8f8b4bb9c551474ae2c728add6a3e4884d9237b9"
+  integrity sha512-cl34dWCVQF5d+Qe24rgAgGWaMwghSZKC6t8FXRytJpyEz9monb+vvcvOU9K+Xk5E3afZo1DSAao6ks5atyMfSA==
+  dependencies:
+    zone.js "^0.9.1"
+
+"@new-eden-social/utils@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@new-eden-social/utils/-/utils-0.1.1.tgz#ddc0e888b174eb3886405f83489df7d58fb016bc"
+  integrity sha512-+kdX9crO3f4eVuEIHUIKp5HYkZ4Rw3w7qB6xUphGbXKq8Qi1gnlUDBZY6IzBsGr5amxpoeuaSg7dKcPNSbn9Uw==
+  dependencies:
+    hashids "^1.2.2"
+
+"@new-eden-social/validation@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@new-eden-social/validation/-/validation-0.1.1.tgz#7d44cf349e25d8ff300d1a310d615c0cba266bab"
+  integrity sha512-fT6drPofsZqeUp8y7pssgP6DZGIoZDgOopAre6n5xD0NC1eCXf5e7na5Da05nyk40HMN2uzu5a8GZCLc9fD9UQ==
+  dependencies:
+    class-sanitizer "^0.0.5"
+    class-transformer "^0.2.3"
+    class-validator "^0.9.1"
+
+"@new-eden-social/zkillboard@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@new-eden-social/zkillboard/-/zkillboard-0.1.1.tgz#9a8b485d0a6e5bda38624a17480d67e0a6ce5cd1"
+  integrity sha512-6gmaC9cLdThC6/GcmUff7M+LJE0HrtCiZNbKhizuvJQvEytoAZREow9NX1NpUaLn+hG0GPGcyNIc66lBh4+/wQ==
+  dependencies:
+    axios "^0.19.0"
+    rxjs "^6.5.2"
+
 "@ngrx/effects@8.0.1":
   version "8.0.1"
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-8.0.1.tgz#2420e264d96f9fde7fbe594703827f4e44a0b146"
@@ -1665,13 +1738,6 @@
   dependencies:
     "@types/events" "*"
     "@types/minimatch" "*"
-    "@types/node" "*"
-
-"@types/hashids@1.0.30":
-  version "1.0.30"
-  resolved "https://registry.yarnpkg.com/@types/hashids/-/hashids-1.0.30.tgz#c0a056b25c5b13c80bf330fb8d379ac4d4049999"
-  integrity sha512-ESXJxz/GRY+SGa3n0WuWZLR0xM3k8LTr4+2xOoj/a0ZThglF/UfEeKVaMQNNFvFQ+mw3ng8LbC3gmJx/GmR5EQ==
-  dependencies:
     "@types/node" "*"
 
 "@types/ioredis@4.0.12":
