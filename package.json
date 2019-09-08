@@ -108,7 +108,7 @@
     "ngrx-store-localstorage": "7.0.1",
     "ngx-infinite-scroll": "7.2.0",
     "normalize.css": "8.0.1",
-    "pg": "7.11.0",
+    "pg": "7.12.1",
     "pg-query-stream": "2.0.0",
     "redis": "2.8.0",
     "reflect-metadata": "0.1.13",
