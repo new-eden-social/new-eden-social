@@ -15,7 +15,7 @@
     "@types/ioredis": "4.0.12",
     "@types/jasmine": "3.3.13",
     "@types/jasminewd2": "2.0.6",
-    "@types/node": "12.0.10",
+    "@types/node": "12.7.4",
     "@types/socket.io": "2.1.2",
     "@types/socket.io-client": "1.4.32",
     "@types/ws": "6.0.1",
