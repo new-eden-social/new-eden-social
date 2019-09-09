@@ -20,7 +20,7 @@
     "build:docker": "exit 0"
   },
   "dependencies": {
-    "zone.js": "^0.9.1"
+    "zone.js": "^0.10.0"
   },
   "peerDependencies": {
     "@nestjs/common": "^6.3.2"
