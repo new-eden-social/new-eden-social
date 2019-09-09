@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@new-eden-social/zkillboard": "^0.1.1",
-    "ws": "7.0.1"
+    "ws": "7.1.2"
   },
   "peerDependencies": {
     "@nestjs/common": "^6.3.2"
