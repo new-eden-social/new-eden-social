@@ -9444,10 +9444,10 @@ ngrx-store-localstorage@7.0.1:
   dependencies:
     lodash.merge "^4.6.1"
 
-ngx-infinite-scroll@7.2.0:
-  version "7.2.0"
-  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-7.2.0.tgz#bf96d50713ff94f66b8e66d9d1876a29f4441ed1"
-  integrity sha512-EcqjKpU1ukRV3YXOW8cTVtbzPpa9UPaRtYBCg0ZQH3ceCDm+xzLbd4pXy6oKAIN4zN1r/pyGuf5XOJkA8vr6yg==
+ngx-infinite-scroll@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-8.0.0.tgz#4fc1e1d1bb50baedc4793c28115faec656a8d027"
+  integrity sha512-9KRCFAszLttd735CY1GbqtiVRdEvAGWUL8FQqD+iBGitbhgws4OZS+qdKIV+lrJzYXh+Y2XnOOSiUFADOo4+fQ==
   dependencies:
     opencollective-postinstall "^2.0.2"
 

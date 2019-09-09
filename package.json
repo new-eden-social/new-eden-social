@@ -106,7 +106,7 @@
     "moment": "2.24.0",
     "nest-morgan": "1.0.1",
     "ngrx-store-localstorage": "7.0.1",
-    "ngx-infinite-scroll": "7.2.0",
+    "ngx-infinite-scroll": "8.0.0",
     "normalize.css": "8.0.1",
     "pg": "7.11.0",
     "pg-query-stream": "2.0.0",
