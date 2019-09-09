@@ -1435,7 +1435,7 @@
   dependencies:
     iterare "1.2.0"
 
-"@new-eden-social/esi@^0.1.1":
+"@new-eden-social/esi@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/esi/-/esi-0.1.1.tgz#7bc821bfe7eddf3e312bcd4350448b79950b6bf4"
   integrity sha512-eHlc5ry452TA7lzEuK8AoRr3Bg3qHBq0VEo6KQH7p8xtIZC5GKJriYQ3C5Rf+5m8qY3g94QBJVJ8O55fFTbXUQ==
@@ -1445,14 +1445,14 @@
     "@reactivex/rxjs" "^6.5.2"
     axios "^0.19.0"
 
-"@new-eden-social/eve-sso@^0.1.1":
+"@new-eden-social/eve-sso@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/eve-sso/-/eve-sso-0.1.1.tgz#008b30aca939c23f1890e16db03e464f27930fbf"
   integrity sha512-Zx/v1Wj0DaxqWRn7DvMl2epWEM1XUYZuHgf3TqQjpEivahIG7FJMDBwb+/ktiuiYdLFDEB3w7ZgTQj1N5kVIKg==
   dependencies:
     axios "^0.19.0"
 
-"@new-eden-social/killmails-stream@^0.1.1":
+"@new-eden-social/killmails-stream@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/killmails-stream/-/killmails-stream-0.1.1.tgz#8b8ba7e7deef01f64e8360365601dfde7c8dd0d5"
   integrity sha512-CotanOhGePO9TdyEncLpsQN8wDxG0Y+4o/XZyCGiEY1BY3dFn3iyjDa55tiXTJl5Q+iwl7NQLH3WConOpjww+w==
@@ -1460,7 +1460,7 @@
     "@new-eden-social/zkillboard" "^0.1.1"
     ws "7.0.1"
 
-"@new-eden-social/logger@^0.1.1":
+"@new-eden-social/logger@0.1.1", "@new-eden-social/logger@^0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/logger/-/logger-0.1.1.tgz#51bd095da985196bc450c7cd111dce2a9fb41c91"
   integrity sha512-5W1FWp8FPCOFQcnrwm4x1J/zbMiaFbBsyvhVJ26cwYwH+VVIqjKQo+5L6EMAGSUCqxBQXC3XdCsYpqi+NbhX/A==
@@ -1468,7 +1468,7 @@
     logform "^2.1.2"
     winston "^3.2.1"
 
-"@new-eden-social/pagination@^0.1.1":
+"@new-eden-social/pagination@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/pagination/-/pagination-0.1.1.tgz#85d83a38b77505af957ab0c35da379e6023ddecc"
   integrity sha512-1jKX3CsG8AxvM6sF6rJ+jNYrvorOg4fvJbybLHsBSBfqT/qMQd1JDNEbVUipCyu+2sokH8kVZw25aPCGRnjyFQ==
@@ -1477,21 +1477,21 @@
     "@new-eden-social/validation" "^0.1.1"
     express "^4.17.1"
 
-"@new-eden-social/request-context@^0.1.1":
+"@new-eden-social/request-context@0.1.1", "@new-eden-social/request-context@^0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/request-context/-/request-context-0.1.1.tgz#8f8b4bb9c551474ae2c728add6a3e4884d9237b9"
   integrity sha512-cl34dWCVQF5d+Qe24rgAgGWaMwghSZKC6t8FXRytJpyEz9monb+vvcvOU9K+Xk5E3afZo1DSAao6ks5atyMfSA==
   dependencies:
     zone.js "^0.9.1"
 
-"@new-eden-social/utils@^0.1.1":
+"@new-eden-social/utils@0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/utils/-/utils-0.1.1.tgz#ddc0e888b174eb3886405f83489df7d58fb016bc"
   integrity sha512-+kdX9crO3f4eVuEIHUIKp5HYkZ4Rw3w7qB6xUphGbXKq8Qi1gnlUDBZY6IzBsGr5amxpoeuaSg7dKcPNSbn9Uw==
   dependencies:
     hashids "^1.2.2"
 
-"@new-eden-social/validation@^0.1.1":
+"@new-eden-social/validation@0.1.1", "@new-eden-social/validation@^0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/validation/-/validation-0.1.1.tgz#7d44cf349e25d8ff300d1a310d615c0cba266bab"
   integrity sha512-fT6drPofsZqeUp8y7pssgP6DZGIoZDgOopAre6n5xD0NC1eCXf5e7na5Da05nyk40HMN2uzu5a8GZCLc9fD9UQ==
@@ -1500,7 +1500,7 @@
     class-transformer "^0.2.3"
     class-validator "^0.9.1"
 
-"@new-eden-social/zkillboard@^0.1.1":
+"@new-eden-social/zkillboard@0.1.1", "@new-eden-social/zkillboard@^0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/zkillboard/-/zkillboard-0.1.1.tgz#9a8b485d0a6e5bda38624a17480d67e0a6ce5cd1"
   integrity sha512-6gmaC9cLdThC6/GcmUff7M+LJE0HrtCiZNbKhizuvJQvEytoAZREow9NX1NpUaLn+hG0GPGcyNIc66lBh4+/wQ==
@@ -7767,7 +7767,7 @@ lead@^1.0.0:
   dependencies:
     flush-write-stream "^1.0.2"
 
-lerna@^3.15.0:
+lerna@3.16.4:
   version "3.16.4"
   resolved "https://registry.yarnpkg.com/lerna/-/lerna-3.16.4.tgz#158cb4f478b680f46f871d5891f531f3a2cb31ec"
   integrity sha512-0HfwXIkqe72lBLZcNO9NMRfylh5Ng1l8tETgYQ260ZdHRbPuaLKE3Wqnd2YYRRkWfwPyEyZO8mZweBR+slVe1A==
@@ -8111,7 +8111,7 @@ lowercase-keys@^1.0.0, lowercase-keys@^1.0.1:
   resolved "https://registry.yarnpkg.com/lowercase-keys/-/lowercase-keys-1.0.1.tgz#6f9e30b47084d971a7c820ff15a6c5167b74c26f"
   integrity sha512-G2Lj61tXDnVFFOi8VZds+SoQjtQC3dgokKdDG2mTm1tx4m50NUHBOZSBwQQHyy0V12A0JTG4icfZQH+xPyh8VA==
 
-lru-cache@4.1.x, lru-cache@^4.0.1, lru-cache@^4.1.2:
+lru-cache@4.1.x, lru-cache@^4.0.1, lru-cache@^4.1.2, lru-cache@^4.1.3:
   version "4.1.5"
   resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.5.tgz#8bbe50ea85bed59bc9e33dcab8235ee9bcf443cd"
   integrity sha512-sWZlbEP2OsHNkXrMl5GYk/jKk70MBng6UU4YI/qGDYbgf6YbP4EvmqISbXCoJiRKs+1bSpFHVgQxvJ17F2li5g==
@@ -13247,7 +13247,7 @@ webpack-merge@4.2.1:
   dependencies:
     lodash "^4.17.5"
 
-webpack-node-externals@^1.7.2:
+webpack-node-externals@1.7.2:
   version "1.7.2"
   resolved "https://registry.yarnpkg.com/webpack-node-externals/-/webpack-node-externals-1.7.2.tgz#6e1ee79ac67c070402ba700ef033a9b8d52ac4e3"
   integrity sha512-ajerHZ+BJKeCLviLUUmnyd5B4RavLF76uv3cs6KNuO8W+HuQaEs0y0L7o40NQxdPy5w0pcv8Ew7yPUAQG0UdCg==
