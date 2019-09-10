@@ -5,6 +5,14 @@ commands:
     description: "Authenticate with Docker Hub"
     steps:
       - run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  link_bazel_bin:
+    description: "Links bazel from node_modules to /usr/local"
+    steps:
+      - run: |
+        pathToBazel=$(ls $(realpath ./node_modules/@bazel/bazel-linux_x64)/bazel-*)
+        sudo ln -fs $pathToBazel /usr/local/bin/bazel
+        echo "Bazel version:"
+        bazel version
   pull_tag_push:
     description: "Pull, Tag and Push image"
     parameters:
@@ -53,6 +61,7 @@ jobs:
           key: v2-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
             - /app/node_modules
+      - link_bazel_bin
       - run:
           name: Run Build
           command: yarn build
@@ -72,9 +81,13 @@ jobs:
           key: v2-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
             - /app/node_modules
+      - link_bazel_bin
       - run:
           name: Run Linter
           command: yarn lint
+      - run:
+          name: Run Bazel Linter
+          command: yarn bazel:lint
 
   test:
     executor: node-test
@@ -91,6 +104,7 @@ jobs:
           key: v2-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
             - /app/node_modules
+      - link_bazel_bin
       - run:
           name: Run Tests
           command: yarn test
