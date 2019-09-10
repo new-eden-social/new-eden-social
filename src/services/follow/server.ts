@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 // Used for TypeORM
 import 'reflect-metadata';
-import { FollowModule } from './src/follow.module';
+import { FollowModule } from './follow.module';
 import { join } from 'path';
 import { Transport } from '@nestjs/microservices';
 

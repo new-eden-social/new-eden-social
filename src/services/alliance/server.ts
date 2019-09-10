@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
 // Used for TypeORM
 import 'reflect-metadata';
-import { AllianceModule } from './src/alliance.module';
-import { Transport } from '@nestjs/common/enums/transport.enum';
+import { AllianceModule } from '@new-eden-social/services-alliance/alliance.module';
+import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
 
 async function bootstrap() {

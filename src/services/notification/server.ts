@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 // Used for TypeORM
 import 'reflect-metadata';
-import { NotificationModule } from './src/notification.module';
+import { NotificationModule } from './notification.module';
 import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
 

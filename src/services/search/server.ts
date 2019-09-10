@@ -5,7 +5,7 @@ import 'reflect-metadata';
 import 'zone.js';
 import 'zone.js/dist/zone-node.js';
 import 'zone.js/dist/long-stack-trace-zone.js';
-import { SearchModule } from './src/search.module';
+import { SearchModule } from './search.module';
 import { Transport } from '@nestjs/common/enums/transport.enum';
 import { join } from 'path';
 

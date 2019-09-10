@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "noImplicitAny": false,
+    "removeComments": false,
+    "noLib": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "sourceMap": true,
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@new-eden-social/services-*": ["src/services/*"]
+    },
+  },
+  "exclude": [
+    "node_modules",
+    "bazel-",
+  ],
+  "include": [
+    "src/services/**/*",
+    "src/gateway/**/*",
+  ],
+}

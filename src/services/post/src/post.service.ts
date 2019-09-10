@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Post } from './post.entity';
-import { VCreatePost } from '../../../gateway/src/post/post.validate';
+import { VCreatePost } from '../../../gateway/post/post.validate';
 import { POST_TYPES } from './post.constants';
 import { PostRepository } from './post.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { MetascraperGrpcClient } from '@new-eden-social/api-metascraper';
+import { MetascraperGrpcClient } from '@new-eden-social/services-metascraper';
 import { IKillmail } from '@new-eden-social/zkillboard';
-import { HashtagGrpcClient } from '@new-eden-social/api-hashtag';
-import { NotificationGrpcClient, NOTIFICATION_TYPE } from '@new-eden-social/api-notification';
+import { HashtagGrpcClient } from '@new-eden-social/services-hashtag';
+import { NotificationGrpcClient, NOTIFICATION_TYPE } from '@new-eden-social/services-notification';
 import * as uuidv4 from 'uuid/v4';
 import { ICreatePost } from './post.interface';
 

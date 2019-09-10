@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 // Used for TypeORM
 import 'reflect-metadata';
-import { WebsocketModule } from './src/websocket.module';
+import { WebsocketModule } from './websocket.module';
 import { Transport } from '@nestjs/common/enums/transport.enum';
 
 async function bootstrap() {

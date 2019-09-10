@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 // Used for TypeORM
 import 'reflect-metadata';
-import { CharacterModule } from './src/character.module';
+import { CharacterModule } from '@new-eden-social/services-character/character.module';
 import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
 

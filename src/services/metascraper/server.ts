@@ -5,7 +5,7 @@ import 'reflect-metadata';
 import 'zone.js';
 import 'zone.js/dist/zone-node.js';
 import 'zone.js/dist/long-stack-trace-zone.js';
-import { MetascraperModule } from './src/metascraper.module';
+import { MetascraperModule } from './metascraper.module';
 import { Transport } from '@nestjs/common/enums/transport.enum';
 import { join } from 'path';
 

@@ -35,22 +35,27 @@ executors:
   node-test:
     docker:
       - image: circleci/node:lts
-  docker-build:
-    machine:
-      image: circleci/classic:201808-01
 
 jobs:
-  build-base:
-    executor: docker-build
+  build:
+    executor: node-test
     steps:
-     - checkout
-     - authenticate_docker_hub
-     - run:
-        name: Building image
-        command: docker build . -t newedensocial/base:$CIRCLE_SHA1
-     - run:
-        name: Push Image
-        command: docker push newedensocial/base:$CIRCLE_SHA1
+      - checkout
+      - authenticate_docker_hub
+      - restore_cache:
+          keys:
+            - v2-node-modules-{{ .Branch }}-
+            - v2-node-modules-master-
+      - run:
+          name: Install Dependencies
+          command: yarn --frozen-lockfile --non-interactive
+      - save_cache:
+          key: v2-node-modules-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /app/node_modules
+      - run:
+          name: Run Build
+          command: yarn build
 
   test-lint:
     executor: node-test
@@ -58,16 +63,13 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-node-modules-{{ .Branch }}-
-            - v1-node-modules-master-
-      - run:
-          name: Install Lerna
-          command: yarn global add lerna
+            - v2-node-modules-{{ .Branch }}-
+            - v2-node-modules-master-
       - run:
           name: Install Dependencies
-          command: yarn run bootstrap
+          command: yarn --frozen-lockfile --non-interactive
       - save_cache:
-          key: v1-node-modules-{{ .Branch }}-{{ epoch }}
+          key: v2-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
             - /app/node_modules
       - run:
@@ -80,22 +82,20 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - v1-node-modules-{{ .Branch }}-
-            - v1-node-modules-master-
-      - run:
-          name: Install Lerna
-          command: yarn global add lerna
+            - v2-node-modules-{{ .Branch }}-
+            - v2-node-modules-master-
       - run:
           name: Install Dependencies
-          command: yarn run bootstrap
+          command: yarn --frozen-lockfile --non-interactive
       - save_cache:
-          key: v1-node-modules-{{ .Branch }}-{{ epoch }}
+          key: v2-node-modules-{{ .Branch }}-{{ epoch }}
           paths:
-            - /app/api/node_modules
+            - /app/node_modules
       - run:
           name: Run Tests
           command: yarn test
 
+  # TODO: Not bazel compatible
   push_latest:
     executor: docker-build
     steps:
@@ -104,6 +104,7 @@ jobs:
           image: newedensocial/base
           tag: latest
 
+  # TODO: Not bazel compatible
   push_release:
     executor: docker-build
     steps:
@@ -128,13 +129,13 @@ workflows:
     jobs:
       - test-lint
       - test
-      - build-base
+      - build
       # Release latest version
       - push_latest:
           requires:
             - test-lint
             - test
-            - build-base
+            - build
           filters:
             branches:
               only: master
@@ -149,7 +150,7 @@ workflows:
           requires:
             - test-lint
             - test
-            - build-base
+            - build
           filters:
             branches:
               ignore:

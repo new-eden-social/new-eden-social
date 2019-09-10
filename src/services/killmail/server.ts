@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 // Used for TypeORM
 import 'reflect-metadata';
-import { KillmailModule } from './src/killmail.module';
+import { KillmailModule } from './killmail.module';
 import { Transport } from '@nestjs/common/enums/transport.enum';
 import { join } from 'path';
 

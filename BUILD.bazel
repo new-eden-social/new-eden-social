@@ -1,0 +1,5 @@
+filegroup(
+    name = "tsconfig.json",
+    srcs = ["tsconfig-bazel.json"],
+    visibility = ["//visibility:public"],
+)

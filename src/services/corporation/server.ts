@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 // Used for TypeORM
 import 'reflect-metadata';
-import { CorporationModule } from './src/corporation.module';
+import { CorporationModule } from './corporation.module';
 import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
 

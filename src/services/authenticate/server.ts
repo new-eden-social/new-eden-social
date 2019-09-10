@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { join } from 'path';
-import { AuthenticateModule } from './src/authenticate.module';
+import { AuthenticateModule } from '@new-eden-social/services-authenticate/authenticate.module';
 
 async function bootstrap() {
   const HTTP_PORT = parseInt(process.env.HTTP_PORT, 10) || 3000; // Default to 3000

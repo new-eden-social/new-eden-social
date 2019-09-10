@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
-import { UpdaterService } from './src/updater.service';
-import { UpdaterModule } from './src/updater.module';
+import { UpdaterService } from './updater.service';
+import { UpdaterModule } from './updater.module';
 import { LoggerService } from '@new-eden-social/logger';
 
 async function bootstrap() {
