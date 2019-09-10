@@ -1109,10 +1109,10 @@
   dependencies:
     find-up "^2.1.0"
 
-"@ctrl/ngx-emoji-mart@0.17.0":
-  version "0.17.0"
-  resolved "https://registry.yarnpkg.com/@ctrl/ngx-emoji-mart/-/ngx-emoji-mart-0.17.0.tgz#14368c55171be6a8ac31f1cc40b89ffd2bcfa596"
-  integrity sha512-gdHM/OPTbqWMIlFPAbjgAPo5BGsjkehILCInw5OttuT25HMZXJFjWVpi6vGixNVrAs8kz6sTYM/wbldS5GP9yQ==
+"@ctrl/ngx-emoji-mart@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@ctrl/ngx-emoji-mart/-/ngx-emoji-mart-1.0.1.tgz#15bfa674d21818b915c93625c9e85fbd19a3c321"
+  integrity sha512-0XG0vdM8/aXUxemtTG//LksmE0oBPbUHcEabHDBv2gQw3GJ0+RPq9arNGzS05zuuYMiwI7jU9kuLLaAmHCZOkg==
   dependencies:
     tslib "^1.9.0"
 
