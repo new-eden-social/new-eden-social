@@ -112,7 +112,7 @@
     "pg-query-stream": "2.0.0",
     "redis": "2.8.0",
     "reflect-metadata": "0.1.13",
-    "rxjs": "6.5.2",
+    "rxjs": "6.5.3",
     "socket.io-client": "2.2.0",
     "swagger-ui-express": "4.0.6",
     "ts-loader": "6.0.4",
