@@ -19,7 +19,7 @@
     "build:docker": "exit 0"
   },
   "dependencies": {
-    "hashids": "^1.2.2"
+    "hashids": "^2.0.0"
   },
   "devDependencies": {
     "@types/hashids": "1.0.30"
