@@ -894,6 +894,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@bazel/bazel-linux_x64@^0.29.0":
+  version "0.29.0"
+  resolved "https://registry.yarnpkg.com/@bazel/bazel-linux_x64/-/bazel-linux_x64-0.29.0.tgz#95250ad8463425bec81a95736056f432c186cb9d"
+  integrity sha512-QxWdtlsFKMi3SJ++osjA8QQbWOlGZXU0/TtUTiswsRwWdOEwZhOa2c1ljIQY5QBgzc3CCh2clRnkjWQj0/V/Dw==
+
 "@bazel/buildifier-darwin_x64@0.28.0":
   version "0.28.0"
   resolved "https://registry.yarnpkg.com/@bazel/buildifier-darwin_x64/-/buildifier-darwin_x64-0.28.0.tgz#bc8c4312596d4cf321062ae4e3f2115be453fef2"
