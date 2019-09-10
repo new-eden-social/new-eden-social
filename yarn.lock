@@ -5185,7 +5185,7 @@ deep-extend@^0.6.0:
   resolved "https://registry.yarnpkg.com/deep-extend/-/deep-extend-0.6.0.tgz#c4fa7c95404a17a9c3e8ca7e1537312b736330ac"
   integrity sha512-LOHxIOaPYdHlJRtCQfDIVZtfw/ufM8+rVj649RIHzcm/vGwQRXFt6OPqIFWsm2XEMrNIEtWR64sY1LEKD2vAOA==
 
-deepmerge@3.3.0, deepmerge@^3.0.0:
+deepmerge@3.3.0, deepmerge@^3.0.0, deepmerge@^3.2.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/deepmerge/-/deepmerge-3.3.0.tgz#d3c47fd6f3a93d517b14426b0628a17b0125f5f7"
   integrity sha512-GRQOafGHwMHpjPx9iCvTgpu9NojZ49q794EEL94JVEw6VaeA8XTUyBKvAkOOjBX9oJNiV6G3P+T+tihFjo2TqA==
@@ -8607,11 +8607,6 @@ lodash.map@^4.5.1:
   resolved "https://registry.yarnpkg.com/lodash.map/-/lodash.map-4.6.0.tgz#771ec7839e3473d9c4cde28b19394c3562f4f6d3"
   integrity sha1-dx7Hg540c9nEzeKLGTlMNWL09tM=
 
-lodash.merge@^4.6.1:
-  version "4.6.1"
-  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
-  integrity sha512-AOYza4+Hf5z1/0Hztxpm2/xiPZgi/cjMqdnKTUWTBSKchJlxXXuUSxCCl8rJlf4g6yww/j6mA8nC8Hw/EZWxKQ==
-
 lodash.set@^4.3.2:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/lodash.set/-/lodash.set-4.3.2.tgz#d8757b1da807dde24816b0d6a84bea1a76230b23"
@@ -9592,12 +9587,12 @@ next-tick@1, next-tick@^1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ngrx-store-localstorage@7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/ngrx-store-localstorage/-/ngrx-store-localstorage-7.0.1.tgz#58b9fb7797698d07e41330ec2f78fa25052dc245"
-  integrity sha512-Mw5Vjp/KbYZ9qvWw68ixt97+QXsqIAQyceeUIKiMwVQtoWdjs008rYAkO54mJDx57CXVseogVdsnjXokcRijOA==
+ngrx-store-localstorage@8.0.0:
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/ngrx-store-localstorage/-/ngrx-store-localstorage-8.0.0.tgz#da307a54188347803f68566ff927d20dcb9c810b"
+  integrity sha512-3AHqw1AeXDXU/Hgxlh5fjP/srgGuP8BJR2uQ6ViGLeKwMEQDZuQfwd8zu9+bPZcvIxbAcxjWoGCVJXYEkBlxmg==
   dependencies:
-    lodash.merge "^4.6.1"
+    deepmerge "^3.2.0"
 
 ngx-infinite-scroll@8.0.0:
   version "8.0.0"

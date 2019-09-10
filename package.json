@@ -105,7 +105,7 @@
     "metascraper-video-provider": "4.0.2",
     "moment": "2.24.0",
     "nest-morgan": "1.0.1",
-    "ngrx-store-localstorage": "7.0.1",
+    "ngrx-store-localstorage": "8.0.0",
     "ngx-infinite-scroll": "8.0.0",
     "normalize.css": "8.0.1",
     "pg": "7.11.0",
