@@ -9,10 +9,10 @@ commands:
     description: "Links bazel from node_modules to /usr/local"
     steps:
       - run: |
-        pathToBazel=$(ls $(realpath ./node_modules/@bazel/bazel-linux_x64)/bazel-*)
-        sudo ln -fs $pathToBazel /usr/local/bin/bazel
-        echo "Bazel version:"
-        bazel version
+          pathToBazel=$(ls $(realpath ./node_modules/@bazel/bazel-linux_x64)/bazel-*)
+          sudo ln -fs $pathToBazel /usr/local/bin/bazel
+          echo "Bazel version:"
+          bazel version
   pull_tag_push:
     description: "Pull, Tag and Push image"
     parameters:
