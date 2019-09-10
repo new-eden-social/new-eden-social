@@ -97,29 +97,23 @@ jobs:
 
   # TODO: Not bazel compatible
   push_latest:
-    executor: docker-build
+    executor: node-test
     steps:
       - authenticate_docker_hub
-      - pull_tag_push:
-          image: newedensocial/base
-          tag: latest
 
   # TODO: Not bazel compatible
   push_release:
-    executor: docker-build
+    executor: node-test
     steps:
       - authenticate_docker_hub
-      - pull_tag_push:
-          image: newedensocial/base
-          tag: $CIRCLE_TAG
 
   deploy_latest:
-    executor: docker-build
+    executor: node-test
     steps:
       - demo_deploy
 
   deploy_release:
-    executor: docker-build
+    executor: node-test
     steps:
       - demo_deploy
 
