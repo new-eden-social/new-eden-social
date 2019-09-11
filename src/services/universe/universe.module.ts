@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
-import { UniverseLocationModule } from './modules/location/location.module';
-import { UniverseGroupModule } from './modules/group/group.module';
-import { UniverseCategoryModule } from './modules/category/category.module';
-import { UniverseTypeModule } from './modules/type/type.module';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
-import { UniverseCategory } from './modules/category/category.entity';
-import { UniverseGroup } from './modules/group/group.entity';
-import { UniverseLocation } from './modules/location/location.entity';
-import { UniverseType } from './modules/type/type.entity';
-import { UniverseGrpcController } from './grpc/universe.grpc.controller';
+import { UniverseCategory } from '@new-eden-social/services-universe/modules/category/category.entity';
+import { UniverseGroup } from '@new-eden-social/services-universe/modules/group/group.entity';
+import { UniverseLocation } from '@new-eden-social/services-universe/modules/location/location.entity';
+import { UniverseType } from '@new-eden-social/services-universe/modules/type/type.entity';
+import { UniverseCategoryModule } from '@new-eden-social/services-universe/modules/category/category.module';
+import { UniverseGroupModule } from '@new-eden-social/services-universe/modules/group/group.module';
+import { UniverseLocationModule } from '@new-eden-social/services-universe/modules/location/location.module';
+import { UniverseTypeModule } from '@new-eden-social/services-universe/modules/type/type.module';
+import { UniverseGrpcController } from '@new-eden-social/services-universe/grpc/universe.grpc.controller';
 
 @Module({
   imports: [

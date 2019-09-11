@@ -2,7 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { Follow } from './follow.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { FollowRepository } from './follow.repository';
-import { NotificationGrpcClient, NOTIFICATION_TYPE } from '@new-eden-social/services-notification';
+import { NotificationGrpcClient } from '@new-eden-social/services-notification';
+import { NOTIFICATION_TYPE } from '@new-eden-social/services-notification/notification.constants';
 import * as uuidv4 from 'uuid/v4';
 
 @Injectable()

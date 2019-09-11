@@ -6,7 +6,7 @@ import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { Comment } from '@new-eden-social/services-comment/comment.entity';
-import { NotificationGrpcModule } from '@new-eden-social/services-notification/grpc/notification.grpc.module';
+import { NotificationGrpcModule } from '@new-eden-social/services-notification';
 
 @Module({
   imports: [

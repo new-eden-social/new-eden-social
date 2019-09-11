@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { Client, ClientGrpc } from '@nestjs/microservices';
-import { ISearchGrpcService } from './search.grpc.interface';
-import { SearchGrpcClientOptions } from './search.grpc.client.options';
+import { ISearchGrpcService } from '@new-eden-social/services-search/grpc/search.grpc.interface';
+import { SearchGrpcClientOptions } from '@new-eden-social/services-search/grpc/search.grpc.client.options';
 
 @Injectable()
 export class SearchGrpcClient implements OnModuleInit {

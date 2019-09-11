@@ -1,9 +1,8 @@
-import { AggregateRoot } from '@nestjs/cqrs';
 import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { NOTIFICATION_TYPE } from './notification.constants';
 
 @Entity()
-export class Notification extends AggregateRoot {
+export class Notification {
 
   @PrimaryGeneratedColumn('uuid')
   id: string;

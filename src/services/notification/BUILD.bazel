@@ -19,6 +19,7 @@ ts_library(
         "@npm//reflect-metadata",
         "@npm//rxjs",
         "@npm//typeorm",
+        "//src/services/websocket:lib"
     ],
 )
 

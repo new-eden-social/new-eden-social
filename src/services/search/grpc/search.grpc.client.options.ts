@@ -1,4 +1,4 @@
-import { GrpcOptions } from '@nestjs/common/interfaces/microservices/microservice-configuration.interface';
+import { GrpcOptions } from '@nestjs/microservices';
 import { join } from 'path';
 
 export const SearchGrpcClientOptions: GrpcOptions = {

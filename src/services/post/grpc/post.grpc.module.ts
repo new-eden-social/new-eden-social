@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { PostGrpcClient } from './post.grpc.client';
+import { PostGrpcClient } from '@new-eden-social/services-post/grpc/post.grpc.client';
 
 @Module({
   exports: [

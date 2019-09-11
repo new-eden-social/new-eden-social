@@ -22,7 +22,9 @@ import { WsLoggerExceptionInterceptor, LoggerService } from '@new-eden-social/lo
 import { ISocket } from './websocket.interface';
 import { EventPattern } from '@nestjs/microservices';
 import { WS_REDIS_EVENTS } from './redis/websocket.redis.events';
-import { DWsRedisLatestWall, DWsRedisCharacterWall, DWsRedisCharacter, DWsRedisHashtagWall, DWsRedisAllianceWall, DWsRedisCorporationWall, DWsRedisPostComments } from './redis/websocket.redis.dto';
+import { DWsRedisLatestWall, DWsRedisCharacterWall, DWsRedisCharacter,
+  DWsRedisHashtagWall, DWsRedisAllianceWall, DWsRedisCorporationWall,
+  DWsRedisPostComments } from './redis/websocket.redis.dto';
 import { AuthenticateGrpcClient } from '@new-eden-social/services-authenticate';
 
 @WebSocketGateway()

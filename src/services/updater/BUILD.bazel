@@ -19,6 +19,9 @@ ts_library(
         "@npm//reflect-metadata",
         "@npm//rxjs",
         "@npm//typeorm",
+        "//src/services/character:lib",
+        "//src/services/corporation:lib",
+        "//src/services/alliance:lib",
     ],
 )
 

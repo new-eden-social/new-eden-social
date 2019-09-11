@@ -18,9 +18,11 @@ ts_library(
         "@npm//@new-eden-social/zkillboard",
         "@npm//@types/node",
         "@npm//@types/socket.io",
+        "@npm//class-validator",
         "@npm//reflect-metadata",
         "@npm//rxjs",
         "@npm//typeorm",
+        "//src/services/authenticate:lib",
     ],
 )
 

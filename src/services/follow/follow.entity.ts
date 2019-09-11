@@ -1,8 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
-import { AggregateRoot } from '@nestjs/cqrs';
 
 @Entity()
-export class Follow extends AggregateRoot {
+export class Follow {
 
   @PrimaryGeneratedColumn('uuid')
   id: string;

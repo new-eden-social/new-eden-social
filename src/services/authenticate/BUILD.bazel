@@ -9,6 +9,7 @@ ts_library(
     deps = [
         "@npm//@nestjs/common",
         "@npm//@nestjs/core",
+        "@npm//@nestjs/jwt",
         "@npm//@nestjs/microservices",
         "@npm//@nestjs/typeorm",
         "@npm//@new-eden-social/esi",

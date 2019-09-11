@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { UniverseGrpcClient } from './universe.grpc.client';
+import { UniverseGrpcClient } from '@new-eden-social/services-universe/grpc/universe.grpc.client';
 
 @Module({
   exports: [

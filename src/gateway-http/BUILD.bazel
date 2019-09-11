@@ -1,0 +1,62 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@npm_bazel_typescript//:index.bzl", "ts_library")
+
+ts_library(
+    name = "lib",
+    srcs = glob(["**/*.ts"]),
+    module_name = "@new-eden-social/gateway-http",
+    deps = [
+        "@npm//@nestjs/common",
+        "@npm//@nestjs/core",
+        "@npm//@nestjs/microservices",
+        "@npm//@nestjs/swagger",
+        "@npm//@new-eden-social/logger",
+        "@npm//@new-eden-social/pagination",
+        "@npm//@new-eden-social/esi",
+        "@npm//@new-eden-social/eve-sso",
+        # "@npm//@new-eden-social/validation",
+        "@npm//@new-eden-social/utils",
+        "@npm//@types/node",
+        "@npm//class-validator",
+        "@npm//rxjs",
+        "//src/services/alliance:lib",
+        "//src/services/authenticate:lib",
+        "//src/services/character:lib",
+        "//src/services/comment:lib",
+        "//src/services/corporation:lib",
+        "//src/services/follow:lib",
+        "//src/services/hashtag:lib",
+        "//src/services/killmail:lib",
+        "//src/services/metascraper:lib",
+        "//src/services/notification:lib",
+        "//src/services/post:lib",
+        "//src/services/search:lib",
+        "//src/services/universe:lib",
+        "//src/services/updater:lib",
+        "//src/services/websocket:lib",
+    ],
+)
+
+load("@build_bazel_rules_nodejs//:defs.bzl", "nodejs_binary")
+
+nodejs_binary(
+    name = "bin",
+    bootstrap = ["source-map-support/register"],
+    data = [
+        ":lib",
+        "@npm//@nestjs/platform-express",
+        "@npm//source-map-support",
+    ],
+    entry_point = ":server.ts",
+)
+
+load("@io_bazel_rules_docker//nodejs:image.bzl", "nodejs_image")
+
+nodejs_image(
+    name = "docker",
+    data = [":lib"],
+    entry_point = ":server.ts",
+    # This will be put into its own layer.
+    node_modules = "@npm//:node_modules",
+)

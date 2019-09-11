@@ -1,5 +1,5 @@
 Here are listed features and order that they will be added. If you have an idea,
-don't hesitate, just write in the [issues section](https://github.com/new-eden-social/hub/issues/new) or on [slack #evebook](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/), we love new ideas :)
+don't hesitate, just write in the [issues section](https://github.com/new-eden-social/new-eden-social/issues/new) or on [slack #evebook](https://www.fuzzwork.co.uk/tweetfleet-slack-invites/), we love new ideas :)
 
 # Alpha
 - [x] Initial design

@@ -1,4 +1,4 @@
-import { POST_TYPES } from './post.constants';
+import { POST_TYPES } from '@new-eden-social/services-post/post.constants';
 
 export interface ICreatePost {
   content: string;

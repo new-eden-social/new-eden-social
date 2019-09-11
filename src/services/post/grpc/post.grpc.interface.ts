@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
-import { ICreatePost } from '../post.interface';
-import { POST_TYPES } from '../post.constants';
+import { ICreatePost } from '@new-eden-social/services-post/post.interface';
+import { POST_TYPES } from '@new-eden-social/services-post/post.constants';
 
 // Should reflect the .proto file!
 export interface IPostGrpcService {

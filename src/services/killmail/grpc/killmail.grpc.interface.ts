@@ -21,7 +21,7 @@ export interface IKillmailResponse {
 
 export interface IParticipantResponse {
   characterId: number;
-  type: string; // attacker | victim
+  type: 'attacker' | 'victim'; // attacker | victim
   shipId?: number;
   damageDone: number;
   finalBlow: boolean;

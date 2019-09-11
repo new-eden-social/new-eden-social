@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { LoggerService } from '@new-eden-social/logger';
-import { CharacterGrpcClient } from '@new-eden-social/services-character/grpc/character.grpc.client';
-import { CorporationGrpcClient } from '@new-eden-social/services-corporation/grpc/corporation.grpc.client';
-import { AllianceGrpcClient } from '@new-eden-social/services-alliance/grpc/alliance.grpc.client';
+import { CharacterGrpcClient } from '@new-eden-social/services-character';
+import { CorporationGrpcClient } from '@new-eden-social/services-corporation';
+import { AllianceGrpcClient } from '@new-eden-social/services-alliance';
 
 @Injectable()
 export class UpdaterService {

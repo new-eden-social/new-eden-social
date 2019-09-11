@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
-import { PostService } from './post.service';
+import { PostService } from '@new-eden-social/services-post/post.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { PostRepository } from './post.repository';
+import { PostRepository } from '@new-eden-social/services-post/post.repository';
 import { LoggerModule } from '@new-eden-social/logger';
 import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
-import { MetascraperGrpcModule } from '@new-eden-social/services-metascraper';
-import { Post } from './post.entity';
-import { WebsocketRedisModule } from '@new-eden-social/services-websocket';
-import { PostGrpcController } from './grpc/post.grpc.controller';
+import { MetascraperGrpcModule } from '@new-eden-social/services-metascraper/grpc/metascraper.grpc.module';
+import { Post } from '@new-eden-social/services-post/post.entity';
+import { WebsocketRedisModule } from '@new-eden-social/services-websocket/redis/websocket.redis.module';
+import { PostGrpcController } from '@new-eden-social/services-post/grpc/post.grpc.controller';
+import { NotificationGrpcModule } from '@new-eden-social/services-notification/grpc/notification.grpc.module';
+import { HashtagGrpcModule } from '@new-eden-social/services-hashtag/grpc/hashtag.grpc.module';
 
 @Module({
   imports: [
@@ -30,6 +32,8 @@ import { PostGrpcController } from './grpc/post.grpc.controller';
 
     MetascraperGrpcModule,
     WebsocketRedisModule,
+    NotificationGrpcModule,
+    HashtagGrpcModule,
   ],
   providers: [
     PostService,

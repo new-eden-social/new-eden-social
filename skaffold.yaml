@@ -1,0 +1,50 @@
+build:
+  tagPolicy:
+    sha256: {}
+  artifacts:
+  - image: gcr.io/new-eden-social/services-alliance
+    bazel:
+      target: //src/services/alliance:docker
+  - image: gcr.io/new-eden-social/services-authenticate
+    bazel:
+      target: //src/services/authenticate:docker
+  - image: gcr.io/new-eden-social/services-character
+    bazel:
+      target: //src/services/character:docker
+  - image: gcr.io/new-eden-social/services-comment
+    bazel:
+      target: //src/services/comment:docker
+  - image: gcr.io/new-eden-social/services-corporation
+    bazel:
+      target: //src/services/corporation:docker
+  - image: gcr.io/new-eden-social/services-follow
+    bazel:
+      target: //src/services/follow:docker
+  - image: gcr.io/new-eden-social/services-hashtag
+    bazel:
+      target: //src/services/hashtag:docker
+  - image: gcr.io/new-eden-social/services-killmail
+    bazel:
+      target: //src/services/killmail:docker
+  - image: gcr.io/new-eden-social/services-metascraper
+    bazel:
+      target: //src/services/metascraper:docker
+  - image: gcr.io/new-eden-social/services-notification
+    bazel:
+      target: //src/services/notification:docker
+  - image: gcr.io/new-eden-social/services-post
+    bazel:
+      target: //src/services/post:docker
+  - image: gcr.io/new-eden-social/services-search
+    bazel:
+      target: //src/services/search:docker
+  - image: gcr.io/new-eden-social/services-universe
+    bazel:
+      target: //src/services/universe:docker
+  - image: gcr.io/new-eden-social/services-updater
+    bazel:
+      target: //src/services/updater:docker
+  - image: gcr.io/new-eden-social/services-websocket
+    bazel:
+      target: //src/services/websocket:docker
+

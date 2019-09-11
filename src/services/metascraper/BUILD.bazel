@@ -19,6 +19,18 @@ ts_library(
         "@npm//reflect-metadata",
         "@npm//rxjs",
         "@npm//typeorm",
+        "@npm//axios",
+        "@npm//metascraper",
+        "@npm//metascraper-author",
+        "@npm//metascraper-date",
+        "@npm//metascraper-description",
+        "@npm//metascraper-image",
+        "@npm//metascraper-video",
+        "@npm//metascraper-logo",
+        "@npm//metascraper-publisher",
+        "@npm//metascraper-title",
+        "@npm//metascraper-url",
+        "@npm//metascraper-video-provider",
     ],
 )
 

@@ -1,6 +1,6 @@
-import { DParticipantShort } from './participant/participant.dto';
-import { Killmail } from './killmail.entity';
 import { ApiModelProperty, ApiModelPropertyOptional } from '@nestjs/swagger';
+import { DParticipant } from './participant.dto';
+import { IKillmailResponse } from '@new-eden-social/services-killmail';
 
 export class DKillmailShort {
   @ApiModelProperty()
@@ -13,16 +13,16 @@ export class DKillmailShort {
   npc: boolean;
   @ApiModelProperty({ type: String })
   createdAt: Date;
-  @ApiModelProperty({ type: DParticipantShort, isArray: true })
-  participants: DParticipantShort[];
+  @ApiModelProperty({ type: DParticipant, isArray: true })
+  participants: DParticipant[];
 
-  constructor(killmail: Killmail) {
+  constructor(killmail: IKillmailResponse) {
     this.id = killmail.id;
     this.warId = killmail.warId;
     this.totalValue = killmail.totalValue;
     this.npc = killmail.npc;
-    this.createdAt = killmail.createdAt;
+    this.createdAt = new Date(killmail.createdAt);
     this.participants = killmail.participants.map(
-      participant => new DParticipantShort(participant));
+      participant => new DParticipant(participant));
   }
 }

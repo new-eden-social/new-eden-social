@@ -2,12 +2,12 @@ import { Controller } from '@nestjs/common';
 import { IPostGrpcService, ICreateAsCharacterRequest, IPostResponse,
   ICreateAsCorporationRequest, ICreateAsAllianceRequest, IGetCharacterWallRequest,
   IPaginatedPostResponse, IGetCorporationWallRequest, IGetAllianceWallRequest,
-  IGetHashtagWallRequest, IGetLocationWallRequest, IGetLatestWallRequest, IUrlResponse, IGetRequest } from './post.grpc.interface';
-import { PostService } from '../post.service';
+  IGetHashtagWallRequest, IGetLocationWallRequest, IGetLatestWallRequest, IUrlResponse, IGetRequest } from '@new-eden-social/services-post/grpc/post.grpc.interface';
+import { PostService } from '@new-eden-social/services-post/post.service';
 import { Observable, from } from 'rxjs';
-import { Post } from '../post.entity';
+import { Post } from '@new-eden-social/services-post/post.entity';
 import { map } from 'rxjs/operators';
-import { IURLMetadata } from '@new-eden-social/services-metascraper';
+import { IURLMetadata } from '@new-eden-social/services-metascraper/metascraper.interface';
 import { GrpcMethod } from '@nestjs/microservices';
 
 @Controller()

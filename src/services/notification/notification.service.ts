@@ -3,7 +3,7 @@ import { NotificationRepository } from './notification.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Notification } from './notification.entity';
 import { NOTIFICATION_TYPE, WS_NOTIFICATION_EVENT, WS_NOTIFICATION_SEEN_EVENT } from './notification.constants';
-import { WebsocketRedisClient } from '@new-eden-social/services-websocket';
+import { WebsocketRedisClient } from '@new-eden-social/services-websocket/redis/websocket.redis.client';
 
 @Injectable()
 export class NotificationService {

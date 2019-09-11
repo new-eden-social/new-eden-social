@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 // Used for TypeORM
 import 'reflect-metadata';
-import { UniverseModule } from './universe.module';
+import { UniverseModule } from '@new-eden-social/services-universe/universe.module';
 import { Transport } from '@nestjs/common/enums/transport.enum';
 import { join } from 'path';
 

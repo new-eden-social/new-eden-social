@@ -19,6 +19,10 @@ ts_library(
         "@npm//reflect-metadata",
         "@npm//rxjs",
         "@npm//typeorm",
+        "//src/services/metascraper:lib",
+        "//src/services/notification:lib",
+        "//src/services/hashtag:lib",
+        "//src/services/websocket:lib",
     ],
 )
 

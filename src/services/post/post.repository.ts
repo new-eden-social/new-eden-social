@@ -1,6 +1,6 @@
 import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
-import { Post } from './post.entity';
+import { Post } from '@new-eden-social/services-post/post.entity';
 
 @EntityRepository(Post)
 export class PostRepository extends Repository<Post> {

@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { Post } from './post.entity';
-import { VCreatePost } from '../../../gateway/src/post/post.validate';
-import { POST_TYPES } from './post.constants';
-import { PostRepository } from './post.repository';
+import { Post } from '@new-eden-social/services-post/post.entity';
+import { POST_TYPES } from '@new-eden-social/services-post/post.constants';
+import { PostRepository } from '@new-eden-social/services-post/post.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MetascraperGrpcClient } from '@new-eden-social/services-metascraper';
 import { IKillmail } from '@new-eden-social/zkillboard';
 import { HashtagGrpcClient } from '@new-eden-social/services-hashtag';
-import { NotificationGrpcClient, NOTIFICATION_TYPE } from '@new-eden-social/services-notification';
+import { NotificationGrpcClient } from '@new-eden-social/services-notification';
 import * as uuidv4 from 'uuid/v4';
-import { ICreatePost } from './post.interface';
+import { ICreatePost } from '@new-eden-social/services-post/post.interface';
+import { NOTIFICATION_TYPE } from '@new-eden-social/services-notification/notification.constants';
 
 @Injectable()
 export class PostService {
@@ -67,7 +67,7 @@ export class PostService {
    * @return {Promise<Post>}
    */
   public async createAsCorporation(
-    postData: VCreatePost,
+    postData: ICreatePost,
     corporationId: number,
   ): Promise<Post> {
     const post = new Post();
@@ -87,7 +87,7 @@ export class PostService {
    * @return {Promise<Post>}
    */
   public async createAsAlliance(
-    postData: VCreatePost,
+    postData: ICreatePost,
     allianceId: number,
   ): Promise<Post> {
     const post = new Post();
@@ -234,7 +234,7 @@ export class PostService {
    * @param {VCreatePost} postData
    * @returns {Promise<Post>}
    */
-  private async create(post: Post, postData: VCreatePost): Promise<Post> {
+  private async create(post: Post, postData: ICreatePost): Promise<Post> {
     if (postData.allianceId) {
       post.allianceWallId = postData.allianceId;
     }
@@ -252,7 +252,7 @@ export class PostService {
     }
 
     if (postData.url) {
-      const urlMetadata = await this.metascraperClient.service.processUrl(postData.url).toPromise();
+      const urlMetadata = await this.metascraperClient.service.processUrl({ url: postData.url }).toPromise();
       post.url = urlMetadata;
       post.killmailId = urlMetadata.killmailId;
     }

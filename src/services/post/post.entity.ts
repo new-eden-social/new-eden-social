@@ -4,12 +4,11 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { POST_TYPES } from './post.constants';
-import { AggregateRoot } from '@nestjs/cqrs';
-import { IURLMetadata } from '@new-eden-social/services-metascraper';
+import { POST_TYPES } from '@new-eden-social/services-post/post.constants';
+import { IURLMetadata } from '@new-eden-social/services-metascraper/metascraper.interface';
 
 @Entity()
-export class Post extends AggregateRoot {
+export class Post {
 
   @PrimaryGeneratedColumn('uuid')
   id: string;

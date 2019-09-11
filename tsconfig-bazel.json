@@ -15,11 +15,12 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@new-eden-social/services-*": ["src/services/*"]
-    },
+      "@new-eden-social/services-*": ["src/services/*"],
+      "@new-eden-social/gateway-http": ["src/gateway-http/*"]
+    }
   },
   "exclude": [
     "node_modules",
-    "bazel-",
-  ],
+    "bazel-"
+  ]
 }

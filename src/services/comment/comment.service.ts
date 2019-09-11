@@ -4,7 +4,7 @@ import { Comment } from '@new-eden-social/services-comment/comment.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { from } from 'rxjs';
 import { filter, mergeMap } from 'rxjs/operators';
-import { NotificationGrpcClient } from '@new-eden-social/services-notification/grpc/notification.grpc.client';
+import { NotificationGrpcClient } from '@new-eden-social/services-notification';
 import { NOTIFICATION_TYPE } from '@new-eden-social/services-notification/notification.constants';
 import * as uuidv4 from 'uuid/v4';
 import { ICreateComment } from '@new-eden-social/services-comment/comment.interface';

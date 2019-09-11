@@ -7,7 +7,7 @@ import { UtilsModule } from '@new-eden-social/utils';
 import { LoggerOptions } from 'typeorm/logger/LoggerOptions';
 import { Notification } from 'rxjs';
 import { NotificationGrpcController } from './grpc/notification.grpc.controller';
-import { WebsocketRedisModule } from '@new-eden-social/services-websocket';
+import { WebsocketRedisModule } from '@new-eden-social/services-websocket/redis/websocket.redis.module';
 
 @Module({
   imports: [
