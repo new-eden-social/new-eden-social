@@ -4,9 +4,11 @@ name: default
 
 volumes:
   - name: node_modules_cache
-    temp: {}
+    host:
+      path: /tmp/cache/new-eden-social/node_modules_cache
   - name: bazel_cache
-    temp: {}
+    host:
+      path: /tmp/cache/new-eden-social/bazel_cache
 
 steps:
 
