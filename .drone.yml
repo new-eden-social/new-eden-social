@@ -11,7 +11,7 @@ volumes:
 steps:
 
 # Restore node_modules
-- name: restore-cache-with-filesystem
+- name: restore-node-modules
   image: meltwater/drone-cache:1
   pull: true
   settings:
@@ -32,7 +32,7 @@ steps:
   - yarn
 
 # Store node_modules
-- name: rebuild-cache-with-filesystem
+- name: store-node-modules
   image: meltwater/drone-cache:1
   pull: true
   settings:
@@ -53,7 +53,7 @@ steps:
   - yarn lint
 
 # Restore bazel cache
-- name: restore-cache-with-filesystem
+- name: restore-bazel
   image: meltwater/drone-cache:1
   pull: true
   settings:
@@ -74,7 +74,7 @@ steps:
   - yarn build --disk_cache=bazel_cache
 
 # Store bazel cache
-- name: restore-cache-with-filesystem
+- name: store-bazel
   image: meltwater/drone-cache:1
   pull: true
   settings:
