@@ -1,14 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { GatewayModule } from './gateway.module';
-// import { ValidatorPipe } from '@new-eden-social/validation';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const HTTP_PORT = parseInt(process.env.HTTP_PORT, 10) || 3000; // Default to 3000
 
   const app = await NestFactory.create(GatewayModule);
   app.enableCors();
-  // app.useGlobalPipes(new ValidatorPipe());
+  app.useGlobalPipes(new ValidationPipe({
+    whitelist: true,
+    transform: true,
+  }));
 
    // Swagger
   const options = new DocumentBuilder()

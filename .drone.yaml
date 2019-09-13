@@ -1,0 +1,23 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+- name: test-lint
+  image: node:lts
+  commands:
+  - yarn
+  - yarn lint
+
+- name: test
+  image: node:lts
+  commands:
+  - yarn
+  - yarn test
+
+- name: build
+  image: node:lts
+  commands:
+  - yarn
+  - yarn build
+

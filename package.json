@@ -81,7 +81,6 @@
     "@new-eden-social/pagination": "0.1.1",
     "@new-eden-social/request-context": "0.1.1",
     "@new-eden-social/utils": "0.1.1",
-    "@new-eden-social/validation": "0.1.1",
     "@new-eden-social/zkillboard": "0.1.1",
     "@ngrx/effects": "8.3.0",
     "@ngrx/router-store": "8.3.0",

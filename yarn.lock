@@ -2130,7 +2130,7 @@
   dependencies:
     hashids "^1.2.2"
 
-"@new-eden-social/validation@0.1.1", "@new-eden-social/validation@^0.1.1":
+"@new-eden-social/validation@^0.1.1":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@new-eden-social/validation/-/validation-0.1.1.tgz#7d44cf349e25d8ff300d1a310d615c0cba266bab"
   integrity sha512-fT6drPofsZqeUp8y7pssgP6DZGIoZDgOopAre6n5xD0NC1eCXf5e7na5Da05nyk40HMN2uzu5a8GZCLc9fD9UQ==

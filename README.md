@@ -5,20 +5,11 @@
 <h3 align="center">Hub for EVE Online community.</h3>
 
 <div align="center">
-  <a target="_blank" href="https://circleci.com/gh/new-eden-social/new-eden-social">
-    <img src="https://circleci.com/gh/new-eden-social/new-eden-social.svg?style=shield" alt="CircleCI" />
+  <a target="_blank" href="https://drone.tjo.cloud/new-eden-social/new-eden-social">
+    <img src="https://drone.tjo.cloud/api/badges/new-eden-social/new-eden-social/status.svg" alt="Build Status" />
   </a>
   <a target="_blank" href="https://coveralls.io/github/new-eden-social/new-eden-social">
     <img src="https://coveralls.io/repos/github/new-eden-social/new-eden-social/badge.svg" alt="Coverage Status" />
-  </a>
-  <a href="https://microbadger.com/images/newedensocial/base:latest" title="Docker Image Status">
-    <img src="https://images.microbadger.com/badges/image/newedensocial/base:latest.svg">
-  </a>
-  <a href="https://microbadger.com/images/newedensocial/api:latest" title="Docker Image Status">
-    <img src="https://images.microbadger.com/badges/image/newedensocial/api:latest.svg">
-  </a>
-  <a href="https://microbadger.com/images/newedensocial/web:latest" title="Docker Image Status">
-    <img src="https://images.microbadger.com/badges/image/newedensocial/web:latest.svg">
   </a>
   <a target="_blank" href="https://www.fuzzwork.co.uk/tweetfleet-slack-invites/">
     <img src="https://img.shields.io/badge/slack-%23evebook-ff69b4.svg" alt="Join Slack Chat" />
@@ -26,10 +17,6 @@
   <a target="_blank" href="https://liberapay.com/New-Eden-Social">
     <img alt="Liberapay receiving" src="https://img.shields.io/liberapay/receives/new-eden-social.svg"
     alt="Librepay Donations">
-  </a>
-  <a target="_blank" href="https://lerna.js.org/">
-    <img alt="Liberapay receiving" src="https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg"
-    alt="Maintained with lerna">
   </a>
 </div>
 
