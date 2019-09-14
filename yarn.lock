@@ -1880,10 +1880,36 @@
     url-regex "~4.1.1"
     video-extensions "~1.1.0"
 
-"@metascraper/helpers@^5.5.0", "@metascraper/helpers@^5.6.6":
+"@metascraper/helpers@^5.6.6":
   version "5.6.6"
   resolved "https://registry.yarnpkg.com/@metascraper/helpers/-/helpers-5.6.6.tgz#19e2ae088f2c45052ac58aa097f78b6341390672"
   integrity sha512-JHNjb5ZzBIf2lqjeAd7uFmthgvwZxuMbNE70tV0FbYgmlT417Tzo77HxRj9Q4jCYasWj6OMcdGg+pVAcP+Xvfw==
+  dependencies:
+    audio-extensions "0.0.0"
+    chrono-node "~1.3.11"
+    condense-whitespace "~2.0.0"
+    entities "~2.0.0"
+    file-extension "~4.0.5"
+    has-values "~2.0.1"
+    image-extensions "~1.1.0"
+    is-relative-url "~3.0.0"
+    is-uri "~1.2.0"
+    iso-639-3 "~1.2.0"
+    isostring "0.0.1"
+    lodash "~4.17.15"
+    mem "~5.1.1"
+    mime-types "~2.1.24"
+    normalize-url "~4.3.0"
+    smartquotes "~2.3.1"
+    title "~3.4.1"
+    truncate "~2.1.0"
+    url-regex "~5.0.0"
+    video-extensions "~1.1.0"
+
+"@metascraper/helpers@^5.7.4":
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/@metascraper/helpers/-/helpers-5.7.4.tgz#c91c1b11ce585fa973a544a9d24c5d88d50a9354"
+  integrity sha512-GMLFu8j7e65n04w+dfOVF8RWOqNHCqimITtTHYSa1XdLR8vSqE2PjvSOhGoS5ELU5fRlRQKy9EOrKDeRV3/K0w==
   dependencies:
     audio-extensions "0.0.0"
     chrono-node "~1.3.11"
@@ -9107,13 +9133,13 @@ metascraper-video-provider@4.0.2:
     lodash "~4.17.10"
     youtube-dl "~1.12.2"
 
-metascraper-video@5.5.0:
-  version "5.5.0"
-  resolved "https://registry.yarnpkg.com/metascraper-video/-/metascraper-video-5.5.0.tgz#b12995c4d235cb9dd92cb87e43ba3bdbc945b56d"
-  integrity sha512-FOqnOCRB7Y2xfSu9Apag2kdL4kjbN2J68UQd9+E65pFtel4xHbPfJ16/+CTJyX7svzIc90zr9+1n4hHGiI1dkg==
+metascraper-video@5.7.4:
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/metascraper-video/-/metascraper-video-5.7.4.tgz#33895606b5bde9199e02c726811925a52f9aefb0"
+  integrity sha512-8Rm+y0MW+nGS5A5Z08ZAkcwBif60IGNxf7w0D83i1lw5/8K/g/WpGK0NeT8UuVha0ZHXMQcY1TQOhZO56dpAbA==
   dependencies:
-    "@metascraper/helpers" "^5.5.0"
-    lodash "~4.17.11"
+    "@metascraper/helpers" "^5.7.4"
+    lodash "~4.17.15"
 
 metascraper@5.6.6:
   version "5.6.6"
