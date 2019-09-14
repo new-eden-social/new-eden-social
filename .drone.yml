@@ -12,7 +12,6 @@ steps:
     AWS_SECRET_ACCESS_KEY:
       from_secret: cache_secret
   pull: true
-  debug: true
   settings:
     endpoint:
       from_secret: cache_endpoint
@@ -20,6 +19,7 @@ steps:
     bucket: new-eden-social-build-cache
     region: fra1
     path_style: true
+    debug: true
     mount:
       - 'bazel_cache'
       - 'node_modules'
@@ -43,13 +43,13 @@ steps:
     AWS_SECRET_ACCESS_KEY:
       from_secret: cache_secret
   pull: true
-  debug: true
   settings:
     endpoint:
       from_secret: cache_endpoint
     rebuild: true
     bucket: new-eden-social-build-cache
     region: fra1
+    debug: true
     path_style: true
     mount:
       - 'bazel_cache'
