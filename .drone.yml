@@ -21,6 +21,8 @@ steps:
     mount:
       - 'bazel_cache'
       - 'node_modules'
+  when:
+    event: [ push ]
 
 - name: build-test
   image: node:lts
@@ -29,7 +31,7 @@ steps:
   - yarn lint
   - yarn bazel:lint
   - yarn build --disk_cache=bazel_cache
-  - yarn test
+  #- yarn test
 
 - name: store-cache
   image: meltwater/drone-cache:1
@@ -48,3 +50,5 @@ steps:
     mount:
       - 'bazel_cache'
       - 'node_modules'
+  when:
+    event: [ push ]
