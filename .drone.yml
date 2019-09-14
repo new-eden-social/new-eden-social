@@ -2,96 +2,42 @@ kind: pipeline
 type: docker
 name: default
 
-volumes:
-  - name: node_modules_cache
-    host:
-      path: /tmp/cache/new-eden-social/node_modules_cache
-  - name: bazel_cache
-    host:
-      path: /tmp/cache/new-eden-social/bazel_cache
-
 steps:
 
-# Restore node_modules
-- name: restore-node-modules
-  image: meltwater/drone-cache:1
-  pull: true
+- name: restore
+  image: plugins/s3-cache
   settings:
-    backend: filesystem
+    pull: true
+    endpoint:
+      from_secret: cache_endpoint
+    access_key:
+      from_secret: cache_key
+    secret_key:
+      from_secret: cache_secret
     restore: true
-    cache_key: '{{ .Repo.Name }}_{{ checksum "yarn.lock" }}'
-    archive_format: gzip
-    filesystem_cache_root: /tmp/node_modules_cache
-    mount:
-      - 'node_modules'
-  volumes:
-  - name: node_modules_cache
-    path: /tmp/node_modules_cache
 
-- name: dependencies
+- name: build-test
   image: node:lts
   comamnds:
   - yarn
-
-# Store node_modules
-- name: store-node-modules
-  image: meltwater/drone-cache:1
-  pull: true
-  settings:
-    backend: filesystem
-    rebuild: true
-    cache_key: '{{ .Repo.Name }}_{{ checksum "yarn.lock" }}'
-    archive_format: gzip
-    filesystem_cache_root: /tmp/node_modules_cache
-    mount:
-      - 'node_modules'
-  volumes:
-    - name: node_modules_cache
-      path: /tmp/node_modules_cache
-
-- name: test-lint
-  image: node:lts
-  commands:
   - yarn lint
-
-# Restore bazel cache
-- name: restore-bazel
-  image: meltwater/drone-cache:1
-  pull: true
-  settings:
-    backend: "filesystem"
-    restore: true
-    cache_key: '{{ .Repo.Name }}_{{ .Commit.Branch }}_bazel'
-    archive_format: "gzip"
-    filesystem_cache_root: /tmp/bazel_cache
-    mount:
-      - 'bazel_cache'
-  volumes:
-  - name: bazel_cache
-    path: /tmp/bazel_cache
-
-- name: build
-  image: node:lts
-  commands:
+  - yarn bazel:lint
   - yarn build --disk_cache=bazel_cache
-
-# Store bazel cache
-- name: store-bazel
-  image: meltwater/drone-cache:1
-  pull: true
-  settings:
-    backend: filesystem
-    rebuild: true
-    cache_key: '{{ .Repo.Name }}_{{ .Commit.Branch }}_bazel'
-    archive_format: gzip
-    filesystem_cache_root: /tmp/bazel_cache
-    mount:
-      - 'bazel_cache'
-  volumes:
-  - name: bazel_cache
-    path: /tmp/bazel_cache
-
-- name: test
-  image: node:lts
-  commands:
   - yarn test
+
+- name: rebuild
+  image: plugins/s3-cache
+  settings:
+    pull: true
+    endpoint:
+      from_secret: cache_endpoint
+    access_key:
+      from_secret: cache_key
+    secret_key:
+      from_secret: cache_secret
+    rebuild: true
+    mount:
+      - node_modules
+      - bazel_cache
+    when:
+      event: push
