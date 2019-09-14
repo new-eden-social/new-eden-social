@@ -19,6 +19,7 @@ steps:
     restore: true
     bucket: new-eden-social-build-cache
     region: fra1
+    path_style: true
     mount:
       - 'bazel_cache'
       - 'node_modules'
@@ -49,6 +50,7 @@ steps:
     rebuild: true
     bucket: new-eden-social-build-cache
     region: fra1
+    path_style: true
     mount:
       - 'bazel_cache'
       - 'node_modules'
