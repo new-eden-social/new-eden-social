@@ -6,7 +6,7 @@ steps:
 
 steps:
 - name: restore-cache
-  image: meltwater/drone-cache
+  image: meltwater/drone-cache:1
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: cache_key
@@ -17,9 +17,8 @@ steps:
     endpoint:
       from_secret: cache_endpoint
     restore: true
-    cache_key: {{ .Commit.Branch }} #-{{ checksum "go.mod" }} # default if ommitted is {{ .Commit.Branch }}
     bucket: new-eden-social-build-cache
-    region: ""
+    region: fra1
     mount:
       - 'bazel_cache'
       - 'node_modules'
@@ -34,7 +33,7 @@ steps:
   - yarn test
 
 - name: store-cache
-  image: meltwater/drone-cache
+  image: meltwater/drone-cache:1
   environment:
     AWS_ACCESS_KEY_ID:
       from_secret: cache_key
@@ -45,9 +44,8 @@ steps:
     endpoint:
       from_secret: cache_endpoint
     rebuild: true
-    cache_key: {{ .Commit.Branch }} #-{{ checksum "go.mod" }} # default if ommitted is {{ .Commit.Branch }}
     bucket: new-eden-social-build-cache
-    region: ""
+    region: fra1
     mount:
       - 'bazel_cache'
       - 'node_modules'
