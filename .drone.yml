@@ -4,17 +4,25 @@ name: default
 
 steps:
 
-- name: restore
-  image: plugins/s3-cache
-  settings:
-    pull: true
-    endpoint:
-      from_secret: cache_endpoint
+steps:
+- name: restore-cache
+  image: meltwater/drone-cache
+  environment:
     access_key:
       from_secret: cache_key
     secret_key:
       from_secret: cache_secret
+  pull: true
+  settings:
+    endpoint:
+      from_secret: cache_endpoint
     restore: true
+    cache_key: {{ .Commit.Branch }} #-{{ checksum "go.mod" }} # default if ommitted is {{ .Commit.Branch }}
+    bucket: new-eden-social-build-cache
+    region: ""
+    mount:
+      - 'bazel_cache'
+      - 'node_modules'
 
 - name: build-test
   image: node:lts
@@ -25,19 +33,21 @@ steps:
   - yarn build --disk_cache=bazel_cache
   - yarn test
 
-- name: rebuild
-  image: plugins/s3-cache
-  settings:
-    pull: true
-    endpoint:
-      from_secret: cache_endpoint
+- name: store-cache
+  image: meltwater/drone-cache
+  environment:
     access_key:
       from_secret: cache_key
     secret_key:
       from_secret: cache_secret
+  pull: true
+  settings:
+    endpoint:
+      from_secret: cache_endpoint
     rebuild: true
+    cache_key: {{ .Commit.Branch }} #-{{ checksum "go.mod" }} # default if ommitted is {{ .Commit.Branch }}
+    bucket: new-eden-social-build-cache
+    region: ""
     mount:
-      - node_modules
-      - bazel_cache
-    when:
-      event: push
+      - 'bazel_cache'
+      - 'node_modules'
