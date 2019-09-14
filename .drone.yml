@@ -12,6 +12,7 @@ steps:
     AWS_SECRET_ACCESS_KEY:
       from_secret: cache_secret
   pull: true
+  debug: true
   settings:
     endpoint:
       from_secret: cache_endpoint
@@ -41,6 +42,7 @@ steps:
     AWS_SECRET_ACCESS_KEY:
       from_secret: cache_secret
   pull: true
+  debug: true
   settings:
     endpoint:
       from_secret: cache_endpoint
