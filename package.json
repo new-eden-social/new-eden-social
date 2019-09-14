@@ -121,7 +121,7 @@
     "socket.io-client": "2.2.0",
     "swagger-ui-express": "4.0.6",
     "ts-loader": "6.0.4",
-    "typeorm": "0.2.18",
+    "typeorm": "0.2.19",
     "typescript": "3.5.2",
     "uuid": "3.3.3",
     "webpack": "4.39.3",
