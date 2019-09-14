@@ -4,7 +4,6 @@ name: default
 
 steps:
 
-steps:
 - name: restore-cache
   image: meltwater/drone-cache:1
   environment:
