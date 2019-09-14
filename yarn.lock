@@ -1906,6 +1906,32 @@
     url-regex "~5.0.0"
     video-extensions "~1.1.0"
 
+"@metascraper/helpers@^5.7.4":
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/@metascraper/helpers/-/helpers-5.7.4.tgz#c91c1b11ce585fa973a544a9d24c5d88d50a9354"
+  integrity sha512-GMLFu8j7e65n04w+dfOVF8RWOqNHCqimITtTHYSa1XdLR8vSqE2PjvSOhGoS5ELU5fRlRQKy9EOrKDeRV3/K0w==
+  dependencies:
+    audio-extensions "0.0.0"
+    chrono-node "~1.3.11"
+    condense-whitespace "~2.0.0"
+    entities "~2.0.0"
+    file-extension "~4.0.5"
+    has-values "~2.0.1"
+    image-extensions "~1.1.0"
+    is-relative-url "~3.0.0"
+    is-uri "~1.2.0"
+    iso-639-3 "~1.2.0"
+    isostring "0.0.1"
+    lodash "~4.17.15"
+    mem "~5.1.1"
+    mime-types "~2.1.24"
+    normalize-url "~4.3.0"
+    smartquotes "~2.3.1"
+    title "~3.4.1"
+    truncate "~2.1.0"
+    url-regex "~5.0.0"
+    video-extensions "~1.1.0"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/@mrmlnc/readdir-enhanced/-/readdir-enhanced-2.2.1.tgz#524af240d1a360527b730475ecfa1344aa540dde"
@@ -9115,12 +9141,12 @@ metascraper-video@5.5.0:
     "@metascraper/helpers" "^5.5.0"
     lodash "~4.17.11"
 
-metascraper@5.6.6:
-  version "5.6.6"
-  resolved "https://registry.yarnpkg.com/metascraper/-/metascraper-5.6.6.tgz#81988384d50fc6c01d19b668beb1cdbcc94ace1f"
-  integrity sha512-+UyLs7WcSXlQA41W0CWC3sFr0uMmutDwFznJjuEJx4tI2q23bvNeSPE2E01vQw7LeHYvidvdKkTVqhLXqbB8yg==
+metascraper@5.7.4:
+  version "5.7.4"
+  resolved "https://registry.yarnpkg.com/metascraper/-/metascraper-5.7.4.tgz#a48154a8292a129cf3b77ccf7f60577c0f441c24"
+  integrity sha512-uJs+L4ufTs64KKXnizq8qJmK5Te/4QqUAH6IGxwk1Jzm0d1bxUXHy+7nCWgwk2/cW2w2b0et7xIuFotr3zr1GQ==
   dependencies:
-    "@metascraper/helpers" "^5.6.6"
+    "@metascraper/helpers" "^5.7.4"
     cheerio "~1.0.0-rc.2"
     cheerio-advanced-selectors "~2.0.1"
     lodash "~4.17.15"
