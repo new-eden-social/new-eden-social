@@ -8,9 +8,9 @@ steps:
 - name: restore-cache
   image: meltwater/drone-cache
   environment:
-    access_key:
+    AWS_ACCESS_KEY_ID:
       from_secret: cache_key
-    secret_key:
+    AWS_SECRET_ACCESS_KEY:
       from_secret: cache_secret
   pull: true
   settings:
@@ -36,9 +36,9 @@ steps:
 - name: store-cache
   image: meltwater/drone-cache
   environment:
-    access_key:
+    AWS_ACCESS_KEY_ID:
       from_secret: cache_key
-    secret_key:
+    AWS_SECRET_ACCESS_KEY:
       from_secret: cache_secret
   pull: true
   settings:
