@@ -17,8 +17,7 @@ steps:
       from_secret: cache_endpoint
     restore: true
     bucket: new-eden-social-build-cache
-    region: fra1
-    path_style: true
+    region: us-east-1
     debug: true
     mount:
       - 'bazel_cache'
@@ -48,7 +47,7 @@ steps:
       from_secret: cache_endpoint
     rebuild: true
     bucket: new-eden-social-build-cache
-    region: fra1
+    region: us-east-1
     debug: true
     path_style: true
     mount:
