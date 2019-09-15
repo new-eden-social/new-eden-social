@@ -8,6 +8,11 @@ tar -C /tmp -xzf /tmp/gc-sdk.tar.gz
 source /tmp/google-cloud-sdk/path.bash.inc
 gcloud init
 
+echo '=== Installing skaffold'
+curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
+chmod +x skaffold
+sudo mv skaffold /usr/local/bin
+
 echo '=== Preparing google credentials'
 echo $CACHE_GOOGLE_CREDENTIALS_FILE | base64 -d - > .creds-cache.json
 echo $REGISTRY_GOOGLE_CREDENTIALS_FILE | base64 -d - > .creds-registry.json
