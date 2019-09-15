@@ -20,18 +20,20 @@ steps:
     region: us-east-1
     debug: true
     mount:
-      - 'bazel_cache'
-      - 'node_modules'
+      - node_modules
   when:
     event: [ push ]
 
 - name: build-test
   image: node:lts
+  environment:
+    CACHE_GOOGLE_CREDENTIALS_FILE:
+      from_secret: cache_google_credentials_file
   commands:
+  - echo $CACHE_GOOGLE_CREDENTIALS_FILE > creds.json
   - yarn
   - yarn lint
-  - yarn bazel:lint
-  - yarn build --disk_cache=bazel_cache
+  - yarn build --google_credentials=creds.json --remote_upload_local_results=true
   #- yarn test
 
 - name: store-cache
@@ -51,7 +53,6 @@ steps:
     debug: true
     path_style: true
     mount:
-      - 'bazel_cache'
-      - 'node_modules'
+      - node_modules
   when:
     event: [ push ]
