@@ -2,3 +2,5 @@ node_modules
 .vscode
 dist
 bazel-out
+.bazelrc.user
+.creds*.json

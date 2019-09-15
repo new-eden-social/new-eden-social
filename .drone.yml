@@ -29,11 +29,15 @@ steps:
   environment:
     CACHE_GOOGLE_CREDENTIALS_FILE:
       from_secret: cache_google_credentials_file
+    REGISTRY_GOOGLE_CREDENTIALS_FILE:
+      from_secret: registry_google_credentials_file
+    GOOGLE_APPLICATION_CREDENTIALS: .creds-registry.json
+    SKAFFOLD_DEFAULT_REPO: eu.gcr.io/new-eden-social-production
   commands:
-  - echo $CACHE_GOOGLE_CREDENTIALS_FILE | base64 -d - > creds.json
+  - sudo ./tools/prepare-ci.sh
   - yarn
   - yarn lint
-  - yarn build --google_credentials=creds.json --remote_upload_local_results=true
+  - yarn build:skaffold
   #- yarn test
 
 # - name: store-cache

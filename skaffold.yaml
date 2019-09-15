@@ -1,50 +1,52 @@
+apiVersion: skaffold/v1beta13
+kind: Config
+
 build:
   tagPolicy:
-    sha256: {}
+    gitCommit: {}
   artifacts:
-  - image: gcr.io/new-eden-social/services-alliance
+  - image: eu.gcr.io/new-eden-social-development/services-alliance
     bazel:
-      target: //src/services/alliance:docker
-  - image: gcr.io/new-eden-social/services-authenticate
+      target: //src/services/alliance:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-authenticate
     bazel:
-      target: //src/services/authenticate:docker
-  - image: gcr.io/new-eden-social/services-character
+      target: //src/services/authenticate:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-character
     bazel:
-      target: //src/services/character:docker
-  - image: gcr.io/new-eden-social/services-comment
+      target: //src/services/character:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-comment
     bazel:
-      target: //src/services/comment:docker
-  - image: gcr.io/new-eden-social/services-corporation
+      target: //src/services/comment:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-corporation
     bazel:
-      target: //src/services/corporation:docker
-  - image: gcr.io/new-eden-social/services-follow
+      target: //src/services/corporation:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-follow
     bazel:
-      target: //src/services/follow:docker
-  - image: gcr.io/new-eden-social/services-hashtag
+      target: //src/services/follow:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-hashtag
     bazel:
-      target: //src/services/hashtag:docker
-  - image: gcr.io/new-eden-social/services-killmail
+      target: //src/services/hashtag:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-killmail
     bazel:
-      target: //src/services/killmail:docker
-  - image: gcr.io/new-eden-social/services-metascraper
+      target: //src/services/killmail:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-metascraper
     bazel:
-      target: //src/services/metascraper:docker
-  - image: gcr.io/new-eden-social/services-notification
+      target: //src/services/metascraper:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-notification
     bazel:
-      target: //src/services/notification:docker
-  - image: gcr.io/new-eden-social/services-post
+      target: //src/services/notification:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-post
     bazel:
-      target: //src/services/post:docker
-  - image: gcr.io/new-eden-social/services-search
+      target: //src/services/post:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-search
     bazel:
-      target: //src/services/search:docker
-  - image: gcr.io/new-eden-social/services-universe
+      target: //src/services/search:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-universe
     bazel:
-      target: //src/services/universe:docker
-  - image: gcr.io/new-eden-social/services-updater
+      target: //src/services/universe:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-updater
     bazel:
-      target: //src/services/updater:docker
-  - image: gcr.io/new-eden-social/services-websocket
+      target: //src/services/updater:docker.tar
+  - image: eu.gcr.io/new-eden-social-development/services-websocket
     bazel:
-      target: //src/services/websocket:docker
-
+      target: //src/services/websocket:docker.tar

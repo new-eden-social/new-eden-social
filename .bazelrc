@@ -76,6 +76,8 @@ run --incompatible_strict_action_env
 build --remote_http_cache=https://storage.googleapis.com/new-eden-social-bazel-cache
 build --remote_upload_local_results=false
 
+build --host_force_python=PY2
+
 # Load any settings specific to the current user.
 # .bazelrc.user should appear in .gitignore so that settings are not shared with team members
 # This needs to be last statement in this
