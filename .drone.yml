@@ -34,7 +34,7 @@ steps:
     GOOGLE_APPLICATION_CREDENTIALS: .creds-registry.json
     SKAFFOLD_DEFAULT_REPO: eu.gcr.io/new-eden-social-production
   commands:
-  - sudo ./tools/prepare-ci.sh
+  - ./tools/prepare-ci.sh
   - yarn
   - yarn lint
   - yarn build:skaffold
