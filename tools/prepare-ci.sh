@@ -1,6 +1,5 @@
 #!/bin/bash
-
-echo $PATH
+set -euxo pipefail
 
 echo '=== Installing gcp sdk'
 curl -fsSL -o /tmp/gc-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-262.0.0-linux-x86_64.tar.gz
@@ -12,7 +11,7 @@ source /tmp/google-cloud-sdk/path.bash.inc
 echo '=== Installing skaffold'
 curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
 chmod +x skaffold
-sudo mv skaffold /usr/local/bin
+mv skaffold /usr/local/bin
 
 echo '=== Preparing google credentials'
 echo $CACHE_GOOGLE_CREDENTIALS_FILE | base64 -d - > .creds-cache.json
