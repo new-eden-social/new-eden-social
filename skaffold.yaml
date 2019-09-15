@@ -5,48 +5,48 @@ build:
   tagPolicy:
     gitCommit: {}
   artifacts:
-  - image: eu.gcr.io/new-eden-social-development/services-alliance
+  - image: services-alliance
     bazel:
       target: //src/services/alliance:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-authenticate
+  - image: services-authenticate
     bazel:
       target: //src/services/authenticate:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-character
+  - image: services-character
     bazel:
       target: //src/services/character:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-comment
+  - image: services-comment
     bazel:
       target: //src/services/comment:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-corporation
+  - image: services-corporation
     bazel:
       target: //src/services/corporation:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-follow
+  - image: services-follow
     bazel:
       target: //src/services/follow:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-hashtag
+  - image: services-hashtag
     bazel:
       target: //src/services/hashtag:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-killmail
+  - image: services-killmail
     bazel:
       target: //src/services/killmail:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-metascraper
+  - image: services-metascraper
     bazel:
       target: //src/services/metascraper:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-notification
+  - image: services-notification
     bazel:
       target: //src/services/notification:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-post
+  - image: services-post
     bazel:
       target: //src/services/post:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-search
+  - image: services-search
     bazel:
       target: //src/services/search:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-universe
+  - image: services-universe
     bazel:
       target: //src/services/universe:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-updater
+  - image: services-updater
     bazel:
       target: //src/services/updater:docker.tar
-  - image: eu.gcr.io/new-eden-social-development/services-websocket
+  - image: services-websocket
     bazel:
       target: //src/services/websocket:docker.tar
