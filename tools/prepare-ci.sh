@@ -6,7 +6,6 @@ curl -fsSL -o /tmp/gc-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapi
 echo '6d5365de421a1417c785213d5fdedae54e479f9087b037764a4205a96e52c3ca /tmp/gc-sdk.tar.gz' | sha256sum -c
 tar -C /tmp -xzf /tmp/gc-sdk.tar.gz
 /tmp/google-cloud-sdk/install.sh
-source /tmp/google-cloud-sdk/path.bash.inc
 
 echo '=== Installing skaffold'
 curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64

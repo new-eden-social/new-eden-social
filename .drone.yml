@@ -34,6 +34,7 @@ steps:
     GOOGLE_APPLICATION_CREDENTIALS: .creds-registry.json
     SKAFFOLD_DEFAULT_REPO: eu.gcr.io/new-eden-social-production
   commands:
+  - export PATH=:PATH/google-cloud-sdk/bin
   - ./tools/prepare-ci.sh
   - yarn
   - yarn lint
