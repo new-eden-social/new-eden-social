@@ -5,7 +5,7 @@ echo '=== Installing gcp sdk'
 curl -fsSL -o /tmp/gc-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-262.0.0-linux-x86_64.tar.gz
 echo '6d5365de421a1417c785213d5fdedae54e479f9087b037764a4205a96e52c3ca /tmp/gc-sdk.tar.gz' | sha256sum -c
 tar -C /tmp -xzf /tmp/gc-sdk.tar.gz
-/tmp/google-cloud-sdk/install.sh
+/tmp/google-cloud-sdk/install.sh > /dev/null
 
 echo '=== Installing skaffold'
 curl -Lo skaffold https://storage.googleapis.com/skaffold/releases/latest/skaffold-linux-amd64
@@ -23,8 +23,8 @@ build --remote_upload_local_results=true
 EOF
 
 echo '=== Authenticating gcloud creds-registry'
-gcloud auth activate-service-account --key-file=.creds-registry.json
+gcloud auth activate-service-account --key-file=.creds-registry.json > /dev/null
 
 echo '=== Authenticating docker regestry credentials'
-gcloud components install docker-credential-gcr
-gcloud auth configure-docker
+gcloud components install docker-credential-gcr > /dev/null
+gcloud auth configure-docker > /dev/null

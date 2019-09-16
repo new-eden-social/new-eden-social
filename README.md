@@ -5,8 +5,8 @@
 <h3 align="center">Hub for EVE Online community.</h3>
 
 <div align="center">
-  <a target="_blank" href="https://drone.tjo.cloud/new-eden-social/new-eden-social">
-    <img src="https://drone.tjo.cloud/api/badges/new-eden-social/new-eden-social/status.svg" alt="Build Status" />
+  <a target="_blank" href="https://cloud.drone.io/new-eden-social/new-eden-social">
+    <img src="https://cloud.drone.io/api/badges/new-eden-social/new-eden-social/status.svg" alt="Build Status" />
   </a>
   <a target="_blank" href="https://coveralls.io/github/new-eden-social/new-eden-social">
     <img src="https://coveralls.io/repos/github/new-eden-social/new-eden-social/badge.svg" alt="Coverage Status" />
