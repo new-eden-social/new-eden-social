@@ -4,7 +4,7 @@ name: default
 steps:
 
 # On TAG we push to production
-- name: build-test
+- name: build-test-production
   image: node:lts
   environment:
     CACHE_GOOGLE_CREDENTIALS_FILE:
@@ -25,7 +25,7 @@ steps:
     - tag
 
 # Every other time we push to development
-- name: build-test
+- name: build-test-devleopment
   image: node:lts
   environment:
     CACHE_GOOGLE_CREDENTIALS_FILE:
