@@ -31,7 +31,7 @@ steps:
     CACHE_GOOGLE_CREDENTIALS_FILE:
       from_secret: cache_google_credentials_file
     REGISTRY_GOOGLE_CREDENTIALS_FILE:
-      from_secret: registry_develop_google_credentials_file
+      from_secret: registry_development_google_credentials_file
     GOOGLE_APPLICATION_CREDENTIALS: .creds-registry.json
     SKAFFOLD_DEFAULT_REPO: eu.gcr.io/new-eden-social-production
   commands:
