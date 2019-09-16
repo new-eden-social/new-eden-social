@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euxo pipefail
+set -e pipefail
 
 echo '=== Installing gcp sdk'
 curl -fsSL -o /tmp/gc-sdk.tar.gz https://dl.google.com/dl/cloudsdk/channels/rapid/downloads/google-cloud-sdk-262.0.0-linux-x86_64.tar.gz

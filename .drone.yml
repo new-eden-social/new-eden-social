@@ -1,36 +1,16 @@
 kind: pipeline
 type: docker
 name: default
-
 steps:
 
-# - name: restore-cache
-#   image: meltwater/drone-cache:1
-#   environment:
-#     AWS_ACCESS_KEY_ID:
-#       from_secret: cache_key
-#     AWS_SECRET_ACCESS_KEY:
-#       from_secret: cache_secret
-#   pull: true
-#   settings:
-#     endpoint:
-#       from_secret: cache_endpoint
-#     restore: true
-#     bucket: new-eden-social-build-cache
-#     region: us-east-1
-#     debug: true
-#     mount:
-#       - node_modules
-#   when:
-#     event: [ push ]
-
+# On TAG we push to production
 - name: build-test
   image: node:lts
   environment:
     CACHE_GOOGLE_CREDENTIALS_FILE:
       from_secret: cache_google_credentials_file
     REGISTRY_GOOGLE_CREDENTIALS_FILE:
-      from_secret: registry_google_credentials_file
+      from_secret: registry_production_google_credentials_file
     GOOGLE_APPLICATION_CREDENTIALS: .creds-registry.json
     SKAFFOLD_DEFAULT_REPO: eu.gcr.io/new-eden-social-production
   commands:
@@ -40,24 +20,27 @@ steps:
   - yarn lint
   - yarn build:skaffold
   #- yarn test
-
-# - name: store-cache
-#   image: meltwater/drone-cache:1
-#   environment:
-#     AWS_ACCESS_KEY_ID:
-#       from_secret: cache_key
-#     AWS_SECRET_ACCESS_KEY:
-#       from_secret: cache_secret
-#   pull: true
-#   settings:
-#     endpoint:
-#       from_secret: cache_endpoint
-#     rebuild: true
-#     bucket: new-eden-social-build-cache
-#     region: us-east-1
-#     debug: true
-#     path_style: true
-#     mount:
-#       - node_modules
   when:
-    event: [ push ]
+    event:
+    - tag
+
+# Every other time we push to development
+- name: build-test
+  image: node:lts
+  environment:
+    CACHE_GOOGLE_CREDENTIALS_FILE:
+      from_secret: cache_google_credentials_file
+    REGISTRY_GOOGLE_CREDENTIALS_FILE:
+      from_secret: registry_develop_google_credentials_file
+    GOOGLE_APPLICATION_CREDENTIALS: .creds-registry.json
+    SKAFFOLD_DEFAULT_REPO: eu.gcr.io/new-eden-social-production
+  commands:
+  - export PATH=$PATH:/tmp/google-cloud-sdk/bin
+  - ./tools/prepare-ci.sh
+  - yarn
+  - yarn lint
+  - yarn build:skaffold
+  #- yarn test
+  when:
+    exclude:
+    - tag
