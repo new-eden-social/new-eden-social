@@ -33,7 +33,7 @@ steps:
     REGISTRY_GOOGLE_CREDENTIALS_FILE:
       from_secret: registry_development_google_credentials_file
     GOOGLE_APPLICATION_CREDENTIALS: .creds-registry.json
-    SKAFFOLD_DEFAULT_REPO: eu.gcr.io/new-eden-social-production
+    SKAFFOLD_DEFAULT_REPO: eu.gcr.io/new-eden-social-development
   commands:
   - export PATH=$PATH:/tmp/google-cloud-sdk/bin
   - ./tools/prepare-ci.sh
