@@ -50,3 +50,10 @@ build:
   - image: services-websocket
     bazel:
       target: //src/services/websocket:docker.tar
+
+
+deploy:
+  helm:
+    releases:
+    - name: alliances
+      chartPath: charts/alliances
