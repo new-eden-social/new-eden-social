@@ -8,7 +8,7 @@
     "@angular/compiler-cli": "8.2.5",
     "@angular/language-service": "8.2.5",
     "@bazel/bazel-linux_x64": "0.29.0",
-    "@bazel/buildifier": "0.28.0",
+    "@bazel/buildifier": "0.29.0",
     "@bazel/hide-bazel-files": "0.37.0",
     "@bazel/ibazel": "0.10.3",
     "@bazel/typescript": "0.37.0",
