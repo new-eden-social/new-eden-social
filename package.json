@@ -11,7 +11,7 @@
     "@bazel/buildifier": "0.28.0",
     "@bazel/hide-bazel-files": "0.37.0",
     "@bazel/ibazel": "0.10.3",
-    "@bazel/typescript": "0.37.0",
+    "@bazel/typescript": "0.42.3",
     "@commitlint/cli": "8.0.0",
     "@commitlint/config-conventional": "8.0.0",
     "@types/bluebird": "3.5.27",
