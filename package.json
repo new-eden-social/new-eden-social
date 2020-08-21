@@ -91,7 +91,7 @@
     "@nguniversal/module-map-ngfactory-loader": "7.1.1",
     "angular2-moment": "1.9.0",
     "class-sanitizer": "0.0.5",
-    "class-transformer": "0.2.3",
+    "class-transformer": "0.3.1",
     "class-validator": "0.9.1",
     "core-js": "3.1.4",
     "express": "4.17.1",
