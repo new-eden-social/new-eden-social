@@ -4,9 +4,9 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "0.803.4",
     "@angular/cli": "8.3.4",
-    "@angular/compiler": "8.2.5",
-    "@angular/compiler-cli": "8.2.5",
-    "@angular/language-service": "8.2.5",
+    "@angular/compiler": "8.2.14",
+    "@angular/compiler-cli": "8.2.14",
+    "@angular/language-service": "8.2.14",
     "@bazel/bazel-linux_x64": "0.29.0",
     "@bazel/buildifier": "0.28.0",
     "@bazel/hide-bazel-files": "0.37.0",
@@ -49,17 +49,17 @@
     "webpack-node-externals": "1.7.2"
   },
   "dependencies": {
-    "@angular/animations": "8.2.5",
+    "@angular/animations": "8.2.14",
     "@angular/cdk": "8.2.0",
-    "@angular/common": "8.2.5",
-    "@angular/core": "8.2.5",
-    "@angular/forms": "8.2.5",
-    "@angular/http": "7.2.15",
+    "@angular/common": "8.2.14",
+    "@angular/core": "8.2.14",
+    "@angular/forms": "8.2.14",
+    "@angular/http": "7.2.16",
     "@angular/material": "8.2.0",
-    "@angular/platform-browser": "8.2.5",
-    "@angular/platform-browser-dynamic": "8.2.5",
-    "@angular/platform-server": "8.2.5",
-    "@angular/router": "8.2.5",
+    "@angular/platform-browser": "8.2.14",
+    "@angular/platform-browser-dynamic": "8.2.14",
+    "@angular/platform-server": "8.2.14",
+    "@angular/router": "8.2.14",
     "@ctrl/ngx-emoji-mart": "1.0.1",
     "@godaddy/terminus": "4.2.0",
     "@nestjs/common": "6.6.7",
@@ -126,7 +126,7 @@
     "uuid": "3.3.3",
     "webpack": "4.39.3",
     "ws": "7.1.2",
-    "zone.js": "0.10.2"
+    "zone.js": "0.11.2"
   },
   "scripts": {
     "build": "bazel build //...",
