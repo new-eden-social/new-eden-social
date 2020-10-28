@@ -928,10 +928,10 @@
   resolved "https://registry.yarnpkg.com/@bazel/hide-bazel-files/-/hide-bazel-files-0.37.0.tgz#3c30a3f64f0b976c8c0e8dd236b0f26db0f6f860"
   integrity sha512-aVReQa7UxWjBNTsZTAmFKHujTaDxlMUEq2BgvP7mYp1nnZjsCI30SjzPkTn77Ghw4/lK8lhht7AdfWPQp271pQ==
 
-"@bazel/ibazel@0.10.3":
-  version "0.10.3"
-  resolved "https://registry.yarnpkg.com/@bazel/ibazel/-/ibazel-0.10.3.tgz#2e2b8a1d3e885946eac41db2b1aa6801fb319887"
-  integrity sha512-v1nXbMTHVlMM4z4uWp6XiRoHAyUlYggF1SOboLLWRp0+D22kWixqArWqnozLw2mOtnxr97BdLjluWiho6A8Hjg==
+"@bazel/ibazel@0.13.2":
+  version "0.13.2"
+  resolved "https://registry.yarnpkg.com/@bazel/ibazel/-/ibazel-0.13.2.tgz#eb914c41c66af4606db786457a7b130634355e8f"
+  integrity sha512-q5fGwjTY76MLNcYpF2zEu/y1Clu4DjdjhvJM9+yDKc3+3mBlbX+uiMJYiCz5b0oSYdJTlw1QSRptTYA7CID8EQ==
 
 "@bazel/typescript@0.37.0":
   version "0.37.0"
