@@ -15,7 +15,7 @@
     "@commitlint/cli": "8.0.0",
     "@commitlint/config-conventional": "8.0.0",
     "@types/bluebird": "3.5.27",
-    "@types/chai": "4.2.2",
+    "@types/chai": "4.2.14",
     "@types/faker": "4.1.5",
     "@types/ioredis": "4.0.12",
     "@types/jasmine": "3.3.13",
